@@ -23,7 +23,6 @@ package br.com.jcv.security.guardian.controller;
 
 import br.com.jcv.commons.library.commodities.dto.GenericErrorResponse;
 import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,6 +33,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestControllerAdvice

@@ -50,6 +50,10 @@ public class SessionStateModelBuilder {
         this.sessionstate.setIdToken(idToken);
         return this;
     }
+    public SessionStateModelBuilder idUserUUID(UUID idUserUUID){
+        this.sessionstate.setIdUserUUID(idUserUUID);
+        return this;
+    }
     public SessionStateModelBuilder status(String status){
         this.sessionstate.setStatus(status);
         return this;

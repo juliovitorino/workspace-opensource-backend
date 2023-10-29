@@ -50,6 +50,10 @@ public class SessionStateDTOBuilder {
         this.sessionstateDTO.setIdToken(idToken);
         return this;
     }
+    public SessionStateDTOBuilder idUserUUID(UUID idUserUUID){
+        this.sessionstateDTO.setIdUserUUID(idUserUUID);
+        return this;
+    }
     public SessionStateDTOBuilder status(String status){
         this.sessionstateDTO.setStatus(status);
         return this;

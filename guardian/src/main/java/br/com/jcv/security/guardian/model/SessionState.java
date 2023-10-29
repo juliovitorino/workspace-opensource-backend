@@ -34,6 +34,10 @@ public class SessionState {
     @CodeGeneratorFieldDescriptor(fieldDescription = "Session's token")
     private UUID idToken;
 
+    @Column(name = "id_user_uuid")
+    @CodeGeneratorFieldDescriptor(fieldDescription = "user external token")
+    private UUID idUserUUID;
+
     @CodeGeneratorFieldDescriptor(fieldDescription = "Status field")
     @Column(length = 1)
     private String status;

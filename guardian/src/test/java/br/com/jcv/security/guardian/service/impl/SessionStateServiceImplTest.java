@@ -68,6 +68,7 @@ public class SessionStateServiceImplTest {
 
     public static final String SESSIONSTATE_NOTFOUND_WITH_ID = "SessionState não encontrada com id = ";
     public static final String SESSIONSTATE_NOTFOUND_WITH_IDTOKEN = "SessionState não encontrada com idToken = ";
+    public static final String SESSIONSTATE_NOTFOUND_WITH_IDUSERUUID = "SessionState não encontrada com idUserUUID = ";
     public static final String SESSIONSTATE_NOTFOUND_WITH_STATUS = "SessionState não encontrada com status = ";
     public static final String SESSIONSTATE_NOTFOUND_WITH_DATECREATED = "SessionState não encontrada com dateCreated = ";
     public static final String SESSIONSTATE_NOTFOUND_WITH_DATEUPDATED = "SessionState não encontrada com dateUpdated = ";
@@ -104,9 +105,10 @@ public class SessionStateServiceImplTest {
     @Test
     public void shouldReturnListOfSessionStateWhenFindAllByFilterIsCalled() {
         // scenario
-        Long id = 6858L;
-        UUID idToken = UUID.fromString("782c325a-e036-4c0d-9d9e-81acb225e127");
-        String status = "MaWgMbk1DFb0jRKQwOCxy8g4phvhJ3ICW604iWtOGWb0a9E6VJ";
+        Long id = 32L;
+        UUID idToken = UUID.fromString("accf21e7-91c2-45a2-a718-2d5aa364eef7");
+        UUID idUserUUID = UUID.fromString("8608c6ac-1c21-4af0-9e90-e499ba5655ac");
+        String status = "5HqTjT8eavI0nlpk3byfWFmnHqeI64zlRamktJKWbtV0aD81vh";
         String dateCreated = "2025-10-07";
         String dateUpdated = "2025-10-07";
 
@@ -114,6 +116,7 @@ public class SessionStateServiceImplTest {
         Map<String, Object> mapFieldsRequestMock = new HashMap<>();
         mapFieldsRequestMock.put("id", id);
         mapFieldsRequestMock.put("idToken", idToken);
+        mapFieldsRequestMock.put("idUserUUID", idUserUUID);
         mapFieldsRequestMock.put("status", status);
         mapFieldsRequestMock.put("dateCreated", dateCreated);
         mapFieldsRequestMock.put("dateUpdated", dateUpdated);
@@ -134,6 +137,7 @@ public class SessionStateServiceImplTest {
         Mockito.when(sessionstateRepositoryMock.findSessionStateByFilter(
             id,
             idToken,
+            idUserUUID,
             status,
             dateCreated,
             dateUpdated
@@ -152,9 +156,10 @@ public class SessionStateServiceImplTest {
     @Test
     public void shouldReturnMapWithSessionStateListWhenFindPageByFilterIsCalled() {
         // scenario
-        Long id = 5020L;
-        UUID idToken = UUID.fromString("2f17b33a-1057-4f17-a1df-93173c6b9fd2");
-        String status = "x00idp0MCd51n2XUzdufvkNp7a2bkQdIvXKezsXfMbB6k2p9xF";
+        Long id = 400L;
+        UUID idToken = UUID.fromString("09602b2e-11af-44e8-a82c-c68d9b4157dd");
+        UUID idUserUUID = UUID.fromString("f0390f7b-6ea4-43cc-b92e-0d121afc4cb8");
+        String status = "nGUKTRuIohlnsC1tuxeA4PcCghikyj1gusgpdne0ruvIbaIINq";
         String dateCreated = "2025-10-07";
         String dateUpdated = "2025-10-07";
 
@@ -162,6 +167,7 @@ public class SessionStateServiceImplTest {
         Map<String, Object> mapFieldsRequestMock = new HashMap<>();
         mapFieldsRequestMock.put("id", id);
         mapFieldsRequestMock.put("idToken", idToken);
+        mapFieldsRequestMock.put("idUserUUID", idUserUUID);
         mapFieldsRequestMock.put("status", status);
         mapFieldsRequestMock.put("dateCreated", dateCreated);
         mapFieldsRequestMock.put("dateUpdated", dateUpdated);
@@ -200,6 +206,7 @@ public class SessionStateServiceImplTest {
         Mockito.when(sessionstateRepositoryMock.findSessionStateByFilter(pageableMock,
             id,
             idToken,
+            idUserUUID,
             status,
             dateCreated,
             dateUpdated
@@ -241,7 +248,7 @@ public class SessionStateServiceImplTest {
     @Test
     public void shouldReturnSessionStateNotFoundExceptionWhenUpdateStatusByIdForInexistentId() {
         // scenario
-        Long idMock = 8063L;
+        Long idMock = 1560L;
         Optional<SessionState> sessionstateNonExistentMock = Optional.empty();
         Mockito.when(sessionstateRepositoryMock.findById(idMock)).thenReturn(sessionstateNonExistentMock);
 
@@ -256,7 +263,7 @@ public class SessionStateServiceImplTest {
     @Test
     public void shouldThrowSessionStateNotFoundExceptionWhenUpdateStatusByIdForInexistentId() {
         // scenario
-        Long idMock = 22203L;
+        Long idMock = 11526L;
         Mockito.when(sessionstateRepositoryMock.findById(idMock))
                 .thenThrow(new SessionStateNotFoundException(SESSIONSTATE_NOTFOUND_WITH_ID,
                 HttpStatus.NOT_FOUND,
@@ -273,19 +280,21 @@ public class SessionStateServiceImplTest {
     @Test
     public void shouldReturnSessionStateDTOAfterUpdateStatusById() {
         // scenario
-        Long idMock = 26016L;
+        Long idMock = 18605L;
         Optional<SessionState> sessionstateModelMock = Optional.ofNullable(
                 SessionStateModelBuilder.newSessionStateModelTestBuilder()
                         .id(idMock)
-                        .idToken(UUID.fromString("c6531239-9123-433c-81ca-e1a23f943c9f"))
+                        .idToken(UUID.fromString("8829f146-0a8b-4067-b66b-eb8fd570e41f"))
+                        .idUserUUID(UUID.fromString("53fecc73-9516-4303-9ff4-cd4eec04496f"))
 
                         .status("X")
                         .now()
         );
         SessionState sessionstateToSaveMock = sessionstateModelMock.orElse(null);
         SessionState sessionstateSavedMck = SessionStateModelBuilder.newSessionStateModelTestBuilder()
-                        .id(80375L)
-                        .idToken(UUID.fromString("49cb76f5-0044-4102-afc9-ecd97fc3381e"))
+                        .id(62284L)
+                        .idToken(UUID.fromString("1c639e91-db67-475f-9b52-de0125a7637b"))
+                        .idUserUUID(UUID.fromString("774ca4ba-c089-4c47-b12c-30070239e840"))
 
                         .status("A")
                         .now();
@@ -316,8 +325,9 @@ public class SessionStateServiceImplTest {
     public void shouldSearchSessionStateByIdAndReturnDTO() {
         // scenario
         Optional<SessionState> sessionstateModelMock = Optional.ofNullable(SessionStateModelBuilder.newSessionStateModelTestBuilder()
-                .id(50041L)
-                .idToken(UUID.fromString("29384c8f-f5ff-4c9a-9f9b-ccf28c9310e9"))
+                .id(56454L)
+                .idToken(UUID.fromString("364689aa-a00e-4dc8-b386-984f3ac10a3a"))
+                .idUserUUID(UUID.fromString("f22f1794-6382-4b9c-ac9d-e94601a9d28b"))
 
                 .status("A")
                 .dateCreated(dateTimeMock.getToday())
@@ -362,8 +372,9 @@ public class SessionStateServiceImplTest {
     public void ShouldSaveUpdateExistingSessionStateWithSucess() {
         // scenario
         SessionStateDTO sessionstateDTOMock = SessionStateDTOBuilder.newSessionStateDTOTestBuilder()
-                .id(62672L)
-                .idToken(UUID.fromString("c1020ce4-3a74-4bac-9dd8-2847d93e9632"))
+                .id(2572L)
+                .idToken(UUID.fromString("ed8526be-3916-4564-905f-23d0d36db6a7"))
+                .idUserUUID(UUID.fromString("99f6ed7a-9ca7-453f-a463-4526cdb3ad1b"))
 
                 .status("P")
                 .dateCreated(dateTimeMock.getToday())
@@ -372,6 +383,7 @@ public class SessionStateServiceImplTest {
         SessionState sessionstateMock = SessionStateModelBuilder.newSessionStateModelTestBuilder()
                 .id(sessionstateDTOMock.getId())
                 .idToken(sessionstateDTOMock.getIdToken())
+                .idUserUUID(sessionstateDTOMock.getIdUserUUID())
 
                 .status("P")
                 .dateCreated(dateTimeMock.getToday())
@@ -380,6 +392,7 @@ public class SessionStateServiceImplTest {
         SessionState sessionstateSavedMock = SessionStateModelBuilder.newSessionStateModelTestBuilder()
                 .id(sessionstateDTOMock.getId())
                 .idToken(sessionstateDTOMock.getIdToken())
+                .idUserUUID(sessionstateDTOMock.getIdUserUUID())
 
                 .status("P")
                 .dateCreated(dateTimeMock.getToday())
@@ -401,7 +414,8 @@ public class SessionStateServiceImplTest {
         // scenario
         SessionStateDTO sessionstateDTOMock = SessionStateDTOBuilder.newSessionStateDTOTestBuilder()
                 .id(null)
-                .idToken(UUID.fromString("82eef911-dbbb-4139-8c05-cb3a446f2480"))
+                .idToken(UUID.fromString("1e7e504b-df27-4776-8b79-59019cb48d1f"))
+                .idUserUUID(UUID.fromString("b3025c66-0188-47b1-8b53-3e39ab87939c"))
 
                 .status("P")
                 .dateCreated(dateTimeMock.getToday())
@@ -410,6 +424,7 @@ public class SessionStateServiceImplTest {
         SessionState sessionstateModelMock = SessionStateModelBuilder.newSessionStateModelTestBuilder()
                 .id(null)
                 .idToken(sessionstateDTOMock.getIdToken())
+                .idUserUUID(sessionstateDTOMock.getIdUserUUID())
 
                 .status("P")
                 .dateCreated(dateTimeMock.getToday())
@@ -418,6 +433,7 @@ public class SessionStateServiceImplTest {
         SessionState sessionstateSavedMock = SessionStateModelBuilder.newSessionStateModelTestBuilder()
                 .id(501L)
                 .idToken(sessionstateDTOMock.getIdToken())
+                .idUserUUID(sessionstateDTOMock.getIdUserUUID())
 
                 .status("P")
                 .dateCreated(dateTimeMock.getToday())
@@ -439,15 +455,17 @@ public class SessionStateServiceImplTest {
     public void shouldExecutePartialUpdateWithSucess() {
         // scenario
         Map<String, Object> mapSessionStateDTOMock = new HashMap<>();
-        mapSessionStateDTOMock.put(SessionStateConstantes.IDTOKEN,UUID.fromString("a9383fc4-79c3-4205-8bf2-93643dccdb87"));
-        mapSessionStateDTOMock.put(SessionStateConstantes.STATUS,"YaVnX5d7RUPGKbeJ5fvOWc2QjIjyd05KcuFp8NH91nUYLzf103");
+        mapSessionStateDTOMock.put(SessionStateConstantes.IDTOKEN,UUID.fromString("465ff580-aa8a-4f22-ae47-e4b6c9d00b66"));
+        mapSessionStateDTOMock.put(SessionStateConstantes.IDUSERUUID,UUID.fromString("5219dd11-1f78-4943-9948-03a635ad06d2"));
+        mapSessionStateDTOMock.put(SessionStateConstantes.STATUS,"Bm72deMW10AN1edjS1Ob0d4PG2ADXPqkVWIRiRL1Qf055XRHzt");
 
 
         Optional<SessionState> sessionstateModelMock = Optional.ofNullable(
                 SessionStateModelBuilder.newSessionStateModelTestBuilder()
-                        .id(4700L)
-                        .idToken(UUID.fromString("28e65489-1cc9-4817-9e3d-3b3e225a6ff9"))
-                        .status("8Yc8V2DAkf7c0pdik2SEOmXYFwpnc0VSf6Ratbddx6Bxes0rJ9")
+                        .id(6206L)
+                        .idToken(UUID.fromString("89455342-216a-4de3-9ade-5044287575a0"))
+                        .idUserUUID(UUID.fromString("3e9fd024-7a9b-4f11-bcac-f43cae046beb"))
+                        .status("WWIy8gRJqCw3uWoYAYzGy6R5lC0sHce9LjWlElbb8xhtgbPLG8")
 
                         .now()
         );
@@ -465,8 +483,9 @@ public class SessionStateServiceImplTest {
     public void shouldReturnSessionStateNotFoundExceptionWhenTrySearchNotExistentId() {
         // scenario
         Map<String, Object> mapSessionStateDTOMock = new HashMap<>();
-        mapSessionStateDTOMock.put(SessionStateConstantes.IDTOKEN,UUID.fromString("e57f0c96-f9ff-4aec-be26-daa4814eab24"));
-        mapSessionStateDTOMock.put(SessionStateConstantes.STATUS,"GR9H0oWYjfhdTSXEmd3oFzi76XVYYuIf70b8E8c7K0TAAKFxu0");
+        mapSessionStateDTOMock.put(SessionStateConstantes.IDTOKEN,UUID.fromString("2dc384b9-23d2-43ec-b178-5fdc1e961b08"));
+        mapSessionStateDTOMock.put(SessionStateConstantes.IDUSERUUID,UUID.fromString("720bf05b-3236-4f45-8e07-db5406c2a4d9"));
+        mapSessionStateDTOMock.put(SessionStateConstantes.STATUS,"9b4sYfJI0nPerRUuKrvWzySc2w1l8NoixfCr0WHfDpM5BDO0Vz");
 
 
         Mockito.when(sessionstateRepositoryMock.findById(1L)).thenReturn(Optional.empty());
@@ -490,10 +509,10 @@ public class SessionStateServiceImplTest {
             SessionStateModelBuilder.newSessionStateModelTestBuilder().now()
         );
 
-        Mockito.when(sessionstateRepositoryMock.findAllByIdAndStatus(30466L, "A")).thenReturn(sessionstates);
+        Mockito.when(sessionstateRepositoryMock.findAllByIdAndStatus(8566L, "A")).thenReturn(sessionstates);
 
         // action
-        List<SessionStateDTO> result = sessionstateService.findAllSessionStateByIdAndStatus(30466L, "A");
+        List<SessionStateDTO> result = sessionstateService.findAllSessionStateByIdAndStatus(8566L, "A");
 
         // validate
         Assertions.assertInstanceOf(List.class, result);
@@ -508,10 +527,28 @@ public class SessionStateServiceImplTest {
             SessionStateModelBuilder.newSessionStateModelTestBuilder().now()
         );
 
-        Mockito.when(sessionstateRepositoryMock.findAllByIdTokenAndStatus(UUID.fromString("cf5c06e0-7600-4ea4-a486-a1279dcdf073"), "A")).thenReturn(sessionstates);
+        Mockito.when(sessionstateRepositoryMock.findAllByIdTokenAndStatus(UUID.fromString("8cbd52e6-026f-4611-b430-b643926749f0"), "A")).thenReturn(sessionstates);
 
         // action
-        List<SessionStateDTO> result = sessionstateService.findAllSessionStateByIdTokenAndStatus(UUID.fromString("cf5c06e0-7600-4ea4-a486-a1279dcdf073"), "A");
+        List<SessionStateDTO> result = sessionstateService.findAllSessionStateByIdTokenAndStatus(UUID.fromString("8cbd52e6-026f-4611-b430-b643926749f0"), "A");
+
+        // validate
+        Assertions.assertInstanceOf(List.class, result);
+        Assertions.assertEquals(3, result.size());
+    }
+    @Test
+    public void shouldReturnSessionStateListWhenFindAllSessionStateByIdUserUUIDAndStatus() {
+        // scenario
+        List<SessionState> sessionstates = Arrays.asList(
+            SessionStateModelBuilder.newSessionStateModelTestBuilder().now(),
+            SessionStateModelBuilder.newSessionStateModelTestBuilder().now(),
+            SessionStateModelBuilder.newSessionStateModelTestBuilder().now()
+        );
+
+        Mockito.when(sessionstateRepositoryMock.findAllByIdUserUUIDAndStatus(UUID.fromString("06508b44-504b-4618-8cf2-ff422e578ce5"), "A")).thenReturn(sessionstates);
+
+        // action
+        List<SessionStateDTO> result = sessionstateService.findAllSessionStateByIdUserUUIDAndStatus(UUID.fromString("06508b44-504b-4618-8cf2-ff422e578ce5"), "A");
 
         // validate
         Assertions.assertInstanceOf(List.class, result);
@@ -558,11 +595,11 @@ public class SessionStateServiceImplTest {
     public void shouldReturnExistentSessionStateDTOWhenFindSessionStateByIdAndStatus() {
         // scenario
         Optional<SessionState> sessionstateModelMock = Optional.ofNullable(SessionStateModelBuilder.newSessionStateModelTestBuilder().now());
-        Mockito.when(sessionstateRepositoryMock.loadMaxIdByIdAndStatus(660L, "A")).thenReturn(1L);
+        Mockito.when(sessionstateRepositoryMock.loadMaxIdByIdAndStatus(40012L, "A")).thenReturn(1L);
         Mockito.when(sessionstateRepositoryMock.findById(1L)).thenReturn(sessionstateModelMock);
 
         // action
-        SessionStateDTO result = sessionstateService.findSessionStateByIdAndStatus(660L, "A");
+        SessionStateDTO result = sessionstateService.findSessionStateByIdAndStatus(40012L, "A");
 
         // validate
         Assertions.assertInstanceOf(SessionStateDTO.class,result);
@@ -570,11 +607,11 @@ public class SessionStateServiceImplTest {
     @Test
     public void shouldReturnSessionStateNotFoundExceptionWhenNonExistenceSessionStateIdAndStatus() {
         // scenario
-        Mockito.when(sessionstateRepositoryMock.loadMaxIdByIdAndStatus(660L, "A")).thenReturn(0L);
+        Mockito.when(sessionstateRepositoryMock.loadMaxIdByIdAndStatus(40012L, "A")).thenReturn(0L);
         Mockito.when(sessionstateRepositoryMock.findById(0L)).thenReturn(Optional.empty());
         // action
         SessionStateNotFoundException exception = Assertions.assertThrows(SessionStateNotFoundException.class,
-                ()->sessionstateService.findSessionStateByIdAndStatus(660L, "A"));
+                ()->sessionstateService.findSessionStateByIdAndStatus(40012L, "A"));
 
         // validate
         Assertions.assertTrue(exception.getMessage().contains(SESSIONSTATE_NOTFOUND_WITH_ID));
@@ -583,11 +620,11 @@ public class SessionStateServiceImplTest {
     public void shouldReturnExistentSessionStateDTOWhenFindSessionStateByIdTokenAndStatus() {
         // scenario
         Optional<SessionState> sessionstateModelMock = Optional.ofNullable(SessionStateModelBuilder.newSessionStateModelTestBuilder().now());
-        Mockito.when(sessionstateRepositoryMock.loadMaxIdByIdTokenAndStatus(UUID.fromString("f8d786d5-72c3-445a-8ce4-0342b7b8a907"), "A")).thenReturn(1L);
+        Mockito.when(sessionstateRepositoryMock.loadMaxIdByIdTokenAndStatus(UUID.fromString("47d53549-0da4-43e1-b517-66cb3b883a0c"), "A")).thenReturn(1L);
         Mockito.when(sessionstateRepositoryMock.findById(1L)).thenReturn(sessionstateModelMock);
 
         // action
-        SessionStateDTO result = sessionstateService.findSessionStateByIdTokenAndStatus(UUID.fromString("f8d786d5-72c3-445a-8ce4-0342b7b8a907"), "A");
+        SessionStateDTO result = sessionstateService.findSessionStateByIdTokenAndStatus(UUID.fromString("47d53549-0da4-43e1-b517-66cb3b883a0c"), "A");
 
         // validate
         Assertions.assertInstanceOf(SessionStateDTO.class,result);
@@ -595,20 +632,45 @@ public class SessionStateServiceImplTest {
     @Test
     public void shouldReturnSessionStateNotFoundExceptionWhenNonExistenceSessionStateIdTokenAndStatus() {
         // scenario
-        Mockito.when(sessionstateRepositoryMock.loadMaxIdByIdTokenAndStatus(UUID.fromString("f8d786d5-72c3-445a-8ce4-0342b7b8a907"), "A")).thenReturn(0L);
+        Mockito.when(sessionstateRepositoryMock.loadMaxIdByIdTokenAndStatus(UUID.fromString("47d53549-0da4-43e1-b517-66cb3b883a0c"), "A")).thenReturn(0L);
         Mockito.when(sessionstateRepositoryMock.findById(0L)).thenReturn(Optional.empty());
         // action
         SessionStateNotFoundException exception = Assertions.assertThrows(SessionStateNotFoundException.class,
-                ()->sessionstateService.findSessionStateByIdTokenAndStatus(UUID.fromString("f8d786d5-72c3-445a-8ce4-0342b7b8a907"), "A"));
+                ()->sessionstateService.findSessionStateByIdTokenAndStatus(UUID.fromString("47d53549-0da4-43e1-b517-66cb3b883a0c"), "A"));
 
         // validate
         Assertions.assertTrue(exception.getMessage().contains(SESSIONSTATE_NOTFOUND_WITH_IDTOKEN));
+    }
+    @Test
+    public void shouldReturnExistentSessionStateDTOWhenFindSessionStateByIdUserUUIDAndStatus() {
+        // scenario
+        Optional<SessionState> sessionstateModelMock = Optional.ofNullable(SessionStateModelBuilder.newSessionStateModelTestBuilder().now());
+        Mockito.when(sessionstateRepositoryMock.loadMaxIdByIdUserUUIDAndStatus(UUID.fromString("2936747a-4b27-49c3-99be-c8b1e6981fb3"), "A")).thenReturn(1L);
+        Mockito.when(sessionstateRepositoryMock.findById(1L)).thenReturn(sessionstateModelMock);
+
+        // action
+        SessionStateDTO result = sessionstateService.findSessionStateByIdUserUUIDAndStatus(UUID.fromString("2936747a-4b27-49c3-99be-c8b1e6981fb3"), "A");
+
+        // validate
+        Assertions.assertInstanceOf(SessionStateDTO.class,result);
+    }
+    @Test
+    public void shouldReturnSessionStateNotFoundExceptionWhenNonExistenceSessionStateIdUserUUIDAndStatus() {
+        // scenario
+        Mockito.when(sessionstateRepositoryMock.loadMaxIdByIdUserUUIDAndStatus(UUID.fromString("2936747a-4b27-49c3-99be-c8b1e6981fb3"), "A")).thenReturn(0L);
+        Mockito.when(sessionstateRepositoryMock.findById(0L)).thenReturn(Optional.empty());
+        // action
+        SessionStateNotFoundException exception = Assertions.assertThrows(SessionStateNotFoundException.class,
+                ()->sessionstateService.findSessionStateByIdUserUUIDAndStatus(UUID.fromString("2936747a-4b27-49c3-99be-c8b1e6981fb3"), "A"));
+
+        // validate
+        Assertions.assertTrue(exception.getMessage().contains(SESSIONSTATE_NOTFOUND_WITH_IDUSERUUID));
     }
 
     @Test
     public void shouldReturnSessionStateDTOWhenUpdateExistingIdTokenById() {
         // scenario
-        UUID idTokenUpdateMock = UUID.fromString("31c76ee7-833b-4dde-9480-55cba2b943cd");
+        UUID idTokenUpdateMock = UUID.fromString("32354900-f071-45d9-ad0c-68b6f283d79a");
         Optional<SessionState> sessionstateModelMock = Optional.ofNullable(SessionStateModelBuilder.newSessionStateModelTestBuilder()
                         .id(420L)
                 .now());
@@ -621,13 +683,29 @@ public class SessionStateServiceImplTest {
         // validate
         Mockito.verify(sessionstateRepositoryMock,Mockito.times(1)).updateIdTokenById(420L, idTokenUpdateMock);
     }
+    @Test
+    public void shouldReturnSessionStateDTOWhenUpdateExistingIdUserUUIDById() {
+        // scenario
+        UUID idUserUUIDUpdateMock = UUID.fromString("0b56148d-a8eb-41f7-91a9-136f2479345d");
+        Optional<SessionState> sessionstateModelMock = Optional.ofNullable(SessionStateModelBuilder.newSessionStateModelTestBuilder()
+                        .id(420L)
+                .now());
+        Mockito.when(sessionstateRepositoryMock.findById(420L)).thenReturn(sessionstateModelMock);
+        Mockito.doNothing().when(sessionstateRepositoryMock).updateIdUserUUIDById(420L, idUserUUIDUpdateMock);
+
+        // action
+        sessionstateService.updateIdUserUUIDById(420L, idUserUUIDUpdateMock);
+
+        // validate
+        Mockito.verify(sessionstateRepositoryMock,Mockito.times(1)).updateIdUserUUIDById(420L, idUserUUIDUpdateMock);
+    }
 
 
 
     @Test
     public void showReturnExistingSessionStateDTOWhenFindSessionStateByIdAndStatusActiveAnonimous() {
         // scenario
-        Long idMock = 3078L;
+        Long idMock = 40808L;
         Long maxIdMock = 1972L;
         Optional<SessionState> sessionstateModelMock = Optional.ofNullable(SessionStateModelBuilder.newSessionStateModelTestBuilder()
                 .id(idMock)
@@ -646,7 +724,7 @@ public class SessionStateServiceImplTest {
     @Test
     public void showReturnSessionStateNotFoundExceptionWhenNonExistenceFindSessionStateByIdAndStatusActiveAnonimous() {
         // scenario
-        Long idMock = 3078L;
+        Long idMock = 40808L;
         Long noMaxIdMock = 0L;
         Optional<SessionState> sessionstateModelMock = Optional.empty();
         Mockito.when(sessionstateRepositoryMock.loadMaxIdByIdAndStatus(idMock, "A")).thenReturn(noMaxIdMock);
@@ -665,7 +743,7 @@ public class SessionStateServiceImplTest {
     @Test
     public void showReturnExistingSessionStateDTOWhenFindSessionStateByIdTokenAndStatusActiveAnonimous() {
         // scenario
-        UUID idTokenMock = UUID.fromString("c5381f13-dad3-4ab3-96e5-6dc8fdd0b9fe");
+        UUID idTokenMock = UUID.fromString("d3ac5609-5f47-43c4-8f51-37425af81d6b");
         Long maxIdMock = 1972L;
         Optional<SessionState> sessionstateModelMock = Optional.ofNullable(SessionStateModelBuilder.newSessionStateModelTestBuilder()
                 .idToken(idTokenMock)
@@ -684,7 +762,7 @@ public class SessionStateServiceImplTest {
     @Test
     public void showReturnSessionStateNotFoundExceptionWhenNonExistenceFindSessionStateByIdTokenAndStatusActiveAnonimous() {
         // scenario
-        UUID idTokenMock = UUID.fromString("c5381f13-dad3-4ab3-96e5-6dc8fdd0b9fe");
+        UUID idTokenMock = UUID.fromString("d3ac5609-5f47-43c4-8f51-37425af81d6b");
         Long noMaxIdMock = 0L;
         Optional<SessionState> sessionstateModelMock = Optional.empty();
         Mockito.when(sessionstateRepositoryMock.loadMaxIdByIdTokenAndStatus(idTokenMock, "A")).thenReturn(noMaxIdMock);
@@ -696,6 +774,44 @@ public class SessionStateServiceImplTest {
 
         // validate
         Assertions.assertTrue(exception.getMessage().contains(SESSIONSTATE_NOTFOUND_WITH_IDTOKEN));
+        Assertions.assertEquals(404, exception.getHttpStatus().value());
+
+    }
+
+    @Test
+    public void showReturnExistingSessionStateDTOWhenFindSessionStateByIdUserUUIDAndStatusActiveAnonimous() {
+        // scenario
+        UUID idUserUUIDMock = UUID.fromString("2d37b41c-5ad3-4674-aa90-29caf27e6d05");
+        Long maxIdMock = 1972L;
+        Optional<SessionState> sessionstateModelMock = Optional.ofNullable(SessionStateModelBuilder.newSessionStateModelTestBuilder()
+                .idUserUUID(idUserUUIDMock)
+                .now()
+        );
+        Mockito.when(sessionstateRepositoryMock.loadMaxIdByIdUserUUIDAndStatus(idUserUUIDMock, "A")).thenReturn(maxIdMock);
+        Mockito.when(sessionstateRepositoryMock.findById(maxIdMock)).thenReturn(sessionstateModelMock);
+
+        // action
+        SessionStateDTO result = sessionstateService.findSessionStateByIdUserUUIDAndStatus(idUserUUIDMock);
+
+        // validate
+        Assertions.assertEquals(idUserUUIDMock, result.getIdUserUUID());
+
+    }
+    @Test
+    public void showReturnSessionStateNotFoundExceptionWhenNonExistenceFindSessionStateByIdUserUUIDAndStatusActiveAnonimous() {
+        // scenario
+        UUID idUserUUIDMock = UUID.fromString("2d37b41c-5ad3-4674-aa90-29caf27e6d05");
+        Long noMaxIdMock = 0L;
+        Optional<SessionState> sessionstateModelMock = Optional.empty();
+        Mockito.when(sessionstateRepositoryMock.loadMaxIdByIdUserUUIDAndStatus(idUserUUIDMock, "A")).thenReturn(noMaxIdMock);
+        Mockito.when(sessionstateRepositoryMock.findById(noMaxIdMock)).thenReturn(sessionstateModelMock);
+
+        // action
+        SessionStateNotFoundException exception = Assertions.assertThrows(SessionStateNotFoundException.class,
+                ()->sessionstateService.findSessionStateByIdUserUUIDAndStatus(idUserUUIDMock));
+
+        // validate
+        Assertions.assertTrue(exception.getMessage().contains(SESSIONSTATE_NOTFOUND_WITH_IDUSERUUID));
         Assertions.assertEquals(404, exception.getHttpStatus().value());
 
     }

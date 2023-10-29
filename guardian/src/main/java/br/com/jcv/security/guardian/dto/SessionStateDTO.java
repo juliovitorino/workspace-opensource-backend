@@ -38,7 +38,7 @@ import java.util.UUID;
 * SessionStateDTO - Data Transfer Object
 *
 * @author SessionState
-* @since Sun Oct 29 08:28:53 BRT 2023
+* @since Sun Oct 29 15:32:37 BRT 2023
 */
 
 @NoArgsConstructor
@@ -55,6 +55,10 @@ public class SessionStateDTO extends DTOPadrao implements Serializable
     @SerializedName(SessionStateConstantes.IDTOKEN)
     @JsonProperty(SessionStateConstantes.IDTOKEN)
     private UUID idToken;
+    
+    @SerializedName(SessionStateConstantes.IDUSERUUID)
+    @JsonProperty(SessionStateConstantes.IDUSERUUID)
+    private UUID idUserUUID;
 
 
     @SerializedName("mensagemResponse")

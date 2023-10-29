@@ -25,13 +25,14 @@ package br.com.jcv.security.guardian.constantes;
 * SessionStateConstantes - Constantes para geral das Entity e DTO
 *
 * @author SessionState
-* @since Sun Oct 29 08:28:54 BRT 2023
+* @since Sun Oct 29 15:32:38 BRT 2023
 */
 
 public class SessionStateConstantes {
     private SessionStateConstantes() {}
     public static final String ID = "id";
     public static final String IDTOKEN = "idToken";
+    public static final String IDUSERUUID = "idUserUUID";
     public static final String STATUS = "status";
     public static final String DATECREATED = "dateCreated";
     public static final String DATEUPDATED = "dateUpdated";
