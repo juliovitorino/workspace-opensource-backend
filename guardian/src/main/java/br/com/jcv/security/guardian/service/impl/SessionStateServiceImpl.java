@@ -56,7 +56,7 @@ import lombok.extern.slf4j.Slf4j;
 * SessionStateServiceImpl - Implementation for SessionState interface
 *
 * @author SessionState
-* @since Sun Oct 29 08:28:53 BRT 2023
+* @since Sun Oct 29 15:32:37 BRT 2023
 */
 
 
@@ -66,6 +66,7 @@ public class SessionStateServiceImpl implements SessionStateService
 {
     private static final String SESSIONSTATE_NOTFOUND_WITH_ID = "SessionState não encontrada com id = ";
     private static final String SESSIONSTATE_NOTFOUND_WITH_IDTOKEN = "SessionState não encontrada com idToken = ";
+    private static final String SESSIONSTATE_NOTFOUND_WITH_IDUSERUUID = "SessionState não encontrada com idUserUUID = ";
     private static final String SESSIONSTATE_NOTFOUND_WITH_STATUS = "SessionState não encontrada com status = ";
     private static final String SESSIONSTATE_NOTFOUND_WITH_DATECREATED = "SessionState não encontrada com dateCreated = ";
     private static final String SESSIONSTATE_NOTFOUND_WITH_DATEUPDATED = "SessionState não encontrada com dateUpdated = ";
@@ -146,6 +147,7 @@ public class SessionStateServiceImpl implements SessionStateService
 
             for (Map.Entry<String,Object> entry : updates.entrySet()) {
                 if(entry.getKey().equalsIgnoreCase(SessionStateConstantes.IDTOKEN)) sessionstate.setIdToken((UUID)entry.getValue());
+                if(entry.getKey().equalsIgnoreCase(SessionStateConstantes.IDUSERUUID)) sessionstate.setIdUserUUID((UUID)entry.getValue());
 
         }
         if(updates.get(SessionStateConstantes.DATEUPDATED) == null) sessionstate.setDateUpdated(new Date());
@@ -196,6 +198,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     List<SessionState> lstSessionState;
     Long id = null;
     UUID idToken = null;
+    UUID idUserUUID = null;
     String status = null;
     String dateCreated = null;
     String dateUpdated = null;
@@ -204,6 +207,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     for (Map.Entry<String,Object> entry : filtro.getCamposFiltro().entrySet()) {
         if(entry.getKey().equalsIgnoreCase(SessionStateConstantes.ID)) id = Objects.isNull(entry.getValue()) ? null : Long.valueOf(entry.getValue().toString());
         if(entry.getKey().equalsIgnoreCase(SessionStateConstantes.IDTOKEN)) idToken = Objects.isNull(entry.getValue()) ? null : UUID.fromString(entry.getValue().toString());
+        if(entry.getKey().equalsIgnoreCase(SessionStateConstantes.IDUSERUUID)) idUserUUID = Objects.isNull(entry.getValue()) ? null : UUID.fromString(entry.getValue().toString());
         if(entry.getKey().equalsIgnoreCase(SessionStateConstantes.STATUS)) status = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(SessionStateConstantes.DATECREATED)) dateCreated = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(SessionStateConstantes.DATEUPDATED)) dateUpdated = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
@@ -214,6 +218,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     Page<SessionState> paginaSessionState = sessionstateRepository.findSessionStateByFilter(paging,
         id
         ,idToken
+        ,idUserUUID
         ,status
         ,dateCreated
         ,dateUpdated
@@ -239,6 +244,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     public List<SessionStateDTO> findAllByFilter(RequestFilter filtro) {
     Long id = null;
     UUID idToken = null;
+    UUID idUserUUID = null;
     String status = null;
     String dateCreated = null;
     String dateUpdated = null;
@@ -246,6 +252,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
         for (Map.Entry<String,Object> entry : filtro.getCamposFiltro().entrySet()) {
         if(entry.getKey().equalsIgnoreCase(SessionStateConstantes.ID)) id = Objects.isNull(entry.getValue()) ? null : Long.valueOf(entry.getValue().toString());
         if(entry.getKey().equalsIgnoreCase(SessionStateConstantes.IDTOKEN)) idToken = Objects.isNull(entry.getValue()) ? null : UUID.fromString(entry.getValue().toString());
+        if(entry.getKey().equalsIgnoreCase(SessionStateConstantes.IDUSERUUID)) idUserUUID = Objects.isNull(entry.getValue()) ? null : UUID.fromString(entry.getValue().toString());
         if(entry.getKey().equalsIgnoreCase(SessionStateConstantes.STATUS)) status = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(SessionStateConstantes.DATECREATED)) dateCreated = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(SessionStateConstantes.DATEUPDATED)) dateUpdated = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
@@ -255,6 +262,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
         List<SessionState> lstSessionState = sessionstateRepository.findSessionStateByFilter(
             id
             ,idToken
+            ,idUserUUID
             ,status
             ,dateCreated
             ,dateUpdated
@@ -281,6 +289,15 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     )
     public List<SessionStateDTO> findAllSessionStateByIdTokenAndStatus(UUID idToken, String status) {
         return sessionstateRepository.findAllByIdTokenAndStatus(idToken, status).stream().map(this::toDTO).collect(Collectors.toList());
+    }
+    @Override
+    @Transactional(transactionManager="transactionManager",
+    propagation = Propagation.REQUIRED,
+    rollbackFor = Throwable.class,
+    noRollbackFor = SessionStateNotFoundException.class
+    )
+    public List<SessionStateDTO> findAllSessionStateByIdUserUUIDAndStatus(UUID idUserUUID, String status) {
+        return sessionstateRepository.findAllByIdUserUUIDAndStatus(idUserUUID, status).stream().map(this::toDTO).collect(Collectors.toList());
     }
     @Override
     @Transactional(transactionManager="transactionManager",
@@ -319,7 +336,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         SESSIONSTATE_NOTFOUND_WITH_ID + id))
                 );
-        return sessionstateData.isPresent() ? this.toDTO(sessionstateData.get()) : null ;
+        return sessionstateData.map(this::toDTO).orElse(null);
     }
 
     @Override
@@ -368,6 +385,36 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     rollbackFor = Throwable.class,
     noRollbackFor = SessionStateNotFoundException.class
     )
+    public SessionStateDTO findSessionStateByIdUserUUIDAndStatus(UUID idUserUUID, String status) {
+        Long maxId = sessionstateRepository.loadMaxIdByIdUserUUIDAndStatus(idUserUUID, status);
+        if(maxId == null) maxId = 0L;
+        Optional<SessionState> sessionstateData =
+            Optional.ofNullable( sessionstateRepository
+                .findById(maxId)
+                .orElseThrow(
+                    () -> new SessionStateNotFoundException(SESSIONSTATE_NOTFOUND_WITH_IDUSERUUID + idUserUUID,
+                        HttpStatus.NOT_FOUND,
+                        SESSIONSTATE_NOTFOUND_WITH_IDUSERUUID + idUserUUID))
+                );
+        return sessionstateData.map(this::toDTO).orElse(null);
+    }
+
+    @Override
+    @Transactional(transactionManager="transactionManager",
+    propagation = Propagation.REQUIRED,
+    rollbackFor = Throwable.class,
+    noRollbackFor = SessionStateNotFoundException.class
+    )
+    public SessionStateDTO findSessionStateByIdUserUUIDAndStatus(UUID idUserUUID) {
+        return this.findSessionStateByIdUserUUIDAndStatus(idUserUUID, GenericStatusEnums.ATIVO.getShortValue());
+    }
+
+    @Override
+    @Transactional(transactionManager="transactionManager",
+    propagation = Propagation.REQUIRED,
+    rollbackFor = Throwable.class,
+    noRollbackFor = SessionStateNotFoundException.class
+    )
     public SessionStateDTO findSessionStateByDateCreatedAndStatus(Date dateCreated, String status) {
         Long maxId = sessionstateRepository.loadMaxIdByDateCreatedAndStatus(dateCreated, status);
         if(maxId == null) maxId = 0L;
@@ -379,7 +426,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         SESSIONSTATE_NOTFOUND_WITH_DATECREATED + dateCreated))
                 );
-        return sessionstateData.isPresent() ? this.toDTO(sessionstateData.get()) : null ;
+        return sessionstateData.map(this::toDTO).orElse(null);
     }
 
     @Override
@@ -409,7 +456,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         SESSIONSTATE_NOTFOUND_WITH_DATEUPDATED + dateUpdated))
                 );
-        return sessionstateData.isPresent() ? this.toDTO(sessionstateData.get()) : null ;
+        return sessionstateData.map(this::toDTO).orElse(null);
     }
 
     @Override
@@ -432,12 +479,23 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
         sessionstateRepository.updateIdTokenById(id, idToken);
         return findById(id);
     }
+    @Override
+    @Transactional(
+    transactionManager = "transactionManager",
+    propagation = Propagation.REQUIRED,
+    rollbackFor = Throwable.class)
+    public SessionStateDTO updateIdUserUUIDById(Long id, UUID idUserUUID) {
+        findById(id);
+        sessionstateRepository.updateIdUserUUIDById(id, idUserUUID);
+        return findById(id);
+    }
 
 
     public SessionStateDTO toDTO(SessionState sessionstate) {
         SessionStateDTO sessionstateDTO = new SessionStateDTO();
                 sessionstateDTO.setId(sessionstate.getId());
                 sessionstateDTO.setIdToken(sessionstate.getIdToken());
+                sessionstateDTO.setIdUserUUID(sessionstate.getIdUserUUID());
                 sessionstateDTO.setStatus(sessionstate.getStatus());
                 sessionstateDTO.setDateCreated(sessionstate.getDateCreated());
                 sessionstateDTO.setDateUpdated(sessionstate.getDateUpdated());
@@ -450,6 +508,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
         sessionstate = new SessionState();
                     sessionstate.setId(sessionstateDTO.getId());
                     sessionstate.setIdToken(sessionstateDTO.getIdToken());
+                    sessionstate.setIdUserUUID(sessionstateDTO.getIdUserUUID());
                     sessionstate.setStatus(sessionstateDTO.getStatus());
                     sessionstate.setDateCreated(sessionstateDTO.getDateCreated());
                     sessionstate.setDateUpdated(sessionstateDTO.getDateUpdated());

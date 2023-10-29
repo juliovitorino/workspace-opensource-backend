@@ -44,7 +44,7 @@ import java.util.UUID;
 * Changelog:
 *
 * @autor SessionState
-* @since Sun Oct 29 08:28:53 BRT 2023
+* @since Sun Oct 29 15:32:37 BRT 2023
 *
 */
 @Repository
@@ -56,6 +56,7 @@ public interface SessionStateRepository extends JpaRepository<SessionState, Long
 @Query(value = "SELECT * FROM tb_session_state WHERE 1=1 " +
         "AND (cast(:id as BIGINT) IS NULL OR id_session_state = :id) " +
         "AND (cast(:idToken as TEXT) IS NULL OR id_token = :idToken) " +
+        "AND (cast(:idUserUUID as TEXT) IS NULL OR id_user_uuid = :idUserUUID) " +
         "AND (cast(:status as TEXT) IS NULL OR status = :status) " +
         "AND (cast(:dateCreated as DATE) IS NULL OR to_char(date_created, 'YYYY-MM-DD') = :dateCreated) " +
         "AND (cast(:dateUpdated as DATE) IS NULL OR to_char(date_updated, 'YYYY-MM-DD') = :dateUpdated) "
@@ -64,6 +65,7 @@ public interface SessionStateRepository extends JpaRepository<SessionState, Long
 Page<SessionState> findSessionStateByFilter(Pageable pageable,
         @Param(SessionStateConstantes.ID) Long id,
         @Param(SessionStateConstantes.IDTOKEN) UUID idToken,
+        @Param(SessionStateConstantes.IDUSERUUID) UUID idUserUUID,
         @Param(SessionStateConstantes.STATUS) String status,
         @Param(SessionStateConstantes.DATECREATED) String dateCreated,
         @Param(SessionStateConstantes.DATEUPDATED) String dateUpdated
@@ -73,6 +75,7 @@ Page<SessionState> findSessionStateByFilter(Pageable pageable,
 @Query(value = "SELECT * FROM tb_session_state WHERE 1=1 " +
         "AND (cast(:id as BIGINT) IS NULL OR id_session_state = :id) " +
         "AND (cast(:idToken as TEXT) IS NULL OR id_token = :idToken) " +
+        "AND (cast(:idUserUUID as TEXT) IS NULL OR id_user_uuid = :idUserUUID) " +
         "AND (cast(:status as TEXT) IS NULL OR status = :status) " +
         "AND (cast(:dateCreated as DATE) IS NULL OR to_char(date_created, 'YYYY-MM-DD') = :dateCreated) " +
         "AND (cast(:dateUpdated as DATE) IS NULL OR to_char(date_updated, 'YYYY-MM-DD') = :dateUpdated) "
@@ -81,6 +84,7 @@ Page<SessionState> findSessionStateByFilter(Pageable pageable,
 List<SessionState> findSessionStateByFilter(
         @Param(SessionStateConstantes.ID) Long id,
         @Param(SessionStateConstantes.IDTOKEN) UUID idToken,
+        @Param(SessionStateConstantes.IDUSERUUID) UUID idUserUUID,
         @Param(SessionStateConstantes.STATUS) String status,
         @Param(SessionStateConstantes.DATECREATED) String dateCreated,
         @Param(SessionStateConstantes.DATEUPDATED) String dateUpdated
@@ -91,6 +95,8 @@ List<SessionState> findSessionStateByFilter(
      Long loadMaxIdByIdAndStatus(Long id, String status);
      @Query(value = "SELECT MAX(id_session_state) AS maxid FROM tb_session_state WHERE id_token = :idToken AND status = :status ", nativeQuery = true)
      Long loadMaxIdByIdTokenAndStatus(UUID idToken, String status);
+     @Query(value = "SELECT MAX(id_session_state) AS maxid FROM tb_session_state WHERE id_user_uuid = :idUserUUID AND status = :status ", nativeQuery = true)
+     Long loadMaxIdByIdUserUUIDAndStatus(UUID idUserUUID, String status);
      @Query(value = "SELECT MAX(id_session_state) AS maxid FROM tb_session_state WHERE date_created = :dateCreated AND status = :status ", nativeQuery = true)
      Long loadMaxIdByDateCreatedAndStatus(Date dateCreated, String status);
      @Query(value = "SELECT MAX(id_session_state) AS maxid FROM tb_session_state WHERE date_updated = :dateUpdated AND status = :status ", nativeQuery = true)
@@ -101,12 +107,16 @@ List<SessionState> findSessionStateByFilter(
      @Query(value = "UPDATE tb_session_state SET id_token = :idToken, dt_updated = current_timestamp  WHERE id_session_state = :id", nativeQuery = true)
      void updateIdTokenById(@Param("id") Long id, @Param(SessionStateConstantes.IDTOKEN) UUID idToken);
      @Modifying
+     @Query(value = "UPDATE tb_session_state SET id_user_uuid = :idUserUUID, dt_updated = current_timestamp  WHERE id_session_state = :id", nativeQuery = true)
+     void updateIdUserUUIDById(@Param("id") Long id, @Param(SessionStateConstantes.IDUSERUUID) UUID idUserUUID);
+     @Modifying
      @Query(value = "UPDATE tb_session_state SET status = :status, dt_updated = current_timestamp  WHERE id_session_state = :id", nativeQuery = true)
      void updateStatusById(@Param("id") Long id, @Param(SessionStateConstantes.STATUS) String status);
 
 
      long countByIdAndStatus(Long id, String status);
      long countByIdTokenAndStatus(UUID idToken, String status);
+     long countByIdUserUUIDAndStatus(UUID idUserUUID, String status);
      long countByDateCreatedAndStatus(Date dateCreated, String status);
      long countByDateUpdatedAndStatus(Date dateUpdated, String status);
 
@@ -115,6 +125,8 @@ List<SessionState> findSessionStateByFilter(
     Optional<SessionState> findByIdAndStatus(Long id, String status);
     @Query(value = "SELECT * FROM tb_session_state WHERE id_session_state = (SELECT MAX(id_session_state) AS maxid FROM tb_session_state WHERE id_token = :idToken AND  status = :status) ", nativeQuery = true)
     Optional<SessionState> findByIdTokenAndStatus(UUID idToken, String status);
+    @Query(value = "SELECT * FROM tb_session_state WHERE id_session_state = (SELECT MAX(id_session_state) AS maxid FROM tb_session_state WHERE id_user_uuid = :idUserUUID AND  status = :status) ", nativeQuery = true)
+    Optional<SessionState> findByIdUserUUIDAndStatus(UUID idUserUUID, String status);
     @Query(value = "SELECT * FROM tb_session_state WHERE id_session_state = (SELECT MAX(id_session_state) AS maxid FROM tb_session_state WHERE date_created = :dateCreated AND  status = :status) ", nativeQuery = true)
     Optional<SessionState> findByDateCreatedAndStatus(Date dateCreated, String status);
     @Query(value = "SELECT * FROM tb_session_state WHERE id_session_state = (SELECT MAX(id_session_state) AS maxid FROM tb_session_state WHERE date_updated = :dateUpdated AND  status = :status) ", nativeQuery = true)
@@ -125,6 +137,8 @@ List<SessionState> findSessionStateByFilter(
      List<SessionState> findAllByIdAndStatus(Long id, String status);
      @Query(value = "SELECT * FROM tb_session_state WHERE id_token = :idToken AND  status = :status ", nativeQuery = true)
      List<SessionState> findAllByIdTokenAndStatus(UUID idToken, String status);
+     @Query(value = "SELECT * FROM tb_session_state WHERE id_user_uuid = :idUserUUID AND  status = :status ", nativeQuery = true)
+     List<SessionState> findAllByIdUserUUIDAndStatus(UUID idUserUUID, String status);
      @Query(value = "SELECT * FROM tb_session_state WHERE date_created = :dateCreated AND  status = :status ", nativeQuery = true)
      List<SessionState> findAllByDateCreatedAndStatus(Date dateCreated, String status);
      @Query(value = "SELECT * FROM tb_session_state WHERE date_updated = :dateUpdated AND  status = :status ", nativeQuery = true)
@@ -137,6 +151,9 @@ List<SessionState> findSessionStateByFilter(
     @Modifying
     @Query(value = "DELETE FROM tb_session_state WHERE id_token = :idToken", nativeQuery = true)
     void deleteByIdToken(@Param(SessionStateConstantes.IDTOKEN) UUID idToken);
+    @Modifying
+    @Query(value = "DELETE FROM tb_session_state WHERE id_user_uuid = :idUserUUID", nativeQuery = true)
+    void deleteByIdUserUUID(@Param(SessionStateConstantes.IDUSERUUID) UUID idUserUUID);
     @Modifying
     @Query(value = "DELETE FROM tb_session_state WHERE status = :status", nativeQuery = true)
     void deleteByStatus(@Param(SessionStateConstantes.STATUS) String status);

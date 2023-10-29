@@ -37,7 +37,7 @@ import java.util.UUID;
 * SessionStateService - Interface for SessionState
 *
 * @author SessionState
-* @since Sun Oct 29 08:28:53 BRT 2023
+* @since Sun Oct 29 15:32:37 BRT 2023
 */
 
 public interface SessionStateService extends CommoditieBaseService<SessionStateDTO,SessionState>
@@ -46,6 +46,8 @@ public interface SessionStateService extends CommoditieBaseService<SessionStateD
     SessionStateDTO findSessionStateByIdAndStatus(Long id, String status);
     SessionStateDTO findSessionStateByIdTokenAndStatus(UUID idToken);
     SessionStateDTO findSessionStateByIdTokenAndStatus(UUID idToken, String status);
+    SessionStateDTO findSessionStateByIdUserUUIDAndStatus(UUID idUserUUID);
+    SessionStateDTO findSessionStateByIdUserUUIDAndStatus(UUID idUserUUID, String status);
     SessionStateDTO findSessionStateByDateCreatedAndStatus(Date dateCreated);
     SessionStateDTO findSessionStateByDateCreatedAndStatus(Date dateCreated, String status);
     SessionStateDTO findSessionStateByDateUpdatedAndStatus(Date dateUpdated);
@@ -53,10 +55,12 @@ public interface SessionStateService extends CommoditieBaseService<SessionStateD
 
     List<SessionStateDTO> findAllSessionStateByIdAndStatus(Long id, String status);
     List<SessionStateDTO> findAllSessionStateByIdTokenAndStatus(UUID idToken, String status);
+    List<SessionStateDTO> findAllSessionStateByIdUserUUIDAndStatus(UUID idUserUUID, String status);
     List<SessionStateDTO> findAllSessionStateByDateCreatedAndStatus(Date dateCreated, String status);
     List<SessionStateDTO> findAllSessionStateByDateUpdatedAndStatus(Date dateUpdated, String status);
 
     SessionStateDTO updateIdTokenById(Long id, UUID idToken);
+    SessionStateDTO updateIdUserUUIDById(Long id, UUID idUserUUID);
     SessionStateDTO updateStatusById(Long id, String status);
 
 

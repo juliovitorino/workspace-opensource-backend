@@ -55,7 +55,7 @@ import lombok.extern.slf4j.Slf4j;
 * SessionStateCommoditieController - Controller for SessionState API
 *
 * @author SessionState
-* @since Sun Oct 29 08:28:53 BRT 2023
+* @since Sun Oct 29 15:32:38 BRT 2023
 */
 
 @Slf4j
@@ -308,6 +308,26 @@ public class SessionStateCommoditieController
     public ResponseEntity<SessionStateDTO> findSessionStateByIdToken(@RequestParam(SessionStateConstantes.IDTOKEN) UUID idToken) {
         try{
             SessionStateDTO sessionstateDTO = sessionstateService.findSessionStateByIdTokenAndStatus(idToken, GenericStatusEnums.ATIVO.getShortValue());
+            return Objects.nonNull(sessionstateDTO)
+                ? new ResponseEntity<>(sessionstateDTO, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (SessionStateNotFoundException ex) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch(CommoditieBaseException e) {
+            return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
+        } catch(Exception ex) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "Indica que o processo SessionState foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo SessionState foi executado com sucesso"),
+            @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
+    })
+    @GetMapping(params = "idUserUUID")
+    public ResponseEntity<SessionStateDTO> findSessionStateByIdUserUUID(@RequestParam(SessionStateConstantes.IDUSERUUID) UUID idUserUUID) {
+        try{
+            SessionStateDTO sessionstateDTO = sessionstateService.findSessionStateByIdUserUUIDAndStatus(idUserUUID, GenericStatusEnums.ATIVO.getShortValue());
             return Objects.nonNull(sessionstateDTO)
                 ? new ResponseEntity<>(sessionstateDTO, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
