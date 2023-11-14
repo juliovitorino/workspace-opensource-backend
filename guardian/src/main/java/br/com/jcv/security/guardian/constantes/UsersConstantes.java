@@ -25,13 +25,14 @@ package br.com.jcv.security.guardian.constantes;
 * UsersConstantes - Constantes para geral das Entity e DTO
 *
 * @author Users
-* @since Tue Nov 14 17:22:09 BRT 2023
+* @since Tue Nov 14 19:09:16 BRT 2023
 */
 
 public class UsersConstantes {
     private UsersConstantes() {}
     public static final String ID = "id";
     public static final String NAME = "name";
+    public static final String EMAIL = "email";
     public static final String ENCODEDPASSPHRASE = "encodedPassPhrase";
     public static final String IDUSERUUID = "idUserUUID";
     public static final String BIRTHDAY = "birthday";

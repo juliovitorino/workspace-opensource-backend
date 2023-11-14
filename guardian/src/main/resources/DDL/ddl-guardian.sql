@@ -11,9 +11,13 @@ create table tb_session_state (
 create table tb_user (
     id_user bigserial NOT NULL,
     tx_name VARCHAR NOT NULL,
+    tx_email VARCHAR NOT NULL,
     tx_encoded_pass_phrase VARCHAR NOT NULL,
     id_user_uuid UUID NOT NULL,
     dt_birthday date NOT NULL,
+    cd_url_token_activation VARCHAR,
+    cd_activation VARCHAR,
+    dt_due_activation timestamptz,
     status VARCHAR(1) NOT NULL,
     date_created timestamp NOT NULL,
     date_updated timestamp NOT NULL,

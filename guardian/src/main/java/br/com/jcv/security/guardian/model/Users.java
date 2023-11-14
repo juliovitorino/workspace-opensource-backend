@@ -35,6 +35,10 @@ public class Users {
     @CodeGeneratorFieldDescriptor(fieldDescription = "User name")
     private String name;
 
+    @Column(name = "tx_email")
+    @CodeGeneratorFieldDescriptor(fieldDescription = "Email")
+    private String email;
+
     @Column(name = "tx_encoded_pass_phrase")
     @CodeGeneratorFieldDescriptor(fieldDescription = "encoded pass phrase")
     private String encodedPassPhrase;
@@ -44,8 +48,20 @@ public class Users {
     private UUID idUserUUID;
 
     @Column(name = "dt_birthday")
-    @CodeGeneratorFieldDescriptor(fieldDescription = "Birth day")
+    @CodeGeneratorFieldDescriptor(fieldDescription = "Birthday")
     private LocalDate birthday;
+
+    @Column(name = "cd_url_token_activation")
+    @CodeGeneratorFieldDescriptor(fieldDescription = "Token for URL activation")
+    private String urlTokenActivation;
+
+    @Column(name = "cd_activation")
+    @CodeGeneratorFieldDescriptor(fieldDescription = "Code for account activation")
+    private String activationCode;
+
+    @Column(name = "dt_due_activation")
+    @CodeGeneratorFieldDescriptor(fieldDescription = "Due date for account activation")
+    private Date dueDateActivation;
 
     @CodeGeneratorFieldDescriptor(fieldDescription = "Status field")
     @Column(length = 1)

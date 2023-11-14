@@ -39,7 +39,7 @@ import java.util.UUID;
 * UsersService - Interface for Users
 *
 * @author Users
-* @since Tue Nov 14 17:22:08 BRT 2023
+* @since Tue Nov 14 19:09:15 BRT 2023
 */
 
 public interface UsersService extends CommoditieBaseService<UsersDTO,Users>
@@ -48,6 +48,8 @@ public interface UsersService extends CommoditieBaseService<UsersDTO,Users>
     UsersDTO findUsersByIdAndStatus(Long id, String status);
     UsersDTO findUsersByNameAndStatus(String name);
     UsersDTO findUsersByNameAndStatus(String name, String status);
+    UsersDTO findUsersByEmailAndStatus(String email);
+    UsersDTO findUsersByEmailAndStatus(String email, String status);
     UsersDTO findUsersByEncodedPassPhraseAndStatus(String encodedPassPhrase);
     UsersDTO findUsersByEncodedPassPhraseAndStatus(String encodedPassPhrase, String status);
     UsersDTO findUsersByIdUserUUIDAndStatus(UUID idUserUUID);
@@ -61,6 +63,7 @@ public interface UsersService extends CommoditieBaseService<UsersDTO,Users>
 
     List<UsersDTO> findAllUsersByIdAndStatus(Long id, String status);
     List<UsersDTO> findAllUsersByNameAndStatus(String name, String status);
+    List<UsersDTO> findAllUsersByEmailAndStatus(String email, String status);
     List<UsersDTO> findAllUsersByEncodedPassPhraseAndStatus(String encodedPassPhrase, String status);
     List<UsersDTO> findAllUsersByIdUserUUIDAndStatus(UUID idUserUUID, String status);
     List<UsersDTO> findAllUsersByBirthdayAndStatus(LocalDate birthday, String status);
@@ -68,6 +71,7 @@ public interface UsersService extends CommoditieBaseService<UsersDTO,Users>
     List<UsersDTO> findAllUsersByDateUpdatedAndStatus(Date dateUpdated, String status);
 
     UsersDTO updateNameById(Long id, String name);
+    UsersDTO updateEmailById(Long id, String email);
     UsersDTO updateEncodedPassPhraseById(Long id, String encodedPassPhrase);
     UsersDTO updateIdUserUUIDById(Long id, UUID idUserUUID);
     UsersDTO updateBirthdayById(Long id, LocalDate birthday);

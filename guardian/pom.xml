@@ -18,9 +18,15 @@
 
 	<properties>
 		<postgresql.version>42.6.0</postgresql.version>
+		<commons-codec.version>1.11</commons-codec.version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>${commons-codec.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

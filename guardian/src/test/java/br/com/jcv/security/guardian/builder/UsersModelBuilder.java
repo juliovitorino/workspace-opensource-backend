@@ -50,6 +50,10 @@ public class UsersModelBuilder {
         this.users.setName(name);
         return this;
     }
+    public UsersModelBuilder email(String email){
+        this.users.setEmail(email);
+        return this;
+    }
     public UsersModelBuilder encodedPassPhrase(String encodedPassPhrase){
         this.users.setEncodedPassPhrase(encodedPassPhrase);
         return this;

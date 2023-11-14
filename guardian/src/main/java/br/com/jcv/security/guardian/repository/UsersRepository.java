@@ -45,7 +45,7 @@ import java.util.UUID;
 * Changelog:
 *
 * @autor Users
-* @since Tue Nov 14 17:22:08 BRT 2023
+* @since Tue Nov 14 19:09:15 BRT 2023
 *
 */
 @Repository
@@ -57,6 +57,7 @@ public interface UsersRepository extends JpaRepository<Users, Long>
 @Query(value = "SELECT * FROM tb_user WHERE 1=1 " +
         "AND (cast(:id as BIGINT) IS NULL OR id_user = :id) " +
         "AND (cast(:name as TEXT) IS NULL OR tx_name = :name) " +
+        "AND (cast(:email as TEXT) IS NULL OR tx_email = :email) " +
         "AND (cast(:encodedPassPhrase as TEXT) IS NULL OR tx_encoded_pass_phrase = :encodedPassPhrase) " +
         "AND (cast(:idUserUUID as TEXT) IS NULL OR id_user_uuid = :idUserUUID) " +
         "AND (cast(:birthday as DATE) IS NULL OR to_char(dt_birthday, 'YYYY-MM-DD') = :birthday) " +
@@ -68,6 +69,7 @@ public interface UsersRepository extends JpaRepository<Users, Long>
 Page<Users> findUsersByFilter(Pageable pageable,
         @Param(UsersConstantes.ID) Long id,
         @Param(UsersConstantes.NAME) String name,
+        @Param(UsersConstantes.EMAIL) String email,
         @Param(UsersConstantes.ENCODEDPASSPHRASE) String encodedPassPhrase,
         @Param(UsersConstantes.IDUSERUUID) UUID idUserUUID,
         @Param(UsersConstantes.BIRTHDAY) String birthday,
@@ -80,6 +82,7 @@ Page<Users> findUsersByFilter(Pageable pageable,
 @Query(value = "SELECT * FROM tb_user WHERE 1=1 " +
         "AND (cast(:id as BIGINT) IS NULL OR id_user = :id) " +
         "AND (cast(:name as TEXT) IS NULL OR tx_name = :name) " +
+        "AND (cast(:email as TEXT) IS NULL OR tx_email = :email) " +
         "AND (cast(:encodedPassPhrase as TEXT) IS NULL OR tx_encoded_pass_phrase = :encodedPassPhrase) " +
         "AND (cast(:idUserUUID as TEXT) IS NULL OR id_user_uuid = :idUserUUID) " +
         "AND (cast(:birthday as DATE) IS NULL OR to_char(dt_birthday, 'YYYY-MM-DD') = :birthday) " +
@@ -91,6 +94,7 @@ Page<Users> findUsersByFilter(Pageable pageable,
 List<Users> findUsersByFilter(
         @Param(UsersConstantes.ID) Long id,
         @Param(UsersConstantes.NAME) String name,
+        @Param(UsersConstantes.EMAIL) String email,
         @Param(UsersConstantes.ENCODEDPASSPHRASE) String encodedPassPhrase,
         @Param(UsersConstantes.IDUSERUUID) UUID idUserUUID,
         @Param(UsersConstantes.BIRTHDAY) String birthday,
@@ -104,6 +108,8 @@ List<Users> findUsersByFilter(
      Long loadMaxIdByIdAndStatus(Long id, String status);
      @Query(value = "SELECT MAX(id_user) AS maxid FROM tb_user WHERE tx_name = :name AND status = :status ", nativeQuery = true)
      Long loadMaxIdByNameAndStatus(String name, String status);
+     @Query(value = "SELECT MAX(id_user) AS maxid FROM tb_user WHERE tx_email = :email AND status = :status ", nativeQuery = true)
+     Long loadMaxIdByEmailAndStatus(String email, String status);
      @Query(value = "SELECT MAX(id_user) AS maxid FROM tb_user WHERE tx_encoded_pass_phrase = :encodedPassPhrase AND status = :status ", nativeQuery = true)
      Long loadMaxIdByEncodedPassPhraseAndStatus(String encodedPassPhrase, String status);
      @Query(value = "SELECT MAX(id_user) AS maxid FROM tb_user WHERE id_user_uuid = :idUserUUID AND status = :status ", nativeQuery = true)
@@ -120,6 +126,9 @@ List<Users> findUsersByFilter(
      @Query(value = "UPDATE tb_user SET tx_name = :name, dt_updated = current_timestamp  WHERE id_user = :id", nativeQuery = true)
      void updateNameById(@Param("id") Long id, @Param(UsersConstantes.NAME) String name);
      @Modifying
+     @Query(value = "UPDATE tb_user SET tx_email = :email, dt_updated = current_timestamp  WHERE id_user = :id", nativeQuery = true)
+     void updateEmailById(@Param("id") Long id, @Param(UsersConstantes.EMAIL) String email);
+     @Modifying
      @Query(value = "UPDATE tb_user SET tx_encoded_pass_phrase = :encodedPassPhrase, dt_updated = current_timestamp  WHERE id_user = :id", nativeQuery = true)
      void updateEncodedPassPhraseById(@Param("id") Long id, @Param(UsersConstantes.ENCODEDPASSPHRASE) String encodedPassPhrase);
      @Modifying
@@ -135,6 +144,7 @@ List<Users> findUsersByFilter(
 
      long countByIdAndStatus(Long id, String status);
      long countByNameAndStatus(String name, String status);
+     long countByEmailAndStatus(String email, String status);
      long countByEncodedPassPhraseAndStatus(String encodedPassPhrase, String status);
      long countByIdUserUUIDAndStatus(UUID idUserUUID, String status);
      long countByBirthdayAndStatus(LocalDate birthday, String status);
@@ -146,6 +156,8 @@ List<Users> findUsersByFilter(
     Optional<Users> findByIdAndStatus(Long id, String status);
     @Query(value = "SELECT * FROM tb_user WHERE id_user = (SELECT MAX(id_user) AS maxid FROM tb_user WHERE tx_name = :name AND  status = :status) ", nativeQuery = true)
     Optional<Users> findByNameAndStatus(String name, String status);
+    @Query(value = "SELECT * FROM tb_user WHERE id_user = (SELECT MAX(id_user) AS maxid FROM tb_user WHERE tx_email = :email AND  status = :status) ", nativeQuery = true)
+    Optional<Users> findByEmailAndStatus(String email, String status);
     @Query(value = "SELECT * FROM tb_user WHERE id_user = (SELECT MAX(id_user) AS maxid FROM tb_user WHERE tx_encoded_pass_phrase = :encodedPassPhrase AND  status = :status) ", nativeQuery = true)
     Optional<Users> findByEncodedPassPhraseAndStatus(String encodedPassPhrase, String status);
     @Query(value = "SELECT * FROM tb_user WHERE id_user = (SELECT MAX(id_user) AS maxid FROM tb_user WHERE id_user_uuid = :idUserUUID AND  status = :status) ", nativeQuery = true)
@@ -162,6 +174,8 @@ List<Users> findUsersByFilter(
      List<Users> findAllByIdAndStatus(Long id, String status);
      @Query(value = "SELECT * FROM tb_user WHERE tx_name = :name AND  status = :status ", nativeQuery = true)
      List<Users> findAllByNameAndStatus(String name, String status);
+     @Query(value = "SELECT * FROM tb_user WHERE tx_email = :email AND  status = :status ", nativeQuery = true)
+     List<Users> findAllByEmailAndStatus(String email, String status);
      @Query(value = "SELECT * FROM tb_user WHERE tx_encoded_pass_phrase = :encodedPassPhrase AND  status = :status ", nativeQuery = true)
      List<Users> findAllByEncodedPassPhraseAndStatus(String encodedPassPhrase, String status);
      @Query(value = "SELECT * FROM tb_user WHERE id_user_uuid = :idUserUUID AND  status = :status ", nativeQuery = true)
@@ -180,6 +194,9 @@ List<Users> findUsersByFilter(
     @Modifying
     @Query(value = "DELETE FROM tb_user WHERE tx_name = :name", nativeQuery = true)
     void deleteByName(@Param(UsersConstantes.NAME) String name);
+    @Modifying
+    @Query(value = "DELETE FROM tb_user WHERE tx_email = :email", nativeQuery = true)
+    void deleteByEmail(@Param(UsersConstantes.EMAIL) String email);
     @Modifying
     @Query(value = "DELETE FROM tb_user WHERE tx_encoded_pass_phrase = :encodedPassPhrase", nativeQuery = true)
     void deleteByEncodedPassPhrase(@Param(UsersConstantes.ENCODEDPASSPHRASE) String encodedPassPhrase);

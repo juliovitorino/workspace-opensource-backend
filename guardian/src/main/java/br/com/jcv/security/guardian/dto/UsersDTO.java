@@ -20,6 +20,7 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 package br.com.jcv.security.guardian.dto;
+import br.com.jcv.codegen.codegenerator.annotation.CodeGeneratorFieldDescriptor;
 import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import br.com.jcv.commons.library.commodities.dto.DTOPadrao;
 import br.com.jcv.commons.library.commodities.annotation.RegexValidation;
@@ -30,6 +31,8 @@ import lombok.*;
 import br.com.jcv.security.guardian.constantes.UsersConstantes;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
+
+import javax.persistence.Column;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
@@ -38,7 +41,7 @@ import java.util.UUID;
 * UsersDTO - Data Transfer Object
 *
 * @author Users
-* @since Tue Nov 14 17:22:08 BRT 2023
+* @since Tue Nov 14 19:09:15 BRT 2023
 */
 
 @NoArgsConstructor
@@ -56,6 +59,10 @@ public class UsersDTO extends DTOPadrao implements Serializable
     @JsonProperty(UsersConstantes.NAME)
     private String name;
     
+    @SerializedName(UsersConstantes.EMAIL)
+    @JsonProperty(UsersConstantes.EMAIL)
+    private String email;
+    
     @SerializedName(UsersConstantes.ENCODEDPASSPHRASE)
     @JsonProperty(UsersConstantes.ENCODEDPASSPHRASE)
     private String encodedPassPhrase;
@@ -68,6 +75,9 @@ public class UsersDTO extends DTOPadrao implements Serializable
     @JsonProperty(UsersConstantes.BIRTHDAY)
     private LocalDate birthday;
 
+    private String activationCode;
+    private Date dueDateActivation;
+    private String urlTokenActivation;
 
     @SerializedName("mensagemResponse")
     @JsonProperty("mensagemResponse")

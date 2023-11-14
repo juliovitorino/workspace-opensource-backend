@@ -68,6 +68,7 @@ public class UsersServiceImplTest {
 
     public static final String USERS_NOTFOUND_WITH_ID = "Users não encontrada com id = ";
     public static final String USERS_NOTFOUND_WITH_NAME = "Users não encontrada com name = ";
+    public static final String USERS_NOTFOUND_WITH_EMAIL = "Users não encontrada com email = ";
     public static final String USERS_NOTFOUND_WITH_ENCODEDPASSPHRASE = "Users não encontrada com encodedPassPhrase = ";
     public static final String USERS_NOTFOUND_WITH_IDUSERUUID = "Users não encontrada com idUserUUID = ";
     public static final String USERS_NOTFOUND_WITH_BIRTHDAY = "Users não encontrada com birthday = ";
@@ -107,12 +108,13 @@ public class UsersServiceImplTest {
     @Test
     public void shouldReturnListOfUsersWhenFindAllByFilterIsCalled() {
         // scenario
-        Long id = 78001L;
-        String name = "632owRG3VKm5PmBh988yE0aYhtAeJwyenVrmSD7XqlRs908cfi";
-        String encodedPassPhrase = "fQFua3Mm1WqWt95RLAhnmKolWhUOnAgBuz40efhYEF1LLNKAq7";
-        UUID idUserUUID = UUID.fromString("8357a668-ec15-40a3-8ef2-5079d2606ce8");
+        Long id = 82063L;
+        String name = "zK8EooDWMRzg0RxuOtPWdsUJ0DH4nmhb50NAbQMDfNGTe13GXD";
+        String email = "3sh03brGCpNt8pSQzeExyIz2lKfsfNsJfE9S2ie2LvMyQfEsYz";
+        String encodedPassPhrase = "pIS90rBtNN0VGWo62fbomfoW1TBR8j43qjPq0NKibfYsd9OG8S";
+        UUID idUserUUID = UUID.fromString("ee781a8b-8efb-41df-b9ca-e587b27feac7");
         String birthday = "2025-10-07";
-        String status = "DnlnJeGTGngroa4lCyqoifyJbvgwoOYe6F2irOBJSS3nhHcWuK";
+        String status = "z4TGPga00lhU8BnzpEsSC6U0rhC64PIzoRDvtCcCreglRLbTSg";
         String dateCreated = "2025-10-07";
         String dateUpdated = "2025-10-07";
 
@@ -120,6 +122,7 @@ public class UsersServiceImplTest {
         Map<String, Object> mapFieldsRequestMock = new HashMap<>();
         mapFieldsRequestMock.put("id", id);
         mapFieldsRequestMock.put("name", name);
+        mapFieldsRequestMock.put("email", email);
         mapFieldsRequestMock.put("encodedPassPhrase", encodedPassPhrase);
         mapFieldsRequestMock.put("idUserUUID", idUserUUID);
         mapFieldsRequestMock.put("birthday", birthday);
@@ -143,6 +146,7 @@ public class UsersServiceImplTest {
         Mockito.when(usersRepositoryMock.findUsersByFilter(
             id,
             name,
+            email,
             encodedPassPhrase,
             idUserUUID,
             birthday,
@@ -164,12 +168,13 @@ public class UsersServiceImplTest {
     @Test
     public void shouldReturnMapWithUsersListWhenFindPageByFilterIsCalled() {
         // scenario
-        Long id = 81747L;
-        String name = "Y0Q2ah3MXMPpeL8JFOeR0rfpgAqAPSt1KvPPX3MbKam7rUennz";
-        String encodedPassPhrase = "Tf7XtzGyqk08W053Ic8HnxlTa10bIuPbzlsCnPNc2l046EIrih";
-        UUID idUserUUID = UUID.fromString("22184acc-32bb-44c0-b597-99641a658c4d");
+        Long id = 22321L;
+        String name = "Hq4duowQjK078wMAVAH8IhJOFzLT6leznpg5XfsXp9QGEILNxn";
+        String email = "o8L5ASz3xQAul2O5rWMO0INjhDnlQauPSXQX2NmwIfl7YpDyym";
+        String encodedPassPhrase = "JyUBe0aB0Rh8delLnD6DICYEtGFt7stO1MLRYPIEbfKmhDBYfB";
+        UUID idUserUUID = UUID.fromString("12169d2d-dd4e-4fa1-b11b-8ca3637aa764");
         String birthday = "2025-10-07";
-        String status = "UBuNyfaB0WRqN5JHzrNGUVlpwCYdqMm3nsQcLWq9plPeALT5d4";
+        String status = "o2POlgAfNlXIElUGI9jzA1PvcFWNXUDNaJ4INawU8rlerQ36dg";
         String dateCreated = "2025-10-07";
         String dateUpdated = "2025-10-07";
 
@@ -177,6 +182,7 @@ public class UsersServiceImplTest {
         Map<String, Object> mapFieldsRequestMock = new HashMap<>();
         mapFieldsRequestMock.put("id", id);
         mapFieldsRequestMock.put("name", name);
+        mapFieldsRequestMock.put("email", email);
         mapFieldsRequestMock.put("encodedPassPhrase", encodedPassPhrase);
         mapFieldsRequestMock.put("idUserUUID", idUserUUID);
         mapFieldsRequestMock.put("birthday", birthday);
@@ -218,6 +224,7 @@ public class UsersServiceImplTest {
         Mockito.when(usersRepositoryMock.findUsersByFilter(pageableMock,
             id,
             name,
+            email,
             encodedPassPhrase,
             idUserUUID,
             birthday,
@@ -262,7 +269,7 @@ public class UsersServiceImplTest {
     @Test
     public void shouldReturnUsersNotFoundExceptionWhenUpdateStatusByIdForInexistentId() {
         // scenario
-        Long idMock = 60408L;
+        Long idMock = 11061L;
         Optional<Users> usersNonExistentMock = Optional.empty();
         Mockito.when(usersRepositoryMock.findById(idMock)).thenReturn(usersNonExistentMock);
 
@@ -277,7 +284,7 @@ public class UsersServiceImplTest {
     @Test
     public void shouldThrowUsersNotFoundExceptionWhenUpdateStatusByIdForInexistentId() {
         // scenario
-        Long idMock = 23845L;
+        Long idMock = 78770L;
         Mockito.when(usersRepositoryMock.findById(idMock))
                 .thenThrow(new UsersNotFoundException(USERS_NOTFOUND_WITH_ID,
                 HttpStatus.NOT_FOUND,
@@ -294,25 +301,27 @@ public class UsersServiceImplTest {
     @Test
     public void shouldReturnUsersDTOAfterUpdateStatusById() {
         // scenario
-        Long idMock = 67640L;
+        Long idMock = 68586L;
         Optional<Users> usersModelMock = Optional.ofNullable(
                 UsersModelBuilder.newUsersModelTestBuilder()
                         .id(idMock)
-                        .name("Vp7fD3jGgk8MzC0tF5lfJ1tnC5wDjhwP5QbWB9oJj6D8d2Kgtt")
-                        .encodedPassPhrase("BtxAmrxWIXeCIAQBoOCal1YF8O9dAjMURBNJrd41gCgdbAGVII")
-                        .idUserUUID(UUID.fromString("e0319cac-a94a-45b9-a6cf-87147265eaec"))
-                        .birthday(LocalDate.of(557,1,5))
+                        .name("HAtnDnBnr8TgJdTXdgoCGqFMJ6izAI7DFfDSV8j0dj6OacXCXA")
+                        .email("cJ48042ulVPlLRMAVA2cwPuXxN6SidsDF70lUKhDOFkFWjw3SK")
+                        .encodedPassPhrase("9ythn1ca0HGNSXz11FArWySPBdrkx0xUYjaFd0ANGBzFViaHmm")
+                        .idUserUUID(UUID.fromString("fe4d83ff-6f7f-4717-b8d4-b4f018ff80d5"))
+                        .birthday(LocalDate.of(4800,12,12))
 
                         .status("X")
                         .now()
         );
         Users usersToSaveMock = usersModelMock.orElse(null);
         Users usersSavedMck = UsersModelBuilder.newUsersModelTestBuilder()
-                        .id(10028L)
-                        .name("5xo1uVPJY2DlNwxqbOnq4F3WrgWVFWD8YfR5gV6l6YtTmOaVw8")
-                        .encodedPassPhrase("yPECVx4OQxfPYWxytJ6mRyGU1fEr5NwzwcdLAeTQP2ToxrrsDG")
-                        .idUserUUID(UUID.fromString("a8dbb27f-4a69-4680-8dfc-592699ec86ab"))
-                        .birthday(LocalDate.of(1717,10,31))
+                        .id(35028L)
+                        .name("Q2qcRALQH0Eie7pvStp0U8UdlCG3uWvb0Sq3WUx02p6GH3Hsnh")
+                        .email("MWYrJOSfc34NYVh2ArYYiTTwW7W0Vb2NCmQSMHzBX8Pp2tprtM")
+                        .encodedPassPhrase("B9uyCg7fnvKW1tQuYWTM1IEhJ5ccfALVX9XV43vNN7K1rj0iXr")
+                        .idUserUUID(UUID.fromString("d704455f-7655-4290-8d03-f6b3bd76fcc2"))
+                        .birthday(LocalDate.of(7288,6,3))
 
                         .status("A")
                         .now();
@@ -343,11 +352,12 @@ public class UsersServiceImplTest {
     public void shouldSearchUsersByIdAndReturnDTO() {
         // scenario
         Optional<Users> usersModelMock = Optional.ofNullable(UsersModelBuilder.newUsersModelTestBuilder()
-                .id(38030L)
-                .name("xtS32nd0P4ll5Xfd1AwRCFagt3gesIx3z0SdV1JFTO840cxxRx")
-                .encodedPassPhrase("E0Bui1KorA1VpIBfCbYNNfcjd5B49XpAhx3EutVSnkAl1iSA0X")
-                .idUserUUID(UUID.fromString("050a0f77-54a7-4556-8895-7d73800101f4"))
-                .birthday(LocalDate.of(8844,4,18))
+                .id(25352L)
+                .name("7bl78KGNcGwrDIG2GuaUvxpYcq2hvy6sByvTjafLKMRgqRg9js")
+                .email("EMXdFL7gapHuN3VIWIes4eNWqbSVU03agf3HVGicDSDvReDIQD")
+                .encodedPassPhrase("b0lKug5s0s8in5xXir60rMUW9EjFYlEJiT99TO01KpdFOy1ely")
+                .idUserUUID(UUID.fromString("43325d69-c209-4b2a-bae8-2eba90badbfc"))
+                .birthday(LocalDate.of(8402,6,30))
 
                 .status("A")
                 .dateCreated(dateTimeMock.getToday())
@@ -392,11 +402,12 @@ public class UsersServiceImplTest {
     public void ShouldSaveUpdateExistingUsersWithSucess() {
         // scenario
         UsersDTO usersDTOMock = UsersDTOBuilder.newUsersDTOTestBuilder()
-                .id(3038L)
-                .name("DuK0HUSwo5UkkV8zAK83su4O997ChY0gqahB7e7sHo6CrMxBV9")
-                .encodedPassPhrase("h7r6MosrB6JpwUTrHVsez4DMVBD6F3aHdIqNduVMFzGDnSo07F")
-                .idUserUUID(UUID.fromString("703129b0-36e9-498d-8580-d59538d7dad5"))
-                .birthday(LocalDate.of(837,10,25))
+                .id(64767L)
+                .name("u9fmIMq4u9TdijEaOihWpH90ms2yg1wxV8bm9WL4E5t4dbs8Nh")
+                .email("tg6sNOxDRieXzrvKhJdlKbJ3K5LKFbDa9RdGzsubyYSPDeaeOY")
+                .encodedPassPhrase("eXEocc9T0btgR2n2xNt2GXGnHPrIb6D8g23auoyytaOOr6v0fJ")
+                .idUserUUID(UUID.fromString("cfa33f3f-623c-43eb-8390-1be18c365bc4"))
+                .birthday(LocalDate.of(707,8,11))
 
                 .status("P")
                 .dateCreated(dateTimeMock.getToday())
@@ -405,6 +416,7 @@ public class UsersServiceImplTest {
         Users usersMock = UsersModelBuilder.newUsersModelTestBuilder()
                 .id(usersDTOMock.getId())
                 .name(usersDTOMock.getName())
+                .email(usersDTOMock.getEmail())
                 .encodedPassPhrase(usersDTOMock.getEncodedPassPhrase())
                 .idUserUUID(usersDTOMock.getIdUserUUID())
                 .birthday(usersDTOMock.getBirthday())
@@ -416,6 +428,7 @@ public class UsersServiceImplTest {
         Users usersSavedMock = UsersModelBuilder.newUsersModelTestBuilder()
                 .id(usersDTOMock.getId())
                 .name(usersDTOMock.getName())
+                .email(usersDTOMock.getEmail())
                 .encodedPassPhrase(usersDTOMock.getEncodedPassPhrase())
                 .idUserUUID(usersDTOMock.getIdUserUUID())
                 .birthday(usersDTOMock.getBirthday())
@@ -440,10 +453,11 @@ public class UsersServiceImplTest {
         // scenario
         UsersDTO usersDTOMock = UsersDTOBuilder.newUsersDTOTestBuilder()
                 .id(null)
-                .name("Ydl6G2jkAPIUcCr59RBikb6VA7UgFnevQggcEuCnWwdKhbIbOX")
-                .encodedPassPhrase("dTmX1UsUSKrRcc5orODt9092vIVYhgUGrxpqVFWsvzjF2I7qbI")
-                .idUserUUID(UUID.fromString("afce04dc-9c66-48db-b886-590cd45b3bb2"))
-                .birthday(LocalDate.of(6043,4,2))
+                .name("m0P6wQ31vPYvwk8LCpB0SyyrvpRdjOnG0qJqSPfftTBtcpktYg")
+                .email("bbGLvTp9HFbylHyY7b0NNL6VP0eIuIW6rktdentDtOEBozihMI")
+                .encodedPassPhrase("mMre1Qo18uRMx1is81vN73GG2AJd1SG1U02AHeePuFBmjHIqAc")
+                .idUserUUID(UUID.fromString("12c3067e-a903-4ba2-8794-3a2493891c41"))
+                .birthday(LocalDate.of(4505,11,16))
 
                 .status("P")
                 .dateCreated(dateTimeMock.getToday())
@@ -452,6 +466,7 @@ public class UsersServiceImplTest {
         Users usersModelMock = UsersModelBuilder.newUsersModelTestBuilder()
                 .id(null)
                 .name(usersDTOMock.getName())
+                .email(usersDTOMock.getEmail())
                 .encodedPassPhrase(usersDTOMock.getEncodedPassPhrase())
                 .idUserUUID(usersDTOMock.getIdUserUUID())
                 .birthday(usersDTOMock.getBirthday())
@@ -463,6 +478,7 @@ public class UsersServiceImplTest {
         Users usersSavedMock = UsersModelBuilder.newUsersModelTestBuilder()
                 .id(501L)
                 .name(usersDTOMock.getName())
+                .email(usersDTOMock.getEmail())
                 .encodedPassPhrase(usersDTOMock.getEncodedPassPhrase())
                 .idUserUUID(usersDTOMock.getIdUserUUID())
                 .birthday(usersDTOMock.getBirthday())
@@ -487,21 +503,23 @@ public class UsersServiceImplTest {
     public void shouldExecutePartialUpdateWithSucess() {
         // scenario
         Map<String, Object> mapUsersDTOMock = new HashMap<>();
-        mapUsersDTOMock.put(UsersConstantes.NAME,"ruJyTkvSsLvMb7UVuVtKEpAeEw3PEu2WWTkyvfBuU7Dmzgvq2v");
-        mapUsersDTOMock.put(UsersConstantes.ENCODEDPASSPHRASE,"YUtdV1BObI6KLajwcSm9u7u8hLN64WpkJ4tSEMReIdfHMDlKop");
-        mapUsersDTOMock.put(UsersConstantes.IDUSERUUID,UUID.fromString("f50dc708-bfbc-4533-83a4-2eaef1b6b841"));
-        mapUsersDTOMock.put(UsersConstantes.BIRTHDAY,LocalDate.of(6076,5,3));
-        mapUsersDTOMock.put(UsersConstantes.STATUS,"5vOPl2q4Kcx2VGI9i0AFKaK0jGcS3Brk30PErz195ilO5CA1YF");
+        mapUsersDTOMock.put(UsersConstantes.NAME,"EQPIHGcu0eMj2keQyRMHMDvxGFndwTeMCWX9HW0oBwk7yTfaD1");
+        mapUsersDTOMock.put(UsersConstantes.EMAIL,"yqmVKbDuVea29MsE6GhvJ6NknX8K1H3W0emLQ0anh4r0nAhspk");
+        mapUsersDTOMock.put(UsersConstantes.ENCODEDPASSPHRASE,"KVbkCL7dH4X6WFhiiu128S11YMeaf3MJOKuLFlAuky4jDAIuUC");
+        mapUsersDTOMock.put(UsersConstantes.IDUSERUUID,UUID.fromString("3d33e12c-7470-4e70-8544-40ffe52e9387"));
+        mapUsersDTOMock.put(UsersConstantes.BIRTHDAY,LocalDate.of(1450,1,21));
+        mapUsersDTOMock.put(UsersConstantes.STATUS,"aydjFy2rPk2bLffww5MJdwWBuHNsBS1AN0tCX0Hzk0gdnfdW5z");
 
 
         Optional<Users> usersModelMock = Optional.ofNullable(
                 UsersModelBuilder.newUsersModelTestBuilder()
-                        .id(80701L)
-                        .name("fW60U3IARU1NOHiFzDNoX1DUX0IxzwSGm7Bqs97smFPCXdy5G5")
-                        .encodedPassPhrase("5EkV25FloxOsf9bdTTVIOiSaHhcsMCeO5RFUpT2ucqplzG1zSK")
-                        .idUserUUID(UUID.fromString("5eecd0da-d884-46ff-8aad-0acaa1519892"))
-                        .birthday(LocalDate.of(5336,7,10))
-                        .status("v2ewbUpxMY40YTFBrI5lolYSlE0kfN2Ws3U28xvAss6xcevsh7")
+                        .id(18800L)
+                        .name("GiBz8nAT9qgMfaBJzG07H60QmCI8yvfL3nxWK5irFbPnTf5Cnx")
+                        .email("EhjMuBgnMWTNQawtUkkSrnCOwkubjhGtYPGe0SSdx7R1z6Xt8i")
+                        .encodedPassPhrase("nv0opM4Cq4QlLYemFpdjyQGcT0TkC54R6f6kJkIXPxSw3Yaqan")
+                        .idUserUUID(UUID.fromString("e6d83c5f-29dd-46dc-a264-0c9eec66c12f"))
+                        .birthday(LocalDate.of(4031,7,31))
+                        .status("3ctfi1xLYYuMmoEkj223MOJgGKFk5jil2oqh3h50sNNpP6UTB0")
 
                         .now()
         );
@@ -519,11 +537,12 @@ public class UsersServiceImplTest {
     public void shouldReturnUsersNotFoundExceptionWhenTrySearchNotExistentId() {
         // scenario
         Map<String, Object> mapUsersDTOMock = new HashMap<>();
-        mapUsersDTOMock.put(UsersConstantes.NAME,"hzt6u1b3Lw9f7iEjpy65rAhS3sAMJutXDJ0UvLdNoyjLcoW0F9");
-        mapUsersDTOMock.put(UsersConstantes.ENCODEDPASSPHRASE,"cxumwIogBnzbjkdF4IwCiDCiB9u098F6U7nFoQ0yhJzUhNIAXi");
-        mapUsersDTOMock.put(UsersConstantes.IDUSERUUID,UUID.fromString("e53ccf8a-57cf-4e2e-abad-260c7b44da60"));
-        mapUsersDTOMock.put(UsersConstantes.BIRTHDAY,LocalDate.of(1424,3,22));
-        mapUsersDTOMock.put(UsersConstantes.STATUS,"LJInij4ymigXIKHSJS0oWjcbdmiaWqSto547jazIUHNSLg7PG8");
+        mapUsersDTOMock.put(UsersConstantes.NAME,"IpXn49xqPD0bcaPbByNhxhJqiXNsGeRr854dIE6nt1nJDAI0Id");
+        mapUsersDTOMock.put(UsersConstantes.EMAIL,"Q7nJOcElQhI1vB0lIF1Sfu8bow0F8BQq0dqo8uB50BN7FmbeUL");
+        mapUsersDTOMock.put(UsersConstantes.ENCODEDPASSPHRASE,"IOENPl4HRtqf3JLwhxJS5wSF10lK5QID65SaF0DfQSIAwHngvC");
+        mapUsersDTOMock.put(UsersConstantes.IDUSERUUID,UUID.fromString("b149825d-580f-4a01-8aa8-105af39f1a14"));
+        mapUsersDTOMock.put(UsersConstantes.BIRTHDAY,LocalDate.of(505,5,23));
+        mapUsersDTOMock.put(UsersConstantes.STATUS,"4NwggrMT0lL0YP5Ge8qJuxIOiUET8RyKdJiDPIzrc0TtNQXrYG");
 
 
         Mockito.when(usersRepositoryMock.findById(1L)).thenReturn(Optional.empty());
@@ -547,10 +566,10 @@ public class UsersServiceImplTest {
             UsersModelBuilder.newUsersModelTestBuilder().now()
         );
 
-        Mockito.when(usersRepositoryMock.findAllByIdAndStatus(27115L, "A")).thenReturn(userss);
+        Mockito.when(usersRepositoryMock.findAllByIdAndStatus(75566L, "A")).thenReturn(userss);
 
         // action
-        List<UsersDTO> result = usersService.findAllUsersByIdAndStatus(27115L, "A");
+        List<UsersDTO> result = usersService.findAllUsersByIdAndStatus(75566L, "A");
 
         // validate
         Assertions.assertInstanceOf(List.class, result);
@@ -565,10 +584,28 @@ public class UsersServiceImplTest {
             UsersModelBuilder.newUsersModelTestBuilder().now()
         );
 
-        Mockito.when(usersRepositoryMock.findAllByNameAndStatus("2tMaA6zMfEzxO923QetN17CFETRTniDMhip9nirzpFibnqGgqM", "A")).thenReturn(userss);
+        Mockito.when(usersRepositoryMock.findAllByNameAndStatus("7AmMeDM170ROSgY67JCfBBUI3QgqzfmV4CVDFKnXvpigs7Y9il", "A")).thenReturn(userss);
 
         // action
-        List<UsersDTO> result = usersService.findAllUsersByNameAndStatus("2tMaA6zMfEzxO923QetN17CFETRTniDMhip9nirzpFibnqGgqM", "A");
+        List<UsersDTO> result = usersService.findAllUsersByNameAndStatus("7AmMeDM170ROSgY67JCfBBUI3QgqzfmV4CVDFKnXvpigs7Y9il", "A");
+
+        // validate
+        Assertions.assertInstanceOf(List.class, result);
+        Assertions.assertEquals(3, result.size());
+    }
+    @Test
+    public void shouldReturnUsersListWhenFindAllUsersByEmailAndStatus() {
+        // scenario
+        List<Users> userss = Arrays.asList(
+            UsersModelBuilder.newUsersModelTestBuilder().now(),
+            UsersModelBuilder.newUsersModelTestBuilder().now(),
+            UsersModelBuilder.newUsersModelTestBuilder().now()
+        );
+
+        Mockito.when(usersRepositoryMock.findAllByEmailAndStatus("viSJVLLSorqY8BrItnYAdf0HzjBTxOhzmqgOO1Yvjh7qhD1M2J", "A")).thenReturn(userss);
+
+        // action
+        List<UsersDTO> result = usersService.findAllUsersByEmailAndStatus("viSJVLLSorqY8BrItnYAdf0HzjBTxOhzmqgOO1Yvjh7qhD1M2J", "A");
 
         // validate
         Assertions.assertInstanceOf(List.class, result);
@@ -583,10 +620,10 @@ public class UsersServiceImplTest {
             UsersModelBuilder.newUsersModelTestBuilder().now()
         );
 
-        Mockito.when(usersRepositoryMock.findAllByEncodedPassPhraseAndStatus("GHh4cDwoXxU0823DEwisVos0v2slJbsMo531hWXd43wH0lQKoE", "A")).thenReturn(userss);
+        Mockito.when(usersRepositoryMock.findAllByEncodedPassPhraseAndStatus("Ilp4rqLeatFbSttoy0G0MI43fxMQ9HEqODVlEx0Fyv0Tm3nxJs", "A")).thenReturn(userss);
 
         // action
-        List<UsersDTO> result = usersService.findAllUsersByEncodedPassPhraseAndStatus("GHh4cDwoXxU0823DEwisVos0v2slJbsMo531hWXd43wH0lQKoE", "A");
+        List<UsersDTO> result = usersService.findAllUsersByEncodedPassPhraseAndStatus("Ilp4rqLeatFbSttoy0G0MI43fxMQ9HEqODVlEx0Fyv0Tm3nxJs", "A");
 
         // validate
         Assertions.assertInstanceOf(List.class, result);
@@ -601,10 +638,10 @@ public class UsersServiceImplTest {
             UsersModelBuilder.newUsersModelTestBuilder().now()
         );
 
-        Mockito.when(usersRepositoryMock.findAllByIdUserUUIDAndStatus(UUID.fromString("113e1b61-5ec4-4714-b175-b112e8125822"), "A")).thenReturn(userss);
+        Mockito.when(usersRepositoryMock.findAllByIdUserUUIDAndStatus(UUID.fromString("227ad249-369d-4d2c-a972-8a817a1fc9fd"), "A")).thenReturn(userss);
 
         // action
-        List<UsersDTO> result = usersService.findAllUsersByIdUserUUIDAndStatus(UUID.fromString("113e1b61-5ec4-4714-b175-b112e8125822"), "A");
+        List<UsersDTO> result = usersService.findAllUsersByIdUserUUIDAndStatus(UUID.fromString("227ad249-369d-4d2c-a972-8a817a1fc9fd"), "A");
 
         // validate
         Assertions.assertInstanceOf(List.class, result);
@@ -619,10 +656,10 @@ public class UsersServiceImplTest {
             UsersModelBuilder.newUsersModelTestBuilder().now()
         );
 
-        Mockito.when(usersRepositoryMock.findAllByBirthdayAndStatus(LocalDate.of(2180,9,2), "A")).thenReturn(userss);
+        Mockito.when(usersRepositoryMock.findAllByBirthdayAndStatus(LocalDate.of(5006,7,6), "A")).thenReturn(userss);
 
         // action
-        List<UsersDTO> result = usersService.findAllUsersByBirthdayAndStatus(LocalDate.of(2180,9,2), "A");
+        List<UsersDTO> result = usersService.findAllUsersByBirthdayAndStatus(LocalDate.of(5006,7,6), "A");
 
         // validate
         Assertions.assertInstanceOf(List.class, result);
@@ -669,11 +706,11 @@ public class UsersServiceImplTest {
     public void shouldReturnExistentUsersDTOWhenFindUsersByIdAndStatus() {
         // scenario
         Optional<Users> usersModelMock = Optional.ofNullable(UsersModelBuilder.newUsersModelTestBuilder().now());
-        Mockito.when(usersRepositoryMock.loadMaxIdByIdAndStatus(62583L, "A")).thenReturn(1L);
+        Mockito.when(usersRepositoryMock.loadMaxIdByIdAndStatus(1474L, "A")).thenReturn(1L);
         Mockito.when(usersRepositoryMock.findById(1L)).thenReturn(usersModelMock);
 
         // action
-        UsersDTO result = usersService.findUsersByIdAndStatus(62583L, "A");
+        UsersDTO result = usersService.findUsersByIdAndStatus(1474L, "A");
 
         // validate
         Assertions.assertInstanceOf(UsersDTO.class,result);
@@ -681,11 +718,11 @@ public class UsersServiceImplTest {
     @Test
     public void shouldReturnUsersNotFoundExceptionWhenNonExistenceUsersIdAndStatus() {
         // scenario
-        Mockito.when(usersRepositoryMock.loadMaxIdByIdAndStatus(62583L, "A")).thenReturn(0L);
+        Mockito.when(usersRepositoryMock.loadMaxIdByIdAndStatus(1474L, "A")).thenReturn(0L);
         Mockito.when(usersRepositoryMock.findById(0L)).thenReturn(Optional.empty());
         // action
         UsersNotFoundException exception = Assertions.assertThrows(UsersNotFoundException.class,
-                ()->usersService.findUsersByIdAndStatus(62583L, "A"));
+                ()->usersService.findUsersByIdAndStatus(1474L, "A"));
 
         // validate
         Assertions.assertTrue(exception.getMessage().contains(USERS_NOTFOUND_WITH_ID));
@@ -694,11 +731,11 @@ public class UsersServiceImplTest {
     public void shouldReturnExistentUsersDTOWhenFindUsersByNameAndStatus() {
         // scenario
         Optional<Users> usersModelMock = Optional.ofNullable(UsersModelBuilder.newUsersModelTestBuilder().now());
-        Mockito.when(usersRepositoryMock.loadMaxIdByNameAndStatus("W6tGRN7kiwzUoBOHQoF2fLQCFfsawJ1ljEvlRCxznMqTb2CSbd", "A")).thenReturn(1L);
+        Mockito.when(usersRepositoryMock.loadMaxIdByNameAndStatus("w8jd8nVNqDcXxF9RbV5NG0d8c80BKds3qLD3uM23MQOPVjrvO0", "A")).thenReturn(1L);
         Mockito.when(usersRepositoryMock.findById(1L)).thenReturn(usersModelMock);
 
         // action
-        UsersDTO result = usersService.findUsersByNameAndStatus("W6tGRN7kiwzUoBOHQoF2fLQCFfsawJ1ljEvlRCxznMqTb2CSbd", "A");
+        UsersDTO result = usersService.findUsersByNameAndStatus("w8jd8nVNqDcXxF9RbV5NG0d8c80BKds3qLD3uM23MQOPVjrvO0", "A");
 
         // validate
         Assertions.assertInstanceOf(UsersDTO.class,result);
@@ -706,24 +743,49 @@ public class UsersServiceImplTest {
     @Test
     public void shouldReturnUsersNotFoundExceptionWhenNonExistenceUsersNameAndStatus() {
         // scenario
-        Mockito.when(usersRepositoryMock.loadMaxIdByNameAndStatus("W6tGRN7kiwzUoBOHQoF2fLQCFfsawJ1ljEvlRCxznMqTb2CSbd", "A")).thenReturn(0L);
+        Mockito.when(usersRepositoryMock.loadMaxIdByNameAndStatus("w8jd8nVNqDcXxF9RbV5NG0d8c80BKds3qLD3uM23MQOPVjrvO0", "A")).thenReturn(0L);
         Mockito.when(usersRepositoryMock.findById(0L)).thenReturn(Optional.empty());
         // action
         UsersNotFoundException exception = Assertions.assertThrows(UsersNotFoundException.class,
-                ()->usersService.findUsersByNameAndStatus("W6tGRN7kiwzUoBOHQoF2fLQCFfsawJ1ljEvlRCxznMqTb2CSbd", "A"));
+                ()->usersService.findUsersByNameAndStatus("w8jd8nVNqDcXxF9RbV5NG0d8c80BKds3qLD3uM23MQOPVjrvO0", "A"));
 
         // validate
         Assertions.assertTrue(exception.getMessage().contains(USERS_NOTFOUND_WITH_NAME));
     }
     @Test
-    public void shouldReturnExistentUsersDTOWhenFindUsersByEncodedPassPhraseAndStatus() {
+    public void shouldReturnExistentUsersDTOWhenFindUsersByEmailAndStatus() {
         // scenario
         Optional<Users> usersModelMock = Optional.ofNullable(UsersModelBuilder.newUsersModelTestBuilder().now());
-        Mockito.when(usersRepositoryMock.loadMaxIdByEncodedPassPhraseAndStatus("7AUIxYXm5n7xXhYvziemAzanXfLhA8s1OkM1NIFOv1QvROXMxJ", "A")).thenReturn(1L);
+        Mockito.when(usersRepositoryMock.loadMaxIdByEmailAndStatus("Rond089hkd663kpI9hMl0Ve1cPOOiQW1pLUY0wUrv0fBhXm9Pa", "A")).thenReturn(1L);
         Mockito.when(usersRepositoryMock.findById(1L)).thenReturn(usersModelMock);
 
         // action
-        UsersDTO result = usersService.findUsersByEncodedPassPhraseAndStatus("7AUIxYXm5n7xXhYvziemAzanXfLhA8s1OkM1NIFOv1QvROXMxJ", "A");
+        UsersDTO result = usersService.findUsersByEmailAndStatus("Rond089hkd663kpI9hMl0Ve1cPOOiQW1pLUY0wUrv0fBhXm9Pa", "A");
+
+        // validate
+        Assertions.assertInstanceOf(UsersDTO.class,result);
+    }
+    @Test
+    public void shouldReturnUsersNotFoundExceptionWhenNonExistenceUsersEmailAndStatus() {
+        // scenario
+        Mockito.when(usersRepositoryMock.loadMaxIdByEmailAndStatus("Rond089hkd663kpI9hMl0Ve1cPOOiQW1pLUY0wUrv0fBhXm9Pa", "A")).thenReturn(0L);
+        Mockito.when(usersRepositoryMock.findById(0L)).thenReturn(Optional.empty());
+        // action
+        UsersNotFoundException exception = Assertions.assertThrows(UsersNotFoundException.class,
+                ()->usersService.findUsersByEmailAndStatus("Rond089hkd663kpI9hMl0Ve1cPOOiQW1pLUY0wUrv0fBhXm9Pa", "A"));
+
+        // validate
+        Assertions.assertTrue(exception.getMessage().contains(USERS_NOTFOUND_WITH_EMAIL));
+    }
+    @Test
+    public void shouldReturnExistentUsersDTOWhenFindUsersByEncodedPassPhraseAndStatus() {
+        // scenario
+        Optional<Users> usersModelMock = Optional.ofNullable(UsersModelBuilder.newUsersModelTestBuilder().now());
+        Mockito.when(usersRepositoryMock.loadMaxIdByEncodedPassPhraseAndStatus("iB33qwruyDzf4M2BKzDyAM7L1XnaAhUmaK6oupvl5aKbfXkYdf", "A")).thenReturn(1L);
+        Mockito.when(usersRepositoryMock.findById(1L)).thenReturn(usersModelMock);
+
+        // action
+        UsersDTO result = usersService.findUsersByEncodedPassPhraseAndStatus("iB33qwruyDzf4M2BKzDyAM7L1XnaAhUmaK6oupvl5aKbfXkYdf", "A");
 
         // validate
         Assertions.assertInstanceOf(UsersDTO.class,result);
@@ -731,11 +793,11 @@ public class UsersServiceImplTest {
     @Test
     public void shouldReturnUsersNotFoundExceptionWhenNonExistenceUsersEncodedPassPhraseAndStatus() {
         // scenario
-        Mockito.when(usersRepositoryMock.loadMaxIdByEncodedPassPhraseAndStatus("7AUIxYXm5n7xXhYvziemAzanXfLhA8s1OkM1NIFOv1QvROXMxJ", "A")).thenReturn(0L);
+        Mockito.when(usersRepositoryMock.loadMaxIdByEncodedPassPhraseAndStatus("iB33qwruyDzf4M2BKzDyAM7L1XnaAhUmaK6oupvl5aKbfXkYdf", "A")).thenReturn(0L);
         Mockito.when(usersRepositoryMock.findById(0L)).thenReturn(Optional.empty());
         // action
         UsersNotFoundException exception = Assertions.assertThrows(UsersNotFoundException.class,
-                ()->usersService.findUsersByEncodedPassPhraseAndStatus("7AUIxYXm5n7xXhYvziemAzanXfLhA8s1OkM1NIFOv1QvROXMxJ", "A"));
+                ()->usersService.findUsersByEncodedPassPhraseAndStatus("iB33qwruyDzf4M2BKzDyAM7L1XnaAhUmaK6oupvl5aKbfXkYdf", "A"));
 
         // validate
         Assertions.assertTrue(exception.getMessage().contains(USERS_NOTFOUND_WITH_ENCODEDPASSPHRASE));
@@ -744,11 +806,11 @@ public class UsersServiceImplTest {
     public void shouldReturnExistentUsersDTOWhenFindUsersByIdUserUUIDAndStatus() {
         // scenario
         Optional<Users> usersModelMock = Optional.ofNullable(UsersModelBuilder.newUsersModelTestBuilder().now());
-        Mockito.when(usersRepositoryMock.loadMaxIdByIdUserUUIDAndStatus(UUID.fromString("6bb31641-3c0c-488c-930a-559378b633f9"), "A")).thenReturn(1L);
+        Mockito.when(usersRepositoryMock.loadMaxIdByIdUserUUIDAndStatus(UUID.fromString("93587e8e-9cd8-4fcd-85cb-6078f7b62f32"), "A")).thenReturn(1L);
         Mockito.when(usersRepositoryMock.findById(1L)).thenReturn(usersModelMock);
 
         // action
-        UsersDTO result = usersService.findUsersByIdUserUUIDAndStatus(UUID.fromString("6bb31641-3c0c-488c-930a-559378b633f9"), "A");
+        UsersDTO result = usersService.findUsersByIdUserUUIDAndStatus(UUID.fromString("93587e8e-9cd8-4fcd-85cb-6078f7b62f32"), "A");
 
         // validate
         Assertions.assertInstanceOf(UsersDTO.class,result);
@@ -756,11 +818,11 @@ public class UsersServiceImplTest {
     @Test
     public void shouldReturnUsersNotFoundExceptionWhenNonExistenceUsersIdUserUUIDAndStatus() {
         // scenario
-        Mockito.when(usersRepositoryMock.loadMaxIdByIdUserUUIDAndStatus(UUID.fromString("6bb31641-3c0c-488c-930a-559378b633f9"), "A")).thenReturn(0L);
+        Mockito.when(usersRepositoryMock.loadMaxIdByIdUserUUIDAndStatus(UUID.fromString("93587e8e-9cd8-4fcd-85cb-6078f7b62f32"), "A")).thenReturn(0L);
         Mockito.when(usersRepositoryMock.findById(0L)).thenReturn(Optional.empty());
         // action
         UsersNotFoundException exception = Assertions.assertThrows(UsersNotFoundException.class,
-                ()->usersService.findUsersByIdUserUUIDAndStatus(UUID.fromString("6bb31641-3c0c-488c-930a-559378b633f9"), "A"));
+                ()->usersService.findUsersByIdUserUUIDAndStatus(UUID.fromString("93587e8e-9cd8-4fcd-85cb-6078f7b62f32"), "A"));
 
         // validate
         Assertions.assertTrue(exception.getMessage().contains(USERS_NOTFOUND_WITH_IDUSERUUID));
@@ -769,11 +831,11 @@ public class UsersServiceImplTest {
     public void shouldReturnExistentUsersDTOWhenFindUsersByBirthdayAndStatus() {
         // scenario
         Optional<Users> usersModelMock = Optional.ofNullable(UsersModelBuilder.newUsersModelTestBuilder().now());
-        Mockito.when(usersRepositoryMock.loadMaxIdByBirthdayAndStatus(LocalDate.of(6167,5,6), "A")).thenReturn(1L);
+        Mockito.when(usersRepositoryMock.loadMaxIdByBirthdayAndStatus(LocalDate.of(1800,3,11), "A")).thenReturn(1L);
         Mockito.when(usersRepositoryMock.findById(1L)).thenReturn(usersModelMock);
 
         // action
-        UsersDTO result = usersService.findUsersByBirthdayAndStatus(LocalDate.of(6167,5,6), "A");
+        UsersDTO result = usersService.findUsersByBirthdayAndStatus(LocalDate.of(1800,3,11), "A");
 
         // validate
         Assertions.assertInstanceOf(UsersDTO.class,result);
@@ -781,11 +843,11 @@ public class UsersServiceImplTest {
     @Test
     public void shouldReturnUsersNotFoundExceptionWhenNonExistenceUsersBirthdayAndStatus() {
         // scenario
-        Mockito.when(usersRepositoryMock.loadMaxIdByBirthdayAndStatus(LocalDate.of(6167,5,6), "A")).thenReturn(0L);
+        Mockito.when(usersRepositoryMock.loadMaxIdByBirthdayAndStatus(LocalDate.of(1800,3,11), "A")).thenReturn(0L);
         Mockito.when(usersRepositoryMock.findById(0L)).thenReturn(Optional.empty());
         // action
         UsersNotFoundException exception = Assertions.assertThrows(UsersNotFoundException.class,
-                ()->usersService.findUsersByBirthdayAndStatus(LocalDate.of(6167,5,6), "A"));
+                ()->usersService.findUsersByBirthdayAndStatus(LocalDate.of(1800,3,11), "A"));
 
         // validate
         Assertions.assertTrue(exception.getMessage().contains(USERS_NOTFOUND_WITH_BIRTHDAY));
@@ -794,7 +856,7 @@ public class UsersServiceImplTest {
     @Test
     public void shouldReturnUsersDTOWhenUpdateExistingNameById() {
         // scenario
-        String nameUpdateMock = "89z5BKMHusgeIQotQuXz3y2HeHXEhrmSLvsLm46Gll6lnE5xAR";
+        String nameUpdateMock = "3UTpjkYN5rmmfzx0RjQJ0fVMRkYswyNsCDn0OQ00VMFeYcxLkL";
         Optional<Users> usersModelMock = Optional.ofNullable(UsersModelBuilder.newUsersModelTestBuilder()
                         .id(420L)
                 .now());
@@ -808,9 +870,25 @@ public class UsersServiceImplTest {
         Mockito.verify(usersRepositoryMock,Mockito.times(1)).updateNameById(420L, nameUpdateMock);
     }
     @Test
+    public void shouldReturnUsersDTOWhenUpdateExistingEmailById() {
+        // scenario
+        String emailUpdateMock = "HjegVBdzu23X6LJj0hKGFUFCynwI2hedwMqsUrB1v7jhsf943z";
+        Optional<Users> usersModelMock = Optional.ofNullable(UsersModelBuilder.newUsersModelTestBuilder()
+                        .id(420L)
+                .now());
+        Mockito.when(usersRepositoryMock.findById(420L)).thenReturn(usersModelMock);
+        Mockito.doNothing().when(usersRepositoryMock).updateEmailById(420L, emailUpdateMock);
+
+        // action
+        usersService.updateEmailById(420L, emailUpdateMock);
+
+        // validate
+        Mockito.verify(usersRepositoryMock,Mockito.times(1)).updateEmailById(420L, emailUpdateMock);
+    }
+    @Test
     public void shouldReturnUsersDTOWhenUpdateExistingEncodedPassPhraseById() {
         // scenario
-        String encodedPassPhraseUpdateMock = "tJ4kj3X99U03xX8Ra5arhJ0mVEVg5QmOV2DUt0X8i9CLB6TBY8";
+        String encodedPassPhraseUpdateMock = "rz130AJNn84mo7HPwk1D1dkcSY0X0cLl5BYQKLbctNLRYn4t0F";
         Optional<Users> usersModelMock = Optional.ofNullable(UsersModelBuilder.newUsersModelTestBuilder()
                         .id(420L)
                 .now());
@@ -826,7 +904,7 @@ public class UsersServiceImplTest {
     @Test
     public void shouldReturnUsersDTOWhenUpdateExistingIdUserUUIDById() {
         // scenario
-        UUID idUserUUIDUpdateMock = UUID.fromString("27677eec-4395-4558-860c-2f39e1f33ac4");
+        UUID idUserUUIDUpdateMock = UUID.fromString("a1843839-0d2e-46e5-b102-2d6eb1600c0c");
         Optional<Users> usersModelMock = Optional.ofNullable(UsersModelBuilder.newUsersModelTestBuilder()
                         .id(420L)
                 .now());
@@ -842,7 +920,7 @@ public class UsersServiceImplTest {
     @Test
     public void shouldReturnUsersDTOWhenUpdateExistingBirthdayById() {
         // scenario
-        LocalDate birthdayUpdateMock = LocalDate.of(4182,12,16);
+        LocalDate birthdayUpdateMock = LocalDate.of(1808,2,18);
         Optional<Users> usersModelMock = Optional.ofNullable(UsersModelBuilder.newUsersModelTestBuilder()
                         .id(420L)
                 .now());
@@ -861,7 +939,7 @@ public class UsersServiceImplTest {
     @Test
     public void showReturnExistingUsersDTOWhenFindUsersByIdAndStatusActiveAnonimous() {
         // scenario
-        Long idMock = 87422L;
+        Long idMock = 20352L;
         Long maxIdMock = 1972L;
         Optional<Users> usersModelMock = Optional.ofNullable(UsersModelBuilder.newUsersModelTestBuilder()
                 .id(idMock)
@@ -880,7 +958,7 @@ public class UsersServiceImplTest {
     @Test
     public void showReturnUsersNotFoundExceptionWhenNonExistenceFindUsersByIdAndStatusActiveAnonimous() {
         // scenario
-        Long idMock = 87422L;
+        Long idMock = 20352L;
         Long noMaxIdMock = 0L;
         Optional<Users> usersModelMock = Optional.empty();
         Mockito.when(usersRepositoryMock.loadMaxIdByIdAndStatus(idMock, "A")).thenReturn(noMaxIdMock);
@@ -899,7 +977,7 @@ public class UsersServiceImplTest {
     @Test
     public void showReturnExistingUsersDTOWhenFindUsersByNameAndStatusActiveAnonimous() {
         // scenario
-        String nameMock = "KC5RjWllcJRMdf5dpLKK0qew3IwOti61YpEcKYTik5jHiT9H5s";
+        String nameMock = "xTvCAiThiqrn0qzVHmT06RMp7CxjIcBtdjoMpzdkSUC4DyPsIO";
         Long maxIdMock = 1972L;
         Optional<Users> usersModelMock = Optional.ofNullable(UsersModelBuilder.newUsersModelTestBuilder()
                 .name(nameMock)
@@ -918,7 +996,7 @@ public class UsersServiceImplTest {
     @Test
     public void showReturnUsersNotFoundExceptionWhenNonExistenceFindUsersByNameAndStatusActiveAnonimous() {
         // scenario
-        String nameMock = "KC5RjWllcJRMdf5dpLKK0qew3IwOti61YpEcKYTik5jHiT9H5s";
+        String nameMock = "xTvCAiThiqrn0qzVHmT06RMp7CxjIcBtdjoMpzdkSUC4DyPsIO";
         Long noMaxIdMock = 0L;
         Optional<Users> usersModelMock = Optional.empty();
         Mockito.when(usersRepositoryMock.loadMaxIdByNameAndStatus(nameMock, "A")).thenReturn(noMaxIdMock);
@@ -935,9 +1013,47 @@ public class UsersServiceImplTest {
     }
 
     @Test
+    public void showReturnExistingUsersDTOWhenFindUsersByEmailAndStatusActiveAnonimous() {
+        // scenario
+        String emailMock = "eOQ6FJ09qykdKkvquUzKg1BWl0mASyH0roXk9MGhAGXQFqfwgM";
+        Long maxIdMock = 1972L;
+        Optional<Users> usersModelMock = Optional.ofNullable(UsersModelBuilder.newUsersModelTestBuilder()
+                .email(emailMock)
+                .now()
+        );
+        Mockito.when(usersRepositoryMock.loadMaxIdByEmailAndStatus(emailMock, "A")).thenReturn(maxIdMock);
+        Mockito.when(usersRepositoryMock.findById(maxIdMock)).thenReturn(usersModelMock);
+
+        // action
+        UsersDTO result = usersService.findUsersByEmailAndStatus(emailMock);
+
+        // validate
+        Assertions.assertEquals(emailMock, result.getEmail());
+
+    }
+    @Test
+    public void showReturnUsersNotFoundExceptionWhenNonExistenceFindUsersByEmailAndStatusActiveAnonimous() {
+        // scenario
+        String emailMock = "eOQ6FJ09qykdKkvquUzKg1BWl0mASyH0roXk9MGhAGXQFqfwgM";
+        Long noMaxIdMock = 0L;
+        Optional<Users> usersModelMock = Optional.empty();
+        Mockito.when(usersRepositoryMock.loadMaxIdByEmailAndStatus(emailMock, "A")).thenReturn(noMaxIdMock);
+        Mockito.when(usersRepositoryMock.findById(noMaxIdMock)).thenReturn(usersModelMock);
+
+        // action
+        UsersNotFoundException exception = Assertions.assertThrows(UsersNotFoundException.class,
+                ()->usersService.findUsersByEmailAndStatus(emailMock));
+
+        // validate
+        Assertions.assertTrue(exception.getMessage().contains(USERS_NOTFOUND_WITH_EMAIL));
+        Assertions.assertEquals(404, exception.getHttpStatus().value());
+
+    }
+
+    @Test
     public void showReturnExistingUsersDTOWhenFindUsersByEncodedPassPhraseAndStatusActiveAnonimous() {
         // scenario
-        String encodedPassPhraseMock = "YDLxu5JYsmMgdJRuCAOrGprcMFoWhmTgemfie3vOpk4DoLlIBD";
+        String encodedPassPhraseMock = "0yggBfuhLzJu0xqjVuDlelFlHBRNFVS3rO7Gqmem0je1UB0LCE";
         Long maxIdMock = 1972L;
         Optional<Users> usersModelMock = Optional.ofNullable(UsersModelBuilder.newUsersModelTestBuilder()
                 .encodedPassPhrase(encodedPassPhraseMock)
@@ -956,7 +1072,7 @@ public class UsersServiceImplTest {
     @Test
     public void showReturnUsersNotFoundExceptionWhenNonExistenceFindUsersByEncodedPassPhraseAndStatusActiveAnonimous() {
         // scenario
-        String encodedPassPhraseMock = "YDLxu5JYsmMgdJRuCAOrGprcMFoWhmTgemfie3vOpk4DoLlIBD";
+        String encodedPassPhraseMock = "0yggBfuhLzJu0xqjVuDlelFlHBRNFVS3rO7Gqmem0je1UB0LCE";
         Long noMaxIdMock = 0L;
         Optional<Users> usersModelMock = Optional.empty();
         Mockito.when(usersRepositoryMock.loadMaxIdByEncodedPassPhraseAndStatus(encodedPassPhraseMock, "A")).thenReturn(noMaxIdMock);
@@ -975,7 +1091,7 @@ public class UsersServiceImplTest {
     @Test
     public void showReturnExistingUsersDTOWhenFindUsersByIdUserUUIDAndStatusActiveAnonimous() {
         // scenario
-        UUID idUserUUIDMock = UUID.fromString("7f019dfd-ded2-4af6-bb00-eedb82005504");
+        UUID idUserUUIDMock = UUID.fromString("e6213868-9e41-42f1-96dc-a7177bc1c74e");
         Long maxIdMock = 1972L;
         Optional<Users> usersModelMock = Optional.ofNullable(UsersModelBuilder.newUsersModelTestBuilder()
                 .idUserUUID(idUserUUIDMock)
@@ -994,7 +1110,7 @@ public class UsersServiceImplTest {
     @Test
     public void showReturnUsersNotFoundExceptionWhenNonExistenceFindUsersByIdUserUUIDAndStatusActiveAnonimous() {
         // scenario
-        UUID idUserUUIDMock = UUID.fromString("7f019dfd-ded2-4af6-bb00-eedb82005504");
+        UUID idUserUUIDMock = UUID.fromString("e6213868-9e41-42f1-96dc-a7177bc1c74e");
         Long noMaxIdMock = 0L;
         Optional<Users> usersModelMock = Optional.empty();
         Mockito.when(usersRepositoryMock.loadMaxIdByIdUserUUIDAndStatus(idUserUUIDMock, "A")).thenReturn(noMaxIdMock);
@@ -1013,7 +1129,7 @@ public class UsersServiceImplTest {
     @Test
     public void showReturnExistingUsersDTOWhenFindUsersByBirthdayAndStatusActiveAnonimous() {
         // scenario
-        LocalDate birthdayMock = LocalDate.of(6022,12,15);
+        LocalDate birthdayMock = LocalDate.of(51,1,6);
         Long maxIdMock = 1972L;
         Optional<Users> usersModelMock = Optional.ofNullable(UsersModelBuilder.newUsersModelTestBuilder()
                 .birthday(birthdayMock)
@@ -1032,7 +1148,7 @@ public class UsersServiceImplTest {
     @Test
     public void showReturnUsersNotFoundExceptionWhenNonExistenceFindUsersByBirthdayAndStatusActiveAnonimous() {
         // scenario
-        LocalDate birthdayMock = LocalDate.of(6022,12,15);
+        LocalDate birthdayMock = LocalDate.of(51,1,6);
         Long noMaxIdMock = 0L;
         Optional<Users> usersModelMock = Optional.empty();
         Mockito.when(usersRepositoryMock.loadMaxIdByBirthdayAndStatus(birthdayMock, "A")).thenReturn(noMaxIdMock);

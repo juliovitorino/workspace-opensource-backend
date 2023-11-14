@@ -50,6 +50,10 @@ public class UsersDTOBuilder {
         this.usersDTO.setName(name);
         return this;
     }
+    public UsersDTOBuilder email(String email){
+        this.usersDTO.setEmail(email);
+        return this;
+    }
     public UsersDTOBuilder encodedPassPhrase(String encodedPassPhrase){
         this.usersDTO.setEncodedPassPhrase(encodedPassPhrase);
         return this;
