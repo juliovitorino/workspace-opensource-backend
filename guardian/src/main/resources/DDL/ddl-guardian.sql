@@ -8,6 +8,20 @@ create table tb_session_state (
     CONSTRAINT tb_session_state_pkey PRIMARY KEY (id_token)
 );
 
+
+create table tb_application (
+    id_application bigserial NOT NULL,
+    tx_name VARCHAR NOT NULL,
+    cd_external UUID NOT NULL,
+    status VARCHAR(1) NOT NULL,
+    date_created timestamp NOT NULL,
+    date_updated timestamp NOT NULL,
+    CONSTRAINT tb_applicationpkey PRIMARY KEY (id_application)
+);
+
+CREATE UNIQUE INDEX uix_cd_external ON tb_application(cd_external);
+
+
 create table tb_user (
     id_user bigserial NOT NULL,
     tx_name VARCHAR NOT NULL,

@@ -70,6 +70,7 @@ public class UsersServiceImplTest {
     public static final String USERS_NOTFOUND_WITH_NAME = "Users não encontrada com name = ";
     public static final String USERS_NOTFOUND_WITH_EMAIL = "Users não encontrada com email = ";
     public static final String USERS_NOTFOUND_WITH_ENCODEDPASSPHRASE = "Users não encontrada com encodedPassPhrase = ";
+    public static final String USERS_NOTFOUND_WITH_ENCODED_PWD = "Users não encontrada com encodedPassPhrase = ";
     public static final String USERS_NOTFOUND_WITH_IDUSERUUID = "Users não encontrada com idUserUUID = ";
     public static final String USERS_NOTFOUND_WITH_BIRTHDAY = "Users não encontrada com birthday = ";
     public static final String USERS_NOTFOUND_WITH_STATUS = "Users não encontrada com status = ";
@@ -800,7 +801,7 @@ public class UsersServiceImplTest {
                 ()->usersService.findUsersByEncodedPassPhraseAndStatus("iB33qwruyDzf4M2BKzDyAM7L1XnaAhUmaK6oupvl5aKbfXkYdf", "A"));
 
         // validate
-        Assertions.assertTrue(exception.getMessage().contains(USERS_NOTFOUND_WITH_ENCODEDPASSPHRASE));
+        Assertions.assertTrue(exception.getMessage().contains(USERS_NOTFOUND_WITH_ENCODED_PWD));
     }
     @Test
     public void shouldReturnExistentUsersDTOWhenFindUsersByIdUserUUIDAndStatus() {
@@ -1083,7 +1084,7 @@ public class UsersServiceImplTest {
                 ()->usersService.findUsersByEncodedPassPhraseAndStatus(encodedPassPhraseMock));
 
         // validate
-        Assertions.assertTrue(exception.getMessage().contains(USERS_NOTFOUND_WITH_ENCODEDPASSPHRASE));
+        Assertions.assertTrue(exception.getMessage().contains(USERS_NOTFOUND_WITH_ENCODED_PWD));
         Assertions.assertEquals(404, exception.getHttpStatus().value());
 
     }
