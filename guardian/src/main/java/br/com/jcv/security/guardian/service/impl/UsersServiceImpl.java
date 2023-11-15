@@ -158,7 +158,6 @@ public class UsersServiceImpl implements UsersService
             for (Map.Entry<String,Object> entry : updates.entrySet()) {
                 if(entry.getKey().equalsIgnoreCase(UsersConstantes.NAME)) users.setName((String)entry.getValue());
                 if(entry.getKey().equalsIgnoreCase(UsersConstantes.EMAIL)) users.setEmail((String)entry.getValue());
-                if(entry.getKey().equalsIgnoreCase(UsersConstantes.ENCODEDPASSPHRASE)) users.setEncodedPassPhrase((String)entry.getValue());
                 if(entry.getKey().equalsIgnoreCase(UsersConstantes.ENCODED_PWD)) users.setEncodedPassPhrase((String)entry.getValue());
                 if(entry.getKey().equalsIgnoreCase(UsersConstantes.IDUSERUUID)) users.setIdUserUUID((UUID)entry.getValue());
                 if(entry.getKey().equalsIgnoreCase(UsersConstantes.BIRTHDAY)) users.setBirthday((LocalDate)entry.getValue());
@@ -225,7 +224,6 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.ID)) id = Objects.isNull(entry.getValue()) ? null : Long.valueOf(entry.getValue().toString());
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.NAME)) name = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.EMAIL)) email = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
-        if(entry.getKey().equalsIgnoreCase(UsersConstantes.ENCODEDPASSPHRASE)) encodedPassPhrase = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.ENCODED_PWD)) encodedPassPhrase = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.IDUSERUUID)) idUserUUID = Objects.isNull(entry.getValue()) ? null : UUID.fromString(entry.getValue().toString());
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.BIRTHDAY)) birthday = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
@@ -280,7 +278,6 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.ID)) id = Objects.isNull(entry.getValue()) ? null : Long.valueOf(entry.getValue().toString());
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.NAME)) name = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.EMAIL)) email = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
-        if(entry.getKey().equalsIgnoreCase(UsersConstantes.ENCODEDPASSPHRASE)) encodedPassPhrase = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.ENCODED_PWD)) encodedPassPhrase = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.IDUSERUUID)) idUserUUID = Objects.isNull(entry.getValue()) ? null : UUID.fromString(entry.getValue().toString());
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.BIRTHDAY)) birthday = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();

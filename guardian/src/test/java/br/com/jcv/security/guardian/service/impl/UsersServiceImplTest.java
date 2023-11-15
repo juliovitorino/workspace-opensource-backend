@@ -506,7 +506,7 @@ public class UsersServiceImplTest {
         Map<String, Object> mapUsersDTOMock = new HashMap<>();
         mapUsersDTOMock.put(UsersConstantes.NAME,"EQPIHGcu0eMj2keQyRMHMDvxGFndwTeMCWX9HW0oBwk7yTfaD1");
         mapUsersDTOMock.put(UsersConstantes.EMAIL,"yqmVKbDuVea29MsE6GhvJ6NknX8K1H3W0emLQ0anh4r0nAhspk");
-        mapUsersDTOMock.put(UsersConstantes.ENCODEDPASSPHRASE,"KVbkCL7dH4X6WFhiiu128S11YMeaf3MJOKuLFlAuky4jDAIuUC");
+        mapUsersDTOMock.put(UsersConstantes.ENCODED_PWD,"KVbkCL7dH4X6WFhiiu128S11YMeaf3MJOKuLFlAuky4jDAIuUC");
         mapUsersDTOMock.put(UsersConstantes.IDUSERUUID,UUID.fromString("3d33e12c-7470-4e70-8544-40ffe52e9387"));
         mapUsersDTOMock.put(UsersConstantes.BIRTHDAY,LocalDate.of(1450,1,21));
         mapUsersDTOMock.put(UsersConstantes.STATUS,"aydjFy2rPk2bLffww5MJdwWBuHNsBS1AN0tCX0Hzk0gdnfdW5z");
@@ -540,7 +540,7 @@ public class UsersServiceImplTest {
         Map<String, Object> mapUsersDTOMock = new HashMap<>();
         mapUsersDTOMock.put(UsersConstantes.NAME,"IpXn49xqPD0bcaPbByNhxhJqiXNsGeRr854dIE6nt1nJDAI0Id");
         mapUsersDTOMock.put(UsersConstantes.EMAIL,"Q7nJOcElQhI1vB0lIF1Sfu8bow0F8BQq0dqo8uB50BN7FmbeUL");
-        mapUsersDTOMock.put(UsersConstantes.ENCODEDPASSPHRASE,"IOENPl4HRtqf3JLwhxJS5wSF10lK5QID65SaF0DfQSIAwHngvC");
+        mapUsersDTOMock.put(UsersConstantes.ENCODED_PWD,"IOENPl4HRtqf3JLwhxJS5wSF10lK5QID65SaF0DfQSIAwHngvC");
         mapUsersDTOMock.put(UsersConstantes.IDUSERUUID,UUID.fromString("b149825d-580f-4a01-8aa8-105af39f1a14"));
         mapUsersDTOMock.put(UsersConstantes.BIRTHDAY,LocalDate.of(505,5,23));
         mapUsersDTOMock.put(UsersConstantes.STATUS,"4NwggrMT0lL0YP5Ge8qJuxIOiUET8RyKdJiDPIzrc0TtNQXrYG");
