@@ -68,7 +68,7 @@ public class UsersServiceImplTest {
 
     public static final String USERS_NOTFOUND_WITH_ID = "Users não encontrada com id = ";
     public static final String USERS_NOTFOUND_WITH_NAME = "Users não encontrada com name = ";
-    public static final String USERS_NOTFOUND_WITH_ENCODEDPASSPHRASE = "Users não encontrada com encodedPassPhrase = ";
+    public static final String USERS_NOTFOUND_WITH_ENCODED_PWD = "Users não encontrada com encodedPassPhrase = ";
     public static final String USERS_NOTFOUND_WITH_IDUSERUUID = "Users não encontrada com idUserUUID = ";
     public static final String USERS_NOTFOUND_WITH_BIRTHDAY = "Users não encontrada com birthday = ";
     public static final String USERS_NOTFOUND_WITH_STATUS = "Users não encontrada com status = ";
@@ -488,7 +488,7 @@ public class UsersServiceImplTest {
         // scenario
         Map<String, Object> mapUsersDTOMock = new HashMap<>();
         mapUsersDTOMock.put(UsersConstantes.NAME,"ruJyTkvSsLvMb7UVuVtKEpAeEw3PEu2WWTkyvfBuU7Dmzgvq2v");
-        mapUsersDTOMock.put(UsersConstantes.ENCODEDPASSPHRASE,"YUtdV1BObI6KLajwcSm9u7u8hLN64WpkJ4tSEMReIdfHMDlKop");
+        mapUsersDTOMock.put(UsersConstantes.ENCODED_PWD,"YUtdV1BObI6KLajwcSm9u7u8hLN64WpkJ4tSEMReIdfHMDlKop");
         mapUsersDTOMock.put(UsersConstantes.IDUSERUUID,UUID.fromString("f50dc708-bfbc-4533-83a4-2eaef1b6b841"));
         mapUsersDTOMock.put(UsersConstantes.BIRTHDAY,LocalDate.of(6076,5,3));
         mapUsersDTOMock.put(UsersConstantes.STATUS,"5vOPl2q4Kcx2VGI9i0AFKaK0jGcS3Brk30PErz195ilO5CA1YF");
@@ -520,7 +520,7 @@ public class UsersServiceImplTest {
         // scenario
         Map<String, Object> mapUsersDTOMock = new HashMap<>();
         mapUsersDTOMock.put(UsersConstantes.NAME,"hzt6u1b3Lw9f7iEjpy65rAhS3sAMJutXDJ0UvLdNoyjLcoW0F9");
-        mapUsersDTOMock.put(UsersConstantes.ENCODEDPASSPHRASE,"cxumwIogBnzbjkdF4IwCiDCiB9u098F6U7nFoQ0yhJzUhNIAXi");
+        mapUsersDTOMock.put(UsersConstantes.ENCODED_PWD,"cxumwIogBnzbjkdF4IwCiDCiB9u098F6U7nFoQ0yhJzUhNIAXi");
         mapUsersDTOMock.put(UsersConstantes.IDUSERUUID,UUID.fromString("e53ccf8a-57cf-4e2e-abad-260c7b44da60"));
         mapUsersDTOMock.put(UsersConstantes.BIRTHDAY,LocalDate.of(1424,3,22));
         mapUsersDTOMock.put(UsersConstantes.STATUS,"LJInij4ymigXIKHSJS0oWjcbdmiaWqSto547jazIUHNSLg7PG8");
@@ -738,7 +738,7 @@ public class UsersServiceImplTest {
                 ()->usersService.findUsersByEncodedPassPhraseAndStatus("7AUIxYXm5n7xXhYvziemAzanXfLhA8s1OkM1NIFOv1QvROXMxJ", "A"));
 
         // validate
-        Assertions.assertTrue(exception.getMessage().contains(USERS_NOTFOUND_WITH_ENCODEDPASSPHRASE));
+        Assertions.assertTrue(exception.getMessage().contains(USERS_NOTFOUND_WITH_ENCODED_PWD));
     }
     @Test
     public void shouldReturnExistentUsersDTOWhenFindUsersByIdUserUUIDAndStatus() {
@@ -967,7 +967,7 @@ public class UsersServiceImplTest {
                 ()->usersService.findUsersByEncodedPassPhraseAndStatus(encodedPassPhraseMock));
 
         // validate
-        Assertions.assertTrue(exception.getMessage().contains(USERS_NOTFOUND_WITH_ENCODEDPASSPHRASE));
+        Assertions.assertTrue(exception.getMessage().contains(USERS_NOTFOUND_WITH_ENCODED_PWD));
         Assertions.assertEquals(404, exception.getHttpStatus().value());
 
     }

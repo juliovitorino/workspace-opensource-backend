@@ -22,19 +22,17 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 package br.com.jcv.security.guardian.constantes;
 
 /**
-* UsersConstantes - Constantes para geral das Entity e DTO
+* GApplicationConstantes - Constantes para geral das Entity e DTO
 *
-* @author Users
-* @since Tue Nov 14 17:22:09 BRT 2023
+* @author GApplication
+* @since Wed Nov 15 11:12:12 BRT 2023
 */
 
-public class UsersConstantes {
-    private UsersConstantes() {}
+public class GApplicationConstantes {
+    private GApplicationConstantes() {}
     public static final String ID = "id";
     public static final String NAME = "name";
-    public static final String ENCODED_PWD = "encodedPassPhrase";
-    public static final String IDUSERUUID = "idUserUUID";
-    public static final String BIRTHDAY = "birthday";
+    public static final String EXTERNALCODEUUID = "externalCodeUUID";
     public static final String STATUS = "status";
     public static final String DATECREATED = "dateCreated";
     public static final String DATEUPDATED = "dateUpdated";

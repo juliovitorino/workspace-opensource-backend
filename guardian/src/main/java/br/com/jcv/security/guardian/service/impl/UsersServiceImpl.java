@@ -65,7 +65,7 @@ public class UsersServiceImpl implements UsersService
 {
     private static final String USERS_NOTFOUND_WITH_ID = "Users não encontrada com id = ";
     private static final String USERS_NOTFOUND_WITH_NAME = "Users não encontrada com name = ";
-    private static final String USERS_NOTFOUND_WITH_ENCODEDPASSPHRASE = "Users não encontrada com encodedPassPhrase = ";
+    private static final String USERS_NOTFOUND_WITH_ENCODED_PWD = "Users não encontrada com encodedPassPhrase = ";
     private static final String USERS_NOTFOUND_WITH_IDUSERUUID = "Users não encontrada com idUserUUID = ";
     private static final String USERS_NOTFOUND_WITH_BIRTHDAY = "Users não encontrada com birthday = ";
     private static final String USERS_NOTFOUND_WITH_STATUS = "Users não encontrada com status = ";
@@ -148,7 +148,7 @@ public class UsersServiceImpl implements UsersService
 
             for (Map.Entry<String,Object> entry : updates.entrySet()) {
                 if(entry.getKey().equalsIgnoreCase(UsersConstantes.NAME)) users.setName((String)entry.getValue());
-                if(entry.getKey().equalsIgnoreCase(UsersConstantes.ENCODEDPASSPHRASE)) users.setEncodedPassPhrase((String)entry.getValue());
+                if(entry.getKey().equalsIgnoreCase(UsersConstantes.ENCODED_PWD)) users.setEncodedPassPhrase((String)entry.getValue());
                 if(entry.getKey().equalsIgnoreCase(UsersConstantes.IDUSERUUID)) users.setIdUserUUID((UUID)entry.getValue());
                 if(entry.getKey().equalsIgnoreCase(UsersConstantes.BIRTHDAY)) users.setBirthday((LocalDate)entry.getValue());
 
@@ -212,7 +212,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     for (Map.Entry<String,Object> entry : filtro.getCamposFiltro().entrySet()) {
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.ID)) id = Objects.isNull(entry.getValue()) ? null : Long.valueOf(entry.getValue().toString());
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.NAME)) name = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
-        if(entry.getKey().equalsIgnoreCase(UsersConstantes.ENCODEDPASSPHRASE)) encodedPassPhrase = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
+        if(entry.getKey().equalsIgnoreCase(UsersConstantes.ENCODED_PWD)) encodedPassPhrase = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.IDUSERUUID)) idUserUUID = Objects.isNull(entry.getValue()) ? null : UUID.fromString(entry.getValue().toString());
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.BIRTHDAY)) birthday = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.STATUS)) status = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
@@ -263,7 +263,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
         for (Map.Entry<String,Object> entry : filtro.getCamposFiltro().entrySet()) {
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.ID)) id = Objects.isNull(entry.getValue()) ? null : Long.valueOf(entry.getValue().toString());
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.NAME)) name = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
-        if(entry.getKey().equalsIgnoreCase(UsersConstantes.ENCODEDPASSPHRASE)) encodedPassPhrase = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
+        if(entry.getKey().equalsIgnoreCase(UsersConstantes.ENCODED_PWD)) encodedPassPhrase = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.IDUSERUUID)) idUserUUID = Objects.isNull(entry.getValue()) ? null : UUID.fromString(entry.getValue().toString());
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.BIRTHDAY)) birthday = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.STATUS)) status = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
@@ -425,9 +425,9 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
             Optional.ofNullable( usersRepository
                 .findById(maxId)
                 .orElseThrow(
-                    () -> new UsersNotFoundException(USERS_NOTFOUND_WITH_ENCODEDPASSPHRASE + encodedPassPhrase,
+                    () -> new UsersNotFoundException(USERS_NOTFOUND_WITH_ENCODED_PWD + encodedPassPhrase,
                         HttpStatus.NOT_FOUND,
-                        USERS_NOTFOUND_WITH_ENCODEDPASSPHRASE + encodedPassPhrase))
+                        USERS_NOTFOUND_WITH_ENCODED_PWD + encodedPassPhrase))
                 );
         return usersData.map(this::toDTO).orElse(null);
     }

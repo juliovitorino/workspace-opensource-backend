@@ -68,7 +68,7 @@ public interface UsersRepository extends JpaRepository<Users, Long>
 Page<Users> findUsersByFilter(Pageable pageable,
         @Param(UsersConstantes.ID) Long id,
         @Param(UsersConstantes.NAME) String name,
-        @Param(UsersConstantes.ENCODEDPASSPHRASE) String encodedPassPhrase,
+        @Param(UsersConstantes.ENCODED_PWD) String encodedPassPhrase,
         @Param(UsersConstantes.IDUSERUUID) UUID idUserUUID,
         @Param(UsersConstantes.BIRTHDAY) String birthday,
         @Param(UsersConstantes.STATUS) String status,
@@ -91,7 +91,7 @@ Page<Users> findUsersByFilter(Pageable pageable,
 List<Users> findUsersByFilter(
         @Param(UsersConstantes.ID) Long id,
         @Param(UsersConstantes.NAME) String name,
-        @Param(UsersConstantes.ENCODEDPASSPHRASE) String encodedPassPhrase,
+        @Param(UsersConstantes.ENCODED_PWD) String encodedPassPhrase,
         @Param(UsersConstantes.IDUSERUUID) UUID idUserUUID,
         @Param(UsersConstantes.BIRTHDAY) String birthday,
         @Param(UsersConstantes.STATUS) String status,
@@ -121,7 +121,7 @@ List<Users> findUsersByFilter(
      void updateNameById(@Param("id") Long id, @Param(UsersConstantes.NAME) String name);
      @Modifying
      @Query(value = "UPDATE tb_user SET tx_encoded_pass_phrase = :encodedPassPhrase, dt_updated = current_timestamp  WHERE id_user = :id", nativeQuery = true)
-     void updateEncodedPassPhraseById(@Param("id") Long id, @Param(UsersConstantes.ENCODEDPASSPHRASE) String encodedPassPhrase);
+     void updateEncodedPassPhraseById(@Param("id") Long id, @Param(UsersConstantes.ENCODED_PWD) String encodedPassPhrase);
      @Modifying
      @Query(value = "UPDATE tb_user SET id_user_uuid = :idUserUUID, dt_updated = current_timestamp  WHERE id_user = :id", nativeQuery = true)
      void updateIdUserUUIDById(@Param("id") Long id, @Param(UsersConstantes.IDUSERUUID) UUID idUserUUID);
@@ -182,7 +182,7 @@ List<Users> findUsersByFilter(
     void deleteByName(@Param(UsersConstantes.NAME) String name);
     @Modifying
     @Query(value = "DELETE FROM tb_user WHERE tx_encoded_pass_phrase = :encodedPassPhrase", nativeQuery = true)
-    void deleteByEncodedPassPhrase(@Param(UsersConstantes.ENCODEDPASSPHRASE) String encodedPassPhrase);
+    void deleteByEncodedPassPhrase(@Param(UsersConstantes.ENCODED_PWD) String encodedPassPhrase);
     @Modifying
     @Query(value = "DELETE FROM tb_user WHERE id_user_uuid = :idUserUUID", nativeQuery = true)
     void deleteByIdUserUUID(@Param(UsersConstantes.IDUSERUUID) UUID idUserUUID);
