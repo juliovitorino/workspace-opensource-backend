@@ -326,7 +326,7 @@ public class UsersCommoditieController
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
     @GetMapping(params = "encodedPassPhrase")
-    public ResponseEntity<UsersDTO> findUsersByEncodedPassPhrase(@RequestParam(UsersConstantes.ENCODEDPASSPHRASE) String encodedPassPhrase) {
+    public ResponseEntity<UsersDTO> findUsersByEncodedPassPhrase(@RequestParam(UsersConstantes.ENCODED_PWD) String encodedPassPhrase) {
         try{
             UsersDTO usersDTO = usersService.findUsersByEncodedPassPhraseAndStatus(encodedPassPhrase, GenericStatusEnums.ATIVO.getShortValue());
             return Objects.nonNull(usersDTO)
