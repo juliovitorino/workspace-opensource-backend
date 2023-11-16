@@ -19,22 +19,29 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 
-package br.com.jcv.security.guardian.constantes;
+package br.com.jcv.security.guardian.exception;
 
-/**
-* UsersConstantes - Constantes para geral das Entity e DTO
-*
-* @author Users
-* @since Thu Nov 16 09:03:29 BRT 2023
-*/
+import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
 
-public class UsersConstantes {
-    private UsersConstantes() {}
-    public static final String ID = "id";
-    public static final String NAME = "name";
-    public static final String BIRTHDAY = "birthday";
-    public static final String STATUS = "status";
-    public static final String DATECREATED = "dateCreated";
-    public static final String DATEUPDATED = "dateUpdated";
+import java.util.HashMap;
+import org.springframework.http.HttpStatus;
+import java.util.Map;
 
+
+public class ApplicationUserNotFoundException extends CommoditieBaseException {
+    public ApplicationUserNotFoundException(String input, HttpStatus httpStatus, String msgcode, Map<String,String> mapParams) {
+        super(input, httpStatus, msgcode, mapParams);
+    }
+
+    public ApplicationUserNotFoundException(String input, HttpStatus httpStatus, String msgcode) {
+        this(input, httpStatus, msgcode, null);
+    }
+
+    public ApplicationUserNotFoundException(String input, HttpStatus httpStatus) {
+      this(input, httpStatus, null, new HashMap<>());
+    }
+
+    public ApplicationUserNotFoundException(String input, int httpStatus) {
+      this(input, HttpStatus.valueOf(httpStatus), null, new HashMap<>());
+    }
 }

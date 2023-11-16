@@ -10,5 +10,7 @@ public abstract class AbstractGuardianBusinessService {
     @Autowired protected Gson gson;
     @Autowired protected SessionStateService sessionStateService;
     @Autowired protected UsersService usersService;
+    @Autowired protected GApplicationService gApplicationService;
+    @Autowired protected ApplicationUserService applicationUserService;
     @Autowired protected DateTime dateTime;
 }

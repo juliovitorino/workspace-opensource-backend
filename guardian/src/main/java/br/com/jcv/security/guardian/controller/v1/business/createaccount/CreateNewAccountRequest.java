@@ -13,6 +13,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,6 +24,8 @@ import java.time.LocalDate;
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CreateNewAccountRequest implements Serializable {
+    @NotNull
+    private UUID externalApplicationUUID;
     @NotEmpty
     private String email;
     @NotEmpty

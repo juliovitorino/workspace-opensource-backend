@@ -44,12 +44,7 @@ import org.springframework.transaction.annotation.Propagation;
 
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
@@ -62,7 +57,7 @@ import lombok.extern.slf4j.Slf4j;
 * UsersServiceImpl - Implementation for Users interface
 *
 * @author Users
-* @since Tue Nov 14 17:22:08 BRT 2023
+* @since Thu Nov 16 09:03:28 BRT 2023
 */
 
 
@@ -72,10 +67,6 @@ public class UsersServiceImpl implements UsersService
 {
     private static final String USERS_NOTFOUND_WITH_ID = "Users não encontrada com id = ";
     private static final String USERS_NOTFOUND_WITH_NAME = "Users não encontrada com name = ";
-    private static final String USERS_NOTFOUND_WITH_EMAIL = "Users não encontrada com email = ";
-    private static final String USERS_NOTFOUND_WITH_ENCODEDPASSPHRASE = "Users não encontrada com encodedPassPhrase = ";
-    private static final String USERS_NOTFOUND_WITH_ENCODED_PWD = "Users não encontrada com encodedPassPhrase = ";
-    private static final String USERS_NOTFOUND_WITH_IDUSERUUID = "Users não encontrada com idUserUUID = ";
     private static final String USERS_NOTFOUND_WITH_BIRTHDAY = "Users não encontrada com birthday = ";
     private static final String USERS_NOTFOUND_WITH_STATUS = "Users não encontrada com status = ";
     private static final String USERS_NOTFOUND_WITH_DATECREATED = "Users não encontrada com dateCreated = ";
@@ -157,9 +148,6 @@ public class UsersServiceImpl implements UsersService
 
             for (Map.Entry<String,Object> entry : updates.entrySet()) {
                 if(entry.getKey().equalsIgnoreCase(UsersConstantes.NAME)) users.setName((String)entry.getValue());
-                if(entry.getKey().equalsIgnoreCase(UsersConstantes.EMAIL)) users.setEmail((String)entry.getValue());
-                if(entry.getKey().equalsIgnoreCase(UsersConstantes.ENCODED_PWD)) users.setEncodedPassPhrase((String)entry.getValue());
-                if(entry.getKey().equalsIgnoreCase(UsersConstantes.IDUSERUUID)) users.setIdUserUUID((UUID)entry.getValue());
                 if(entry.getKey().equalsIgnoreCase(UsersConstantes.BIRTHDAY)) users.setBirthday((LocalDate)entry.getValue());
 
         }
@@ -211,9 +199,6 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     List<Users> lstUsers;
     Long id = null;
     String name = null;
-    String email = null;
-    String encodedPassPhrase = null;
-    UUID idUserUUID = null;
     String birthday = null;
     String status = null;
     String dateCreated = null;
@@ -223,9 +208,6 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     for (Map.Entry<String,Object> entry : filtro.getCamposFiltro().entrySet()) {
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.ID)) id = Objects.isNull(entry.getValue()) ? null : Long.valueOf(entry.getValue().toString());
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.NAME)) name = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
-        if(entry.getKey().equalsIgnoreCase(UsersConstantes.EMAIL)) email = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
-        if(entry.getKey().equalsIgnoreCase(UsersConstantes.ENCODED_PWD)) encodedPassPhrase = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
-        if(entry.getKey().equalsIgnoreCase(UsersConstantes.IDUSERUUID)) idUserUUID = Objects.isNull(entry.getValue()) ? null : UUID.fromString(entry.getValue().toString());
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.BIRTHDAY)) birthday = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.STATUS)) status = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.DATECREATED)) dateCreated = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
@@ -237,9 +219,6 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     Page<Users> paginaUsers = usersRepository.findUsersByFilter(paging,
         id
         ,name
-        ,email
-        ,encodedPassPhrase
-        ,idUserUUID
         ,birthday
         ,status
         ,dateCreated
@@ -266,9 +245,6 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     public List<UsersDTO> findAllByFilter(RequestFilter filtro) {
     Long id = null;
     String name = null;
-    String email = null;
-    String encodedPassPhrase = null;
-    UUID idUserUUID = null;
     String birthday = null;
     String status = null;
     String dateCreated = null;
@@ -277,9 +253,6 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
         for (Map.Entry<String,Object> entry : filtro.getCamposFiltro().entrySet()) {
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.ID)) id = Objects.isNull(entry.getValue()) ? null : Long.valueOf(entry.getValue().toString());
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.NAME)) name = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
-        if(entry.getKey().equalsIgnoreCase(UsersConstantes.EMAIL)) email = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
-        if(entry.getKey().equalsIgnoreCase(UsersConstantes.ENCODED_PWD)) encodedPassPhrase = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
-        if(entry.getKey().equalsIgnoreCase(UsersConstantes.IDUSERUUID)) idUserUUID = Objects.isNull(entry.getValue()) ? null : UUID.fromString(entry.getValue().toString());
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.BIRTHDAY)) birthday = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.STATUS)) status = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.DATECREATED)) dateCreated = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
@@ -290,9 +263,6 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
         List<Users> lstUsers = usersRepository.findUsersByFilter(
             id
             ,name
-            ,email
-            ,encodedPassPhrase
-            ,idUserUUID
             ,birthday
             ,status
             ,dateCreated
@@ -320,33 +290,6 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     )
     public List<UsersDTO> findAllUsersByNameAndStatus(String name, String status) {
         return usersRepository.findAllByNameAndStatus(name, status).stream().map(this::toDTO).collect(Collectors.toList());
-    }
-    @Override
-    @Transactional(transactionManager="transactionManager",
-    propagation = Propagation.REQUIRED,
-    rollbackFor = Throwable.class,
-    noRollbackFor = UsersNotFoundException.class
-    )
-    public List<UsersDTO> findAllUsersByEmailAndStatus(String email, String status) {
-        return usersRepository.findAllByEmailAndStatus(email, status).stream().map(this::toDTO).collect(Collectors.toList());
-    }
-    @Override
-    @Transactional(transactionManager="transactionManager",
-    propagation = Propagation.REQUIRED,
-    rollbackFor = Throwable.class,
-    noRollbackFor = UsersNotFoundException.class
-    )
-    public List<UsersDTO> findAllUsersByEncodedPassPhraseAndStatus(String encodedPassPhrase, String status) {
-        return usersRepository.findAllByEncodedPassPhraseAndStatus(encodedPassPhrase, status).stream().map(this::toDTO).collect(Collectors.toList());
-    }
-    @Override
-    @Transactional(transactionManager="transactionManager",
-    propagation = Propagation.REQUIRED,
-    rollbackFor = Throwable.class,
-    noRollbackFor = UsersNotFoundException.class
-    )
-    public List<UsersDTO> findAllUsersByIdUserUUIDAndStatus(UUID idUserUUID, String status) {
-        return usersRepository.findAllByIdUserUUIDAndStatus(idUserUUID, status).stream().map(this::toDTO).collect(Collectors.toList());
     }
     @Override
     @Transactional(transactionManager="transactionManager",
@@ -435,96 +378,6 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     )
     public UsersDTO findUsersByNameAndStatus(String name) {
         return this.findUsersByNameAndStatus(name, GenericStatusEnums.ATIVO.getShortValue());
-    }
-
-    @Override
-    @Transactional(transactionManager="transactionManager",
-    propagation = Propagation.REQUIRED,
-    rollbackFor = Throwable.class,
-    noRollbackFor = UsersNotFoundException.class
-    )
-    public UsersDTO findUsersByEmailAndStatus(String email, String status) {
-        Long maxId = usersRepository.loadMaxIdByEmailAndStatus(email, status);
-        if(maxId == null) maxId = 0L;
-        Optional<Users> usersData =
-            Optional.ofNullable( usersRepository
-                .findById(maxId)
-                .orElseThrow(
-                    () -> new UsersNotFoundException(USERS_NOTFOUND_WITH_EMAIL + email,
-                        HttpStatus.NOT_FOUND,
-                        USERS_NOTFOUND_WITH_EMAIL + email))
-                );
-        return usersData.map(this::toDTO).orElse(null);
-    }
-
-    @Override
-    @Transactional(transactionManager="transactionManager",
-    propagation = Propagation.REQUIRED,
-    rollbackFor = Throwable.class,
-    noRollbackFor = UsersNotFoundException.class
-    )
-    public UsersDTO findUsersByEmailAndStatus(String email) {
-        return this.findUsersByEmailAndStatus(email, GenericStatusEnums.ATIVO.getShortValue());
-    }
-
-    @Override
-    @Transactional(transactionManager="transactionManager",
-    propagation = Propagation.REQUIRED,
-    rollbackFor = Throwable.class,
-    noRollbackFor = UsersNotFoundException.class
-    )
-    public UsersDTO findUsersByEncodedPassPhraseAndStatus(String encodedPassPhrase, String status) {
-        Long maxId = usersRepository.loadMaxIdByEncodedPassPhraseAndStatus(encodedPassPhrase, status);
-        if(maxId == null) maxId = 0L;
-        Optional<Users> usersData =
-            Optional.ofNullable( usersRepository
-                .findById(maxId)
-                .orElseThrow(
-                    () -> new UsersNotFoundException(USERS_NOTFOUND_WITH_ENCODED_PWD + encodedPassPhrase,
-                        HttpStatus.NOT_FOUND,
-                        USERS_NOTFOUND_WITH_ENCODED_PWD + encodedPassPhrase))
-                );
-        return usersData.map(this::toDTO).orElse(null);
-    }
-
-    @Override
-    @Transactional(transactionManager="transactionManager",
-    propagation = Propagation.REQUIRED,
-    rollbackFor = Throwable.class,
-    noRollbackFor = UsersNotFoundException.class
-    )
-    public UsersDTO findUsersByEncodedPassPhraseAndStatus(String encodedPassPhrase) {
-        return this.findUsersByEncodedPassPhraseAndStatus(encodedPassPhrase, GenericStatusEnums.ATIVO.getShortValue());
-    }
-
-    @Override
-    @Transactional(transactionManager="transactionManager",
-    propagation = Propagation.REQUIRED,
-    rollbackFor = Throwable.class,
-    noRollbackFor = UsersNotFoundException.class
-    )
-    public UsersDTO findUsersByIdUserUUIDAndStatus(UUID idUserUUID, String status) {
-        Long maxId = usersRepository.loadMaxIdByIdUserUUIDAndStatus(idUserUUID, status);
-        if(maxId == null) maxId = 0L;
-        Optional<Users> usersData =
-            Optional.ofNullable( usersRepository
-                .findById(maxId)
-                .orElseThrow(
-                    () -> new UsersNotFoundException(USERS_NOTFOUND_WITH_IDUSERUUID + idUserUUID,
-                        HttpStatus.NOT_FOUND,
-                        USERS_NOTFOUND_WITH_IDUSERUUID + idUserUUID))
-                );
-        return usersData.map(this::toDTO).orElse(null);
-    }
-
-    @Override
-    @Transactional(transactionManager="transactionManager",
-    propagation = Propagation.REQUIRED,
-    rollbackFor = Throwable.class,
-    noRollbackFor = UsersNotFoundException.class
-    )
-    public UsersDTO findUsersByIdUserUUIDAndStatus(UUID idUserUUID) {
-        return this.findUsersByIdUserUUIDAndStatus(idUserUUID, GenericStatusEnums.ATIVO.getShortValue());
     }
 
     @Override
@@ -632,36 +485,6 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     transactionManager = "transactionManager",
     propagation = Propagation.REQUIRED,
     rollbackFor = Throwable.class)
-    public UsersDTO updateEmailById(Long id, String email) {
-        findById(id);
-        usersRepository.updateEmailById(id, email);
-        return findById(id);
-    }
-    @Override
-    @Transactional(
-    transactionManager = "transactionManager",
-    propagation = Propagation.REQUIRED,
-    rollbackFor = Throwable.class)
-    public UsersDTO updateEncodedPassPhraseById(Long id, String encodedPassPhrase) {
-        findById(id);
-        usersRepository.updateEncodedPassPhraseById(id, encodedPassPhrase);
-        return findById(id);
-    }
-    @Override
-    @Transactional(
-    transactionManager = "transactionManager",
-    propagation = Propagation.REQUIRED,
-    rollbackFor = Throwable.class)
-    public UsersDTO updateIdUserUUIDById(Long id, UUID idUserUUID) {
-        findById(id);
-        usersRepository.updateIdUserUUIDById(id, idUserUUID);
-        return findById(id);
-    }
-    @Override
-    @Transactional(
-    transactionManager = "transactionManager",
-    propagation = Propagation.REQUIRED,
-    rollbackFor = Throwable.class)
     public UsersDTO updateBirthdayById(Long id, LocalDate birthday) {
         findById(id);
         usersRepository.updateBirthdayById(id, birthday);
@@ -673,33 +496,24 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
         UsersDTO usersDTO = new UsersDTO();
                 usersDTO.setId(users.getId());
                 usersDTO.setName(users.getName());
-                usersDTO.setEmail(users.getEmail());
-                usersDTO.setEncodedPassPhrase(users.getEncodedPassPhrase());
-                usersDTO.setIdUserUUID(users.getIdUserUUID());
                 usersDTO.setBirthday(users.getBirthday());
-                usersDTO.setActivationCode(users.getActivationCode());
-                usersDTO.setDueDateActivation(users.getDueDateActivation());
-                usersDTO.setUrlTokenActivation(users.getUrlTokenActivation());
                 usersDTO.setStatus(users.getStatus());
                 usersDTO.setDateCreated(users.getDateCreated());
                 usersDTO.setDateUpdated(users.getDateUpdated());
+
         return usersDTO;
     }
 
     public Users toEntity(UsersDTO usersDTO) {
-        Users users = new Users();
+        Users users = null;
+        users = new Users();
                     users.setId(usersDTO.getId());
                     users.setName(usersDTO.getName());
-                    users.setEmail(usersDTO.getEmail());
-                    users.setEncodedPassPhrase(usersDTO.getEncodedPassPhrase());
-                    users.setIdUserUUID(usersDTO.getIdUserUUID());
                     users.setBirthday(usersDTO.getBirthday());
-                    users.setActivationCode(usersDTO.getActivationCode());
-                    users.setDueDateActivation(usersDTO.getDueDateActivation());
-                    users.setUrlTokenActivation(usersDTO.getUrlTokenActivation());
                     users.setStatus(usersDTO.getStatus());
                     users.setDateCreated(usersDTO.getDateCreated());
                     users.setDateUpdated(usersDTO.getDateUpdated());
+
         return users;
     }
 }

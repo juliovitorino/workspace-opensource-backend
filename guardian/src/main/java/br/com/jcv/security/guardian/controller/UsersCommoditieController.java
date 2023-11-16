@@ -56,7 +56,7 @@ import lombok.extern.slf4j.Slf4j;
 * UsersCommoditieController - Controller for Users API
 *
 * @author Users
-* @since Tue Nov 14 19:09:16 BRT 2023
+* @since Thu Nov 16 09:03:29 BRT 2023
 */
 
 @Slf4j
@@ -309,66 +309,6 @@ public class UsersCommoditieController
     public ResponseEntity<UsersDTO> findUsersByName(@RequestParam(UsersConstantes.NAME) String name) {
         try{
             UsersDTO usersDTO = usersService.findUsersByNameAndStatus(name, GenericStatusEnums.ATIVO.getShortValue());
-            return Objects.nonNull(usersDTO)
-                ? new ResponseEntity<>(usersDTO, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (UsersNotFoundException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch(CommoditieBaseException e) {
-            return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
-        } catch(Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo Users foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo Users foi executado com sucesso"),
-            @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
-    })
-    @GetMapping(params = "email")
-    public ResponseEntity<UsersDTO> findUsersByEmail(@RequestParam(UsersConstantes.EMAIL) String email) {
-        try{
-            UsersDTO usersDTO = usersService.findUsersByEmailAndStatus(email, GenericStatusEnums.ATIVO.getShortValue());
-            return Objects.nonNull(usersDTO)
-                ? new ResponseEntity<>(usersDTO, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (UsersNotFoundException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch(CommoditieBaseException e) {
-            return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
-        } catch(Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo Users foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo Users foi executado com sucesso"),
-            @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
-    })
-    @GetMapping(params = "encodedPassPhrase")
-    public ResponseEntity<UsersDTO> findUsersByEncodedPassPhrase(@RequestParam(UsersConstantes.ENCODED_PWD) String encodedPassPhrase) {
-        try{
-            UsersDTO usersDTO = usersService.findUsersByEncodedPassPhraseAndStatus(encodedPassPhrase, GenericStatusEnums.ATIVO.getShortValue());
-            return Objects.nonNull(usersDTO)
-                ? new ResponseEntity<>(usersDTO, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (UsersNotFoundException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch(CommoditieBaseException e) {
-            return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
-        } catch(Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo Users foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo Users foi executado com sucesso"),
-            @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
-    })
-    @GetMapping(params = "idUserUUID")
-    public ResponseEntity<UsersDTO> findUsersByIdUserUUID(@RequestParam(UsersConstantes.IDUSERUUID) UUID idUserUUID) {
-        try{
-            UsersDTO usersDTO = usersService.findUsersByIdUserUUIDAndStatus(idUserUUID, GenericStatusEnums.ATIVO.getShortValue());
             return Objects.nonNull(usersDTO)
                 ? new ResponseEntity<>(usersDTO, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);

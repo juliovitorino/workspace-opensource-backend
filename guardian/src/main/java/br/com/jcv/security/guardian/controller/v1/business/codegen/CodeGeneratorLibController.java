@@ -3,6 +3,7 @@ package br.com.jcv.security.guardian.controller.v1.business.codegen;
 import br.com.jcv.codegen.codegenerator.dto.WritableCode;
 import br.com.jcv.codegen.codegenerator.exception.CodeGeneratorFolderStructureNotFound;
 import br.com.jcv.codegen.codegenerator.factory.codegen.ICodeGeneratorBatch;
+import br.com.jcv.security.guardian.model.ApplicationUser;
 import br.com.jcv.security.guardian.model.GApplication;
 import br.com.jcv.security.guardian.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +27,15 @@ public class CodeGeneratorLibController {
 
 //            List<WritableCode> BetCodes = generatorMainStream.generate(SessionState.class);
 //            generatorMainStream.flushCode(BetCodes);
-//            List<WritableCode> codes = generatorMainStream.generate(Users.class);
+//
+//            List<WritableCode> codes = generatorMainStream.generate(GApplication.class);
 //            generatorMainStream.flushCode(codes);
 
-            List<WritableCode> codes = generatorMainStream.generate(GApplication.class);
+            List<WritableCode> codes = generatorMainStream.generate(Users.class);
             generatorMainStream.flushCode(codes);
+
+            List<WritableCode> auCode = generatorMainStream.generate(ApplicationUser.class);
+            generatorMainStream.flushCode(auCode);
 
             return ResponseEntity.ok().build();
         } catch(CodeGeneratorFolderStructureNotFound e) {
