@@ -50,14 +50,6 @@ public class UsersModelBuilder {
         this.users.setName(name);
         return this;
     }
-    public UsersModelBuilder encodedPassPhrase(String encodedPassPhrase){
-        this.users.setEncodedPassPhrase(encodedPassPhrase);
-        return this;
-    }
-    public UsersModelBuilder idUserUUID(UUID idUserUUID){
-        this.users.setIdUserUUID(idUserUUID);
-        return this;
-    }
     public UsersModelBuilder birthday(LocalDate birthday){
         this.users.setBirthday(birthday);
         return this;

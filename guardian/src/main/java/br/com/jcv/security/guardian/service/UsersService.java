@@ -39,7 +39,7 @@ import java.util.UUID;
 * UsersService - Interface for Users
 *
 * @author Users
-* @since Tue Nov 14 17:22:08 BRT 2023
+* @since Thu Nov 16 09:03:28 BRT 2023
 */
 
 public interface UsersService extends CommoditieBaseService<UsersDTO,Users>
@@ -48,10 +48,6 @@ public interface UsersService extends CommoditieBaseService<UsersDTO,Users>
     UsersDTO findUsersByIdAndStatus(Long id, String status);
     UsersDTO findUsersByNameAndStatus(String name);
     UsersDTO findUsersByNameAndStatus(String name, String status);
-    UsersDTO findUsersByEncodedPassPhraseAndStatus(String encodedPassPhrase);
-    UsersDTO findUsersByEncodedPassPhraseAndStatus(String encodedPassPhrase, String status);
-    UsersDTO findUsersByIdUserUUIDAndStatus(UUID idUserUUID);
-    UsersDTO findUsersByIdUserUUIDAndStatus(UUID idUserUUID, String status);
     UsersDTO findUsersByBirthdayAndStatus(LocalDate birthday);
     UsersDTO findUsersByBirthdayAndStatus(LocalDate birthday, String status);
     UsersDTO findUsersByDateCreatedAndStatus(Date dateCreated);
@@ -61,15 +57,11 @@ public interface UsersService extends CommoditieBaseService<UsersDTO,Users>
 
     List<UsersDTO> findAllUsersByIdAndStatus(Long id, String status);
     List<UsersDTO> findAllUsersByNameAndStatus(String name, String status);
-    List<UsersDTO> findAllUsersByEncodedPassPhraseAndStatus(String encodedPassPhrase, String status);
-    List<UsersDTO> findAllUsersByIdUserUUIDAndStatus(UUID idUserUUID, String status);
     List<UsersDTO> findAllUsersByBirthdayAndStatus(LocalDate birthday, String status);
     List<UsersDTO> findAllUsersByDateCreatedAndStatus(Date dateCreated, String status);
     List<UsersDTO> findAllUsersByDateUpdatedAndStatus(Date dateUpdated, String status);
 
     UsersDTO updateNameById(Long id, String name);
-    UsersDTO updateEncodedPassPhraseById(Long id, String encodedPassPhrase);
-    UsersDTO updateIdUserUUIDById(Long id, UUID idUserUUID);
     UsersDTO updateBirthdayById(Long id, LocalDate birthday);
     UsersDTO updateStatusById(Long id, String status);
 

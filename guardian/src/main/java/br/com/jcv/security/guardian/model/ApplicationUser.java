@@ -23,21 +23,45 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "tb_user")
-public class Users {
+@Table(name = "tb_application_user")
+public class ApplicationUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_user")
+    @Column(name = "id_application_user")
     @CodeGeneratorFieldDescriptor(fieldReferenceInDto = "id",fieldDescription = "primary key")
     private Long id;
 
-    @Column(name = "tx_name")
-    @CodeGeneratorFieldDescriptor(fieldDescription = "User name")
-    private String name;
+    @Column(name = "id_application")
+    @CodeGeneratorFieldDescriptor(fieldDescription = "Application primary key")
+    private Long idApplication;
 
-    @Column(name = "dt_birthday")
-    @CodeGeneratorFieldDescriptor(fieldDescription = "Birthday")
-    private LocalDate birthday;
+    @Column(name = "id_user")
+    @CodeGeneratorFieldDescriptor(fieldDescription = "User primary key")
+    private Long idUser;
+
+    @Column(name = "tx_email")
+    @CodeGeneratorFieldDescriptor(fieldDescription = "Email")
+    private String email;
+
+    @Column(name = "tx_encoded_pass_phrase")
+    @CodeGeneratorFieldDescriptor(fieldDescription = "encoded pass phrase")
+    private String encodedPassPhrase;
+
+    @Column(name = "cd_external_uuid", unique = true)
+    @CodeGeneratorFieldDescriptor(fieldDescription = "user external token")
+    private UUID externalAppUserUUID;
+
+    @Column(name = "cd_url_token_activation")
+    @CodeGeneratorFieldDescriptor(fieldDescription = "Token for URL activation")
+    private String urlTokenActivation;
+
+    @Column(name = "cd_activation")
+    @CodeGeneratorFieldDescriptor(fieldDescription = "6-digit activation code")
+    private String activationCode;
+
+    @Column(name = "dt_due_activation")
+    @CodeGeneratorFieldDescriptor(fieldDescription = "Due date for account activation")
+    private Date dueDateActivation;
 
     @CodeGeneratorFieldDescriptor(fieldDescription = "Status field")
     @Column(length = 1)
