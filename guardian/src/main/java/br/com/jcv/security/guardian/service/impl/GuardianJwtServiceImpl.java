@@ -28,10 +28,9 @@ public class GuardianJwtServiceImpl implements GuardianJwtService {
     @Autowired private DateTime dateTime;
 
     @Override
-    public String createJwtToken(String tokenSessionId) {
-        final long EXPIRATION_TIME = 100000;
+    public String createJwtToken(String tokenSessionId, Long ttl) {
         final Date now = dateTime.getToday();
-        final Date expirationDate = DateUtility.getDate(now.getTime() + EXPIRATION_TIME);
+        final Date expirationDate = DateUtility.getDate(now.getTime() + ttl);
 
         return Jwts.builder()
                 .setSubject(tokenSessionId)

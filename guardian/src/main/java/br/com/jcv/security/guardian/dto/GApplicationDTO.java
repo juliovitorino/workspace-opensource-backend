@@ -64,6 +64,8 @@ public class GApplicationDTO extends DTOPadrao implements Serializable
     @JsonProperty(GApplicationConstantes.EXTERNALCODEUUID)
     private UUID externalCodeUUID;
 
+    private Long jwtTimeToLive;
+
 
     @SerializedName("mensagemResponse")
     @JsonProperty("mensagemResponse")

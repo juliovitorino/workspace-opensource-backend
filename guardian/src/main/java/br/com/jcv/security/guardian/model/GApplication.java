@@ -39,6 +39,10 @@ public class GApplication {
     @CodeGeneratorFieldDescriptor(fieldDescription = "Application external code")
     private UUID externalCodeUUID;
 
+    @Column(name = "nu_jwt_ttl")
+    @CodeGeneratorFieldDescriptor(fieldDescription = "JWT Time to Live in millisecs")
+    private Long jwtTimeToLive;
+
     @CodeGeneratorFieldDescriptor(fieldDescription = "Status field")
     @Column(length = 1)
     private String status;
