@@ -21,35 +21,33 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 
 package br.com.jcv.security.guardian.service.impl;
 
-import br.com.jcv.commons.library.commodities.constantes.GenericConstantes;
-import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
-import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
 import br.com.jcv.commons.library.commodities.dto.RequestFilter;
+import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
 import br.com.jcv.commons.library.utility.DateTime;
-
-import br.com.jcv.security.guardian.dto.ApplicationUserDTO;
-import br.com.jcv.security.guardian.model.ApplicationUser;
 import br.com.jcv.security.guardian.constantes.ApplicationUserConstantes;
+import br.com.jcv.security.guardian.dto.ApplicationUserDTO;
+import br.com.jcv.security.guardian.exception.ApplicationUserNotFoundException;
+import br.com.jcv.security.guardian.model.ApplicationUser;
 import br.com.jcv.security.guardian.repository.ApplicationUserRepository;
 import br.com.jcv.security.guardian.service.ApplicationUserService;
-import br.com.jcv.security.guardian.exception.ApplicationUserNotFoundException;
-
-import java.text.SimpleDateFormat;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.annotation.Propagation;
-
-import java.text.ParseException;
-import java.util.*;
-import java.util.UUID;
-import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 /**
@@ -69,6 +67,7 @@ public class ApplicationUserServiceImpl implements ApplicationUserService
     private static final String APPLICATIONUSER_NOTFOUND_WITH_EMAIL = "ApplicationUser não encontrada com email = ";
     private static final String APPLICATIONUSER_NOTFOUND_WITH_ENCODEDPASSPHRASE = "ApplicationUser não encontrada com encodedPassPhrase = ";
     private static final String APPLICATIONUSER_NOTFOUND_WITH_EXTERNALAPPUSERUUID = "ApplicationUser não encontrada com externalAppUserUUID = ";
+    private static final String APPLICATIONUSER_NOTFOUND_WITH_EXTERNALUSERUUID = "ApplicationUser não encontrada com externalUserUUID = ";
     private static final String APPLICATIONUSER_NOTFOUND_WITH_URLTOKENACTIVATION = "ApplicationUser não encontrada com urlTokenActivation = ";
     private static final String APPLICATIONUSER_NOTFOUND_WITH_ACTIVATIONCODE = "ApplicationUser não encontrada com activationCode = ";
     private static final String APPLICATIONUSER_NOTFOUND_WITH_DUEDATEACTIVATION = "ApplicationUser não encontrada com dueDateActivation = ";
@@ -539,6 +538,26 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                     () -> new ApplicationUserNotFoundException(APPLICATIONUSER_NOTFOUND_WITH_EXTERNALAPPUSERUUID + externalAppUserUUID,
                         HttpStatus.NOT_FOUND,
                         APPLICATIONUSER_NOTFOUND_WITH_EXTERNALAPPUSERUUID + externalAppUserUUID))
+                );
+        return applicationuserData.map(this::toDTO).orElse(null);
+    }
+
+    @Override
+    @Transactional(transactionManager="transactionManager",
+    propagation = Propagation.REQUIRED,
+    rollbackFor = Throwable.class,
+    noRollbackFor = ApplicationUserNotFoundException.class
+    )
+    public ApplicationUserDTO findApplicationUserByExternalUserUUIDAndStatus(UUID externalUserUUID, String status) {
+        Long maxId = applicationuserRepository.loadMaxIdByExternalUserUUIDAndStatus(externalUserUUID, status);
+        if(maxId == null) maxId = 0L;
+        Optional<ApplicationUser> applicationuserData =
+            Optional.ofNullable( applicationuserRepository
+                .findById(maxId)
+                .orElseThrow(
+                    () -> new ApplicationUserNotFoundException(APPLICATIONUSER_NOTFOUND_WITH_EXTERNALUSERUUID + externalUserUUID,
+                        HttpStatus.NOT_FOUND,
+                        APPLICATIONUSER_NOTFOUND_WITH_EXTERNALUSERUUID + externalUserUUID))
                 );
         return applicationuserData.map(this::toDTO).orElse(null);
     }

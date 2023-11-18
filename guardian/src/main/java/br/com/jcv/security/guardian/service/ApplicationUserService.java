@@ -52,6 +52,7 @@ public interface ApplicationUserService extends CommoditieBaseService<Applicatio
     ApplicationUserDTO findApplicationUserByEncodedPassPhraseAndStatus(String encodedPassPhrase, String status);
     ApplicationUserDTO findApplicationUserByExternalAppUserUUIDAndStatus(UUID externalAppUserUUID);
     ApplicationUserDTO findApplicationUserByExternalAppUserUUIDAndStatus(UUID externalAppUserUUID, String status);
+    ApplicationUserDTO findApplicationUserByExternalUserUUIDAndStatus(UUID externalUserUUID, String status);
     ApplicationUserDTO findApplicationUserByExternalAppUserUUIDAndEmailAndStatus(UUID externalAppUserUUID, String email, String status);
     ApplicationUserDTO findApplicationUserByUrlTokenActivationAndStatus(String urlTokenActivation);
     ApplicationUserDTO findApplicationUserByUrlTokenActivationAndStatus(String urlTokenActivation, String status);

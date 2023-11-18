@@ -42,20 +42,6 @@ public class LoginServiceImpl extends AbstractGuardianBusinessService implements
         return guardianJwtService.createJwtToken(tokenSessionId);
     }
 
-//    private String guardianJwtToken(String tokenSessionId) {
-//        final String seed = "LvqdFVwpliVGDyOH2imXAlrf5ni09doCEYv8myS8XkXORkAlCc";
-//        final long EXPIRATION_TIME = 2000;
-//        final Date now = dateTime.getToday();
-//        final Date expirationDate = DateUtility.getDate(now.getTime() + EXPIRATION_TIME);
-//
-//        return Jwts.builder()
-//                .setSubject(tokenSessionId)
-//                .setId(UUID.randomUUID().toString())
-//                .setIssuedAt(dateTime.getToday())
-//                .setExpiration(expirationDate)
-//                .signWith(SignatureAlgorithm.HS256,seed)
-//                .compact();
-//    }
 
     private String createSession(ApplicationUserDTO applicationUserDTO) {
         UUID idToken = UUID.randomUUID();
