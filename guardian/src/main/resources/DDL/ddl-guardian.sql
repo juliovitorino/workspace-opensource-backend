@@ -13,6 +13,7 @@ create table tb_application (
     id_application bigserial NOT NULL,
     tx_name VARCHAR NOT NULL,
     cd_external UUID NOT NULL,
+    nu_jwt_ttl int8 NOT NULL,
     status VARCHAR(1) NOT NULL,
     date_created timestamp NOT NULL,
     date_updated timestamp NOT NULL,

@@ -2,18 +2,15 @@ package br.com.jcv.security.guardian.controller.v1.business.login;
 
 import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
 import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
-import br.com.jcv.commons.library.utility.DateUtility;
 import br.com.jcv.security.guardian.dto.ApplicationUserDTO;
+import br.com.jcv.security.guardian.dto.GApplicationDTO;
 import br.com.jcv.security.guardian.dto.SessionStateDTO;
 import br.com.jcv.security.guardian.exception.ApplicationUserNotFoundException;
 import br.com.jcv.security.guardian.exception.ApplicationUserWrongEmailException;
 import br.com.jcv.security.guardian.service.AbstractGuardianBusinessService;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -34,12 +31,14 @@ public class LoginServiceImpl extends AbstractGuardianBusinessService implements
             throw new ApplicationUserWrongEmailException("Permission denied. Wrong email", HttpStatus.FORBIDDEN);
         }
 
+        GApplicationDTO appdto = gApplicationService.findById(applicationUserDTO.getIdApplication());
+
         if( ! getMD5HashFromString(loginRequest.getCodePass()).equals(applicationUserDTO.getEncodedPassPhrase())) {
             throw new CommoditieBaseException("Access denied. Invalid user or password", HttpStatus.FORBIDDEN);
         }
 
         String tokenSessionId = createSession(applicationUserDTO);
-        return guardianJwtService.createJwtToken(tokenSessionId);
+        return guardianJwtService.createJwtToken(tokenSessionId, appdto.getJwtTimeToLive());
     }
 
 

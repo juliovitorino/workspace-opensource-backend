@@ -496,6 +496,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                 gapplicationDTO.setId(gapplication.getId());
                 gapplicationDTO.setName(gapplication.getName());
                 gapplicationDTO.setExternalCodeUUID(gapplication.getExternalCodeUUID());
+                gapplicationDTO.setJwtTimeToLive(gapplication.getJwtTimeToLive());
                 gapplicationDTO.setStatus(gapplication.getStatus());
                 gapplicationDTO.setDateCreated(gapplication.getDateCreated());
                 gapplicationDTO.setDateUpdated(gapplication.getDateUpdated());
@@ -509,6 +510,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                     gapplication.setId(gapplicationDTO.getId());
                     gapplication.setName(gapplicationDTO.getName());
                     gapplication.setExternalCodeUUID(gapplicationDTO.getExternalCodeUUID());
+                    gapplication.setJwtTimeToLive(gapplication.getJwtTimeToLive());
                     gapplication.setStatus(gapplicationDTO.getStatus());
                     gapplication.setDateCreated(gapplicationDTO.getDateCreated());
                     gapplication.setDateUpdated(gapplicationDTO.getDateUpdated());
