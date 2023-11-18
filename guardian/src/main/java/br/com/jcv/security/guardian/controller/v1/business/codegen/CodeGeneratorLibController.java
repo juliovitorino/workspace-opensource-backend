@@ -5,6 +5,11 @@ import br.com.jcv.codegen.codegenerator.exception.CodeGeneratorFolderStructureNo
 import br.com.jcv.codegen.codegenerator.factory.codegen.ICodeGeneratorBatch;
 import br.com.jcv.security.guardian.model.ApplicationUser;
 import br.com.jcv.security.guardian.model.GApplication;
+import br.com.jcv.security.guardian.model.Group;
+import br.com.jcv.security.guardian.model.GroupRole;
+import br.com.jcv.security.guardian.model.GroupUser;
+import br.com.jcv.security.guardian.model.Role;
+import br.com.jcv.security.guardian.model.UserRole;
 import br.com.jcv.security.guardian.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,11 +36,19 @@ public class CodeGeneratorLibController {
 //            List<WritableCode> codes = generatorMainStream.generate(GApplication.class);
 //            generatorMainStream.flushCode(codes);
 
-            List<WritableCode> codes = generatorMainStream.generate(Users.class);
-            generatorMainStream.flushCode(codes);
+            List<WritableCode> one = generatorMainStream.generate(Role.class);
+            generatorMainStream.flushCode(one);
+            List<WritableCode> two = generatorMainStream.generate(Group.class);
+            generatorMainStream.flushCode(two);
 
-            List<WritableCode> auCode = generatorMainStream.generate(ApplicationUser.class);
-            generatorMainStream.flushCode(auCode);
+            List<WritableCode> three = generatorMainStream.generate(GroupRole.class);
+            generatorMainStream.flushCode(three);
+
+            List<WritableCode> four = generatorMainStream.generate(GroupUser.class);
+            generatorMainStream.flushCode(four);
+
+            List<WritableCode> five = generatorMainStream.generate(UserRole.class);
+            generatorMainStream.flushCode(five);
 
             return ResponseEntity.ok().build();
         } catch(CodeGeneratorFolderStructureNotFound e) {
