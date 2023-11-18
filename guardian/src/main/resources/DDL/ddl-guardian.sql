@@ -41,6 +41,7 @@ create table tb_application_user (
     tx_email VARCHAR NOT NULL,
     tx_encoded_pass_phrase VARCHAR NOT NULL,
     cd_external_uuid UUID NOT NULL,
+    cd_external_user_uuid UUID NOT NULL,
     cd_url_token_activation VARCHAR,
     cd_activation VARCHAR,
     dt_due_activation timestamptz,
@@ -50,14 +51,20 @@ create table tb_application_user (
     CONSTRAINT tb_application_user_pkey PRIMARY KEY (id_application_user)
 );
 CREATE UNIQUE INDEX uix_application_user_cd_external_uuid ON tb_application_user(cd_external_uuid);
+CREATE UNIQUE INDEX uix_application_user_cd_external_user_uuid ON tb_application_user(cd_external_user_uuid);
 
 ALTER TABLE tb_session_state
 ADD CONSTRAINT fk_session_state_user FOREIGN KEY (id_user_uuid)
-REFERENCES tb_application_user(cd_external_uuid) ON DELETE CASCADE;
+REFERENCES tb_application_user(cd_external_user_uuid) ON DELETE CASCADE;
 
 ALTER TABLE tb_application_user
 ADD CONSTRAINT fk_appuser_application FOREIGN KEY (id_application)
 REFERENCES tb_application(id_application) ON DELETE CASCADE;
+
+ALTER TABLE tb_application_user
+ADD CONSTRAINT fk_appuser_application_01 FOREIGN KEY (cd_external_uuid)
+REFERENCES tb_application(cd_external) ON DELETE CASCADE;
+
 
 ALTER TABLE tb_application_user
 ADD CONSTRAINT fk_appuser_user FOREIGN KEY (id_user)

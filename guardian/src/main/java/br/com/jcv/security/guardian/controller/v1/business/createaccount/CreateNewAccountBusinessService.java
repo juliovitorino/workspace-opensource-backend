@@ -22,13 +22,14 @@ public class CreateNewAccountBusinessService extends AbstractGuardianBusinessSer
         log.info("execute :: processId = {} :: has been started", processId);
 
         GApplicationDTO gApplicationDTO = gApplicationService.findGApplicationByExternalCodeUUIDAndStatus(request.getExternalApplicationUUID());
-        String md5Hex = DigestUtils.md5Hex(request.getPasswd()).toUpperCase();
+        String md5Hex = getMD5HashFromString(request.getPasswd());
 
         UsersDTO usersDTO = mapperToDto(request);
 
         ApplicationUserDTO applicationUserDTO = new ApplicationUserDTO();
         applicationUserDTO.setEmail(request.getEmail());
-        applicationUserDTO.setExternalAppUserUUID(UUID.randomUUID());
+        applicationUserDTO.setExternalAppUserUUID(request.getExternalApplicationUUID());
+        applicationUserDTO.setExternalUserUUID(UUID.randomUUID());
         applicationUserDTO.setEncodedPassPhrase(md5Hex);
         applicationUserDTO.setActivationCode(StringUtility.getRandomCodeNumber(6));
         applicationUserDTO.setDueDateActivation(DateUtility.addDays(dateTime.getToday(),1));

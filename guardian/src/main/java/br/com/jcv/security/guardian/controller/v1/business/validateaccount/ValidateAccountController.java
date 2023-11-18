@@ -12,15 +12,15 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/v1/api/business/validate")
+@RequestMapping("/v1/api/business/validate/account")
 public class ValidateAccountController {
 
     @Autowired private ValidateAccountService validateAccountService;
 
-    @PostMapping("/{externalUUID}")
-    public ResponseEntity validateAccount(@PathVariable @Valid UUID externalUUID, @RequestBody @Valid ValidateAccountRequest request) {
+    @PostMapping("/{externalAppUUID}")
+    public ResponseEntity validateAccount(@PathVariable @Valid UUID externalAppUUID, @RequestBody @Valid ValidateAccountRequest request) {
         final UUID processId = UUID.randomUUID();
-        request.setExternalUUID(externalUUID);
+        request.setExternalUUID(externalAppUUID);
         return ResponseEntity.ok(validateAccountService.execute(processId, request));
     }
 

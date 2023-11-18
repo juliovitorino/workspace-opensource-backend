@@ -19,29 +19,29 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 
-package br.com.jcv.security.guardian.constantes;
+package br.com.jcv.security.guardian.exception;
 
-/**
-* ApplicationUserConstantes - Constantes para geral das Entity e DTO
-*
-* @author ApplicationUser
-* @since Thu Nov 16 09:03:29 BRT 2023
-*/
+import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
+import org.springframework.http.HttpStatus;
 
-public class ApplicationUserConstantes {
-    private ApplicationUserConstantes() {}
-    public static final String ID = "id";
-    public static final String IDAPPLICATION = "idApplication";
-    public static final String IDUSER = "idUser";
-    public static final String EMAIL = "email";
-    public static final String ENCODEDPASSPHRASE = "encodedPassPhrase";
-    public static final String EXTERNALAPPUSERUUID = "externalAppUserUUID";
-    public static final String EXTERNALUSERUUID = "externalUserUUID";
-    public static final String URLTOKENACTIVATION = "urlTokenActivation";
-    public static final String ACTIVATIONCODE = "activationCode";
-    public static final String DUEDATEACTIVATION = "dueDateActivation";
-    public static final String STATUS = "status";
-    public static final String DATECREATED = "dateCreated";
-    public static final String DATEUPDATED = "dateUpdated";
+import java.util.HashMap;
+import java.util.Map;
 
+
+public class ApplicationUserWrongEmailException extends CommoditieBaseException {
+    public ApplicationUserWrongEmailException(String input, HttpStatus httpStatus, String msgcode, Map<String,String> mapParams) {
+        super(input, httpStatus, msgcode, mapParams);
+    }
+
+    public ApplicationUserWrongEmailException(String input, HttpStatus httpStatus, String msgcode) {
+        this(input, httpStatus, msgcode, null);
+    }
+
+    public ApplicationUserWrongEmailException(String input, HttpStatus httpStatus) {
+      this(input, httpStatus, null, new HashMap<>());
+    }
+
+    public ApplicationUserWrongEmailException(String input, int httpStatus) {
+      this(input, HttpStatus.valueOf(httpStatus), null, new HashMap<>());
+    }
 }

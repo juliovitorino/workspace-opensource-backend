@@ -18,7 +18,10 @@ public class ValidateAccountServiceImpl extends AbstractGuardianBusinessService 
     @Override
     public ValidateAccountResponse execute(UUID processId, ValidateAccountRequest request) {
         log.info("execute :: processId = {} : has been started", processId);
-        ApplicationUserDTO applicationUserDTO = applicationUserService.findApplicationUserByExternalAppUserUUIDAndStatus(request.getExternalUUID());
+        ApplicationUserDTO applicationUserDTO =
+                applicationUserService.findApplicationUserByExternalAppUserUUIDAndStatus(
+                        request.getExternalUUID(),
+                        GenericStatusEnums.PENDENTE.getShortValue());
         UsersDTO usersDTO = usersService.findById(applicationUserDTO.getIdApplication());
 
         if( ! applicationUserDTO.getActivationCode().equals(request.getRequiredCode())) {
@@ -27,6 +30,12 @@ public class ValidateAccountServiceImpl extends AbstractGuardianBusinessService 
 
         applicationUserService.updateStatusById(applicationUserDTO.getId(), GenericStatusEnums.ATIVO.getShortValue());
         usersService.updateStatusById(usersDTO.getId(), GenericStatusEnums.ATIVO.getShortValue());
+
+        ApplicationUserDTO updateTo = applicationUserService.findById(applicationUserDTO.getId());
+        updateTo.setActivationCode(null);
+        updateTo.setDueDateActivation(null);
+        updateTo.setUrlTokenActivation(null);
+        applicationUserService.salvar(updateTo);
 
         log.info("execute :: processId = {} : Account has been activated successfully", processId);
         return ValidateAccountResponse.builder()
