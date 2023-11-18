@@ -48,8 +48,12 @@ public class ApplicationUser {
     private String encodedPassPhrase;
 
     @Column(name = "cd_external_uuid", unique = true)
-    @CodeGeneratorFieldDescriptor(fieldDescription = "user external token")
+    @CodeGeneratorFieldDescriptor(fieldDescription = "App user external token")
     private UUID externalAppUserUUID;
+
+    @Column(name = "cd_external_user_uuid", unique = true)
+    @CodeGeneratorFieldDescriptor(fieldDescription = "user external token")
+    private UUID externalUserUUID;
 
     @Column(name = "cd_url_token_activation")
     @CodeGeneratorFieldDescriptor(fieldDescription = "Token for URL activation")

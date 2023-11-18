@@ -26,7 +26,7 @@
   <properties>
     <!-- controle das versoes dos microservicos do projeto -->
     <jcv-code-generator.version>1.0.11-SNAPSHOT</jcv-code-generator.version>
-    <commons-library.version>1.0.10-SNAPSHOT</commons-library.version>
+    <commons-library.version>1.0.11-SNAPSHOT</commons-library.version>
 
     <!-- outras versoes de dependencias comuns a todos os modulos do projeto ms -->
     <java.version>11</java.version>

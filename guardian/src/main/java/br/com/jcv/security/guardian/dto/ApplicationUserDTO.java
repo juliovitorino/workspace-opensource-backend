@@ -71,6 +71,10 @@ public class ApplicationUserDTO extends DTOPadrao implements Serializable
     @SerializedName(ApplicationUserConstantes.EXTERNALAPPUSERUUID)
     @JsonProperty(ApplicationUserConstantes.EXTERNALAPPUSERUUID)
     private UUID externalAppUserUUID;
+
+    @SerializedName(ApplicationUserConstantes.EXTERNALUSERUUID)
+    @JsonProperty(ApplicationUserConstantes.EXTERNALUSERUUID)
+    private UUID externalUserUUID;
     
     @SerializedName(ApplicationUserConstantes.URLTOKENACTIVATION)
     @JsonProperty(ApplicationUserConstantes.URLTOKENACTIVATION)

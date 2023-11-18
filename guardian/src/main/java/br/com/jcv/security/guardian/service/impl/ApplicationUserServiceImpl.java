@@ -549,6 +549,26 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     rollbackFor = Throwable.class,
     noRollbackFor = ApplicationUserNotFoundException.class
     )
+    public ApplicationUserDTO findApplicationUserByExternalAppUserUUIDAndEmailAndStatus(UUID externalAppUserUUID, String email, String status) {
+        Long maxId = applicationuserRepository.loadMaxIdByExternalAppUserUUIDAndEmailAndStatus(externalAppUserUUID, email, status);
+        if(maxId == null) maxId = 0L;
+        Optional<ApplicationUser> applicationuserData =
+            Optional.ofNullable( applicationuserRepository
+                .findById(maxId)
+                .orElseThrow(
+                    () -> new ApplicationUserNotFoundException(APPLICATIONUSER_NOTFOUND_WITH_EXTERNALAPPUSERUUID + externalAppUserUUID,
+                        HttpStatus.NOT_FOUND,
+                        APPLICATIONUSER_NOTFOUND_WITH_EXTERNALAPPUSERUUID + externalAppUserUUID))
+                );
+        return applicationuserData.map(this::toDTO).orElse(null);
+    }
+
+    @Override
+    @Transactional(transactionManager="transactionManager",
+    propagation = Propagation.REQUIRED,
+    rollbackFor = Throwable.class,
+    noRollbackFor = ApplicationUserNotFoundException.class
+    )
     public ApplicationUserDTO findApplicationUserByExternalAppUserUUIDAndStatus(UUID externalAppUserUUID) {
         return this.findApplicationUserByExternalAppUserUUIDAndStatus(externalAppUserUUID, GenericStatusEnums.ATIVO.getShortValue());
     }
@@ -773,6 +793,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
         applicationuserDTO.setEmail(applicationuser.getEmail());
         applicationuserDTO.setEncodedPassPhrase(applicationuser.getEncodedPassPhrase());
         applicationuserDTO.setExternalAppUserUUID(applicationuser.getExternalAppUserUUID());
+        applicationuserDTO.setExternalUserUUID(applicationuser.getExternalUserUUID());
         applicationuserDTO.setUrlTokenActivation(applicationuser.getUrlTokenActivation());
         applicationuserDTO.setActivationCode(applicationuser.getActivationCode());
         applicationuserDTO.setDueDateActivation(applicationuser.getDueDateActivation());
@@ -791,6 +812,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
         applicationuser.setEmail(applicationuserDTO.getEmail());
         applicationuser.setEncodedPassPhrase(applicationuserDTO.getEncodedPassPhrase());
         applicationuser.setExternalAppUserUUID(applicationuserDTO.getExternalAppUserUUID());
+        applicationuser.setExternalUserUUID(applicationuserDTO.getExternalUserUUID());
         applicationuser.setUrlTokenActivation(applicationuserDTO.getUrlTokenActivation());
         applicationuser.setActivationCode(applicationuserDTO.getActivationCode());
         applicationuser.setDueDateActivation(applicationuserDTO.getDueDateActivation());
