@@ -121,6 +121,8 @@ List<ApplicationUser> findApplicationUserByFilter(
      Long loadMaxIdByEncodedPassPhraseAndStatus(String encodedPassPhrase, String status);
      @Query(value = "SELECT MAX(id_application_user) AS maxid FROM tb_application_user WHERE cd_external_uuid = :externalAppUserUUID AND status = :status ", nativeQuery = true)
      Long loadMaxIdByExternalAppUserUUIDAndStatus(UUID externalAppUserUUID, String status);
+     @Query(value = "SELECT MAX(id_application_user) AS maxid FROM tb_application_user WHERE cd_external_user_uuid = :externalUserUUID AND status = :status ", nativeQuery = true)
+     Long loadMaxIdByExternalUserUUIDAndStatus(UUID externalUserUUID, String status);
      @Query(value = "SELECT MAX(id_application_user) AS maxid FROM tb_application_user WHERE cd_external_uuid = :externalAppUserUUID AND tx_email = :email AND status = :status ", nativeQuery = true)
      Long loadMaxIdByExternalAppUserUUIDAndEmailAndStatus(UUID externalAppUserUUID, String email, String status);
      @Query(value = "SELECT MAX(id_application_user) AS maxid FROM tb_application_user WHERE cd_url_token_activation = :urlTokenActivation AND status = :status ", nativeQuery = true)
