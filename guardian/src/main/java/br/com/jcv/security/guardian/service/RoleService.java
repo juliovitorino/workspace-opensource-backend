@@ -44,19 +44,19 @@ public interface RoleService extends CommoditieBaseService<RoleDTO,Role>
 {
     RoleDTO findRoleByIdAndStatus(Long id);
     RoleDTO findRoleByIdAndStatus(Long id, String status);
-    RoleDTO findRoleByNameAndStatus(UUID name);
-    RoleDTO findRoleByNameAndStatus(UUID name, String status);
+    RoleDTO findRoleByNameAndStatus(String name);
+    RoleDTO findRoleByNameAndStatus(String name, String status);
     RoleDTO findRoleByDateCreatedAndStatus(Date dateCreated);
     RoleDTO findRoleByDateCreatedAndStatus(Date dateCreated, String status);
     RoleDTO findRoleByDateUpdatedAndStatus(Date dateUpdated);
     RoleDTO findRoleByDateUpdatedAndStatus(Date dateUpdated, String status);
 
     List<RoleDTO> findAllRoleByIdAndStatus(Long id, String status);
-    List<RoleDTO> findAllRoleByNameAndStatus(UUID name, String status);
+    List<RoleDTO> findAllRoleByNameAndStatus(String name, String status);
     List<RoleDTO> findAllRoleByDateCreatedAndStatus(Date dateCreated, String status);
     List<RoleDTO> findAllRoleByDateUpdatedAndStatus(Date dateUpdated, String status);
 
-    RoleDTO updateNameById(Long id, UUID name);
+    RoleDTO updateNameById(Long id, String name);
     RoleDTO updateStatusById(Long id, String status);
 
 

@@ -22,7 +22,7 @@ public class ValidateAccountServiceImpl extends AbstractGuardianBusinessService 
                 applicationUserService.findApplicationUserByExternalAppUserUUIDAndStatus(
                         request.getExternalUUID(),
                         GenericStatusEnums.PENDENTE.getShortValue());
-        UsersDTO usersDTO = usersService.findById(applicationUserDTO.getIdApplication());
+        UsersDTO usersDTO = usersService.findById(applicationUserDTO.getIdUser());
 
         if( ! applicationUserDTO.getActivationCode().equals(request.getRequiredCode())) {
             throw new CommoditieBaseException("Invalid required code", HttpStatus.BAD_REQUEST);

@@ -129,6 +129,8 @@ List<GroupUser> findGroupUserByFilter(
      List<GroupUser> findAllByIdAndStatus(Long id, String status);
      @Query(value = "SELECT * FROM tb_group_user WHERE id_user = :idUser AND  status = :status ", nativeQuery = true)
      List<GroupUser> findAllByIdUserAndStatus(Long idUser, String status);
+     @Query(value = "SELECT * FROM tb_group_user WHERE id_group = :idGroup AND id_user = :idUser AND status = :status ", nativeQuery = true)
+     List<GroupUser> findAllByIdGroupAndIdUserAndStatus(Long idGroup, Long idUser, String status);
      @Query(value = "SELECT * FROM tb_group_user WHERE id_group = :idGroup AND  status = :status ", nativeQuery = true)
      List<GroupUser> findAllByIdGroupAndStatus(Long idGroup, String status);
      @Query(value = "SELECT * FROM tb_group_user WHERE date_created = :dateCreated AND  status = :status ", nativeQuery = true)

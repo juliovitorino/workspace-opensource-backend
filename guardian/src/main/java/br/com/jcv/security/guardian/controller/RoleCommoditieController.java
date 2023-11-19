@@ -305,7 +305,7 @@ public class RoleCommoditieController
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
     @GetMapping(params = "name")
-    public ResponseEntity<RoleDTO> findRoleByName(@RequestParam(RoleConstantes.NAME) UUID name) {
+    public ResponseEntity<RoleDTO> findRoleByName(@RequestParam(RoleConstantes.NAME) String name) {
         try{
             RoleDTO roleDTO = roleService.findRoleByNameAndStatus(name, GenericStatusEnums.ATIVO.getShortValue());
             return Objects.nonNull(roleDTO)

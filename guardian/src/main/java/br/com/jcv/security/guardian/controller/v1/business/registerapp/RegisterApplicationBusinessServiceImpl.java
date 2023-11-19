@@ -20,6 +20,7 @@ public class RegisterApplicationBusinessServiceImpl implements RegisterApplicati
         GApplicationDTO dto = new GApplicationDTO();
         dto.setName(request.getName());
         dto.setExternalCodeUUID(uuidApp);
+        dto.setJwtTimeToLive(request.getJwtTimeToLive());
 
         GApplicationDTO savedApp = gApplicationService.salvar(dto);
         gApplicationService.updateStatusById(savedApp.getId(), GenericStatusEnums.ATIVO.getShortValue());

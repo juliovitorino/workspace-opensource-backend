@@ -63,7 +63,7 @@ public interface RoleRepository extends JpaRepository<Role, Long>
         , nativeQuery = true)
 Page<Role> findRoleByFilter(Pageable pageable,
         @Param(RoleConstantes.ID) Long id,
-        @Param(RoleConstantes.NAME) UUID name,
+        @Param(RoleConstantes.NAME) String name,
         @Param(RoleConstantes.STATUS) String status,
         @Param(RoleConstantes.DATECREATED) String dateCreated,
         @Param(RoleConstantes.DATEUPDATED) String dateUpdated
@@ -80,7 +80,7 @@ Page<Role> findRoleByFilter(Pageable pageable,
         , nativeQuery = true)
 List<Role> findRoleByFilter(
         @Param(RoleConstantes.ID) Long id,
-        @Param(RoleConstantes.NAME) UUID name,
+        @Param(RoleConstantes.NAME) String name,
         @Param(RoleConstantes.STATUS) String status,
         @Param(RoleConstantes.DATECREATED) String dateCreated,
         @Param(RoleConstantes.DATEUPDATED) String dateUpdated
@@ -90,7 +90,7 @@ List<Role> findRoleByFilter(
      @Query(value = "SELECT MAX(id_role) AS maxid FROM tb_role WHERE id_role = :id AND status = :status ", nativeQuery = true)
      Long loadMaxIdByIdAndStatus(Long id, String status);
      @Query(value = "SELECT MAX(id_role) AS maxid FROM tb_role WHERE tx_name = :name AND status = :status ", nativeQuery = true)
-     Long loadMaxIdByNameAndStatus(UUID name, String status);
+     Long loadMaxIdByNameAndStatus(String name, String status);
      @Query(value = "SELECT MAX(id_role) AS maxid FROM tb_role WHERE date_created = :dateCreated AND status = :status ", nativeQuery = true)
      Long loadMaxIdByDateCreatedAndStatus(Date dateCreated, String status);
      @Query(value = "SELECT MAX(id_role) AS maxid FROM tb_role WHERE date_updated = :dateUpdated AND status = :status ", nativeQuery = true)
@@ -99,7 +99,7 @@ List<Role> findRoleByFilter(
 
      @Modifying
      @Query(value = "UPDATE tb_role SET tx_name = :name, dt_updated = current_timestamp  WHERE id_role = :id", nativeQuery = true)
-     void updateNameById(@Param("id") Long id, @Param(RoleConstantes.NAME) UUID name);
+     void updateNameById(@Param("id") Long id, @Param(RoleConstantes.NAME) String name);
      @Modifying
      @Query(value = "UPDATE tb_role SET status = :status, dt_updated = current_timestamp  WHERE id_role = :id", nativeQuery = true)
      void updateStatusById(@Param("id") Long id, @Param(RoleConstantes.STATUS) String status);
@@ -107,7 +107,7 @@ List<Role> findRoleByFilter(
     @Query(value = "SELECT * FROM tb_role WHERE id_role = (SELECT MAX(id_role) AS maxid FROM tb_role WHERE id_role = :id AND  status = :status) ", nativeQuery = true)
     Optional<Role> findByIdAndStatus(Long id, String status);
     @Query(value = "SELECT * FROM tb_role WHERE id_role = (SELECT MAX(id_role) AS maxid FROM tb_role WHERE tx_name = :name AND  status = :status) ", nativeQuery = true)
-    Optional<Role> findByNameAndStatus(UUID name, String status);
+    Optional<Role> findByNameAndStatus(String name, String status);
     @Query(value = "SELECT * FROM tb_role WHERE id_role = (SELECT MAX(id_role) AS maxid FROM tb_role WHERE date_created = :dateCreated AND  status = :status) ", nativeQuery = true)
     Optional<Role> findByDateCreatedAndStatus(Date dateCreated, String status);
     @Query(value = "SELECT * FROM tb_role WHERE id_role = (SELECT MAX(id_role) AS maxid FROM tb_role WHERE date_updated = :dateUpdated AND  status = :status) ", nativeQuery = true)
@@ -117,7 +117,7 @@ List<Role> findRoleByFilter(
      @Query(value = "SELECT * FROM tb_role WHERE id_role = :id AND  status = :status ", nativeQuery = true)
      List<Role> findAllByIdAndStatus(Long id, String status);
      @Query(value = "SELECT * FROM tb_role WHERE tx_name = :name AND  status = :status ", nativeQuery = true)
-     List<Role> findAllByNameAndStatus(UUID name, String status);
+     List<Role> findAllByNameAndStatus(String name, String status);
      @Query(value = "SELECT * FROM tb_role WHERE date_created = :dateCreated AND  status = :status ", nativeQuery = true)
      List<Role> findAllByDateCreatedAndStatus(Date dateCreated, String status);
      @Query(value = "SELECT * FROM tb_role WHERE date_updated = :dateUpdated AND  status = :status ", nativeQuery = true)
@@ -129,7 +129,7 @@ List<Role> findRoleByFilter(
     void deleteById(@Param(RoleConstantes.ID) Long id);
     @Modifying
     @Query(value = "DELETE FROM tb_role WHERE tx_name = :name", nativeQuery = true)
-    void deleteByName(@Param(RoleConstantes.NAME) UUID name);
+    void deleteByName(@Param(RoleConstantes.NAME) String name);
     @Modifying
     @Query(value = "DELETE FROM tb_role WHERE status = :status", nativeQuery = true)
     void deleteByStatus(@Param(RoleConstantes.STATUS) String status);

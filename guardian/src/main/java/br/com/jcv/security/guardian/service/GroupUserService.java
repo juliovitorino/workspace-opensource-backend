@@ -56,6 +56,7 @@ public interface GroupUserService extends CommoditieBaseService<GroupUserDTO,Gro
     List<GroupUserDTO> findAllGroupUserByIdAndStatus(Long id, String status);
     List<GroupUserDTO> findAllGroupUserByIdUserAndStatus(Long idUser, String status);
     List<GroupUserDTO> findAllGroupUserByIdGroupAndStatus(Long idGroup, String status);
+    List<GroupUserDTO> findAllGroupUserByIdGroupAndIdUserAndStatus(Long idGroup, Long idUser, String status);
     List<GroupUserDTO> findAllGroupUserByDateCreatedAndStatus(Date dateCreated, String status);
     List<GroupUserDTO> findAllGroupUserByDateUpdatedAndStatus(Date dateUpdated, String status);
 

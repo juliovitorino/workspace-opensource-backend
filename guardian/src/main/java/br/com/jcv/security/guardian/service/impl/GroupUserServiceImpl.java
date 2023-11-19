@@ -305,6 +305,15 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     rollbackFor = Throwable.class,
     noRollbackFor = GroupUserNotFoundException.class
     )
+    public List<GroupUserDTO> findAllGroupUserByIdGroupAndIdUserAndStatus(Long idGroup, Long idUser, String status) {
+        return groupuserRepository.findAllByIdGroupAndIdUserAndStatus(idGroup, idUser, status).stream().map(this::toDTO).collect(Collectors.toList());
+    }
+    @Override
+    @Transactional(transactionManager="transactionManager",
+    propagation = Propagation.REQUIRED,
+    rollbackFor = Throwable.class,
+    noRollbackFor = GroupUserNotFoundException.class
+    )
     public List<GroupUserDTO> findAllGroupUserByDateCreatedAndStatus(Date dateCreated, String status) {
         return groupuserRepository.findAllByDateCreatedAndStatus(dateCreated, status).stream().map(this::toDTO).collect(Collectors.toList());
     }

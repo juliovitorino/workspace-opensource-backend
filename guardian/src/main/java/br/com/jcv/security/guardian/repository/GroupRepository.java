@@ -63,7 +63,7 @@ public interface GroupRepository extends JpaRepository<Group, Long>
         , nativeQuery = true)
 Page<Group> findGroupByFilter(Pageable pageable,
         @Param(GroupConstantes.ID) Long id,
-        @Param(GroupConstantes.NAME) UUID name,
+        @Param(GroupConstantes.NAME) String name,
         @Param(GroupConstantes.STATUS) String status,
         @Param(GroupConstantes.DATECREATED) String dateCreated,
         @Param(GroupConstantes.DATEUPDATED) String dateUpdated
@@ -80,7 +80,7 @@ Page<Group> findGroupByFilter(Pageable pageable,
         , nativeQuery = true)
 List<Group> findGroupByFilter(
         @Param(GroupConstantes.ID) Long id,
-        @Param(GroupConstantes.NAME) UUID name,
+        @Param(GroupConstantes.NAME) String name,
         @Param(GroupConstantes.STATUS) String status,
         @Param(GroupConstantes.DATECREATED) String dateCreated,
         @Param(GroupConstantes.DATEUPDATED) String dateUpdated
@@ -90,7 +90,7 @@ List<Group> findGroupByFilter(
      @Query(value = "SELECT MAX(id_group) AS maxid FROM tb_group WHERE id_group = :id AND status = :status ", nativeQuery = true)
      Long loadMaxIdByIdAndStatus(Long id, String status);
      @Query(value = "SELECT MAX(id_group) AS maxid FROM tb_group WHERE tx_name = :name AND status = :status ", nativeQuery = true)
-     Long loadMaxIdByNameAndStatus(UUID name, String status);
+     Long loadMaxIdByNameAndStatus(String name, String status);
      @Query(value = "SELECT MAX(id_group) AS maxid FROM tb_group WHERE date_created = :dateCreated AND status = :status ", nativeQuery = true)
      Long loadMaxIdByDateCreatedAndStatus(Date dateCreated, String status);
      @Query(value = "SELECT MAX(id_group) AS maxid FROM tb_group WHERE date_updated = :dateUpdated AND status = :status ", nativeQuery = true)
@@ -99,7 +99,7 @@ List<Group> findGroupByFilter(
 
      @Modifying
      @Query(value = "UPDATE tb_group SET tx_name = :name, dt_updated = current_timestamp  WHERE id_group = :id", nativeQuery = true)
-     void updateNameById(@Param("id") Long id, @Param(GroupConstantes.NAME) UUID name);
+     void updateNameById(@Param("id") Long id, @Param(GroupConstantes.NAME) String name);
      @Modifying
      @Query(value = "UPDATE tb_group SET status = :status, dt_updated = current_timestamp  WHERE id_group = :id", nativeQuery = true)
      void updateStatusById(@Param("id") Long id, @Param(GroupConstantes.STATUS) String status);
@@ -107,7 +107,7 @@ List<Group> findGroupByFilter(
     @Query(value = "SELECT * FROM tb_group WHERE id_group = (SELECT MAX(id_group) AS maxid FROM tb_group WHERE id_group = :id AND  status = :status) ", nativeQuery = true)
     Optional<Group> findByIdAndStatus(Long id, String status);
     @Query(value = "SELECT * FROM tb_group WHERE id_group = (SELECT MAX(id_group) AS maxid FROM tb_group WHERE tx_name = :name AND  status = :status) ", nativeQuery = true)
-    Optional<Group> findByNameAndStatus(UUID name, String status);
+    Optional<Group> findByNameAndStatus(String name, String status);
     @Query(value = "SELECT * FROM tb_group WHERE id_group = (SELECT MAX(id_group) AS maxid FROM tb_group WHERE date_created = :dateCreated AND  status = :status) ", nativeQuery = true)
     Optional<Group> findByDateCreatedAndStatus(Date dateCreated, String status);
     @Query(value = "SELECT * FROM tb_group WHERE id_group = (SELECT MAX(id_group) AS maxid FROM tb_group WHERE date_updated = :dateUpdated AND  status = :status) ", nativeQuery = true)
@@ -117,7 +117,7 @@ List<Group> findGroupByFilter(
      @Query(value = "SELECT * FROM tb_group WHERE id_group = :id AND  status = :status ", nativeQuery = true)
      List<Group> findAllByIdAndStatus(Long id, String status);
      @Query(value = "SELECT * FROM tb_group WHERE tx_name = :name AND  status = :status ", nativeQuery = true)
-     List<Group> findAllByNameAndStatus(UUID name, String status);
+     List<Group> findAllByNameAndStatus(String name, String status);
      @Query(value = "SELECT * FROM tb_group WHERE date_created = :dateCreated AND  status = :status ", nativeQuery = true)
      List<Group> findAllByDateCreatedAndStatus(Date dateCreated, String status);
      @Query(value = "SELECT * FROM tb_group WHERE date_updated = :dateUpdated AND  status = :status ", nativeQuery = true)
@@ -129,7 +129,7 @@ List<Group> findGroupByFilter(
     void deleteById(@Param(GroupConstantes.ID) Long id);
     @Modifying
     @Query(value = "DELETE FROM tb_group WHERE tx_name = :name", nativeQuery = true)
-    void deleteByName(@Param(GroupConstantes.NAME) UUID name);
+    void deleteByName(@Param(GroupConstantes.NAME) String name);
     @Modifying
     @Query(value = "DELETE FROM tb_group WHERE status = :status", nativeQuery = true)
     void deleteByStatus(@Param(GroupConstantes.STATUS) String status);

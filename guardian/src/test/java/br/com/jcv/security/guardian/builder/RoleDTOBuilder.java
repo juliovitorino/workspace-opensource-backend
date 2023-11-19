@@ -46,7 +46,7 @@ public class RoleDTOBuilder {
         this.roleDTO.setId(id);
         return this;
     }
-    public RoleDTOBuilder name(UUID name){
+    public RoleDTOBuilder name(String name){
         this.roleDTO.setName(name);
         return this;
     }

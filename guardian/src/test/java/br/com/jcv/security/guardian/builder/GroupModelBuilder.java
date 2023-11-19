@@ -46,7 +46,7 @@ public class GroupModelBuilder {
         this.group.setId(id);
         return this;
     }
-    public GroupModelBuilder name(UUID name){
+    public GroupModelBuilder name(String name){
         this.group.setName(name);
         return this;
     }

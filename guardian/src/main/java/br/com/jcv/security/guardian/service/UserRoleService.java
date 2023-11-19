@@ -56,6 +56,7 @@ public interface UserRoleService extends CommoditieBaseService<UserRoleDTO,UserR
     List<UserRoleDTO> findAllUserRoleByIdAndStatus(Long id, String status);
     List<UserRoleDTO> findAllUserRoleByIdRoleAndStatus(Long idRole, String status);
     List<UserRoleDTO> findAllUserRoleByIdUserAndStatus(Long idUser, String status);
+    List<UserRoleDTO> findAllUserRoleByIdUserAndIdRoleAndStatus(Long idUser, Long idRole, String status);
     List<UserRoleDTO> findAllUserRoleByDateCreatedAndStatus(Date dateCreated, String status);
     List<UserRoleDTO> findAllUserRoleByDateUpdatedAndStatus(Date dateUpdated, String status);
 

@@ -105,7 +105,7 @@ public class GroupServiceImplTest {
     public void shouldReturnListOfGroupWhenFindAllByFilterIsCalled() {
         // scenario
         Long id = 80683L;
-        UUID name = UUID.fromString("03560a92-70cf-41f9-a9c2-d509fc50a60d");
+        String name ="03560a92-70cf-41f9-a9c2-d509fc50a60d";
         String status = "0W0t0XbgQWDPU0LUEljCRtkEQ0Ue22LmgIFyfGmc7poxH59IIB";
         String dateCreated = "2025-10-07";
         String dateUpdated = "2025-10-07";
@@ -153,7 +153,7 @@ public class GroupServiceImplTest {
     public void shouldReturnMapWithGroupListWhenFindPageByFilterIsCalled() {
         // scenario
         Long id = 76070L;
-        UUID name = UUID.fromString("6adbdb33-18ca-4d73-84bb-abecdfa11f4f");
+        String name ="6adbdb33-18ca-4d73-84bb-abecdfa11f4f";
         String status = "P6vmMszdQMBvl11y6UDJ02uHP7amSF0zcXNB7ofYuYBEYTz8sX";
         String dateCreated = "2025-10-07";
         String dateUpdated = "2025-10-07";
@@ -277,16 +277,14 @@ public class GroupServiceImplTest {
         Optional<Group> groupModelMock = Optional.ofNullable(
                 GroupModelBuilder.newGroupModelTestBuilder()
                         .id(idMock)
-                        .name(UUID.fromString("29204932-8967-463f-a1f2-a86204f277ec"))
-
+                        .name("29204932-8967-463f-a1f2-a86204f277ec")
                         .status("X")
                         .now()
         );
         Group groupToSaveMock = groupModelMock.orElse(null);
         Group groupSavedMck = GroupModelBuilder.newGroupModelTestBuilder()
                         .id(57756L)
-                        .name(UUID.fromString("19747ebc-3112-4c09-9f8a-8dd084f591a6"))
-
+                        .name("19747ebc-3112-4c09-9f8a-8dd084f591a6")
                         .status("A")
                         .now();
         Mockito.when(groupRepositoryMock.findById(idMock)).thenReturn(groupModelMock);
@@ -317,8 +315,7 @@ public class GroupServiceImplTest {
         // scenario
         Optional<Group> groupModelMock = Optional.ofNullable(GroupModelBuilder.newGroupModelTestBuilder()
                 .id(37505L)
-                .name(UUID.fromString("07613c09-e207-47ff-8aa1-3a5c8bd74e05"))
-
+                .name("07613c09-e207-47ff-8aa1-3a5c8bd74e05")
                 .status("A")
                 .dateCreated(dateTimeMock.getToday())
                 .dateUpdated(dateTimeMock.getToday())
@@ -363,8 +360,7 @@ public class GroupServiceImplTest {
         // scenario
         GroupDTO groupDTOMock = GroupDTOBuilder.newGroupDTOTestBuilder()
                 .id(38165L)
-                .name(UUID.fromString("a3da1330-b5ca-46b3-9937-eb4886d7636e"))
-
+                .name("a3da1330-b5ca-46b3-9937-eb4886d7636e")
                 .status("P")
                 .dateCreated(dateTimeMock.getToday())
                 .dateUpdated(dateTimeMock.getToday())
@@ -401,8 +397,7 @@ public class GroupServiceImplTest {
         // scenario
         GroupDTO groupDTOMock = GroupDTOBuilder.newGroupDTOTestBuilder()
                 .id(null)
-                .name(UUID.fromString("53a87d38-0dd2-48f7-a25b-e0f7a632d777"))
-
+                .name("53a87d38-0dd2-48f7-a25b-e0f7a632d777")
                 .status("P")
                 .dateCreated(dateTimeMock.getToday())
                 .dateUpdated(dateTimeMock.getToday())
@@ -446,7 +441,7 @@ public class GroupServiceImplTest {
         Optional<Group> groupModelMock = Optional.ofNullable(
                 GroupModelBuilder.newGroupModelTestBuilder()
                         .id(147L)
-                        .name(UUID.fromString("7acde3c6-af62-4745-b3c0-380964a5efb5"))
+                        .name("7acde3c6-af62-4745-b3c0-380964a5efb5")
                         .status("pjx60iWaF2MAsbqTAtRdxFyKUWjTLwWOit4cEwrrTavgxtbvlU")
 
                         .now()
@@ -508,10 +503,10 @@ public class GroupServiceImplTest {
             GroupModelBuilder.newGroupModelTestBuilder().now()
         );
 
-        Mockito.when(groupRepositoryMock.findAllByNameAndStatus(UUID.fromString("41b8a72e-e2af-412b-9763-0a9ac0008e68"), "A")).thenReturn(groups);
+        Mockito.when(groupRepositoryMock.findAllByNameAndStatus("41b8a72e-e2af-412b-9763-0a9ac0008e68", "A")).thenReturn(groups);
 
         // action
-        List<GroupDTO> result = groupService.findAllGroupByNameAndStatus(UUID.fromString("41b8a72e-e2af-412b-9763-0a9ac0008e68"), "A");
+        List<GroupDTO> result = groupService.findAllGroupByNameAndStatus("41b8a72e-e2af-412b-9763-0a9ac0008e68", "A");
 
         // validate
         Assertions.assertInstanceOf(List.class, result);
@@ -583,11 +578,11 @@ public class GroupServiceImplTest {
     public void shouldReturnExistentGroupDTOWhenFindGroupByNameAndStatus() {
         // scenario
         Optional<Group> groupModelMock = Optional.ofNullable(GroupModelBuilder.newGroupModelTestBuilder().now());
-        Mockito.when(groupRepositoryMock.loadMaxIdByNameAndStatus(UUID.fromString("1bb0d517-47a0-4177-9cc7-3edca3cf78a7"), "A")).thenReturn(1L);
+        Mockito.when(groupRepositoryMock.loadMaxIdByNameAndStatus("1bb0d517-47a0-4177-9cc7-3edca3cf78a7", "A")).thenReturn(1L);
         Mockito.when(groupRepositoryMock.findById(1L)).thenReturn(groupModelMock);
 
         // action
-        GroupDTO result = groupService.findGroupByNameAndStatus(UUID.fromString("1bb0d517-47a0-4177-9cc7-3edca3cf78a7"), "A");
+        GroupDTO result = groupService.findGroupByNameAndStatus("1bb0d517-47a0-4177-9cc7-3edca3cf78a7", "A");
 
         // validate
         Assertions.assertInstanceOf(GroupDTO.class,result);
@@ -595,11 +590,11 @@ public class GroupServiceImplTest {
     @Test
     public void shouldReturnGroupNotFoundExceptionWhenNonExistenceGroupNameAndStatus() {
         // scenario
-        Mockito.when(groupRepositoryMock.loadMaxIdByNameAndStatus(UUID.fromString("1bb0d517-47a0-4177-9cc7-3edca3cf78a7"), "A")).thenReturn(0L);
+        Mockito.when(groupRepositoryMock.loadMaxIdByNameAndStatus("1bb0d517-47a0-4177-9cc7-3edca3cf78a7", "A")).thenReturn(0L);
         Mockito.when(groupRepositoryMock.findById(0L)).thenReturn(Optional.empty());
         // action
         GroupNotFoundException exception = Assertions.assertThrows(GroupNotFoundException.class,
-                ()->groupService.findGroupByNameAndStatus(UUID.fromString("1bb0d517-47a0-4177-9cc7-3edca3cf78a7"), "A"));
+                ()->groupService.findGroupByNameAndStatus("1bb0d517-47a0-4177-9cc7-3edca3cf78a7", "A"));
 
         // validate
         Assertions.assertTrue(exception.getMessage().contains(GROUP_NOTFOUND_WITH_NAME));
@@ -608,7 +603,7 @@ public class GroupServiceImplTest {
     @Test
     public void shouldReturnGroupDTOWhenUpdateExistingNameById() {
         // scenario
-        UUID nameUpdateMock = UUID.fromString("9967b030-7252-42d8-b20a-971787596f86");
+        String nameUpdateMock = "9967b030-7252-42d8-b20a-971787596f86";
         Optional<Group> groupModelMock = Optional.ofNullable(GroupModelBuilder.newGroupModelTestBuilder()
                         .id(420L)
                 .now());
@@ -665,7 +660,7 @@ public class GroupServiceImplTest {
     @Test
     public void showReturnExistingGroupDTOWhenFindGroupByNameAndStatusActiveAnonimous() {
         // scenario
-        UUID nameMock = UUID.fromString("478c972b-7322-41d3-9120-3791e514c222");
+        String nameMock = "478c972b-7322-41d3-9120-3791e514c222";
         Long maxIdMock = 1972L;
         Optional<Group> groupModelMock = Optional.ofNullable(GroupModelBuilder.newGroupModelTestBuilder()
                 .name(nameMock)
@@ -684,7 +679,7 @@ public class GroupServiceImplTest {
     @Test
     public void showReturnGroupNotFoundExceptionWhenNonExistenceFindGroupByNameAndStatusActiveAnonimous() {
         // scenario
-        UUID nameMock = UUID.fromString("478c972b-7322-41d3-9120-3791e514c222");
+        String nameMock = "478c972b-7322-41d3-9120-3791e514c222";
         Long noMaxIdMock = 0L;
         Optional<Group> groupModelMock = Optional.empty();
         Mockito.when(groupRepositoryMock.loadMaxIdByNameAndStatus(nameMock, "A")).thenReturn(noMaxIdMock);
