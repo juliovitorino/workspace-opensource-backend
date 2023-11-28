@@ -2,7 +2,10 @@ package br.com.jcv.security.guardian.controller.v1.business.registerapp;
 
 import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
+import br.com.jcv.commons.library.commodities.service.BusinessServiceAuth;
+import br.com.jcv.security.guardian.RoleEnums;
 import br.com.jcv.security.guardian.dto.GApplicationDTO;
+import br.com.jcv.security.guardian.service.AbstractGuardianBusinessService;
 import br.com.jcv.security.guardian.service.GApplicationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +15,15 @@ import java.util.UUID;
 
 @Service
 @Slf4j
-public class RegisterApplicationBusinessServiceImpl implements RegisterApplication{
+public class RegisterApplicationBusinessServiceImpl
+        extends AbstractGuardianBusinessService
+        implements RegisterApplication {
 
     @Autowired private GApplicationService gApplicationService;
+
+    @Override
     public RegisterApplicationResponse execute(UUID processId, RegisterApplicationRequest request) {
+
         UUID uuidApp = UUID.randomUUID();
         GApplicationDTO dto = new GApplicationDTO();
         dto.setName(request.getName());
@@ -33,4 +41,5 @@ public class RegisterApplicationBusinessServiceImpl implements RegisterApplicati
                 .build());
         return response;
     }
+
 }

@@ -3,6 +3,8 @@ package br.com.jcv.security.guardian.service;
 import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
 import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
 import br.com.jcv.commons.library.utility.DateTime;
+import br.com.jcv.security.guardian.RoleEnums;
+import br.com.jcv.security.guardian.config.GuardianConfig;
 import br.com.jcv.security.guardian.dto.ApplicationUserDTO;
 import br.com.jcv.security.guardian.dto.GroupRoleDTO;
 import br.com.jcv.security.guardian.dto.GroupUserDTO;
@@ -15,7 +17,6 @@ import br.com.jcv.security.guardian.exception.SessionStateNotFoundException;
 import com.google.gson.Gson;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
-import net.bytebuddy.description.type.TypeList;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,7 @@ import java.util.UUID;
 @Component
 public abstract class AbstractGuardianBusinessService {
     @Autowired protected Gson gson;
+    @Autowired protected GuardianConfig config;
     @Autowired protected SessionStateService sessionStateService;
     @Autowired protected UsersService usersService;
     @Autowired protected GApplicationService gApplicationService;
@@ -98,7 +100,7 @@ public abstract class AbstractGuardianBusinessService {
     }
 
     private boolean hasSuperPower(Long idUser) {
-        RoleDTO superPowerRole = roleService.findRoleByNameAndStatus("ADMIN_SUPER_POWER");
+        RoleDTO superPowerRole = roleService.findRoleByNameAndStatus(RoleEnums.ADMIN_SUPER_POWER.name());
         List<UserRoleDTO> userWithSuperPower =
                 userRoleService.findAllUserRoleByIdUserAndIdRoleAndStatus(
                         idUser,

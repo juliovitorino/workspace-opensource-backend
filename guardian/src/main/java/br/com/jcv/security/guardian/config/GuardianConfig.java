@@ -19,4 +19,7 @@ public class GuardianConfig {
     @Value("${spring.datasource.url}")
     private String dbUrl;
 
+    @Value("${guardian.admin.magicSeed}")
+    private String guardianAdminMagicSeed;
+
 }
