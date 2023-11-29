@@ -2,14 +2,17 @@ package br.com.jcv.security.guardian.controller.v1.business.createaccount;
 
 import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
+import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
 import br.com.jcv.commons.library.utility.DateUtility;
 import br.com.jcv.commons.library.utility.StringUtility;
 import br.com.jcv.security.guardian.dto.ApplicationUserDTO;
 import br.com.jcv.security.guardian.dto.GApplicationDTO;
 import br.com.jcv.security.guardian.dto.UsersDTO;
+import br.com.jcv.security.guardian.exception.ApplicationUserNotFoundException;
 import br.com.jcv.security.guardian.service.AbstractGuardianBusinessService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -22,6 +25,22 @@ public class CreateNewAccountBusinessService extends AbstractGuardianBusinessSer
         log.info("execute :: processId = {} :: has been started", processId);
 
         GApplicationDTO gApplicationDTO = gApplicationService.findGApplicationByExternalCodeUUIDAndStatus(request.getExternalApplicationUUID());
+        try {
+            applicationUserService.findApplicationUserByExternalAppUserUUIDAndEmailAndStatus(
+                    request.getExternalApplicationUUID(),
+                    request.getEmail(),
+                    GenericStatusEnums.ATIVO.getShortValue());
+            throw new CommoditieBaseException("Your account has already been activated", HttpStatus.FORBIDDEN);
+        } catch (ApplicationUserNotFoundException ignored) {}
+
+        try {
+            applicationUserService.findApplicationUserByExternalAppUserUUIDAndEmailAndStatus(
+                    request.getExternalApplicationUUID(),
+                    request.getEmail(),
+                    GenericStatusEnums.PENDENTE.getShortValue());
+            throw new CommoditieBaseException("Your account is waiting your confirmation. Check it out for 6-Digit code in your email", HttpStatus.FORBIDDEN);
+        } catch (ApplicationUserNotFoundException ignored) {}
+
         String md5Hex = getMD5HashFromString(request.getPasswd());
 
         UsersDTO usersDTO = mapperToDto(request);

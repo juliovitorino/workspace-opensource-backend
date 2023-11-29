@@ -8,7 +8,9 @@ import br.com.jcv.security.guardian.RoleEnums;
 import br.com.jcv.security.guardian.controller.v1.business.ControllerGenericResponse;
 import br.com.jcv.security.guardian.controller.v1.business.createaccount.CreateNewAccount;
 import br.com.jcv.security.guardian.controller.v1.business.createaccount.CreateNewAccountRequest;
+import br.com.jcv.security.guardian.controller.v1.business.registerapp.RegisterAdminApplication;
 import br.com.jcv.security.guardian.controller.v1.business.registerapp.RegisterApplication;
+import br.com.jcv.security.guardian.controller.v1.business.registerapp.RegisterApplicationAdminRequest;
 import br.com.jcv.security.guardian.controller.v1.business.registerapp.RegisterApplicationRequest;
 import br.com.jcv.security.guardian.controller.v1.business.registerapp.RegisterApplicationResponse;
 import br.com.jcv.security.guardian.controller.v1.business.validateaccount.ValidateAccountRequest;
@@ -32,7 +34,7 @@ import java.util.UUID;
 @Service
 @Slf4j
 public class InitialGuardianSetupBusinessServiceImpl extends AbstractGuardianBusinessService implements InitialGuardianSetupBusinessService{
-    @Autowired private RegisterApplication registerApplicationService;
+    @Autowired private RegisterAdminApplication registerApplicationService;
     @Autowired private CreateNewAccount createNewAccount;
     @Autowired private ValidateAccountService validateAccountService;
 
@@ -49,10 +51,10 @@ public class InitialGuardianSetupBusinessServiceImpl extends AbstractGuardianBus
         } catch(GApplicationNotFoundException ignored) {}
 
         log.info("execute :: processId = {} :: processing Application Guardian entry", processId);
-        RegisterApplicationRequest applicationRequest = RegisterApplicationRequest.builder()
-                .name("GUARDIAN")
-                .jwtTimeToLive(1000000L)
-                .build();
+        RegisterApplicationAdminRequest applicationRequest = new RegisterApplicationAdminRequest();
+        applicationRequest.setMagicSeed(magicSeed);
+        applicationRequest.setName("GUARDIAN");
+        applicationRequest.setJwtTimeToLive(1000000L);
         RegisterApplicationResponse applicationResponse = registerApplicationService.execute(processId, applicationRequest);
 
         log.info("execute :: processId = {} :: processing User Admin entry", processId);
