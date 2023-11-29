@@ -437,7 +437,7 @@ public class RoleServiceImplTest {
     public void shouldExecutePartialUpdateWithSucess() {
         // scenario
         Map<String, Object> mapRoleDTOMock = new HashMap<>();
-        mapRoleDTOMock.put(RoleConstantes.NAME,UUID.fromString("6ec73f90-716f-4a18-aca9-c0d0255fc262"));
+        mapRoleDTOMock.put(RoleConstantes.NAME,"6ec73f90-716f-4a18-aca9-c0d0255fc262");
         mapRoleDTOMock.put(RoleConstantes.STATUS,"UQM46zRWd2Kqx0F0nNyKq0tcISTbegtsFikzFCuQvUVBUitCOE");
 
 
