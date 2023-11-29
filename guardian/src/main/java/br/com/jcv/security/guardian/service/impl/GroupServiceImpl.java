@@ -145,7 +145,7 @@ public class GroupServiceImpl implements GroupService
             Group group = groupData.get();
 
             for (Map.Entry<String,Object> entry : updates.entrySet()) {
-                if(entry.getKey().equalsIgnoreCase(GroupConstantes.NAME)) group.setName((UUID)entry.getValue());
+                if(entry.getKey().equalsIgnoreCase(GroupConstantes.NAME)) group.setName(entry.getValue().toString());
 
         }
         if(updates.get(GroupConstantes.DATEUPDATED) == null) group.setDateUpdated(new Date());
@@ -195,7 +195,7 @@ public class GroupServiceImpl implements GroupService
 public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     List<Group> lstGroup;
     Long id = null;
-    UUID name = null;
+    String name = null;
     String status = null;
     String dateCreated = null;
     String dateUpdated = null;
@@ -203,7 +203,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
 
     for (Map.Entry<String,Object> entry : filtro.getCamposFiltro().entrySet()) {
         if(entry.getKey().equalsIgnoreCase(GroupConstantes.ID)) id = Objects.isNull(entry.getValue()) ? null : Long.valueOf(entry.getValue().toString());
-        if(entry.getKey().equalsIgnoreCase(GroupConstantes.NAME)) name = Objects.isNull(entry.getValue()) ? null : UUID.fromString(entry.getValue().toString());
+        if(entry.getKey().equalsIgnoreCase(GroupConstantes.NAME)) name = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(GroupConstantes.STATUS)) status = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(GroupConstantes.DATECREATED)) dateCreated = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(GroupConstantes.DATEUPDATED)) dateUpdated = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
@@ -238,14 +238,14 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
 )
     public List<GroupDTO> findAllByFilter(RequestFilter filtro) {
     Long id = null;
-    UUID name = null;
+    String name = null;
     String status = null;
     String dateCreated = null;
     String dateUpdated = null;
 
         for (Map.Entry<String,Object> entry : filtro.getCamposFiltro().entrySet()) {
         if(entry.getKey().equalsIgnoreCase(GroupConstantes.ID)) id = Objects.isNull(entry.getValue()) ? null : Long.valueOf(entry.getValue().toString());
-        if(entry.getKey().equalsIgnoreCase(GroupConstantes.NAME)) name = Objects.isNull(entry.getValue()) ? null : UUID.fromString(entry.getValue().toString());
+        if(entry.getKey().equalsIgnoreCase(GroupConstantes.NAME)) name = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(GroupConstantes.STATUS)) status = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(GroupConstantes.DATECREATED)) dateCreated = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(GroupConstantes.DATEUPDATED)) dateUpdated = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
@@ -279,7 +279,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     rollbackFor = Throwable.class,
     noRollbackFor = GroupNotFoundException.class
     )
-    public List<GroupDTO> findAllGroupByNameAndStatus(UUID name, String status) {
+    public List<GroupDTO> findAllGroupByNameAndStatus(String name, String status) {
         return groupRepository.findAllByNameAndStatus(name, status).stream().map(this::toDTO).collect(Collectors.toList());
     }
     @Override
@@ -338,7 +338,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     rollbackFor = Throwable.class,
     noRollbackFor = GroupNotFoundException.class
     )
-    public GroupDTO findGroupByNameAndStatus(UUID name, String status) {
+    public GroupDTO findGroupByNameAndStatus(String name, String status) {
         Long maxId = groupRepository.loadMaxIdByNameAndStatus(name, status);
         if(maxId == null) maxId = 0L;
         Optional<Group> groupData =
@@ -358,7 +358,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     rollbackFor = Throwable.class,
     noRollbackFor = GroupNotFoundException.class
     )
-    public GroupDTO findGroupByNameAndStatus(UUID name) {
+    public GroupDTO findGroupByNameAndStatus(String name) {
         return this.findGroupByNameAndStatus(name, GenericStatusEnums.ATIVO.getShortValue());
     }
 
@@ -427,7 +427,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     transactionManager = "transactionManager",
     propagation = Propagation.REQUIRED,
     rollbackFor = Throwable.class)
-    public GroupDTO updateNameById(Long id, UUID name) {
+    public GroupDTO updateNameById(Long id, String name) {
         findById(id);
         groupRepository.updateNameById(id, name);
         return findById(id);

@@ -46,7 +46,7 @@ public class GroupDTOBuilder {
         this.groupDTO.setId(id);
         return this;
     }
-    public GroupDTOBuilder name(UUID name){
+    public GroupDTOBuilder name(String name){
         this.groupDTO.setName(name);
         return this;
     }

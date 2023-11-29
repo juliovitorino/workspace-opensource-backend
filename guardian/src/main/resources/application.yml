@@ -30,3 +30,7 @@ logging:
           descriptor:
             sql:
               BasicBinder: TRACE
+
+guardian:
+  admin:
+    magicSeed: B7CdeU3QtR1FQctrSV0JatNEcGeAaFUfSBW2XdDIgpF2eMmUIM

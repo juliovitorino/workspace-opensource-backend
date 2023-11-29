@@ -305,7 +305,7 @@ public class GroupCommoditieController
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
     @GetMapping(params = "name")
-    public ResponseEntity<GroupDTO> findGroupByName(@RequestParam(GroupConstantes.NAME) UUID name) {
+    public ResponseEntity<GroupDTO> findGroupByName(@RequestParam(GroupConstantes.NAME) String name) {
         try{
             GroupDTO groupDTO = groupService.findGroupByNameAndStatus(name, GenericStatusEnums.ATIVO.getShortValue());
             return Objects.nonNull(groupDTO)

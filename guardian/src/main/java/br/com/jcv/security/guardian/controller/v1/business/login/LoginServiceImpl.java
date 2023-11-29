@@ -7,6 +7,7 @@ import br.com.jcv.security.guardian.dto.GApplicationDTO;
 import br.com.jcv.security.guardian.dto.SessionStateDTO;
 import br.com.jcv.security.guardian.exception.ApplicationUserNotFoundException;
 import br.com.jcv.security.guardian.exception.ApplicationUserWrongEmailException;
+import br.com.jcv.security.guardian.exception.GApplicationNotFoundException;
 import br.com.jcv.security.guardian.service.AbstractGuardianBusinessService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,17 +19,19 @@ public class LoginServiceImpl extends AbstractGuardianBusinessService implements
     @Override
     public String execute(UUID processId, LoginRequest loginRequest) {
 
-        gApplicationService.findGApplicationByExternalCodeUUIDAndStatus(loginRequest.getApplicationExternalUUID());
 
         ApplicationUserDTO applicationUserDTO = null;
         try {
-                applicationUserDTO = applicationUserService.findApplicationUserByExternalAppUserUUIDAndEmailAndStatus(
-                        loginRequest.getApplicationExternalUUID(),
-                        loginRequest.getEmail(),
-                        GenericStatusEnums.ATIVO.getShortValue());
+            gApplicationService.findGApplicationByExternalCodeUUIDAndStatus(loginRequest.getApplicationExternalUUID());
+            applicationUserDTO = applicationUserService.findApplicationUserByExternalAppUserUUIDAndEmailAndStatus(
+                    loginRequest.getApplicationExternalUUID(),
+                    loginRequest.getEmail(),
+                    GenericStatusEnums.ATIVO.getShortValue());
 
         } catch (ApplicationUserNotFoundException e) {
             throw new ApplicationUserWrongEmailException("Permission denied. Wrong email", HttpStatus.FORBIDDEN);
+        } catch(GApplicationNotFoundException e) {
+            throw new CommoditieBaseException("Permission denied. Invalid Application Code. Check it out with administrator.", HttpStatus.FORBIDDEN);
         }
 
         GApplicationDTO appdto = gApplicationService.findById(applicationUserDTO.getIdApplication());

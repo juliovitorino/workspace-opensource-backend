@@ -46,7 +46,7 @@ public class RoleModelBuilder {
         this.role.setId(id);
         return this;
     }
-    public RoleModelBuilder name(UUID name){
+    public RoleModelBuilder name(String name){
         this.role.setName(name);
         return this;
     }

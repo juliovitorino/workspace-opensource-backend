@@ -1,5 +1,6 @@
-package br.com.jcv.security.guardian.controller.v1.business.registerapp;
+package br.com.jcv.security.guardian.controller.v1.business;
 
+import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +20,6 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RegisterApplicationRequest implements Serializable {
-    private String name;
-    private Long jwtTimeToLive;
+public class ControllerGenericResponse implements Serializable {
+    private MensagemResponse response;
 }

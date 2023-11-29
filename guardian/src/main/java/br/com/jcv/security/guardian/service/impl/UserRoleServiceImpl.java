@@ -305,6 +305,15 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     rollbackFor = Throwable.class,
     noRollbackFor = UserRoleNotFoundException.class
     )
+    public List<UserRoleDTO> findAllUserRoleByIdUserAndIdRoleAndStatus(Long idUser, Long idRole, String status) {
+        return userroleRepository.findAllByIdUserAndIdRoleAndStatus(idUser, idRole, status).stream().map(this::toDTO).collect(Collectors.toList());
+    }
+    @Override
+    @Transactional(transactionManager="transactionManager",
+    propagation = Propagation.REQUIRED,
+    rollbackFor = Throwable.class,
+    noRollbackFor = UserRoleNotFoundException.class
+    )
     public List<UserRoleDTO> findAllUserRoleByDateCreatedAndStatus(Date dateCreated, String status) {
         return userroleRepository.findAllByDateCreatedAndStatus(dateCreated, status).stream().map(this::toDTO).collect(Collectors.toList());
     }

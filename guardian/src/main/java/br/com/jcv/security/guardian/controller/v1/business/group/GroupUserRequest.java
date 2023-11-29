@@ -1,4 +1,4 @@
-package br.com.jcv.security.guardian.controller.v1.business.registerapp;
+package br.com.jcv.security.guardian.controller.v1.business.group;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -19,7 +18,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RegisterApplicationRequest implements Serializable {
-    private String name;
-    private Long jwtTimeToLive;
+public class GroupUserRequest implements Serializable {
+    private Long idGroup;
+    private Long idUser;
 }

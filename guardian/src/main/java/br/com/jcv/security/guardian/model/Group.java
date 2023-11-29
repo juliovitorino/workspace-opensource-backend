@@ -32,7 +32,7 @@ public class Group {
 
     @Column(name = "tx_name")
     @CodeGeneratorFieldDescriptor(fieldDescription = "Group name")
-    private UUID name;
+    private String name;
 
     @CodeGeneratorFieldDescriptor(fieldDescription = "Status field")
     @Column(length = 1)

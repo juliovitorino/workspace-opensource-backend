@@ -44,19 +44,19 @@ public interface GroupService extends CommoditieBaseService<GroupDTO,Group>
 {
     GroupDTO findGroupByIdAndStatus(Long id);
     GroupDTO findGroupByIdAndStatus(Long id, String status);
-    GroupDTO findGroupByNameAndStatus(UUID name);
-    GroupDTO findGroupByNameAndStatus(UUID name, String status);
+    GroupDTO findGroupByNameAndStatus(String name);
+    GroupDTO findGroupByNameAndStatus(String name, String status);
     GroupDTO findGroupByDateCreatedAndStatus(Date dateCreated);
     GroupDTO findGroupByDateCreatedAndStatus(Date dateCreated, String status);
     GroupDTO findGroupByDateUpdatedAndStatus(Date dateUpdated);
     GroupDTO findGroupByDateUpdatedAndStatus(Date dateUpdated, String status);
 
     List<GroupDTO> findAllGroupByIdAndStatus(Long id, String status);
-    List<GroupDTO> findAllGroupByNameAndStatus(UUID name, String status);
+    List<GroupDTO> findAllGroupByNameAndStatus(String name, String status);
     List<GroupDTO> findAllGroupByDateCreatedAndStatus(Date dateCreated, String status);
     List<GroupDTO> findAllGroupByDateUpdatedAndStatus(Date dateUpdated, String status);
 
-    GroupDTO updateNameById(Long id, UUID name);
+    GroupDTO updateNameById(Long id, String name);
     GroupDTO updateStatusById(Long id, String status);
 
 

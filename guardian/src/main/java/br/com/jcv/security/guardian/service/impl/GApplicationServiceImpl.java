@@ -510,7 +510,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                     gapplication.setId(gapplicationDTO.getId());
                     gapplication.setName(gapplicationDTO.getName());
                     gapplication.setExternalCodeUUID(gapplicationDTO.getExternalCodeUUID());
-                    gapplication.setJwtTimeToLive(gapplication.getJwtTimeToLive());
+                    gapplication.setJwtTimeToLive(gapplicationDTO.getJwtTimeToLive());
                     gapplication.setStatus(gapplicationDTO.getStatus());
                     gapplication.setDateCreated(gapplicationDTO.getDateCreated());
                     gapplication.setDateUpdated(gapplicationDTO.getDateUpdated());

@@ -105,7 +105,7 @@ public class RoleServiceImplTest {
     public void shouldReturnListOfRoleWhenFindAllByFilterIsCalled() {
         // scenario
         Long id = 43L;
-        UUID name = UUID.fromString("98f6305a-c25a-44ff-80f9-ca81ef5ddc26");
+        String name = "98f6305a-c25a-44ff-80f9-ca81ef5ddc26";
         String status = "O0xzwUNs1jUCb5qP2Fr1QP0zOcYBzBtbBosub9sdtvFC9wvhGh";
         String dateCreated = "2025-10-07";
         String dateUpdated = "2025-10-07";
@@ -153,7 +153,7 @@ public class RoleServiceImplTest {
     public void shouldReturnMapWithRoleListWhenFindPageByFilterIsCalled() {
         // scenario
         Long id = 57343L;
-        UUID name = UUID.fromString("329669be-3306-47e1-bfe9-975a4b20bf0e");
+        String name = "329669be-3306-47e1-bfe9-975a4b20bf0e";
         String status = "KA6esOoh4zMq3LN1VucPodc9oPXtIei17waDs1eDC09YoIVJbC";
         String dateCreated = "2025-10-07";
         String dateUpdated = "2025-10-07";
@@ -277,7 +277,7 @@ public class RoleServiceImplTest {
         Optional<Role> roleModelMock = Optional.ofNullable(
                 RoleModelBuilder.newRoleModelTestBuilder()
                         .id(idMock)
-                        .name(UUID.fromString("a48c772c-6387-4a57-a947-eca8e7412b1f"))
+                        .name("a48c772c-6387-4a57-a947-eca8e7412b1f")
 
                         .status("X")
                         .now()
@@ -285,7 +285,7 @@ public class RoleServiceImplTest {
         Role roleToSaveMock = roleModelMock.orElse(null);
         Role roleSavedMck = RoleModelBuilder.newRoleModelTestBuilder()
                         .id(15001L)
-                        .name(UUID.fromString("1a360796-8cbd-4c8c-ac22-860bfb923ac8"))
+                        .name("1a360796-8cbd-4c8c-ac22-860bfb923ac8")
 
                         .status("A")
                         .now();
@@ -317,8 +317,7 @@ public class RoleServiceImplTest {
         // scenario
         Optional<Role> roleModelMock = Optional.ofNullable(RoleModelBuilder.newRoleModelTestBuilder()
                 .id(4400L)
-                .name(UUID.fromString("4442d20c-12e1-4a93-b845-05adca718d92"))
-
+                .name("4442d20c-12e1-4a93-b845-05adca718d92")
                 .status("A")
                 .dateCreated(dateTimeMock.getToday())
                 .dateUpdated(dateTimeMock.getToday())
@@ -363,8 +362,7 @@ public class RoleServiceImplTest {
         // scenario
         RoleDTO roleDTOMock = RoleDTOBuilder.newRoleDTOTestBuilder()
                 .id(14500L)
-                .name(UUID.fromString("a5cc3a59-97c7-4ec3-b6b4-4e2988783a06"))
-
+                .name("a5cc3a59-97c7-4ec3-b6b4-4e2988783a06")
                 .status("P")
                 .dateCreated(dateTimeMock.getToday())
                 .dateUpdated(dateTimeMock.getToday())
@@ -401,7 +399,7 @@ public class RoleServiceImplTest {
         // scenario
         RoleDTO roleDTOMock = RoleDTOBuilder.newRoleDTOTestBuilder()
                 .id(null)
-                .name(UUID.fromString("f023387e-ad99-4f74-95ce-d9a9248b2fd2"))
+                .name("f023387e-ad99-4f74-95ce-d9a9248b2fd2")
 
                 .status("P")
                 .dateCreated(dateTimeMock.getToday())
@@ -446,9 +444,8 @@ public class RoleServiceImplTest {
         Optional<Role> roleModelMock = Optional.ofNullable(
                 RoleModelBuilder.newRoleModelTestBuilder()
                         .id(35724L)
-                        .name(UUID.fromString("158c3cfc-979f-47ba-b523-83b612fcfb8d"))
-                        .status("RCIbqLuv4wCjLbt5yasncMG6qPk5w0lA30bpjoeTc7bJfvV0st")
-
+                        .name("158c3cfc-979f-47ba-b523-83b612fcfb8d")
+                        .status("A")
                         .now()
         );
 
@@ -508,10 +505,10 @@ public class RoleServiceImplTest {
             RoleModelBuilder.newRoleModelTestBuilder().now()
         );
 
-        Mockito.when(roleRepositoryMock.findAllByNameAndStatus(UUID.fromString("14dd6a7c-ece8-4f0d-8527-f9ed743849e8"), "A")).thenReturn(roles);
+        Mockito.when(roleRepositoryMock.findAllByNameAndStatus("14dd6a7c-ece8-4f0d-8527-f9ed743849e8", "A")).thenReturn(roles);
 
         // action
-        List<RoleDTO> result = roleService.findAllRoleByNameAndStatus(UUID.fromString("14dd6a7c-ece8-4f0d-8527-f9ed743849e8"), "A");
+        List<RoleDTO> result = roleService.findAllRoleByNameAndStatus("14dd6a7c-ece8-4f0d-8527-f9ed743849e8", "A");
 
         // validate
         Assertions.assertInstanceOf(List.class, result);
@@ -583,11 +580,11 @@ public class RoleServiceImplTest {
     public void shouldReturnExistentRoleDTOWhenFindRoleByNameAndStatus() {
         // scenario
         Optional<Role> roleModelMock = Optional.ofNullable(RoleModelBuilder.newRoleModelTestBuilder().now());
-        Mockito.when(roleRepositoryMock.loadMaxIdByNameAndStatus(UUID.fromString("c116b715-67d5-4622-a188-8970f39e0d8a"), "A")).thenReturn(1L);
+        Mockito.when(roleRepositoryMock.loadMaxIdByNameAndStatus("c116b715-67d5-4622-a188-8970f39e0d8a", "A")).thenReturn(1L);
         Mockito.when(roleRepositoryMock.findById(1L)).thenReturn(roleModelMock);
 
         // action
-        RoleDTO result = roleService.findRoleByNameAndStatus(UUID.fromString("c116b715-67d5-4622-a188-8970f39e0d8a"), "A");
+        RoleDTO result = roleService.findRoleByNameAndStatus("c116b715-67d5-4622-a188-8970f39e0d8a", "A");
 
         // validate
         Assertions.assertInstanceOf(RoleDTO.class,result);
@@ -595,11 +592,11 @@ public class RoleServiceImplTest {
     @Test
     public void shouldReturnRoleNotFoundExceptionWhenNonExistenceRoleNameAndStatus() {
         // scenario
-        Mockito.when(roleRepositoryMock.loadMaxIdByNameAndStatus(UUID.fromString("c116b715-67d5-4622-a188-8970f39e0d8a"), "A")).thenReturn(0L);
+        Mockito.when(roleRepositoryMock.loadMaxIdByNameAndStatus("c116b715-67d5-4622-a188-8970f39e0d8a", "A")).thenReturn(0L);
         Mockito.when(roleRepositoryMock.findById(0L)).thenReturn(Optional.empty());
         // action
         RoleNotFoundException exception = Assertions.assertThrows(RoleNotFoundException.class,
-                ()->roleService.findRoleByNameAndStatus(UUID.fromString("c116b715-67d5-4622-a188-8970f39e0d8a"), "A"));
+                ()->roleService.findRoleByNameAndStatus("c116b715-67d5-4622-a188-8970f39e0d8a", "A"));
 
         // validate
         Assertions.assertTrue(exception.getMessage().contains(ROLE_NOTFOUND_WITH_NAME));
@@ -608,7 +605,7 @@ public class RoleServiceImplTest {
     @Test
     public void shouldReturnRoleDTOWhenUpdateExistingNameById() {
         // scenario
-        UUID nameUpdateMock = UUID.fromString("38a4a5b9-1c76-445e-86ff-60b561f051d9");
+        String nameUpdateMock = "38a4a5b9-1c76-445e-86ff-60b561f051d9";
         Optional<Role> roleModelMock = Optional.ofNullable(RoleModelBuilder.newRoleModelTestBuilder()
                         .id(420L)
                 .now());
@@ -665,7 +662,7 @@ public class RoleServiceImplTest {
     @Test
     public void showReturnExistingRoleDTOWhenFindRoleByNameAndStatusActiveAnonimous() {
         // scenario
-        UUID nameMock = UUID.fromString("d2ddd954-042c-4ac7-9279-7aa5fcd5b296");
+        String nameMock = "d2ddd954-042c-4ac7-9279-7aa5fcd5b296";
         Long maxIdMock = 1972L;
         Optional<Role> roleModelMock = Optional.ofNullable(RoleModelBuilder.newRoleModelTestBuilder()
                 .name(nameMock)
@@ -684,7 +681,7 @@ public class RoleServiceImplTest {
     @Test
     public void showReturnRoleNotFoundExceptionWhenNonExistenceFindRoleByNameAndStatusActiveAnonimous() {
         // scenario
-        UUID nameMock = UUID.fromString("d2ddd954-042c-4ac7-9279-7aa5fcd5b296");
+        String nameMock = "d2ddd954-042c-4ac7-9279-7aa5fcd5b296";
         Long noMaxIdMock = 0L;
         Optional<Role> roleModelMock = Optional.empty();
         Mockito.when(roleRepositoryMock.loadMaxIdByNameAndStatus(nameMock, "A")).thenReturn(noMaxIdMock);

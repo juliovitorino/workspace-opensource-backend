@@ -145,7 +145,7 @@ public class RoleServiceImpl implements RoleService
             Role role = roleData.get();
 
             for (Map.Entry<String,Object> entry : updates.entrySet()) {
-                if(entry.getKey().equalsIgnoreCase(RoleConstantes.NAME)) role.setName((UUID)entry.getValue());
+                if(entry.getKey().equalsIgnoreCase(RoleConstantes.NAME)) role.setName((String)entry.getValue());
 
         }
         if(updates.get(RoleConstantes.DATEUPDATED) == null) role.setDateUpdated(new Date());
@@ -195,7 +195,7 @@ public class RoleServiceImpl implements RoleService
 public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     List<Role> lstRole;
     Long id = null;
-    UUID name = null;
+    String name = null;
     String status = null;
     String dateCreated = null;
     String dateUpdated = null;
@@ -203,7 +203,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
 
     for (Map.Entry<String,Object> entry : filtro.getCamposFiltro().entrySet()) {
         if(entry.getKey().equalsIgnoreCase(RoleConstantes.ID)) id = Objects.isNull(entry.getValue()) ? null : Long.valueOf(entry.getValue().toString());
-        if(entry.getKey().equalsIgnoreCase(RoleConstantes.NAME)) name = Objects.isNull(entry.getValue()) ? null : UUID.fromString(entry.getValue().toString());
+        if(entry.getKey().equalsIgnoreCase(RoleConstantes.NAME)) name = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(RoleConstantes.STATUS)) status = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(RoleConstantes.DATECREATED)) dateCreated = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(RoleConstantes.DATEUPDATED)) dateUpdated = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
@@ -238,14 +238,14 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
 )
     public List<RoleDTO> findAllByFilter(RequestFilter filtro) {
     Long id = null;
-    UUID name = null;
+    String name = null;
     String status = null;
     String dateCreated = null;
     String dateUpdated = null;
 
         for (Map.Entry<String,Object> entry : filtro.getCamposFiltro().entrySet()) {
         if(entry.getKey().equalsIgnoreCase(RoleConstantes.ID)) id = Objects.isNull(entry.getValue()) ? null : Long.valueOf(entry.getValue().toString());
-        if(entry.getKey().equalsIgnoreCase(RoleConstantes.NAME)) name = Objects.isNull(entry.getValue()) ? null : UUID.fromString(entry.getValue().toString());
+        if(entry.getKey().equalsIgnoreCase(RoleConstantes.NAME)) name = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(RoleConstantes.STATUS)) status = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(RoleConstantes.DATECREATED)) dateCreated = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(RoleConstantes.DATEUPDATED)) dateUpdated = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
@@ -279,7 +279,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     rollbackFor = Throwable.class,
     noRollbackFor = RoleNotFoundException.class
     )
-    public List<RoleDTO> findAllRoleByNameAndStatus(UUID name, String status) {
+    public List<RoleDTO> findAllRoleByNameAndStatus(String name, String status) {
         return roleRepository.findAllByNameAndStatus(name, status).stream().map(this::toDTO).collect(Collectors.toList());
     }
     @Override
@@ -338,7 +338,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     rollbackFor = Throwable.class,
     noRollbackFor = RoleNotFoundException.class
     )
-    public RoleDTO findRoleByNameAndStatus(UUID name, String status) {
+    public RoleDTO findRoleByNameAndStatus(String name, String status) {
         Long maxId = roleRepository.loadMaxIdByNameAndStatus(name, status);
         if(maxId == null) maxId = 0L;
         Optional<Role> roleData =
@@ -358,7 +358,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     rollbackFor = Throwable.class,
     noRollbackFor = RoleNotFoundException.class
     )
-    public RoleDTO findRoleByNameAndStatus(UUID name) {
+    public RoleDTO findRoleByNameAndStatus(String name) {
         return this.findRoleByNameAndStatus(name, GenericStatusEnums.ATIVO.getShortValue());
     }
 
@@ -427,7 +427,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     transactionManager = "transactionManager",
     propagation = Propagation.REQUIRED,
     rollbackFor = Throwable.class)
-    public RoleDTO updateNameById(Long id, UUID name) {
+    public RoleDTO updateNameById(Long id, String name) {
         findById(id);
         roleRepository.updateNameById(id, name);
         return findById(id);

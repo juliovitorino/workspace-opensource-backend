@@ -15,11 +15,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RegisterApplicationRequest implements Serializable {
-    private String name;
-    private Long jwtTimeToLive;
+public class RegisterApplicationAdminRequest extends RegisterApplicationRequest implements Serializable {
+    private String magicSeed;
 }

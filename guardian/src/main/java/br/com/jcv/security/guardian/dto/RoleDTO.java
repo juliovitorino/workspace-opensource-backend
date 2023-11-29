@@ -54,7 +54,7 @@ public class RoleDTO extends DTOPadrao implements Serializable
     
     @SerializedName(RoleConstantes.NAME)
     @JsonProperty(RoleConstantes.NAME)
-    private UUID name;
+    private String name;
 
 
     @SerializedName("mensagemResponse")

@@ -129,6 +129,8 @@ List<UserRole> findUserRoleByFilter(
      List<UserRole> findAllByIdAndStatus(Long id, String status);
      @Query(value = "SELECT * FROM tb_user_role WHERE id_role = :idRole AND  status = :status ", nativeQuery = true)
      List<UserRole> findAllByIdRoleAndStatus(Long idRole, String status);
+     @Query(value = "SELECT * FROM tb_user_role WHERE id_user = :idUser AND id_role = :idRole AND status = :status ", nativeQuery = true)
+     List<UserRole> findAllByIdUserAndIdRoleAndStatus(Long idUser, Long idRole, String status);
      @Query(value = "SELECT * FROM tb_user_role WHERE id_user = :idUser AND  status = :status ", nativeQuery = true)
      List<UserRole> findAllByIdUserAndStatus(Long idUser, String status);
      @Query(value = "SELECT * FROM tb_user_role WHERE date_created = :dateCreated AND  status = :status ", nativeQuery = true)

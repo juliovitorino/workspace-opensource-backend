@@ -54,7 +54,7 @@ public class GroupDTO extends DTOPadrao implements Serializable
     
     @SerializedName(GroupConstantes.NAME)
     @JsonProperty(GroupConstantes.NAME)
-    private UUID name;
+    private String name;
 
 
     @SerializedName("mensagemResponse")
