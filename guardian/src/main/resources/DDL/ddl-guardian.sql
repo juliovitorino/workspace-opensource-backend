@@ -73,7 +73,6 @@ create table tb_user_role (
     id_user_role bigserial NOT NULL,
     id_user int8 NOT NULL,
     id_role int8 NOT NULL,
-    tx_name VARCHAR NOT NULL,
     status VARCHAR(1) NOT NULL,
     date_created timestamp NOT NULL,
     date_updated timestamp NOT NULL,
