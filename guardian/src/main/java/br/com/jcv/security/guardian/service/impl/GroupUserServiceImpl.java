@@ -414,6 +414,26 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     rollbackFor = Throwable.class,
     noRollbackFor = GroupUserNotFoundException.class
     )
+    public GroupUserDTO findGroupUserByIdGroupAndIdUserAndStatus(Long idGroup, Long idUser, String status) {
+        Long maxId = groupuserRepository.loadMaxIdByIdGroupAndIdUserAndStatus(idGroup, idUser, status);
+        if(maxId == null) maxId = 0L;
+        Optional<GroupUser> groupuserData =
+            Optional.ofNullable( groupuserRepository
+                .findById(maxId)
+                .orElseThrow(
+                    () -> new GroupUserNotFoundException(GROUPUSER_NOTFOUND_WITH_IDGROUP + idGroup,
+                        HttpStatus.NOT_FOUND,
+                        GROUPUSER_NOTFOUND_WITH_IDGROUP + idGroup))
+                );
+        return groupuserData.map(this::toDTO).orElse(null);
+    }
+
+    @Override
+    @Transactional(transactionManager="transactionManager",
+    propagation = Propagation.REQUIRED,
+    rollbackFor = Throwable.class,
+    noRollbackFor = GroupUserNotFoundException.class
+    )
     public GroupUserDTO findGroupUserByIdGroupAndStatus(Long idGroup) {
         return this.findGroupUserByIdGroupAndStatus(idGroup, GenericStatusEnums.ATIVO.getShortValue());
     }

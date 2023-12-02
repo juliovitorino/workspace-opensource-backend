@@ -97,6 +97,8 @@ List<GroupUser> findGroupUserByFilter(
      Long loadMaxIdByIdUserAndStatus(Long idUser, String status);
      @Query(value = "SELECT MAX(id_group_user) AS maxid FROM tb_group_user WHERE id_group = :idGroup AND status = :status ", nativeQuery = true)
      Long loadMaxIdByIdGroupAndStatus(Long idGroup, String status);
+     @Query(value = "SELECT MAX(id_group_user) AS maxid FROM tb_group_user WHERE id_group = :idGroup AND id_user = :idUser AND status = :status ", nativeQuery = true)
+     Long loadMaxIdByIdGroupAndIdUserAndStatus(Long idGroup, Long idUser, String status);
      @Query(value = "SELECT MAX(id_group_user) AS maxid FROM tb_group_user WHERE date_created = :dateCreated AND status = :status ", nativeQuery = true)
      Long loadMaxIdByDateCreatedAndStatus(Date dateCreated, String status);
      @Query(value = "SELECT MAX(id_group_user) AS maxid FROM tb_group_user WHERE date_updated = :dateUpdated AND status = :status ", nativeQuery = true)

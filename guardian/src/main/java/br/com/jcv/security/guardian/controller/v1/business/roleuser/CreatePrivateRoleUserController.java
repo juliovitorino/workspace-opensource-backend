@@ -1,4 +1,4 @@
-package br.com.jcv.security.guardian.controller.v1.business.group;
+package br.com.jcv.security.guardian.controller.v1.business.roleuser;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -13,16 +13,15 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/v1/api/business/group-user")
-public class GroupUserRelationshipController {
-    @Autowired private CreateGroupUserRelationshipBusinessService service;
+@RequestMapping("/v1/api/business/roleuser")
+public class CreatePrivateRoleUserController {
+    @Autowired private CreatePrivateRoleUserBusinessService service;
 
     @PostMapping
-    public ResponseEntity createGroupUserRelationship(
+    public ResponseEntity createRoleUserRelationship(
             @RequestHeader(name = HttpHeaders.AUTHORIZATION) String jwtToken,
-            @RequestBody @Valid GroupUserRequest request) {
-        final UUID processId = UUID.randomUUID();
-        return ResponseEntity.ok(service.execute(processId, jwtToken, request));
+            @RequestBody @Valid CreatePrivateRoleUserRequest request) {
+        return ResponseEntity.ok(service.execute(UUID.randomUUID(), jwtToken, request));
 
     }
 }

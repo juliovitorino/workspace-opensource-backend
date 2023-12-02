@@ -23,6 +23,9 @@ public class CreateNewAccountBusinessService extends AbstractGuardianBusinessSer
     @Override
     public CreateNewAccountResponse execute(UUID processId, CreateNewAccountRequest request) {
         log.info("execute :: processId = {} :: has been started", processId);
+        if(!request.getPasswd().equals(request.getPasswdCheck())) {
+            throw new CommoditieBaseException("Your secret password doesn't match with request", HttpStatus.BAD_REQUEST);
+        }
 
         GApplicationDTO gApplicationDTO = gApplicationService.findGApplicationByExternalCodeUUIDAndStatus(request.getExternalApplicationUUID());
         try {

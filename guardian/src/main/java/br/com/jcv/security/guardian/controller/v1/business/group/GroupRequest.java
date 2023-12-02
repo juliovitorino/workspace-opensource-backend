@@ -10,6 +10,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -18,7 +19,6 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class GroupUserRequest implements Serializable {
-    private Long idGroup;
-    private Long idUser;
+public class GroupRequest implements Serializable {
+    private String name;
 }
