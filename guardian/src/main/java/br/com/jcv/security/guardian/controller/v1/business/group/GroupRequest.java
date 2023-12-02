@@ -1,6 +1,5 @@
 package br.com.jcv.security.guardian.controller.v1.business.group;
 
-import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,6 +19,6 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class GroupUserResponse implements Serializable {
-    private MensagemResponse response;
+public class GroupRequest implements Serializable {
+    private String name;
 }

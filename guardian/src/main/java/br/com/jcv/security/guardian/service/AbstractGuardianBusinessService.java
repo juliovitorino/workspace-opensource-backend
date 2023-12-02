@@ -1,10 +1,12 @@
 package br.com.jcv.security.guardian.service;
 
+import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
 import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
 import br.com.jcv.commons.library.utility.DateTime;
 import br.com.jcv.security.guardian.RoleEnums;
 import br.com.jcv.security.guardian.config.GuardianConfig;
+import br.com.jcv.security.guardian.controller.v1.business.ControllerGenericResponse;
 import br.com.jcv.security.guardian.dto.ApplicationUserDTO;
 import br.com.jcv.security.guardian.dto.GroupRoleDTO;
 import br.com.jcv.security.guardian.dto.GroupUserDTO;
@@ -42,14 +44,22 @@ public abstract class AbstractGuardianBusinessService {
     @Autowired protected GuardianJwtService guardianJwtService;
     @Autowired protected DateTime dateTime;
 
-    protected void askHeimdallPermission(String jwtToken, String roleAllowed) {
+    protected SessionStateDTO askHeimdallPermission(String jwtToken) {
         Jws<Claims> claimsJws = guardianJwtService.parseJwt(jwtToken);
         String sessionId = claimsJws.getBody().getSubject();
         SessionStateDTO sessionDTO;
+        try {
+            sessionDTO = sessionStateService.findSessionStateByIdTokenAndStatus(UUID.fromString(sessionId));
+        } catch(SessionStateNotFoundException e) {
+            throw new CommoditieBaseException("Your session has been removed. Try a new login.", HttpStatus.FORBIDDEN);
+        }
+        return sessionDTO;
+    }
+    protected void askHeimdallPermission(String jwtToken, String roleAllowed) {
+        SessionStateDTO sessionDTO = askHeimdallPermission(jwtToken);
         ApplicationUserDTO applicationUserDTO;
         RoleDTO roleDTO ;
         try {
-            sessionDTO = sessionStateService.findSessionStateByIdTokenAndStatus(UUID.fromString(sessionId));
             applicationUserDTO = applicationUserService.findApplicationUserByExternalUserUUIDAndStatus(
                     sessionDTO.getIdUserUUID(),
                     GenericStatusEnums.ATIVO.getShortValue());
@@ -111,5 +121,14 @@ public abstract class AbstractGuardianBusinessService {
 
     protected String getMD5HashFromString(String seed) {
         return DigestUtils.md5Hex(seed).toUpperCase();
+    }
+
+    protected ControllerGenericResponse getControllerGenericResponseInstance(String msgcode, String msg) {
+        return ControllerGenericResponse.builder()
+                .response(MensagemResponse.builder()
+                        .msgcode(msgcode)
+                        .mensagem(msg)
+                        .build())
+                .build();
     }
 }

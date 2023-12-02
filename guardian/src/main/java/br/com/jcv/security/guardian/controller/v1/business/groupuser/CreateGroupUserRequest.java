@@ -1,4 +1,4 @@
-package br.com.jcv.security.guardian.controller.v1.business.group;
+package br.com.jcv.security.guardian.controller.v1.business.groupuser;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -10,6 +10,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.UUID;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -18,7 +20,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class GroupUserRequest implements Serializable {
-    private Long idGroup;
-    private Long idUser;
+public class CreateGroupUserRequest implements Serializable {
+    private UUID externalUserUUID;
+    private String groupName;
 }
