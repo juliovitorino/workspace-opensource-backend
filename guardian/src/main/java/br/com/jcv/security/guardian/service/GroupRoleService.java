@@ -48,6 +48,7 @@ public interface GroupRoleService extends CommoditieBaseService<GroupRoleDTO,Gro
     GroupRoleDTO findGroupRoleByIdRoleAndStatus(Long idRole, String status);
     GroupRoleDTO findGroupRoleByIdGroupAndStatus(Long idGroup);
     GroupRoleDTO findGroupRoleByIdGroupAndStatus(Long idGroup, String status);
+    GroupRoleDTO findGroupRoleByIdGroupAndIdRoleAndStatus(Long idGroup, Long idRole, String status);
     GroupRoleDTO findGroupRoleByDateCreatedAndStatus(Date dateCreated);
     GroupRoleDTO findGroupRoleByDateCreatedAndStatus(Date dateCreated, String status);
     GroupRoleDTO findGroupRoleByDateUpdatedAndStatus(Date dateUpdated);

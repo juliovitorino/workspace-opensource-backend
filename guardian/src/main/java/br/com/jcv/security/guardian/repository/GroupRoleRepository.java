@@ -97,6 +97,8 @@ List<GroupRole> findGroupRoleByFilter(
      Long loadMaxIdByIdRoleAndStatus(Long idRole, String status);
      @Query(value = "SELECT MAX(id_group_role) AS maxid FROM tb_group_role WHERE id_group = :idGroup AND status = :status ", nativeQuery = true)
      Long loadMaxIdByIdGroupAndStatus(Long idGroup, String status);
+     @Query(value = "SELECT MAX(id_group_role) AS maxid FROM tb_group_role WHERE id_group = :idGroup AND id_role = :idRole AND status = :status ", nativeQuery = true)
+     Long loadMaxIdByIdGroupAndIdRoleAndStatus(Long idGroup, Long idRole, String status);
      @Query(value = "SELECT MAX(id_group_role) AS maxid FROM tb_group_role WHERE date_created = :dateCreated AND status = :status ", nativeQuery = true)
      Long loadMaxIdByDateCreatedAndStatus(Date dateCreated, String status);
      @Query(value = "SELECT MAX(id_group_role) AS maxid FROM tb_group_role WHERE date_updated = :dateUpdated AND status = :status ", nativeQuery = true)

@@ -405,6 +405,26 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     rollbackFor = Throwable.class,
     noRollbackFor = GroupRoleNotFoundException.class
     )
+    public GroupRoleDTO findGroupRoleByIdGroupAndIdRoleAndStatus(Long idGroup, Long idRole, String status) {
+        Long maxId = grouproleRepository.loadMaxIdByIdGroupAndIdRoleAndStatus(idGroup, idRole, status);
+        if(maxId == null) maxId = 0L;
+        Optional<GroupRole> grouproleData =
+            Optional.ofNullable( grouproleRepository
+                .findById(maxId)
+                .orElseThrow(
+                    () -> new GroupRoleNotFoundException(GROUPROLE_NOTFOUND_WITH_IDGROUP + idGroup,
+                        HttpStatus.NOT_FOUND,
+                        GROUPROLE_NOTFOUND_WITH_IDGROUP + idGroup))
+                );
+        return grouproleData.map(this::toDTO).orElse(null);
+    }
+
+    @Override
+    @Transactional(transactionManager="transactionManager",
+    propagation = Propagation.REQUIRED,
+    rollbackFor = Throwable.class,
+    noRollbackFor = GroupRoleNotFoundException.class
+    )
     public GroupRoleDTO findGroupRoleByIdGroupAndStatus(Long idGroup) {
         return this.findGroupRoleByIdGroupAndStatus(idGroup, GenericStatusEnums.ATIVO.getShortValue());
     }
