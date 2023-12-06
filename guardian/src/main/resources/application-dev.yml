@@ -20,6 +20,9 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+  threads:
+    virtual:
+      enabled: false;
 
 logging:
   level:
@@ -30,6 +33,10 @@ logging:
           descriptor:
             sql:
               BasicBinder: TRACE
+server:
+  tomcat:
+    threads:
+      max: 8
 
 guardian:
   admin:

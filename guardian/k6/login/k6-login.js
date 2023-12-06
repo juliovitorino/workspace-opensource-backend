@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import {sleep} from 'k6';
+import {sleep, check} from 'k6';
 import {Trend, Rate, Counter} from 'k6/metrics';
 import {heck, fail} from 'k6'
 
@@ -25,6 +25,9 @@ export default function () {
     postGuardianLoginFailRate.add(response.status == 0 || response.status > 399);
     postGuardianLoginSucessRate.add(response.status < 399);
 
+    check(response, {
+        'is status 200' : (r) => r.status === 200,
+     });
     sleep(1);
 }
 
