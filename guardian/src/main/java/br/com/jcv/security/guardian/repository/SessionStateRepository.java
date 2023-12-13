@@ -22,16 +22,21 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 package br.com.jcv.security.guardian.repository;
 
 import java.util.List;
+
 import br.com.jcv.security.guardian.model.SessionState;
 import br.com.jcv.security.guardian.constantes.SessionStateConstantes;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -144,6 +149,12 @@ List<SessionState> findSessionStateByFilter(
      @Query(value = "SELECT * FROM tb_session_state WHERE date_updated = :dateUpdated AND  status = :status ", nativeQuery = true)
      List<SessionState> findAllByDateUpdatedAndStatus(Date dateUpdated, String status);
 
+     @Query(value = "select cast(tss.id_user_uuid as VARCHAR) \n" +
+             " from tb_session_state tss \n" +
+             " where tss.status = :status \n" +
+             " group by tss.id_user_uuid  \n" +
+             " having count(tss.id_user_uuid) > 1", nativeQuery = true)
+     List<String> findAllOldestSessionByStatus(String status);
 
     @Modifying
     @Query(value = "DELETE FROM tb_session_state WHERE id_session_state = :id", nativeQuery = true)
@@ -163,5 +174,13 @@ List<SessionState> findSessionStateByFilter(
     @Modifying
     @Query(value = "DELETE FROM tb_session_state WHERE date_updated = :dateUpdated", nativeQuery = true)
     void deleteByDateUpdated(@Param(SessionStateConstantes.DATEUPDATED) Date dateUpdated);
+    @Modifying
+    @Query(value = "DELETE FROM tb_session_state WHERE id_user_uuid = :idUserUUID AND id_session_state < :maxSessionId", nativeQuery = true)
+    @Async
+    @Transactional(transactionManager="transactionManager",
+            propagation = Propagation.REQUIRED,
+            rollbackFor = Throwable.class
+    )
+    void deleteByIdUserUUIDAndPreviousSessionId(UUID idUserUUID, Long maxSessionId);
 
 }
