@@ -30,3 +30,12 @@ server:
 guardian:
   admin:
     magicSeed: B7CdeU3QtR1FQctrSV0JatNEcGeAaFUfSBW2XdDIgpF2eMmUIM
+
+mq:
+  queues:
+    notifier: NOTIFIER.generic.INP
+  exchanges:
+    direct:
+      notifier:
+        exchange: NOTIFIER.EXCHANGE.DIRECT
+        routingKey: notifierGenericRK
