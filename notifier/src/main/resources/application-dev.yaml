@@ -37,3 +37,7 @@ server:
   tomcat:
     threads:
       max: 8
+
+mq:
+  queues:
+    notifier: NOTIFIER.generic.INP
