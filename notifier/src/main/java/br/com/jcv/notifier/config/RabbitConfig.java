@@ -6,6 +6,8 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +25,11 @@ public class RabbitConfig {
         return new CachingConnectionFactory();
     }
 
+    @Bean("messageConverter")
+    public MessageConverter messageConverter() {
+        return new Jackson2JsonMessageConverter();
+    }
+
     @Bean("rabbitListenerContainerFactory")
     @DependsOn(value = "connectionFactoryMQ")
     public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory() {
@@ -31,6 +38,7 @@ public class RabbitConfig {
         factory.setConcurrentConsumers(3);
         factory.setMaxConcurrentConsumers(12);
         factory.setConsecutiveActiveTrigger(1);
+        factory.setMessageConverter(messageConverter());
         factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
         return factory;
     }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class AddNotificationListener extends AbstractNotifierBusinessService implements IListener<String> {
+public class AddNotificationListener extends AbstractNotifierBusinessService implements IListener<AddNotificationMessage> {
 
     @Autowired private AddNotifierBusinessService service;
     @Override
@@ -19,9 +19,8 @@ public class AddNotificationListener extends AbstractNotifierBusinessService imp
             ackMode = "AUTO",
             concurrency = "4",
             containerFactory = "rabbitListenerContainerFactory")
-    public void onMessage(@Payload String payload) {
-        log.info("onMessage :: received message from rabbit -> {}", payload);
-        AddNotificationMessage message = gson.fromJson(payload, AddNotificationMessage.class);
-        service.execute(message.getProcessId(), message.getAddNotificationRequest());
+    public void onMessage(@Payload AddNotificationMessage payload) {
+        log.info("onMessage :: received message from rabbit -> {}", gson.toJson(payload));
+        service.execute(payload.getProcessId(), payload.getAddNotificationRequest());
     }
 }
