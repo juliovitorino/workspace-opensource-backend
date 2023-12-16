@@ -15,7 +15,10 @@ public class AddNotificationListener extends AbstractNotifierBusinessService imp
 
     @Autowired private AddNotifierBusinessService service;
     @Override
-    @RabbitListener(queues = "${mq.queues.notifier}", concurrency = "4")
+    @RabbitListener(queues = "${mq.queues.notifier}",
+            ackMode = "AUTO",
+            concurrency = "4",
+            containerFactory = "rabbitListenerContainerFactory")
     public void onMessage(@Payload String payload) {
         log.info("onMessage :: received message from rabbit -> {}", payload);
         AddNotificationMessage message = gson.fromJson(payload, AddNotificationMessage.class);
