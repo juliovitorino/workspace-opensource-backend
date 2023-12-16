@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+    stages {
+        stage("Build Backend") {
+            steps {
+                dir('guardian') {
+                    sh 'mvn clean package -DskipTests'
+                }
+            }
+        }
+        stage("Run Unit Tests") {
+            steps {
+                dir('guardian') {
+                    sh 'mvn test'
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+        stage ('Sonar Analysis') {
+            environment {
+                scannerHome = tool 'SONAR_SCANNER'
+            }
+            steps {
+                dir('guardian') {
+                    withSonarQubeEnv('SONAR_LOCAL') {
+                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=Guardian -Dsonar.host.url=http://localhost:9000 -Dsonar.login=540b77b442ab4f881fafaa64caed5f1baf3737e0 -Dsonar.java.binaries=target/classes -Dsonar.sourceEncoding=UTF-8 -Dsonar.sources=src -Dsonar.language=java -Dsonar.dynamicAnalysis=reuseReports -Dsonar.junit.reportsPath=target/surefire-reports -Dsonar.surefire.reportsPath=target/surefire-reports -Dsonar.jacoco.reportPath=target/jacoco.exec -Dsonar.java.coveragePlugin=jacoco -Dsonar.coverage.exclusions=**/.mvn,**model/**,**exception/**,**config/**,**constantes/**,**Application.java"
+                    }
+                } 
+            }
+        }    
+        stage ('Response Quality Gate Hook') {
+            steps {
+                sleep(10)
+                timeout(time: 5, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: false
+                }
+            }
+        }      
+    }
+}

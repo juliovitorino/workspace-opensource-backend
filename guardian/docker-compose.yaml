@@ -1,0 +1,38 @@
+version: "3.1"
+
+services:
+  app-guardian:
+    container_name: app-guardian
+    image: juliovitorino/guardian:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://pg-guardian:5432/guardian
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    networks:
+      - guardian-net
+    depends_on:
+      - pg-guardian
+  pg-guardian:
+    container_name: pg-guardian
+    image: postgres:9.6
+    ports:
+      - "5120:5432"
+    networks:
+      - guardian-net
+    environment:
+      - POSTGRES_DB=guardian
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgresql:/var/lib/postgresql
+      - postgresql_data:/var/lib/postgresql/data
+
+networks:
+  guardian-net:
+
+volumes:
+  postgresql:
+  postgresql_data:
