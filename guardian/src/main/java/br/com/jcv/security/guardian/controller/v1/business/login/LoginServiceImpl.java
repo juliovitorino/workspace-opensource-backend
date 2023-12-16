@@ -8,7 +8,12 @@ import br.com.jcv.security.guardian.dto.SessionStateDTO;
 import br.com.jcv.security.guardian.exception.ApplicationUserNotFoundException;
 import br.com.jcv.security.guardian.exception.ApplicationUserWrongEmailException;
 import br.com.jcv.security.guardian.exception.GApplicationNotFoundException;
+import br.com.jcv.security.guardian.mq.producer.AbstractProducer;
+import br.com.jcv.security.guardian.mq.producer.AddNotificationMessage;
+import br.com.jcv.security.guardian.mq.producer.IProducer;
 import br.com.jcv.security.guardian.service.AbstractGuardianBusinessService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
