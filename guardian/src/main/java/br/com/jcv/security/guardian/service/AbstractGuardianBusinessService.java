@@ -16,11 +16,13 @@ import br.com.jcv.security.guardian.dto.UserRoleDTO;
 import br.com.jcv.security.guardian.exception.ApplicationUserNotFoundException;
 import br.com.jcv.security.guardian.exception.RoleNotFoundException;
 import br.com.jcv.security.guardian.exception.SessionStateNotFoundException;
+import br.com.jcv.security.guardian.infrastructure.CacheProvider;
 import com.google.gson.Gson;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +33,7 @@ import java.util.UUID;
 @Component
 public abstract class AbstractGuardianBusinessService {
     @Autowired protected Gson gson;
+    @Autowired protected @Qualifier("redisService") CacheProvider redis;
     @Autowired protected GuardianConfig config;
     @Autowired protected SessionStateService sessionStateService;
     @Autowired protected UsersService usersService;

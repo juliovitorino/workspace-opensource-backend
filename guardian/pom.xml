@@ -22,6 +22,8 @@
 		<jjwt-api.version>0.11.1</jjwt-api.version>
 		<jjwt-impl.version>0.11.1</jjwt-impl.version>
 		<jjwt-jackson.version>0.11.1</jjwt-jackson.version>
+		<redis.client.version>3.6.0</redis.client.version>
+		<spring-data-redis.version>2.5.1</spring-data-redis.version>
 	</properties>
 
 	<dependencies>
@@ -61,6 +63,20 @@
 			<version>${jjwt-jackson.version}</version>
 			<scope>runtime</scope>
 		</dependency>
+
+		<!-- REDIS cache system dependency -->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>${redis.client.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<version>${spring-data-redis.version}</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
