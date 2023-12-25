@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+
 @Service(value = "redisService")
 public class RedisService implements CacheProvider {
 
@@ -18,5 +20,10 @@ public class RedisService implements CacheProvider {
     @Override
     public <V> void setValue(String key, V value) {
         redisTemplate.opsForValue().set(key, value);
+    }
+
+    @Override
+    public <V> void setValue(String key, V value, int seconds) {
+        redisTemplate.opsForValue().set(key,value,Duration.ofSeconds(seconds));
     }
 }
