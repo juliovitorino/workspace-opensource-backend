@@ -157,17 +157,17 @@
     </dependencies>
   </dependencyManagement>
 
-  <!-- If you want only to download dependencies from Sonatype Nexus, put this in the pom.xml: -->
+  <!-- If you want only to download dependencies from Sonatype Nexus, put this in the pom.xml:
   <repositories>
     <repository>
       <id>nexus-repository</id>
       <url>http://localhost:8081/repository/ms-maven-proxy/</url>
     </repository>
   </repositories>
-
+-->
 
   <!-- And if you want also to publish (deploy) your project, it happens when mvn deploy command  -->
-  <!-- the id tags are referenced at settings.xml to get user and password -->
+  <!-- the id tags are referenced at settings.xml to get user and password
   <distributionManagement>
     <snapshotRepository>
       <id>jcv-nexus-snapshots</id>
@@ -178,7 +178,7 @@
       <url>http://localhost:8081/repository/jcv-maven-releases/</url>
     </repository>
   </distributionManagement>
-
+-->
   <build>
     <plugins>
       <plugin>

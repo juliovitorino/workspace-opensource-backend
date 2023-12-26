@@ -41,6 +41,7 @@ public class LoginServiceImpl extends AbstractGuardianBusinessService implements
         }
 
         String tokenSessionId = createSession(applicationUserDTO);
+        redis.<String>setValue("token-jcv-" + tokenSessionId, tokenSessionId,20);
         return guardianJwtService.createJwtToken(tokenSessionId, appdto.getJwtTimeToLive());
     }
 
