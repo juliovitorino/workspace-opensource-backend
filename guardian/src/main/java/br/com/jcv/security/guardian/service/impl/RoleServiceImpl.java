@@ -21,35 +21,35 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 
 package br.com.jcv.security.guardian.service.impl;
 
-import br.com.jcv.commons.library.commodities.constantes.GenericConstantes;
-import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
-import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
 import br.com.jcv.commons.library.commodities.dto.RequestFilter;
+import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
 import br.com.jcv.commons.library.utility.DateTime;
-
-import br.com.jcv.security.guardian.dto.RoleDTO;
-import br.com.jcv.security.guardian.model.Role;
 import br.com.jcv.security.guardian.constantes.RoleConstantes;
+import br.com.jcv.security.guardian.dto.RoleDTO;
+import br.com.jcv.security.guardian.exception.RoleNotFoundException;
+import br.com.jcv.security.guardian.infrastructure.CacheProvider;
+import br.com.jcv.security.guardian.model.Role;
 import br.com.jcv.security.guardian.repository.RoleRepository;
 import br.com.jcv.security.guardian.service.RoleService;
-import br.com.jcv.security.guardian.exception.RoleNotFoundException;
-
-import java.text.SimpleDateFormat;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
+import com.google.gson.Gson;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.annotation.Propagation;
-
-import java.text.ParseException;
-import java.util.*;
-import java.util.UUID;
-import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 /**
@@ -73,6 +73,9 @@ public class RoleServiceImpl implements RoleService
 
     @Autowired private RoleRepository roleRepository;
     @Autowired private DateTime dateTime;
+    @Autowired private Gson gson;
+
+    @Autowired private @Qualifier("redisService") CacheProvider redisProvider;
 
     @Override
     @Transactional(transactionManager="transactionManager",
@@ -115,6 +118,8 @@ public class RoleServiceImpl implements RoleService
         noRollbackFor = RoleNotFoundException.class
     )
     public RoleDTO findById(Long id) {
+        String cache = redisProvider.getValue("role-" + id);
+        if(Objects.nonNull(cache)) return gson.fromJson(cache,RoleDTO.class);
         Optional<Role> roleData =
             Optional.ofNullable(roleRepository.findById(id)
                 .orElseThrow(
@@ -123,7 +128,11 @@ public class RoleServiceImpl implements RoleService
                     ROLE_NOTFOUND_WITH_ID  + id ))
                 );
 
-        return roleData.map(this::toDTO).orElse(null);
+        RoleDTO response = roleData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("role-" + response.getId(), gson.toJson(response));
+        }
+        return response;
     }
 
     @Override
@@ -309,6 +318,9 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = RoleNotFoundException.class
     )
     public RoleDTO findRoleByIdAndStatus(Long id, String status) {
+        RoleDTO cache = redisProvider.getValue("role-" + id + status,RoleDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Long maxId = roleRepository.loadMaxIdByIdAndStatus(id, status);
         if(maxId == null) maxId = 0L;
         Optional<Role> roleData =
@@ -319,7 +331,11 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         ROLE_NOTFOUND_WITH_ID + id))
                 );
-        return roleData.map(this::toDTO).orElse(null);
+        RoleDTO roleResponse = roleData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(roleResponse)) {
+            redisProvider.setValue("role-" + id + status, gson.toJson(roleResponse),120);
+        }
+        return roleResponse;
     }
 
     @Override
@@ -339,6 +355,9 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = RoleNotFoundException.class
     )
     public RoleDTO findRoleByNameAndStatus(String name, String status) {
+        RoleDTO cache = redisProvider.getValue("role-" + name + status,RoleDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Long maxId = roleRepository.loadMaxIdByNameAndStatus(name, status);
         if(maxId == null) maxId = 0L;
         Optional<Role> roleData =
@@ -349,7 +368,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         ROLE_NOTFOUND_WITH_NAME + name))
                 );
-        return roleData.map(this::toDTO).orElse(null);
+        RoleDTO roleResponse = roleData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(roleResponse)) {
+            redisProvider.setValue("role-" + name + status, gson.toJson(roleResponse),120);
+        }
+        return roleResponse;
+
     }
 
     @Override
