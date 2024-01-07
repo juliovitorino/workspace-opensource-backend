@@ -21,30 +21,27 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 
 package br.com.jcv.security.guardian.service.impl;
 
-import br.com.jcv.commons.library.commodities.constantes.GenericConstantes;
-import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
 import br.com.jcv.commons.library.commodities.dto.RequestFilter;
 import br.com.jcv.commons.library.utility.DateTime;
 
 import br.com.jcv.security.guardian.dto.GroupUserDTO;
+import br.com.jcv.security.guardian.infrastructure.CacheProvider;
 import br.com.jcv.security.guardian.model.GroupUser;
 import br.com.jcv.security.guardian.constantes.GroupUserConstantes;
 import br.com.jcv.security.guardian.repository.GroupUserRepository;
 import br.com.jcv.security.guardian.service.GroupUserService;
 import br.com.jcv.security.guardian.exception.GroupUserNotFoundException;
 
-import java.text.SimpleDateFormat;
-
+import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
 
-import java.text.ParseException;
 import java.util.*;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -62,6 +59,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+
 public class GroupUserServiceImpl implements GroupUserService
 {
     private static final String GROUPUSER_NOTFOUND_WITH_ID = "GroupUser não encontrada com id = ";
@@ -74,6 +72,8 @@ public class GroupUserServiceImpl implements GroupUserService
 
     @Autowired private GroupUserRepository groupuserRepository;
     @Autowired private DateTime dateTime;
+    @Autowired private @Qualifier("redisService") CacheProvider redisProvider;
+    @Autowired private Gson gson;
 
     @Override
     @Transactional(transactionManager="transactionManager",
@@ -116,6 +116,10 @@ public class GroupUserServiceImpl implements GroupUserService
         noRollbackFor = GroupUserNotFoundException.class
     )
     public GroupUserDTO findById(Long id) {
+
+        GroupUserDTO cache = redisProvider.getValue("groupUser-findById-" + id,GroupUserDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Optional<GroupUser> groupuserData =
             Optional.ofNullable(groupuserRepository.findById(id)
                 .orElseThrow(
@@ -124,7 +128,11 @@ public class GroupUserServiceImpl implements GroupUserService
                     GROUPUSER_NOTFOUND_WITH_ID  + id ))
                 );
 
-        return groupuserData.map(this::toDTO).orElse(null);
+        GroupUserDTO response = groupuserData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("groupUser-findById-" + id, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
@@ -335,6 +343,10 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = GroupUserNotFoundException.class
     )
     public GroupUserDTO findGroupUserByIdAndStatus(Long id, String status) {
+
+        GroupUserDTO cache = redisProvider.getValue("groupUser-core" + id + status,GroupUserDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Long maxId = groupuserRepository.loadMaxIdByIdAndStatus(id, status);
         if(maxId == null) maxId = 0L;
         Optional<GroupUser> groupuserData =
@@ -345,7 +357,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         GROUPUSER_NOTFOUND_WITH_ID + id))
                 );
-        return groupuserData.map(this::toDTO).orElse(null);
+
+        GroupUserDTO response = groupuserData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("groupUser-core" + id + status, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
@@ -365,6 +382,10 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = GroupUserNotFoundException.class
     )
     public GroupUserDTO findGroupUserByIdUserAndStatus(Long idUser, String status) {
+
+        GroupUserDTO cache = redisProvider.getValue("groupUser-idUser-core-" + idUser,GroupUserDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Long maxId = groupuserRepository.loadMaxIdByIdUserAndStatus(idUser, status);
         if(maxId == null) maxId = 0L;
         Optional<GroupUser> groupuserData =
@@ -375,7 +396,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         GROUPUSER_NOTFOUND_WITH_IDUSER + idUser))
                 );
-        return groupuserData.map(this::toDTO).orElse(null);
+
+        GroupUserDTO response = groupuserData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("groupUser-idUser-core-" + idUser, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
@@ -395,6 +421,10 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = GroupUserNotFoundException.class
     )
     public GroupUserDTO findGroupUserByIdGroupAndStatus(Long idGroup, String status) {
+
+        GroupUserDTO cache = redisProvider.getValue("groupUser-idGroup-core-" + idGroup,GroupUserDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Long maxId = groupuserRepository.loadMaxIdByIdGroupAndStatus(idGroup, status);
         if(maxId == null) maxId = 0L;
         Optional<GroupUser> groupuserData =
@@ -405,7 +435,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         GROUPUSER_NOTFOUND_WITH_IDGROUP + idGroup))
                 );
-        return groupuserData.map(this::toDTO).orElse(null);
+
+        GroupUserDTO response = groupuserData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("groupUser-idGroup-core-" + idGroup, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
@@ -415,6 +450,10 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = GroupUserNotFoundException.class
     )
     public GroupUserDTO findGroupUserByIdGroupAndIdUserAndStatus(Long idGroup, Long idUser, String status) {
+
+        GroupUserDTO cache = redisProvider.getValue("groupUser-core-" + idGroup+idUser,GroupUserDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Long maxId = groupuserRepository.loadMaxIdByIdGroupAndIdUserAndStatus(idGroup, idUser, status);
         if(maxId == null) maxId = 0L;
         Optional<GroupUser> groupuserData =
@@ -425,7 +464,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         GROUPUSER_NOTFOUND_WITH_IDGROUP + idGroup))
                 );
-        return groupuserData.map(this::toDTO).orElse(null);
+
+        GroupUserDTO response = groupuserData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("groupUser-core-" + idGroup+idUser, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
