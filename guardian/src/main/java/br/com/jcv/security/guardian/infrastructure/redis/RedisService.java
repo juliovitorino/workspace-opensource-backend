@@ -1,6 +1,5 @@
 package br.com.jcv.security.guardian.infrastructure.redis;
 
-import br.com.jcv.security.guardian.dto.RoleDTO;
 import br.com.jcv.security.guardian.infrastructure.CacheProvider;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
