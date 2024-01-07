@@ -28,6 +28,8 @@ import br.com.jcv.commons.library.commodities.dto.RequestFilter;
 import br.com.jcv.commons.library.utility.DateTime;
 
 import br.com.jcv.security.guardian.dto.GroupDTO;
+import br.com.jcv.security.guardian.dto.GroupRoleDTO;
+import br.com.jcv.security.guardian.infrastructure.CacheProvider;
 import br.com.jcv.security.guardian.model.Group;
 import br.com.jcv.security.guardian.constantes.GroupConstantes;
 import br.com.jcv.security.guardian.repository.GroupRepository;
@@ -36,6 +38,8 @@ import br.com.jcv.security.guardian.exception.GroupNotFoundException;
 
 import java.text.SimpleDateFormat;
 
+import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +77,8 @@ public class GroupServiceImpl implements GroupService
 
     @Autowired private GroupRepository groupRepository;
     @Autowired private DateTime dateTime;
+    @Autowired private @Qualifier("redisService") CacheProvider redisProvider;
+    @Autowired private Gson gson;
 
     @Override
     @Transactional(transactionManager="transactionManager",
@@ -115,6 +121,10 @@ public class GroupServiceImpl implements GroupService
         noRollbackFor = GroupNotFoundException.class
     )
     public GroupDTO findById(Long id) {
+
+        GroupDTO cache = redisProvider.getValue("group-findById-" + id,GroupDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Optional<Group> groupData =
             Optional.ofNullable(groupRepository.findById(id)
                 .orElseThrow(
@@ -123,7 +133,11 @@ public class GroupServiceImpl implements GroupService
                     GROUP_NOTFOUND_WITH_ID  + id ))
                 );
 
-        return groupData.map(this::toDTO).orElse(null);
+        GroupDTO response = groupData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("group-findById-" + id, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
@@ -309,6 +323,10 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = GroupNotFoundException.class
     )
     public GroupDTO findGroupByIdAndStatus(Long id, String status) {
+
+        GroupDTO cache = redisProvider.getValue("group-cache-" + id + status,GroupDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Long maxId = groupRepository.loadMaxIdByIdAndStatus(id, status);
         if(maxId == null) maxId = 0L;
         Optional<Group> groupData =
@@ -319,7 +337,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         GROUP_NOTFOUND_WITH_ID + id))
                 );
-        return groupData.map(this::toDTO).orElse(null);
+
+        GroupDTO response = groupData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("group-cache-" + id + status, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
@@ -339,6 +362,10 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = GroupNotFoundException.class
     )
     public GroupDTO findGroupByNameAndStatus(String name, String status) {
+
+        GroupDTO cache = redisProvider.getValue("group-cache-" + name + status,GroupDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Long maxId = groupRepository.loadMaxIdByNameAndStatus(name, status);
         if(maxId == null) maxId = 0L;
         Optional<Group> groupData =
@@ -349,7 +376,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         GROUP_NOTFOUND_WITH_NAME + name))
                 );
-        return groupData.map(this::toDTO).orElse(null);
+
+        GroupDTO response = groupData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("group-cache-" + name + status, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
