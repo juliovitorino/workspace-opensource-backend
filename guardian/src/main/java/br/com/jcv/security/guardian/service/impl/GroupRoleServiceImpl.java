@@ -27,7 +27,9 @@ import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
 import br.com.jcv.commons.library.commodities.dto.RequestFilter;
 import br.com.jcv.commons.library.utility.DateTime;
 
+import br.com.jcv.security.guardian.dto.GApplicationDTO;
 import br.com.jcv.security.guardian.dto.GroupRoleDTO;
+import br.com.jcv.security.guardian.infrastructure.CacheProvider;
 import br.com.jcv.security.guardian.model.GroupRole;
 import br.com.jcv.security.guardian.constantes.GroupRoleConstantes;
 import br.com.jcv.security.guardian.repository.GroupRoleRepository;
@@ -36,6 +38,8 @@ import br.com.jcv.security.guardian.exception.GroupRoleNotFoundException;
 
 import java.text.SimpleDateFormat;
 
+import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +78,8 @@ public class GroupRoleServiceImpl implements GroupRoleService
 
     @Autowired private GroupRoleRepository grouproleRepository;
     @Autowired private DateTime dateTime;
+    @Autowired private @Qualifier("redisService") CacheProvider redisProvider;
+    @Autowired private Gson gson;
 
     @Override
     @Transactional(transactionManager="transactionManager",
@@ -116,6 +122,10 @@ public class GroupRoleServiceImpl implements GroupRoleService
         noRollbackFor = GroupRoleNotFoundException.class
     )
     public GroupRoleDTO findById(Long id) {
+
+        GroupRoleDTO cache = redisProvider.getValue("applicationUser-findById-" + id,GroupRoleDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Optional<GroupRole> grouproleData =
             Optional.ofNullable(grouproleRepository.findById(id)
                 .orElseThrow(
@@ -124,7 +134,11 @@ public class GroupRoleServiceImpl implements GroupRoleService
                     GROUPROLE_NOTFOUND_WITH_ID  + id ))
                 );
 
-        return grouproleData.map(this::toDTO).orElse(null);
+        GroupRoleDTO response = grouproleData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("applicationUser-findById-" + id, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
@@ -326,6 +340,10 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = GroupRoleNotFoundException.class
     )
     public GroupRoleDTO findGroupRoleByIdAndStatus(Long id, String status) {
+
+        GroupRoleDTO cache = redisProvider.getValue("application-cache-" + id + status,GroupRoleDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Long maxId = grouproleRepository.loadMaxIdByIdAndStatus(id, status);
         if(maxId == null) maxId = 0L;
         Optional<GroupRole> grouproleData =
@@ -336,7 +354,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         GROUPROLE_NOTFOUND_WITH_ID + id))
                 );
-        return grouproleData.map(this::toDTO).orElse(null);
+
+        GroupRoleDTO response = grouproleData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("application-cache-" + id + status, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
@@ -356,6 +379,10 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = GroupRoleNotFoundException.class
     )
     public GroupRoleDTO findGroupRoleByIdRoleAndStatus(Long idRole, String status) {
+
+        GroupRoleDTO cache = redisProvider.getValue("application-cache-" + idRole + status,GroupRoleDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Long maxId = grouproleRepository.loadMaxIdByIdRoleAndStatus(idRole, status);
         if(maxId == null) maxId = 0L;
         Optional<GroupRole> grouproleData =
@@ -366,7 +393,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         GROUPROLE_NOTFOUND_WITH_IDROLE + idRole))
                 );
-        return grouproleData.map(this::toDTO).orElse(null);
+
+        GroupRoleDTO response = grouproleData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("application-cache-" + idRole + status, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
@@ -386,6 +418,10 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = GroupRoleNotFoundException.class
     )
     public GroupRoleDTO findGroupRoleByIdGroupAndStatus(Long idGroup, String status) {
+
+        GroupRoleDTO cache = redisProvider.getValue("application-cache-" + idGroup + status,GroupRoleDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Long maxId = grouproleRepository.loadMaxIdByIdGroupAndStatus(idGroup, status);
         if(maxId == null) maxId = 0L;
         Optional<GroupRole> grouproleData =
@@ -396,7 +432,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         GROUPROLE_NOTFOUND_WITH_IDGROUP + idGroup))
                 );
-        return grouproleData.map(this::toDTO).orElse(null);
+
+        GroupRoleDTO response = grouproleData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("application-cache-" + idGroup + status, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
@@ -406,6 +447,10 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = GroupRoleNotFoundException.class
     )
     public GroupRoleDTO findGroupRoleByIdGroupAndIdRoleAndStatus(Long idGroup, Long idRole, String status) {
+
+        GroupRoleDTO cache = redisProvider.getValue("application-cache-" + idGroup + idRole + status,GroupRoleDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Long maxId = grouproleRepository.loadMaxIdByIdGroupAndIdRoleAndStatus(idGroup, idRole, status);
         if(maxId == null) maxId = 0L;
         Optional<GroupRole> grouproleData =
@@ -416,7 +461,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         GROUPROLE_NOTFOUND_WITH_IDGROUP + idGroup))
                 );
-        return grouproleData.map(this::toDTO).orElse(null);
+
+        GroupRoleDTO response = grouproleData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("application-cache-" + idGroup + idRole + status, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override

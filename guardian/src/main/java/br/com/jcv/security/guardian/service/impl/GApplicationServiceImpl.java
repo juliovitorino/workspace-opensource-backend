@@ -27,7 +27,9 @@ import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
 import br.com.jcv.commons.library.commodities.dto.RequestFilter;
 import br.com.jcv.commons.library.utility.DateTime;
 
+import br.com.jcv.security.guardian.dto.ApplicationUserDTO;
 import br.com.jcv.security.guardian.dto.GApplicationDTO;
+import br.com.jcv.security.guardian.infrastructure.CacheProvider;
 import br.com.jcv.security.guardian.model.GApplication;
 import br.com.jcv.security.guardian.constantes.GApplicationConstantes;
 import br.com.jcv.security.guardian.repository.GApplicationRepository;
@@ -36,6 +38,8 @@ import br.com.jcv.security.guardian.exception.GApplicationNotFoundException;
 
 import java.text.SimpleDateFormat;
 
+import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +78,8 @@ public class GApplicationServiceImpl implements GApplicationService
 
     @Autowired private GApplicationRepository gapplicationRepository;
     @Autowired private DateTime dateTime;
-
+    @Autowired private @Qualifier("redisService") CacheProvider redisProvider;
+    @Autowired private Gson gson;
     @Override
     @Transactional(transactionManager="transactionManager",
         propagation = Propagation.REQUIRED,
@@ -116,6 +121,10 @@ public class GApplicationServiceImpl implements GApplicationService
         noRollbackFor = GApplicationNotFoundException.class
     )
     public GApplicationDTO findById(Long id) {
+
+        GApplicationDTO cache = redisProvider.getValue("applicationUser-findById-" + id,GApplicationDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Optional<GApplication> gapplicationData =
             Optional.ofNullable(gapplicationRepository.findById(id)
                 .orElseThrow(
@@ -124,7 +133,11 @@ public class GApplicationServiceImpl implements GApplicationService
                     GAPPLICATION_NOTFOUND_WITH_ID  + id ))
                 );
 
-        return gapplicationData.map(this::toDTO).orElse(null);
+        GApplicationDTO roleResponse = gapplicationData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(roleResponse)) {
+            redisProvider.setValue("applicationUser-findById-" + id, gson.toJson(roleResponse),120);
+        }
+        return roleResponse;
     }
 
     @Override
@@ -326,6 +339,10 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = GApplicationNotFoundException.class
     )
     public GApplicationDTO findGApplicationByIdAndStatus(Long id, String status) {
+
+        GApplicationDTO cache = redisProvider.getValue("application-cache-" + id + status,GApplicationDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Long maxId = gapplicationRepository.loadMaxIdByIdAndStatus(id, status);
         if(maxId == null) maxId = 0L;
         Optional<GApplication> gapplicationData =
@@ -336,7 +353,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         GAPPLICATION_NOTFOUND_WITH_ID + id))
                 );
-        return gapplicationData.map(this::toDTO).orElse(null);
+
+        GApplicationDTO response = gapplicationData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("application-cache-" + id + status, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
@@ -356,6 +378,10 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = GApplicationNotFoundException.class
     )
     public GApplicationDTO findGApplicationByNameAndStatus(String name, String status) {
+
+        GApplicationDTO cache = redisProvider.getValue("application-cache-" + name + status,GApplicationDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Long maxId = gapplicationRepository.loadMaxIdByNameAndStatus(name, status);
         if(maxId == null) maxId = 0L;
         Optional<GApplication> gapplicationData =
@@ -366,7 +392,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         GAPPLICATION_NOTFOUND_WITH_NAME + name))
                 );
-        return gapplicationData.map(this::toDTO).orElse(null);
+
+        GApplicationDTO response = gapplicationData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("application-cache-" + name + status, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
@@ -386,6 +417,10 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = GApplicationNotFoundException.class
     )
     public GApplicationDTO findGApplicationByExternalCodeUUIDAndStatus(UUID externalCodeUUID, String status) {
+
+        GApplicationDTO cache = redisProvider.getValue("application-cache-" + externalCodeUUID + status,GApplicationDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Long maxId = gapplicationRepository.loadMaxIdByExternalCodeUUIDAndStatus(externalCodeUUID, status);
         if(maxId == null) maxId = 0L;
         Optional<GApplication> gapplicationData =
@@ -396,7 +431,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         GAPPLICATION_NOTFOUND_WITH_EXTERNALCODEUUID + externalCodeUUID))
                 );
-        return gapplicationData.map(this::toDTO).orElse(null);
+
+        GApplicationDTO response = gapplicationData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("application-cache-" + externalCodeUUID + status, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
