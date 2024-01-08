@@ -11,7 +11,7 @@ export let postGardianLoginRequests = new Rate('post_guardia_login_requests');
 export default function () {
 
     // prepare endpoint url, body and header
-    const body = JSON.stringify({'applicationExternalUUID' : '0abb08d1-608f-4052-980f-b9ef2bc15e7f','email' : 'admin@gmail.com','codePass' : 'admin'});
+    const body = JSON.stringify({'applicationExternalUUID' : 'ce5aeb29-acb3-47da-9c8c-47a031531c7d','email' : 'admin@gmail.com','codePass' : 'admin'});
     let params = { headers: { 'Content-Type': 'application/json' } }
     let url = 'http://localhost:8080/v1/api/business/login';
 

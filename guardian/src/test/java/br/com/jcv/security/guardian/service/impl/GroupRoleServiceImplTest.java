@@ -27,6 +27,7 @@ import br.com.jcv.security.guardian.builder.GroupRoleDTOBuilder;
 import br.com.jcv.security.guardian.builder.GroupRoleModelBuilder;
 import br.com.jcv.security.guardian.dto.GroupRoleDTO;
 import br.com.jcv.security.guardian.exception.GroupRoleNotFoundException;
+import br.com.jcv.security.guardian.infrastructure.CacheProvider;
 import br.com.jcv.security.guardian.model.GroupRole;
 import br.com.jcv.security.guardian.repository.GroupRoleRepository;
 import br.com.jcv.security.guardian.service.GroupRoleService;
@@ -60,6 +61,8 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 
+import com.google.gson.Gson;
+
 @TestInstance(PER_CLASS)
 public class GroupRoleServiceImplTest {
     private static final UUID uuidMock = UUID.fromString("3dc936e6-478e-4d21-b167-67dee8b730af");
@@ -76,7 +79,10 @@ public class GroupRoleServiceImplTest {
 
     @Mock
     private GroupRoleRepository grouproleRepositoryMock;
-
+    @Mock
+    private CacheProvider redisProviderMock;
+    @Mock
+    private Gson gsonMock;
     @InjectMocks
     private GroupRoleService grouproleService;
     final DateTime dateTimeMock = Mockito.mock(DateTime.class);
