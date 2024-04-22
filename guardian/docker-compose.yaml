@@ -28,11 +28,11 @@ services:
       - POSTGRES_PASSWORD=postgres
     volumes:
       - postgresql:/var/lib/postgresql
-      - postgresql_data:/var/lib/postgresql/data
+      - postgresql_data_guardian:/var/lib/postgresql/data
 
 networks:
   guardian-net:
 
 volumes:
   postgresql:
-  postgresql_data:
+  postgresql_data_guardian:
