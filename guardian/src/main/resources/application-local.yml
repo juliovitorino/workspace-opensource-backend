@@ -21,6 +21,11 @@ spring:
   threads:
     virtual:
       enabled: true;
+  cache:
+    type: redis
+  redis:
+    host: redis-guardian.guardian_guardian-net
+    port: 6379
 
 server:
   tomcat:

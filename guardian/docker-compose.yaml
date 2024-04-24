@@ -1,6 +1,29 @@
 version: "3.1"
 
 services:
+  redis-guardian:
+    container_name: redis-guardian
+    image: redis:7.2.3-alpine
+    ports:
+      - "16379:6379"
+    networks:
+      - guardian-net
+    volumes:
+      - redis_data_guardian:/data
+  pg-guardian:
+    container_name: pg-guardian
+    image: postgres:9.6
+    ports:
+      - "5120:5432"
+    networks:
+      - guardian-net
+    environment:
+      - POSTGRES_DB=guardian
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgresql_guardian:/var/lib/postgresql
+      - postgresql_data_guardian:/var/lib/postgresql/data
   app-guardian:
     container_name: app-guardian
     image: juliovitorino/guardian:latest
@@ -15,24 +38,11 @@ services:
       - guardian-net
     depends_on:
       - pg-guardian
-  pg-guardian:
-    container_name: pg-guardian
-    image: postgres:9.6
-    ports:
-      - "5120:5432"
-    networks:
-      - guardian-net
-    environment:
-      - POSTGRES_DB=guardian
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    volumes:
-      - postgresql:/var/lib/postgresql
-      - postgresql_data_guardian:/var/lib/postgresql/data
-
+      - redis-guardian
 networks:
   guardian-net:
 
 volumes:
-  postgresql:
+  postgresql_guardian:
   postgresql_data_guardian:
+  redis_data_guardian:
