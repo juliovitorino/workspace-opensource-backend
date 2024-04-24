@@ -1,6 +1,8 @@
 package br.com.jcv.security.guardian.config;
 
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -11,13 +13,19 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 @Slf4j
 public class RedisConfig {
+
+    @Value("${spring.redis.host}")
+    private String redisHost;
+    @Value("${spring.redis.port}")
+    private Integer redisPort;
+
     @Bean(name = "jedisConnectionFactory")
     JedisConnectionFactory jedisConnectionFactory() {
         JedisConnectionFactory factory = new JedisConnectionFactory();
-        factory.setHostName("localhost");
-        factory.setPort(6379);
-        log.info("factory JedisConnectionFactory has been created");
-        return new JedisConnectionFactory();
+        factory.setHostName(redisHost);
+        factory.setPort(redisPort);
+        log.info("factory JedisConnectionFactory has been created on {}/{}",redisHost,redisPort);
+        return factory;
     }
 
     @Bean(name = "stringRedisSerializer")

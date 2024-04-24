@@ -27,6 +27,7 @@ import br.com.jcv.security.guardian.builder.UsersDTOBuilder;
 import br.com.jcv.security.guardian.builder.UsersModelBuilder;
 import br.com.jcv.security.guardian.dto.UsersDTO;
 import br.com.jcv.security.guardian.exception.UsersNotFoundException;
+import br.com.jcv.security.guardian.infrastructure.CacheProvider;
 import br.com.jcv.security.guardian.model.Users;
 import br.com.jcv.security.guardian.repository.UsersRepository;
 import br.com.jcv.security.guardian.service.UsersService;
@@ -60,6 +61,8 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 
+import com.google.gson.Gson;
+
 @TestInstance(PER_CLASS)
 public class UsersServiceImplTest {
     private static final UUID uuidMock = UUID.fromString("3dc936e6-478e-4d21-b167-67dee8b730af");
@@ -76,7 +79,10 @@ public class UsersServiceImplTest {
 
     @Mock
     private UsersRepository usersRepositoryMock;
-
+    @Mock
+    private CacheProvider redisProviderMock;
+    @Mock
+    private Gson gsonMock;
     @InjectMocks
     private UsersService usersService;
     final DateTime dateTimeMock = Mockito.mock(DateTime.class);

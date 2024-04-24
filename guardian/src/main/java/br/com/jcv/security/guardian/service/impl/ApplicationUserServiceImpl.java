@@ -27,11 +27,14 @@ import br.com.jcv.commons.library.utility.DateTime;
 import br.com.jcv.security.guardian.constantes.ApplicationUserConstantes;
 import br.com.jcv.security.guardian.dto.ApplicationUserDTO;
 import br.com.jcv.security.guardian.exception.ApplicationUserNotFoundException;
+import br.com.jcv.security.guardian.infrastructure.CacheProvider;
 import br.com.jcv.security.guardian.model.ApplicationUser;
 import br.com.jcv.security.guardian.repository.ApplicationUserRepository;
 import br.com.jcv.security.guardian.service.ApplicationUserService;
+import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -78,6 +81,9 @@ public class ApplicationUserServiceImpl implements ApplicationUserService
 
     @Autowired private ApplicationUserRepository applicationuserRepository;
     @Autowired private DateTime dateTime;
+    @Autowired private @Qualifier("redisService") CacheProvider redisProvider;
+    @Autowired private Gson gson;
+
 
     @Override
     @Transactional(transactionManager="transactionManager",
@@ -120,6 +126,10 @@ public class ApplicationUserServiceImpl implements ApplicationUserService
         noRollbackFor = ApplicationUserNotFoundException.class
     )
     public ApplicationUserDTO findById(Long id) {
+
+        ApplicationUserDTO cache = redisProvider.getValue("applicationUser-findById-" + id,ApplicationUserDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Optional<ApplicationUser> applicationuserData =
             Optional.ofNullable(applicationuserRepository.findById(id)
                 .orElseThrow(
@@ -128,7 +138,11 @@ public class ApplicationUserServiceImpl implements ApplicationUserService
                     APPLICATIONUSER_NOTFOUND_WITH_ID  + id ))
                 );
 
-        return applicationuserData.map(this::toDTO).orElse(null);
+        ApplicationUserDTO roleResponse = applicationuserData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(roleResponse)) {
+            redisProvider.setValue("applicationUser-findById-" + id, gson.toJson(roleResponse),120);
+        }
+        return roleResponse;
     }
 
     @Override
@@ -409,6 +423,10 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = ApplicationUserNotFoundException.class
     )
     public ApplicationUserDTO findApplicationUserByIdUserAndStatus(Long id, String status) {
+
+        ApplicationUserDTO cache = redisProvider.getValue("applicationUser-IdUser-" + id + status,ApplicationUserDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Long maxId = applicationuserRepository.loadMaxIdByIdUserAndStatus(id, status);
         if(maxId == null) maxId = 0L;
         Optional<ApplicationUser> applicationuserData =
@@ -419,7 +437,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         APPLICATIONUSER_NOTFOUND_WITH_ID + id))
                 );
-        return applicationuserData.map(this::toDTO).orElse(null);
+
+        ApplicationUserDTO response = applicationuserData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("applicationUser-IdUser-" + id + status, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
@@ -439,6 +462,10 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = ApplicationUserNotFoundException.class
     )
     public ApplicationUserDTO findApplicationUserByIdAndStatus(Long id, String status) {
+
+        ApplicationUserDTO cache = redisProvider.getValue("applicationUser-" + id + status,ApplicationUserDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Long maxId = applicationuserRepository.loadMaxIdByIdAndStatus(id, status);
         if(maxId == null) maxId = 0L;
         Optional<ApplicationUser> applicationuserData =
@@ -449,7 +476,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         APPLICATIONUSER_NOTFOUND_WITH_ID + id))
                 );
-        return applicationuserData.map(this::toDTO).orElse(null);
+
+        ApplicationUserDTO response = applicationuserData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("applicationUser-" + id + status, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
@@ -469,6 +501,11 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = ApplicationUserNotFoundException.class
     )
     public ApplicationUserDTO findApplicationUserByEmailAndStatus(String email, String status) {
+
+        ApplicationUserDTO cache = redisProvider.getValue("applicationUser-" + email + status,ApplicationUserDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
+
         Long maxId = applicationuserRepository.loadMaxIdByEmailAndStatus(email, status);
         if(maxId == null) maxId = 0L;
         Optional<ApplicationUser> applicationuserData =
@@ -479,7 +516,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         APPLICATIONUSER_NOTFOUND_WITH_EMAIL + email))
                 );
-        return applicationuserData.map(this::toDTO).orElse(null);
+
+        ApplicationUserDTO response = applicationuserData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("applicationUser-" + email + status, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
@@ -499,6 +541,10 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = ApplicationUserNotFoundException.class
     )
     public ApplicationUserDTO findApplicationUserByEncodedPassPhraseAndStatus(String encodedPassPhrase, String status) {
+
+        ApplicationUserDTO cache = redisProvider.getValue("applicationUser-" + encodedPassPhrase + status,ApplicationUserDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Long maxId = applicationuserRepository.loadMaxIdByEncodedPassPhraseAndStatus(encodedPassPhrase, status);
         if(maxId == null) maxId = 0L;
         Optional<ApplicationUser> applicationuserData =
@@ -509,7 +555,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         APPLICATIONUSER_NOTFOUND_WITH_ENCODEDPASSPHRASE + encodedPassPhrase))
                 );
-        return applicationuserData.map(this::toDTO).orElse(null);
+
+        ApplicationUserDTO response = applicationuserData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("applicationUser-" + encodedPassPhrase + status, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
@@ -529,6 +580,11 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = ApplicationUserNotFoundException.class
     )
     public ApplicationUserDTO findApplicationUserByExternalAppUserUUIDAndStatus(UUID externalAppUserUUID, String status) {
+
+        ApplicationUserDTO cache = redisProvider.getValue("applicationUser-" + externalAppUserUUID + status,ApplicationUserDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
+
         Long maxId = applicationuserRepository.loadMaxIdByExternalAppUserUUIDAndStatus(externalAppUserUUID, status);
         if(maxId == null) maxId = 0L;
         Optional<ApplicationUser> applicationuserData =
@@ -539,7 +595,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         APPLICATIONUSER_NOTFOUND_WITH_EXTERNALAPPUSERUUID + externalAppUserUUID))
                 );
-        return applicationuserData.map(this::toDTO).orElse(null);
+
+        ApplicationUserDTO response = applicationuserData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("applicationUser-" + externalAppUserUUID + status, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
@@ -549,6 +610,11 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = ApplicationUserNotFoundException.class
     )
     public ApplicationUserDTO findApplicationUserByExternalUserUUIDAndStatus(UUID externalUserUUID, String status) {
+
+        ApplicationUserDTO cache = redisProvider.getValue("applicationUser-" + externalUserUUID + status,ApplicationUserDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
+
         Long maxId = applicationuserRepository.loadMaxIdByExternalUserUUIDAndStatus(externalUserUUID, status);
         if(maxId == null) maxId = 0L;
         Optional<ApplicationUser> applicationuserData =
@@ -559,7 +625,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         APPLICATIONUSER_NOTFOUND_WITH_EXTERNALUSERUUID + externalUserUUID))
                 );
-        return applicationuserData.map(this::toDTO).orElse(null);
+
+        ApplicationUserDTO response = applicationuserData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("applicationUser-" + externalUserUUID + status, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
@@ -569,6 +640,11 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = ApplicationUserNotFoundException.class
     )
     public ApplicationUserDTO findApplicationUserByExternalAppUserUUIDAndEmailAndStatus(UUID externalAppUserUUID, String email, String status) {
+
+        ApplicationUserDTO cache = redisProvider.getValue("applicationUser-" + externalAppUserUUID + email + status,ApplicationUserDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
+
         Long maxId = applicationuserRepository.loadMaxIdByExternalAppUserUUIDAndEmailAndStatus(externalAppUserUUID, email, status);
         if(maxId == null) maxId = 0L;
         Optional<ApplicationUser> applicationuserData =
@@ -579,7 +655,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         APPLICATIONUSER_NOTFOUND_WITH_EXTERNALAPPUSERUUID + externalAppUserUUID))
                 );
-        return applicationuserData.map(this::toDTO).orElse(null);
+
+        ApplicationUserDTO response = applicationuserData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("applicationUser-" + externalAppUserUUID + email + status, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
@@ -599,6 +680,11 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = ApplicationUserNotFoundException.class
     )
     public ApplicationUserDTO findApplicationUserByUrlTokenActivationAndStatus(String urlTokenActivation, String status) {
+
+        ApplicationUserDTO cache = redisProvider.getValue("applicationUser-" + urlTokenActivation + status,ApplicationUserDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
+
         Long maxId = applicationuserRepository.loadMaxIdByUrlTokenActivationAndStatus(urlTokenActivation, status);
         if(maxId == null) maxId = 0L;
         Optional<ApplicationUser> applicationuserData =
@@ -609,7 +695,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         APPLICATIONUSER_NOTFOUND_WITH_URLTOKENACTIVATION + urlTokenActivation))
                 );
-        return applicationuserData.map(this::toDTO).orElse(null);
+
+        ApplicationUserDTO response = applicationuserData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("applicationUser-" + urlTokenActivation + status, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
@@ -629,6 +720,11 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = ApplicationUserNotFoundException.class
     )
     public ApplicationUserDTO findApplicationUserByActivationCodeAndStatus(String activationCode, String status) {
+
+        ApplicationUserDTO cache = redisProvider.getValue("applicationUser-" + activationCode + status,ApplicationUserDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
+
         Long maxId = applicationuserRepository.loadMaxIdByActivationCodeAndStatus(activationCode, status);
         if(maxId == null) maxId = 0L;
         Optional<ApplicationUser> applicationuserData =
@@ -639,7 +735,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         APPLICATIONUSER_NOTFOUND_WITH_ACTIVATIONCODE + activationCode))
                 );
-        return applicationuserData.map(this::toDTO).orElse(null);
+
+        ApplicationUserDTO response = applicationuserData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("applicationUser-" + activationCode + status, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
@@ -659,6 +760,11 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = ApplicationUserNotFoundException.class
     )
     public ApplicationUserDTO findApplicationUserByDueDateActivationAndStatus(Date dueDateActivation, String status) {
+
+        ApplicationUserDTO cache = redisProvider.getValue("applicationUser-" + dueDateActivation + status,ApplicationUserDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
+
         Long maxId = applicationuserRepository.loadMaxIdByDueDateActivationAndStatus(dueDateActivation, status);
         if(maxId == null) maxId = 0L;
         Optional<ApplicationUser> applicationuserData =
@@ -669,7 +775,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         APPLICATIONUSER_NOTFOUND_WITH_DUEDATEACTIVATION + dueDateActivation))
                 );
-        return applicationuserData.map(this::toDTO).orElse(null);
+
+        ApplicationUserDTO response = applicationuserData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("applicationUser-" + dueDateActivation + status, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override

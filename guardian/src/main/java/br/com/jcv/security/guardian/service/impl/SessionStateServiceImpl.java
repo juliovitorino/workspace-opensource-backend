@@ -27,7 +27,9 @@ import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
 import br.com.jcv.commons.library.commodities.dto.RequestFilter;
 import br.com.jcv.commons.library.utility.DateTime;
 
+import br.com.jcv.security.guardian.dto.RoleDTO;
 import br.com.jcv.security.guardian.dto.SessionStateDTO;
+import br.com.jcv.security.guardian.infrastructure.CacheProvider;
 import br.com.jcv.security.guardian.model.SessionState;
 import br.com.jcv.security.guardian.constantes.SessionStateConstantes;
 import br.com.jcv.security.guardian.repository.SessionStateRepository;
@@ -36,6 +38,8 @@ import br.com.jcv.security.guardian.exception.SessionStateNotFoundException;
 
 import java.text.SimpleDateFormat;
 
+import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +78,9 @@ public class SessionStateServiceImpl implements SessionStateService
 
     @Autowired private SessionStateRepository sessionstateRepository;
     @Autowired private DateTime dateTime;
+    @Autowired private Gson gson;
+
+    @Autowired private @Qualifier("redisService") CacheProvider redisProvider;
 
     @Override
     @Transactional(transactionManager="transactionManager",
@@ -326,6 +333,9 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = SessionStateNotFoundException.class
     )
     public SessionStateDTO findSessionStateByIdAndStatus(Long id, String status) {
+        SessionStateDTO cache = redisProvider.getValue("sessionState-" + id + status,SessionStateDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Long maxId = sessionstateRepository.loadMaxIdByIdAndStatus(id, status);
         if(maxId == null) maxId = 0L;
         Optional<SessionState> sessionstateData =
@@ -336,7 +346,11 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         SESSIONSTATE_NOTFOUND_WITH_ID + id))
                 );
-        return sessionstateData.map(this::toDTO).orElse(null);
+        SessionStateDTO roleResponse = sessionstateData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(roleResponse)) {
+            redisProvider.setValue("sessionState-" + id + status, gson.toJson(roleResponse),120);
+        }
+        return roleResponse;
     }
 
     @Override
@@ -356,6 +370,9 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = SessionStateNotFoundException.class
     )
     public SessionStateDTO findSessionStateByIdTokenAndStatus(UUID idToken, String status) {
+        SessionStateDTO cache = redisProvider.getValue("sessionState-" + idToken + status,SessionStateDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Long maxId = sessionstateRepository.loadMaxIdByIdTokenAndStatus(idToken, status);
         if(maxId == null) maxId = 0L;
         Optional<SessionState> sessionstateData =
@@ -366,7 +383,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         SESSIONSTATE_NOTFOUND_WITH_IDTOKEN + idToken))
                 );
-        return sessionstateData.map(this::toDTO).orElse(null);
+
+        SessionStateDTO roleResponse = sessionstateData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(roleResponse)) {
+            redisProvider.setValue("sessionState-" + idToken + status, gson.toJson(roleResponse),120);
+        }
+        return roleResponse;
     }
 
     @Override
@@ -386,6 +408,9 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = SessionStateNotFoundException.class
     )
     public SessionStateDTO findSessionStateByIdUserUUIDAndStatus(UUID idUserUUID, String status) {
+        SessionStateDTO cache = redisProvider.getValue("sessionState-" + idUserUUID + status,SessionStateDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Long maxId = sessionstateRepository.loadMaxIdByIdUserUUIDAndStatus(idUserUUID, status);
         if(maxId == null) maxId = 0L;
         Optional<SessionState> sessionstateData =
@@ -396,7 +421,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         SESSIONSTATE_NOTFOUND_WITH_IDUSERUUID + idUserUUID))
                 );
-        return sessionstateData.map(this::toDTO).orElse(null);
+
+        SessionStateDTO roleResponse = sessionstateData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(roleResponse)) {
+            redisProvider.setValue("sessionState-" + idUserUUID + status, gson.toJson(roleResponse),120);
+        }
+        return roleResponse;
     }
 
     @Override

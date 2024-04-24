@@ -27,6 +27,7 @@ import br.com.jcv.security.guardian.builder.GroupUserDTOBuilder;
 import br.com.jcv.security.guardian.builder.GroupUserModelBuilder;
 import br.com.jcv.security.guardian.dto.GroupUserDTO;
 import br.com.jcv.security.guardian.exception.GroupUserNotFoundException;
+import br.com.jcv.security.guardian.infrastructure.CacheProvider;
 import br.com.jcv.security.guardian.model.GroupUser;
 import br.com.jcv.security.guardian.repository.GroupUserRepository;
 import br.com.jcv.security.guardian.service.GroupUserService;
@@ -41,6 +42,8 @@ import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -60,6 +63,8 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 
+import com.google.gson.Gson;
+
 @TestInstance(PER_CLASS)
 public class GroupUserServiceImplTest {
     private static final UUID uuidMock = UUID.fromString("3dc936e6-478e-4d21-b167-67dee8b730af");
@@ -76,6 +81,10 @@ public class GroupUserServiceImplTest {
 
     @Mock
     private GroupUserRepository groupuserRepositoryMock;
+    @Mock
+    private CacheProvider redisProviderMock;
+    @Mock
+    private Gson gsonMock;
 
     @InjectMocks
     private GroupUserService groupuserService;
@@ -745,12 +754,22 @@ public class GroupUserServiceImplTest {
         // scenario
         Long idUserMock = 64157L;
         Long maxIdMock = 1972L;
+        final Gson gson = new Gson();
         Optional<GroupUser> groupuserModelMock = Optional.ofNullable(GroupUserModelBuilder.newGroupUserModelTestBuilder()
                 .idUser(idUserMock)
                 .now()
         );
+        GroupUserDTO groupUserDtoMock = GroupUserDTOBuilder.newGroupUserDTOTestBuilder()
+                .id(1L)
+                .idUser(idUserMock)
+                .idGroup(10L)
+                .now();
+        String groupUserJson = gson.toJson(groupUserDtoMock);
+
         Mockito.when(groupuserRepositoryMock.loadMaxIdByIdUserAndStatus(idUserMock, "A")).thenReturn(maxIdMock);
         Mockito.when(groupuserRepositoryMock.findById(maxIdMock)).thenReturn(groupuserModelMock);
+        Mockito.when(redisProviderMock.getValue(Mockito.anyString(),Mockito.any())).thenReturn(null);
+        Mockito.when(gsonMock.toJson(Mockito.any())).thenReturn(groupUserJson);
 
         // action
         GroupUserDTO result = groupuserService.findGroupUserByIdUserAndStatus(idUserMock);

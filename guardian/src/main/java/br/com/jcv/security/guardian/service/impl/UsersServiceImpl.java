@@ -27,7 +27,9 @@ import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
 import br.com.jcv.commons.library.commodities.dto.RequestFilter;
 import br.com.jcv.commons.library.utility.DateTime;
 
+import br.com.jcv.security.guardian.dto.UserRoleDTO;
 import br.com.jcv.security.guardian.dto.UsersDTO;
+import br.com.jcv.security.guardian.infrastructure.CacheProvider;
 import br.com.jcv.security.guardian.model.Users;
 import br.com.jcv.security.guardian.constantes.UsersConstantes;
 import br.com.jcv.security.guardian.repository.UsersRepository;
@@ -36,6 +38,8 @@ import br.com.jcv.security.guardian.exception.UsersNotFoundException;
 
 import java.text.SimpleDateFormat;
 
+import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,6 +79,8 @@ public class UsersServiceImpl implements UsersService
 
     @Autowired private UsersRepository usersRepository;
     @Autowired private DateTime dateTime;
+    @Autowired private @Qualifier("redisService") CacheProvider redisProvider;
+    @Autowired private Gson gson;
 
     @Override
     @Transactional(transactionManager="transactionManager",
@@ -117,6 +123,10 @@ public class UsersServiceImpl implements UsersService
         noRollbackFor = UsersNotFoundException.class
     )
     public UsersDTO findById(Long id) {
+
+        UsersDTO cache = redisProvider.getValue("users-findById-" + id,UsersDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Optional<Users> usersData =
             Optional.ofNullable(usersRepository.findById(id)
                 .orElseThrow(
@@ -125,7 +135,11 @@ public class UsersServiceImpl implements UsersService
                     USERS_NOTFOUND_WITH_ID  + id ))
                 );
 
-        return usersData.map(this::toDTO).orElse(null);
+        UsersDTO response = usersData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("users-findById-" + id, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
@@ -327,6 +341,10 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = UsersNotFoundException.class
     )
     public UsersDTO findUsersByIdAndStatus(Long id, String status) {
+
+        UsersDTO cache = redisProvider.getValue("userRole-cache-by-Id-status-" + id + status,UsersDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Long maxId = usersRepository.loadMaxIdByIdAndStatus(id, status);
         if(maxId == null) maxId = 0L;
         Optional<Users> usersData =
@@ -337,7 +355,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         USERS_NOTFOUND_WITH_ID + id))
                 );
-        return usersData.map(this::toDTO).orElse(null);
+
+        UsersDTO response = usersData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("userRole-cache-by-Id-status-" + id + status, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
@@ -357,6 +380,10 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = UsersNotFoundException.class
     )
     public UsersDTO findUsersByNameAndStatus(String name, String status) {
+
+        UsersDTO cache = redisProvider.getValue("userRole-cache-by-name-status-" + name + status,UsersDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Long maxId = usersRepository.loadMaxIdByNameAndStatus(name, status);
         if(maxId == null) maxId = 0L;
         Optional<Users> usersData =
@@ -367,7 +394,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         USERS_NOTFOUND_WITH_NAME + name))
                 );
-        return usersData.map(this::toDTO).orElse(null);
+
+        UsersDTO response = usersData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("userRole-cache-by-name-status-" + name + status, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override
@@ -387,6 +419,10 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     noRollbackFor = UsersNotFoundException.class
     )
     public UsersDTO findUsersByBirthdayAndStatus(LocalDate birthday, String status) {
+
+        UsersDTO cache = redisProvider.getValue("userRole-cache-by-birthday-status-" + birthday + status,UsersDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
         Long maxId = usersRepository.loadMaxIdByBirthdayAndStatus(birthday, status);
         if(maxId == null) maxId = 0L;
         Optional<Users> usersData =
@@ -397,7 +433,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                         HttpStatus.NOT_FOUND,
                         USERS_NOTFOUND_WITH_BIRTHDAY + birthday))
                 );
-        return usersData.map(this::toDTO).orElse(null);
+
+        UsersDTO response = usersData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("userRole-cache-by-birthday-status-" + birthday + status, gson.toJson(response),120);
+        }
+        return response;
     }
 
     @Override

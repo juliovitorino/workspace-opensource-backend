@@ -27,6 +27,7 @@ import br.com.jcv.security.guardian.builder.RoleDTOBuilder;
 import br.com.jcv.security.guardian.builder.RoleModelBuilder;
 import br.com.jcv.security.guardian.dto.RoleDTO;
 import br.com.jcv.security.guardian.exception.RoleNotFoundException;
+import br.com.jcv.security.guardian.infrastructure.CacheProvider;
 import br.com.jcv.security.guardian.model.Role;
 import br.com.jcv.security.guardian.repository.RoleRepository;
 import br.com.jcv.security.guardian.service.RoleService;
@@ -60,6 +61,8 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 
+import com.google.gson.Gson;
+
 @TestInstance(PER_CLASS)
 public class RoleServiceImplTest {
     private static final UUID uuidMock = UUID.fromString("3dc936e6-478e-4d21-b167-67dee8b730af");
@@ -75,7 +78,10 @@ public class RoleServiceImplTest {
 
     @Mock
     private RoleRepository roleRepositoryMock;
-
+    @Mock
+    private CacheProvider redisProviderMock;
+    @Mock
+    private Gson gsonMock;
     @InjectMocks
     private RoleService roleService;
     final DateTime dateTimeMock = Mockito.mock(DateTime.class);

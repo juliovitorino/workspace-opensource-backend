@@ -27,6 +27,7 @@ import br.com.jcv.security.guardian.builder.GApplicationDTOBuilder;
 import br.com.jcv.security.guardian.builder.GApplicationModelBuilder;
 import br.com.jcv.security.guardian.dto.GApplicationDTO;
 import br.com.jcv.security.guardian.exception.GApplicationNotFoundException;
+import br.com.jcv.security.guardian.infrastructure.CacheProvider;
 import br.com.jcv.security.guardian.model.GApplication;
 import br.com.jcv.security.guardian.repository.GApplicationRepository;
 import br.com.jcv.security.guardian.service.GApplicationService;
@@ -60,6 +61,8 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 
+import com.google.gson.Gson;
+
 @TestInstance(PER_CLASS)
 public class GApplicationServiceImplTest {
     private static final UUID uuidMock = UUID.fromString("3dc936e6-478e-4d21-b167-67dee8b730af");
@@ -76,6 +79,10 @@ public class GApplicationServiceImplTest {
 
     @Mock
     private GApplicationRepository gapplicationRepositoryMock;
+    @Mock
+    private CacheProvider redisProviderMock;
+    @Mock
+    private Gson gsonMock;
 
     @InjectMocks
     private GApplicationService gapplicationService;

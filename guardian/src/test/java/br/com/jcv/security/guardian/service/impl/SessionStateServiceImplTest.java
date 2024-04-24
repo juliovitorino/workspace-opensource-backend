@@ -27,6 +27,7 @@ import br.com.jcv.security.guardian.builder.SessionStateDTOBuilder;
 import br.com.jcv.security.guardian.builder.SessionStateModelBuilder;
 import br.com.jcv.security.guardian.dto.SessionStateDTO;
 import br.com.jcv.security.guardian.exception.SessionStateNotFoundException;
+import br.com.jcv.security.guardian.infrastructure.CacheProvider;
 import br.com.jcv.security.guardian.model.SessionState;
 import br.com.jcv.security.guardian.repository.SessionStateRepository;
 import br.com.jcv.security.guardian.service.SessionStateService;
@@ -60,6 +61,8 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 
+import com.google.gson.Gson;
+
 @TestInstance(PER_CLASS)
 public class SessionStateServiceImplTest {
     private static final UUID uuidMock = UUID.fromString("3dc936e6-478e-4d21-b167-67dee8b730af");
@@ -76,7 +79,10 @@ public class SessionStateServiceImplTest {
 
     @Mock
     private SessionStateRepository sessionstateRepositoryMock;
-
+    @Mock
+    private CacheProvider redisProviderMock;
+    @Mock
+    private Gson gsonMock;
     @InjectMocks
     private SessionStateService sessionstateService;
     final DateTime dateTimeMock = Mockito.mock(DateTime.class);
