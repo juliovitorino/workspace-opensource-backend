@@ -18,5 +18,5 @@ create table public.tb_system_preferences(
     status VARCHAR(1) NOT NULL,
     date_created timestamp NOT NULL,
     date_updated timestamp NOT NULL,
-    CONSTRAINT tb_user_preferences_pkey PRIMARY KEY (id_system_preference)
+    CONSTRAINT tb_system_preferences_pkey PRIMARY KEY (id_system_preference)
 );
