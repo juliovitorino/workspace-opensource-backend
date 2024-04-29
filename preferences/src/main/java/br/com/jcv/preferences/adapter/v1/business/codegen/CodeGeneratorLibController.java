@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.jcv.codegen.codegenerator.dto.WritableCode;
 import br.com.jcv.codegen.codegenerator.exception.CodeGeneratorFolderStructureNotFound;
 import br.com.jcv.codegen.codegenerator.factory.codegen.ICodeGeneratorBatch;
-import br.com.jcv.preferences.corelayer.model.SystemPreferences;
+import br.com.jcv.preferences.corelayer.model.UserPreferences;
 
 @RestController
 @RequestMapping("/v1/api/codegen")
@@ -24,7 +24,9 @@ public class CodeGeneratorLibController {
     public ResponseEntity generateCode() {
         try {
 
-            List<WritableCode> one = generatorMainStream.generate(SystemPreferences.class);
+//            List<WritableCode> one = generatorMainStream.generate(SystemPreferences.class);
+//            generatorMainStream.flushCode(one);
+            List<WritableCode> one = generatorMainStream.generate(UserPreferences.class);
             generatorMainStream.flushCode(one);
 
             return ResponseEntity.ok().build();
