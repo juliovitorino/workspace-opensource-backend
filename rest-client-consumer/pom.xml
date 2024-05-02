@@ -13,9 +13,9 @@
 
 	<groupId>br.com.jcv.rest</groupId>
 	<artifactId>rest-client-consumer</artifactId>
-	<version>1.0.11-SNAPSHOT</version>
-	<name>commons-library</name>
-	<description>Commons Library Functions</description>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>rest-client-consumer</name>
+	<description>Rest Client Consumer Library</description>
 
 	<properties>
 		<!-- outras versoes de dependencias comuns a todos os modulos do projeto ms -->
