@@ -8,7 +8,7 @@ spring:
       matching-strategy: ant_path_matcher
 
   datasource:
-    url: jdbc:postgresql://localhost:5121/preferences
+    url: jdbc:postgresql://pg-preferences:5432/preferences
     username: postgres
     password: postgres
     driverClassName: org.postgresql.Driver
@@ -24,7 +24,7 @@ spring:
   cache:
     type: redis
   redis:
-    host: redis-guardian.guardian_guardian-net
+    host: redis-opensource.opensource_opensource-net
     port: 6379
 
 server:
@@ -32,3 +32,8 @@ server:
     threads:
       max: 10
 
+guardian:
+  openfeign-url: http://app-guardian:8080
+  application:
+    preferences:
+      uuid: 6c65a392-1207-4deb-9559-df10880a0f95

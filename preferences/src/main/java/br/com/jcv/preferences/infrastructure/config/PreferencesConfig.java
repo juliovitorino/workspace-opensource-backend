@@ -1,5 +1,7 @@
 package br.com.jcv.preferences.infrastructure.config;
 
+import java.util.UUID;
+
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -18,5 +20,8 @@ public class PreferencesConfig {
 
     @Value("${spring.datasource.url}")
     private String dbUrl;
+
+    @Value("${guardian.application.preferences.uuid}")
+    private UUID guardianApplicationPreferencesUUID;
 
 }
