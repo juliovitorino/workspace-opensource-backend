@@ -1,10 +1,12 @@
-package br.com.jcv.preferences.adapter.v1.business.userpreferences.create;
+package br.com.jcv.preferences.corebusiness.userpreferences.create;
 
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.jcv.preferences.adapter.v1.business.userpreferences.create.CreateUserPreferencesRequest;
+import br.com.jcv.preferences.adapter.v1.business.userpreferences.create.CreateUserPreferencesResponse;
 import br.com.jcv.preferences.corelayer.service.UserPreferencesService;
 import br.com.jcv.preferences.infrastructure.dto.UserPreferencesDTO;
 import br.com.jcv.preferences.infrastructure.mapper.UserPreferencesMapper;

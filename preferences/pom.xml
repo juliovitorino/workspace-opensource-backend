@@ -76,6 +76,12 @@
 			<version>${spring-data-redis.version}</version>
 		</dependency>
 
+		<!-- OpenFeign Sync Http call -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+
 
 	</dependencies>
 

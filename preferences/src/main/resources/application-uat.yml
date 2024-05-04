@@ -32,5 +32,7 @@ server:
       max: 10
 
 guardian:
-  admin:
-    magicSeed: B7CdeU3QtR1FQctrSV0JatNEcGeAaFUfSBW2XdDIgpF2eMmUIM
+  openfeign-url: http://localhost:8080
+  application:
+    preferences:
+      uuid: 6c65a392-1207-4deb-9559-df10880a0f95

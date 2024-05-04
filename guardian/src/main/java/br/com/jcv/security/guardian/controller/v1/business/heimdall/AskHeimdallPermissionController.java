@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.UUID;
 
+import br.com.jcv.security.guardian.controller.v1.business.ControllerGenericResponse;
+
 @RestController
 @RequestMapping("/v1/api/business/heimdall")
 public class AskHeimdallPermissionController {
     @Autowired private AskHeimdallPermissionBusinessService service;
     @GetMapping(params = "role")
-    public ResponseEntity askHeimdallHandler(
+    public ResponseEntity<ControllerGenericResponse> askHeimdallHandler(
             @RequestHeader(name = HttpHeaders.AUTHORIZATION) String jwtToken,
             @RequestParam @Valid String role) {
         return ResponseEntity.ok(service.execute(UUID.randomUUID(), jwtToken, role));

@@ -24,7 +24,7 @@ spring:
   cache:
     type: redis
   redis:
-    host: redis-guardian.guardian_guardian-net
+    host: redis-opensource.opensource_opensource-net
     port: 6379
 
 server:

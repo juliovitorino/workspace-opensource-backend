@@ -42,7 +42,7 @@ services:
     container_name: app-guardian
     image: juliovitorino/guardian:latest
     ports:
-      - "8080:8080"
+      - "9090:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=local
       - SPRING_DATASOURCE_URL=jdbc:postgresql://pg-guardian:5432/guardian
@@ -52,6 +52,21 @@ services:
       - opensource-net
     depends_on:
       - pg-guardian
+      - redis-opensource
+  app-preferences:
+    container_name: app-preferences
+    image: juliovitorino/preferences:latest
+    ports:
+      - "9091:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://pg-preferences:5432/preferences
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    networks:
+      - opensource-net
+    depends_on:
+      - pg-preferences
       - redis-opensource
 networks:
   opensource-net:
