@@ -1,6 +1,6 @@
 spring:
   application:
-    name: preferences-app
+    name: notifier-app
 
   # solve problem in swagger 'documentationPluginsBootstrapper'
   mvc:
@@ -8,31 +8,44 @@ spring:
       matching-strategy: ant_path_matcher
 
   datasource:
-    url: jdbc:postgresql://pg-guardian-instance.cev4hwwunwmk.sa-east-1.rds.amazonaws.com:5432/preferences
-    username: pgguardian
-    password: EiAqAlZb0qRKegk
+    url: jdbc:postgresql://localhost:5122/notifier
+    username: postgres
+    password: postgres
     driverClassName: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create-drop
+    show-sql: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
   threads:
     virtual:
-      enabled: true;
+      enabled: false;
   cache:
     type: redis
   redis:
-    host: redis-guardian.guardian_guardian-net
+    host: localhost
     port: 16379
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
 server:
   tomcat:
     threads:
-      max: 10
+      max: 8
 
 guardian:
   openfeign-url: http://localhost:8080
   application:
     preferences:
       uuid: 6c65a392-1207-4deb-9559-df10880a0f95
+

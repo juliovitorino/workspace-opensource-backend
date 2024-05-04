@@ -21,6 +21,7 @@
   <modules>
     <module>guardian</module>
     <module>preferences</module>
+    <module>notifier</module>
 
   </modules>
 
