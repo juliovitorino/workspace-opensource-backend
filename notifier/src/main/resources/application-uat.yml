@@ -1,6 +1,6 @@
 spring:
   application:
-    name: preferences-app
+    name: notifier-app
 
   # solve problem in swagger 'documentationPluginsBootstrapper'
   mvc:
@@ -8,7 +8,7 @@ spring:
       matching-strategy: ant_path_matcher
 
   datasource:
-    url: jdbc:postgresql://pg-guardian-instance.cev4hwwunwmk.sa-east-1.rds.amazonaws.com:5432/preferences
+    url: jdbc:postgresql://pg-guardian-instance.cev4hwwunwmk.sa-east-1.rds.amazonaws.com:5432/notifier
     username: pgguardian
     password: EiAqAlZb0qRKegk
     driverClassName: org.postgresql.Driver
