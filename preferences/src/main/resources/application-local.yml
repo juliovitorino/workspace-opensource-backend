@@ -1,6 +1,6 @@
 spring:
   application:
-    name: guardian-app
+    name: preferences-app
 
   # solve problem in swagger 'documentationPluginsBootstrapper'
   mvc:
@@ -8,7 +8,7 @@ spring:
       matching-strategy: ant_path_matcher
 
   datasource:
-    url: jdbc:postgresql://localhost:5120/guardian
+    url: jdbc:postgresql://pg-preferences:5432/preferences
     username: postgres
     password: postgres
     driverClassName: org.postgresql.Driver
@@ -33,5 +33,7 @@ server:
       max: 10
 
 guardian:
-  admin:
-    magicSeed: B7CdeU3QtR1FQctrSV0JatNEcGeAaFUfSBW2XdDIgpF2eMmUIM
+  openfeign-url: http://app-guardian:8080
+  application:
+    preferences:
+      uuid: 6c65a392-1207-4deb-9559-df10880a0f95

@@ -20,6 +20,7 @@
 
   <modules>
     <module>guardian</module>
+    <module>preferences</module>
 
   </modules>
 

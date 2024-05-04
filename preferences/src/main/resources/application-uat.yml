@@ -8,9 +8,9 @@ spring:
       matching-strategy: ant_path_matcher
 
   datasource:
-    url: jdbc:postgresql://localhost:5120/guardian
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://pg-guardian-instance.cev4hwwunwmk.sa-east-1.rds.amazonaws.com:5432/guardian_db
+    username: pgguardian
+    password: EiAqAlZb0qRKegk
     driverClassName: org.postgresql.Driver
   jpa:
     hibernate:
@@ -24,14 +24,15 @@ spring:
   cache:
     type: redis
   redis:
-    host: redis-opensource.opensource_opensource-net
-    port: 6379
-
+    host: redis-guardian.guardian_guardian-net
+    port: 16379
 server:
   tomcat:
     threads:
       max: 10
 
 guardian:
-  admin:
-    magicSeed: B7CdeU3QtR1FQctrSV0JatNEcGeAaFUfSBW2XdDIgpF2eMmUIM
+  openfeign-url: http://localhost:8080
+  application:
+    preferences:
+      uuid: 6c65a392-1207-4deb-9559-df10880a0f95

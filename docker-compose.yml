@@ -1,0 +1,78 @@
+version: "3.1"
+
+services:
+  redis-opensource:
+    container_name: redis-opensource
+    image: redis:7.2.3-alpine
+    ports:
+      - "16379:6379"
+    networks:
+      - opensource-net
+    volumes:
+      - redis_data_guardian:/data
+  pg-guardian:
+    container_name: pg-guardian
+    image: postgres:9.6
+    ports:
+      - "5120:5432"
+    networks:
+      - opensource-net
+    environment:
+      - POSTGRES_DB=guardian
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgresql_opensource:/var/lib/postgresql
+      - postgresql_data_guardian:/var/lib/postgresql/data
+  pg-preferences:
+    container_name: pg-preferences
+    image: postgres:9.6
+    ports:
+      - "5121:5432"
+    networks:
+      - opensource-net
+    environment:
+      - POSTGRES_DB=preferences
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgresql_opensource:/var/lib/postgresql
+      - postgresql_data_preferences:/var/lib/postgresql/data
+  app-guardian:
+    container_name: app-guardian
+    image: juliovitorino/guardian:latest
+    ports:
+      - "9090:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://pg-guardian:5432/guardian
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    networks:
+      - opensource-net
+    depends_on:
+      - pg-guardian
+      - redis-opensource
+  app-preferences:
+    container_name: app-preferences
+    image: juliovitorino/preferences:latest
+    ports:
+      - "9091:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://pg-preferences:5432/preferences
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    networks:
+      - opensource-net
+    depends_on:
+      - pg-preferences
+      - redis-opensource
+networks:
+  opensource-net:
+
+volumes:
+  postgresql_opensource:
+  postgresql_data_guardian:
+  postgresql_data_preferences:
+  redis_data_guardian:

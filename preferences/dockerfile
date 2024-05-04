@@ -1,0 +1,4 @@
+FROM openjdk:11.0.9
+WORKDIR /app
+COPY target/preferences-1.0.0-SNAPSHOT.jar /app/preferences.jar
+ENTRYPOINT ["java", "-jar", "/app/preferences.jar"]
