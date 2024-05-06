@@ -49,6 +49,10 @@ public class Notifier {
     @CodeGeneratorFieldDescriptor(fieldDescription = "type selector for notification")
     private String type;
 
+    @Column(name = "tx_key")
+    @CodeGeneratorFieldDescriptor(fieldDescription = "Any free key identifier for notification.")
+    private String key;
+
     @Column(name = "tx_title")
     @CodeGeneratorFieldDescriptor(fieldDescription = "Title for notification")
     private String title;

@@ -1,0 +1,108 @@
+/*
+Copyright <YEAR> <COPYRIGHT HOLDER>
+
+This software is Open Source and is under MIT license agreement
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the “Software”), to deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit
+persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions
+of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+
+package br.com.jcv.notifier.infrastructure.dto;
+
+import java.io.Serializable;
+import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
+
+import br.com.jcv.commons.library.commodities.dto.DTOPadrao;
+import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
+import br.com.jcv.notifier.infrastructure.constantes.NotifierConstantes;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+/**
+* NotifierDTO - Data Transfer Object
+*
+* @author Notifier
+* @since Mon May 06 08:02:37 BRT 2024
+*/
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
+@EqualsAndHashCode(callSuper = false)
+@ToString
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class NotifierDTO extends DTOPadrao implements Serializable
+{
+    
+    @SerializedName(NotifierConstantes.UUIDEXTERNALAPP)
+    @JsonProperty(NotifierConstantes.UUIDEXTERNALAPP)
+    private UUID uuidExternalApp;
+    
+    @SerializedName(NotifierConstantes.UUIDEXTERNALUSER)
+    @JsonProperty(NotifierConstantes.UUIDEXTERNALUSER)
+    private UUID uuidExternalUser;
+    
+    @SerializedName(NotifierConstantes.TYPE)
+    @JsonProperty(NotifierConstantes.TYPE)
+    private String type;
+    
+    @SerializedName(NotifierConstantes.KEY)
+    @JsonProperty(NotifierConstantes.KEY)
+    private String key;
+    
+    @SerializedName(NotifierConstantes.TITLE)
+    @JsonProperty(NotifierConstantes.TITLE)
+    private String title;
+    
+    @SerializedName(NotifierConstantes.DESCRIPTION)
+    @JsonProperty(NotifierConstantes.DESCRIPTION)
+    private String description;
+    
+    @SerializedName(NotifierConstantes.URLIMAGE)
+    @JsonProperty(NotifierConstantes.URLIMAGE)
+    private String urlImage;
+    
+    @SerializedName(NotifierConstantes.ICONCLASS)
+    @JsonProperty(NotifierConstantes.ICONCLASS)
+    private String iconClass;
+    
+    @SerializedName(NotifierConstantes.URLFOLLOW)
+    @JsonProperty(NotifierConstantes.URLFOLLOW)
+    private String urlFollow;
+    
+    @SerializedName(NotifierConstantes.OBJECTFREE)
+    @JsonProperty(NotifierConstantes.OBJECTFREE)
+    private String objectFree;
+    
+    @SerializedName(NotifierConstantes.SEENINDICATOR)
+    @JsonProperty(NotifierConstantes.SEENINDICATOR)
+    private String seenIndicator;
+
+
+    @SerializedName("mensagemResponse")
+    @JsonProperty("mensagemResponse")
+    private MensagemResponse mensagemResponse;
+}
