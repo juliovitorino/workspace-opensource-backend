@@ -13,6 +13,8 @@ services:
       - "15672:15672"
     volumes:
       - rabbitmq_data_opensource:/var/lib/rabbitmq/
+    networks:
+      - opensource-net
   redis-opensource:
     container_name: redis-opensource
     image: redis:7.2.3-alpine
