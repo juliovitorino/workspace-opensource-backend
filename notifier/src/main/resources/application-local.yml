@@ -37,3 +37,9 @@ guardian:
   application:
     preferences:
       uuid: 6c65a392-1207-4deb-9559-df10880a0f95
+
+
+mq:
+  queues:
+    notifier:
+      add: AddNotifier.INPUT

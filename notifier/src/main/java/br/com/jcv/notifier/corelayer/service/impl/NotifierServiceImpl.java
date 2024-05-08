@@ -42,6 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.jcv.commons.library.commodities.dto.RequestFilter;
 import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
 import br.com.jcv.commons.library.utility.DateTime;
+import br.com.jcv.notifier.corebusiness.addnotification.NotificationRequest;
 import br.com.jcv.notifier.corelayer.model.Notifier;
 import br.com.jcv.notifier.corelayer.repository.NotifierRepository;
 import br.com.jcv.notifier.corelayer.service.NotifierService;
@@ -1005,21 +1006,37 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
 
     public NotifierDTO toDTO(Notifier notifier) {
         NotifierDTO notifierDTO = new NotifierDTO();
-                notifierDTO.setId(notifier.getId());
-                notifierDTO.setUuidExternalApp(notifier.getUuidExternalApp());
-                notifierDTO.setUuidExternalUser(notifier.getUuidExternalUser());
-                notifierDTO.setType(notifier.getType());
-                notifierDTO.setKey(notifier.getKey());
-                notifierDTO.setTitle(notifier.getTitle());
-                notifierDTO.setDescription(notifier.getDescription());
-                notifierDTO.setUrlImage(notifier.getUrlImage());
-                notifierDTO.setIconClass(notifier.getIconClass());
-                notifierDTO.setUrlFollow(notifier.getUrlFollow());
-                notifierDTO.setObjectFree(notifier.getObjectFree());
-                notifierDTO.setSeenIndicator(notifier.getSeenIndicator());
-                notifierDTO.setStatus(notifier.getStatus());
-                notifierDTO.setDateCreated(notifier.getDateCreated());
-                notifierDTO.setDateUpdated(notifier.getDateUpdated());
+        notifierDTO.setId(notifier.getId());
+        notifierDTO.setUuidExternalApp(notifier.getUuidExternalApp());
+        notifierDTO.setUuidExternalUser(notifier.getUuidExternalUser());
+        notifierDTO.setType(notifier.getType());
+        notifierDTO.setKey(notifier.getKey());
+        notifierDTO.setTitle(notifier.getTitle());
+        notifierDTO.setDescription(notifier.getDescription());
+        notifierDTO.setUrlImage(notifier.getUrlImage());
+        notifierDTO.setIconClass(notifier.getIconClass());
+        notifierDTO.setUrlFollow(notifier.getUrlFollow());
+        notifierDTO.setObjectFree(notifier.getObjectFree());
+        notifierDTO.setSeenIndicator(notifier.getSeenIndicator());
+        notifierDTO.setStatus(notifier.getStatus());
+        notifierDTO.setDateCreated(notifier.getDateCreated());
+        notifierDTO.setDateUpdated(notifier.getDateUpdated());
+
+        return notifierDTO;
+    }
+    public NotifierDTO toDTO(NotificationRequest notifier) {
+        NotifierDTO notifierDTO = new NotifierDTO();
+        notifierDTO.setUuidExternalApp(notifier.getUuidExternalApp());
+        notifierDTO.setUuidExternalUser(notifier.getUuidExternalUser());
+        notifierDTO.setType(notifier.getType());
+        notifierDTO.setKey(notifier.getKey());
+        notifierDTO.setTitle(notifier.getTitle());
+        notifierDTO.setDescription(notifier.getDescription());
+        notifierDTO.setUrlImage(notifier.getUrlImage());
+        notifierDTO.setIconClass(notifier.getIconClass());
+        notifierDTO.setUrlFollow(notifier.getUrlFollow());
+        notifierDTO.setObjectFree(notifier.getObjectFree());
+        notifierDTO.setSeenIndicator(notifier.getSeenIndicator());
 
         return notifierDTO;
     }
@@ -1027,22 +1044,23 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     public Notifier toEntity(NotifierDTO notifierDTO) {
         Notifier notifier = null;
         notifier = new Notifier();
-                    notifier.setId(notifierDTO.getId());
-                    notifier.setUuidExternalApp(notifierDTO.getUuidExternalApp());
-                    notifier.setUuidExternalUser(notifierDTO.getUuidExternalUser());
-                    notifier.setType(notifierDTO.getType());
-                    notifier.setKey(notifierDTO.getKey());
-                    notifier.setTitle(notifierDTO.getTitle());
-                    notifier.setDescription(notifierDTO.getDescription());
-                    notifier.setUrlImage(notifierDTO.getUrlImage());
-                    notifier.setIconClass(notifierDTO.getIconClass());
-                    notifier.setUrlFollow(notifierDTO.getUrlFollow());
-                    notifier.setObjectFree(notifierDTO.getObjectFree());
-                    notifier.setSeenIndicator(notifierDTO.getSeenIndicator());
-                    notifier.setStatus(notifierDTO.getStatus());
-                    notifier.setDateCreated(notifierDTO.getDateCreated());
-                    notifier.setDateUpdated(notifierDTO.getDateUpdated());
+        notifier.setId(notifierDTO.getId());
+        notifier.setUuidExternalApp(notifierDTO.getUuidExternalApp());
+        notifier.setUuidExternalUser(notifierDTO.getUuidExternalUser());
+        notifier.setType(notifierDTO.getType());
+        notifier.setKey(notifierDTO.getKey());
+        notifier.setTitle(notifierDTO.getTitle());
+        notifier.setDescription(notifierDTO.getDescription());
+        notifier.setUrlImage(notifierDTO.getUrlImage());
+        notifier.setIconClass(notifierDTO.getIconClass());
+        notifier.setUrlFollow(notifierDTO.getUrlFollow());
+        notifier.setObjectFree(notifierDTO.getObjectFree());
+        notifier.setSeenIndicator(notifierDTO.getSeenIndicator());
+        notifier.setStatus(notifierDTO.getStatus());
+        notifier.setDateCreated(notifierDTO.getDateCreated());
+        notifier.setDateUpdated(notifierDTO.getDateUpdated());
 
         return notifier;
     }
+
 }
