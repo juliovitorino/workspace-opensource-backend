@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.UUID;
 
 import br.com.jcv.commons.library.commodities.service.CommoditieBaseService;
+import br.com.jcv.notifier.corebusiness.addnotification.NotificationRequest;
 import br.com.jcv.notifier.corelayer.model.Notifier;
 import br.com.jcv.notifier.infrastructure.dto.NotifierDTO;
 
@@ -94,6 +95,8 @@ public interface NotifierService extends CommoditieBaseService<NotifierDTO,Notif
     NotifierDTO updateObjectFreeById(Long id, String objectFree);
     NotifierDTO updateSeenIndicatorById(Long id, String seenIndicator);
     NotifierDTO updateStatusById(Long id, String status);
+
+    NotifierDTO toDTO(NotificationRequest notifier);
 
 
 }
