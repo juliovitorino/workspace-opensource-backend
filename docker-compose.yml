@@ -66,6 +66,20 @@ services:
     volumes:
       - postgresql_opensource:/var/lib/postgresql
       - postgresql_data_notifier:/var/lib/postgresql/data
+  pg-reminder:
+    container_name: pg-reminder
+    image: postgres:9.6
+    ports:
+      - "5123:5432"
+    networks:
+      - opensource-net
+    environment:
+      - POSTGRES_DB=reminder
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgresql_opensource:/var/lib/postgresql
+      - postgresql_data_reminder:/var/lib/postgresql/data
   app-guardian:
     container_name: app-guardian
     image: juliovitorino/guardian:latest
@@ -120,6 +134,7 @@ volumes:
   postgresql_data_guardian:
   postgresql_data_preferences:
   postgresql_data_notifier:
+  postgresql_data_reminder:
   redis_data_guardian:
   rabbitmq_data_opensource:
 
