@@ -1,0 +1,4 @@
+FROM openjdk:11.0.9
+WORKDIR /app
+COPY target/notifier-1.0.0-SNAPSHOT.jar /app/notifier.jar
+ENTRYPOINT ["java", "-jar", "/app/notifier.jar"]
