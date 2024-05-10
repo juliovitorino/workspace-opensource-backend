@@ -111,6 +111,7 @@ services:
     depends_on:
       - pg-notifier
       - redis-opensource
+      - rabbitmq
 networks:
   opensource-net:
 
@@ -121,3 +122,4 @@ volumes:
   postgresql_data_notifier:
   redis_data_guardian:
   rabbitmq_data_opensource:
+
