@@ -38,7 +38,13 @@ guardian:
     preferences:
       uuid: 6c65a392-1207-4deb-9559-df10880a0f95
 
-
+# configuration for rabbit MQ
+rabbitMQ:
+  virtualhost: /
+  host: rabbitmq
+  port: 5672
+  username: guest
+  password: guest
 mq:
   queues:
     notifier:
