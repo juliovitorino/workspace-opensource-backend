@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: notifier-app
+
+  # solve problem in swagger 'documentationPluginsBootstrapper'
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  datasource:
+    url: jdbc:postgresql://pg-guardian-instance.cev4hwwunwmk.sa-east-1.rds.amazonaws.com:5432/notifier
+    username: pgnotifier
+    password: EiAqAlZb0qRKegk
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  threads:
+    virtual:
+      enabled: true;
+  cache:
+    type: redis
+  redis:
+    host: redis-guardian.guardian_guardian-net
+    port: 16379
+server:
+  tomcat:
+    threads:
+      max: 10
+
+guardian:
+  openfeign-url: http://localhost:8080
+  application:
+    preferences:
+      uuid: 6c65a392-1207-4deb-9559-df10880a0f95
+
+# configuration for rabbit MQ
+rabbitMQ:
+  virtualhost: /
+  host: place.here.host.for.rabbitmq
+  port: 5672
+  username: guest
+  password: guest
+mq:
+  queues:
+    notifier:
+      add: AddNotifier.INPUT
