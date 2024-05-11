@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 @CodeGeneratorDescriptor(outputDir = "/home/julio/workspaces/workspace-opensource-backend/reminder/src/main/resources",
         project = "",
         fullDescription = "Control all reminder list")
-public class ListReminder {
+public class ReminderList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_list")

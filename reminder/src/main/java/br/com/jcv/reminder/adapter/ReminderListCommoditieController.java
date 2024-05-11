@@ -51,44 +51,44 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import br.com.jcv.commons.library.commodities.dto.RequestFilter;
 import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
 import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
-import br.com.jcv.reminder.corelayer.service.ListReminderService;
-import br.com.jcv.reminder.infrastructure.constantes.ListReminderConstantes;
-import br.com.jcv.reminder.infrastructure.dto.ListReminderDTO;
-import br.com.jcv.reminder.infrastructure.exception.ListReminderNotFoundException;
+import br.com.jcv.reminder.corelayer.service.ReminderListService;
+import br.com.jcv.reminder.infrastructure.constantes.ReminderListConstantes;
+import br.com.jcv.reminder.infrastructure.dto.ReminderListDTO;
+import br.com.jcv.reminder.infrastructure.exception.ReminderListNotFoundException;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 
 /**
-* ListReminderCommoditieController - Controller for ListReminder API
+* ReminderListCommoditieController - Controller for ReminderList API
 *
-* @author ListReminder
-* @since Sat May 11 14:30:00 BRT 2024
+* @author ReminderList
+* @since Sat May 11 17:44:44 BRT 2024
 */
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/api/listreminder")
-public class ListReminderCommoditieController
+@RequestMapping("/v1/api/reminderlist")
+public class ReminderListCommoditieController
 {
-     @Autowired private ListReminderService listreminderService;
+     @Autowired private ReminderListService reminderlistService;
 
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo ListReminder foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo ListReminder foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo ReminderList foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo ReminderList foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
 
     @GetMapping("/list")
-    public ResponseEntity<List<ListReminderDTO>> findAllListReminder() {
+    public ResponseEntity<List<ReminderListDTO>> findAllReminderList() {
         try {
-            List<ListReminderDTO> listreminders = listreminderService.findAllByStatus(GenericStatusEnums.ATIVO.getShortValue());
+            List<ReminderListDTO> reminderlists = reminderlistService.findAllByStatus(GenericStatusEnums.ATIVO.getShortValue());
 
-            if (listreminders.isEmpty()) {
+            if (reminderlists.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
 
-            return new ResponseEntity<>(listreminders, HttpStatus.OK);
+            return new ResponseEntity<>(reminderlists, HttpStatus.OK);
         } catch(CommoditieBaseException e) {
             return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
         } catch (Exception e) {
@@ -97,21 +97,21 @@ public class ListReminderCommoditieController
     }
 
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo ListReminder foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo ListReminder foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo ReminderList foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo ReminderList foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
 
     @GetMapping("/list/{status}")
-    public ResponseEntity<List<ListReminderDTO>> findAllListReminder(@PathVariable("status") String status) {
+    public ResponseEntity<List<ReminderListDTO>> findAllReminderList(@PathVariable("status") String status) {
         try {
-            List<ListReminderDTO> listreminders = listreminderService.findAllByStatus(status);
+            List<ReminderListDTO> reminderlists = reminderlistService.findAllByStatus(status);
 
-            if (listreminders.isEmpty()) {
+            if (reminderlists.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
 
-            return new ResponseEntity<>(listreminders, HttpStatus.OK);
+            return new ResponseEntity<>(reminderlists, HttpStatus.OK);
         } catch(CommoditieBaseException e) {
             return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
         } catch (Exception e) {
@@ -120,15 +120,15 @@ public class ListReminderCommoditieController
     }
 
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo ListReminder foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo ListReminder foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo ReminderList foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo ReminderList foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
 
     @GetMapping("/findAllByFilter")
-    public ResponseEntity<List<ListReminderDTO>> findAllListReminderByFilter(@RequestBody RequestFilter filtro) {
+    public ResponseEntity<List<ReminderListDTO>> findAllReminderListByFilter(@RequestBody RequestFilter filtro) {
         try{
-            List<ListReminderDTO> response = listreminderService.findAllByFilter(filtro);
+            List<ReminderListDTO> response = reminderlistService.findAllByFilter(filtro);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -137,15 +137,15 @@ public class ListReminderCommoditieController
 
 
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo ListReminder foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo ListReminder foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo ReminderList foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo ReminderList foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
 
     @GetMapping("/pagefilter")
-    public ResponseEntity<Map<String,Object>> pageFilterListReminderDinamico(@RequestBody RequestFilter filtro) {
+    public ResponseEntity<Map<String,Object>> pageFilterReminderListDinamico(@RequestBody RequestFilter filtro) {
         try{
-            Map<String,Object> responseFilter = listreminderService.findPageByFilter(filtro);
+            Map<String,Object> responseFilter = reminderlistService.findPageByFilter(filtro);
             return new ResponseEntity<>(responseFilter, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -154,17 +154,17 @@ public class ListReminderCommoditieController
 
 
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo ListReminder foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo ListReminder foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo ReminderList foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo ReminderList foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteListReminder(@PathVariable("id") long id) {
+    public ResponseEntity<HttpStatus> deleteReminderList(@PathVariable("id") long id) {
         try {
-            listreminderService.delete(id);
+            reminderlistService.delete(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch(ListReminderNotFoundException ex) {
+        } catch(ReminderListNotFoundException ex) {
             return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch(CommoditieBaseException e) {
             return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
@@ -174,19 +174,19 @@ public class ListReminderCommoditieController
     }
 
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo ListReminder foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo ListReminder foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo ReminderList foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo ReminderList foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
 
     @PostMapping
-    public ResponseEntity<Long> createListReminder(@RequestBody @Valid ListReminderDTO listreminderDTO) {
+    public ResponseEntity<Long> createReminderList(@RequestBody @Valid ReminderListDTO reminderlistDTO) {
         try {
-            ListReminderDTO listreminderSaved = listreminderService.salvar(listreminderDTO);
+            ReminderListDTO reminderlistSaved = reminderlistService.salvar(reminderlistDTO);
                 URI location = ServletUriComponentsBuilder
                         .fromCurrentRequest()
                         .path("/{id}")
-                        .buildAndExpand(listreminderSaved.getId())
+                        .buildAndExpand(reminderlistSaved.getId())
                         .toUri();
                 return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.LOCATION, String.valueOf(location)).build();
         } catch(CommoditieBaseException e) {
@@ -198,18 +198,18 @@ public class ListReminderCommoditieController
 
 
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo ListReminder foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo ListReminder foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo ReminderList foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo ReminderList foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
 
     @GetMapping("/{id}")
-    public ResponseEntity<ListReminderDTO> getListReminderById(@PathVariable("id") Long id) {
+    public ResponseEntity<ReminderListDTO> getReminderListById(@PathVariable("id") Long id) {
       try {
-           ListReminderDTO listreminderDTO = listreminderService.findById(id);
+           ReminderListDTO reminderlistDTO = reminderlistService.findById(id);
 
-           if (listreminderDTO != null) {
-               return new ResponseEntity<>(listreminderDTO, HttpStatus.OK);
+           if (reminderlistDTO != null) {
+               return new ResponseEntity<>(reminderlistDTO, HttpStatus.OK);
            } else {
                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
            }
@@ -221,24 +221,24 @@ public class ListReminderCommoditieController
     }
 
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo ListReminder foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo ListReminder foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo ReminderList foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo ReminderList foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
 
     @PutMapping("/{id}")
-    public ResponseEntity<ListReminderDTO> updateListReminder(@PathVariable("id") Long id, @RequestBody @Valid ListReminderDTO listreminderDTO) {
-        ListReminderDTO listreminderData = listreminderService.findById(id);
+    public ResponseEntity<ReminderListDTO> updateReminderList(@PathVariable("id") Long id, @RequestBody @Valid ReminderListDTO reminderlistDTO) {
+        ReminderListDTO reminderlistData = reminderlistService.findById(id);
 
-        if(listreminderData == null) {
+        if(reminderlistData == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         try {
-            listreminderDTO.setId(id);
-            listreminderDTO.setDateUpdated(new Date());
-            ListReminderDTO listreminderSaved = listreminderService.salvar(listreminderDTO);
-            return new ResponseEntity<>(listreminderSaved, HttpStatus.OK);
+            reminderlistDTO.setId(id);
+            reminderlistDTO.setDateUpdated(new Date());
+            ReminderListDTO reminderlistSaved = reminderlistService.salvar(reminderlistDTO);
+            return new ResponseEntity<>(reminderlistSaved, HttpStatus.OK);
         } catch(CommoditieBaseException e) {
             return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
         } catch (Exception e) {
@@ -248,8 +248,8 @@ public class ListReminderCommoditieController
 
 
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo ListReminder foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo ListReminder foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo ReminderList foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo ReminderList foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
 
@@ -259,26 +259,26 @@ public class ListReminderCommoditieController
     public ResponseEntity partialUpdateGeneric(
             @RequestBody Map<String, Object> updates,
             @PathVariable("id") Long id) {
-        ListReminderDTO listreminderData = listreminderService.findById(id);
-        if (listreminderData == null || !listreminderService.partialUpdate(id, updates)) {
+        ReminderListDTO reminderlistData = reminderlistService.findById(id);
+        if (reminderlistData == null || !reminderlistService.partialUpdate(id, updates)) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok("ListReminder atualizada");
+        return ResponseEntity.ok("ReminderList atualizada");
     }
 
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo ListReminder foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo ListReminder foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo ReminderList foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo ReminderList foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
 
     @PatchMapping("/{id}/{status}")
-    public ResponseEntity<ListReminderDTO> updateStatusById(
+    public ResponseEntity<ReminderListDTO> updateStatusById(
             @PathVariable("id") Long id, @PathVariable("status") String status) {
       try {
-        ListReminderDTO listreminderUpdated = listreminderService.updateStatusById(id, status);
-        return new ResponseEntity<>(listreminderUpdated, HttpStatus.OK);
-      } catch(ListReminderNotFoundException e) {
+        ReminderListDTO reminderlistUpdated = reminderlistService.updateStatusById(id, status);
+        return new ResponseEntity<>(reminderlistUpdated, HttpStatus.OK);
+      } catch(ReminderListNotFoundException e) {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       } catch(CommoditieBaseException e) {
         return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
@@ -288,18 +288,18 @@ public class ListReminderCommoditieController
     }
 
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo ListReminder foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo ListReminder foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo ReminderList foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo ReminderList foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
     @GetMapping(params = "id")
-    public ResponseEntity<ListReminderDTO> findListReminderById(@RequestParam(ListReminderConstantes.ID) Long id) {
+    public ResponseEntity<ReminderListDTO> findReminderListById(@RequestParam(ReminderListConstantes.ID) Long id) {
         try{
-            ListReminderDTO listreminderDTO = listreminderService.findListReminderByIdAndStatus(id, GenericStatusEnums.ATIVO.getShortValue());
-            return Objects.nonNull(listreminderDTO)
-                ? new ResponseEntity<>(listreminderDTO, HttpStatus.OK)
+            ReminderListDTO reminderlistDTO = reminderlistService.findReminderListByIdAndStatus(id, GenericStatusEnums.ATIVO.getShortValue());
+            return Objects.nonNull(reminderlistDTO)
+                ? new ResponseEntity<>(reminderlistDTO, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (ListReminderNotFoundException ex) {
+        } catch (ReminderListNotFoundException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch(CommoditieBaseException e) {
             return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
@@ -308,18 +308,18 @@ public class ListReminderCommoditieController
         }
     }
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo ListReminder foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo ListReminder foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo ReminderList foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo ReminderList foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
     @GetMapping(params = "uuidExternalApp")
-    public ResponseEntity<ListReminderDTO> findListReminderByUuidExternalApp(@RequestParam(ListReminderConstantes.UUIDEXTERNALAPP) UUID uuidExternalApp) {
+    public ResponseEntity<ReminderListDTO> findReminderListByUuidExternalApp(@RequestParam(ReminderListConstantes.UUIDEXTERNALAPP) UUID uuidExternalApp) {
         try{
-            ListReminderDTO listreminderDTO = listreminderService.findListReminderByUuidExternalAppAndStatus(uuidExternalApp, GenericStatusEnums.ATIVO.getShortValue());
-            return Objects.nonNull(listreminderDTO)
-                ? new ResponseEntity<>(listreminderDTO, HttpStatus.OK)
+            ReminderListDTO reminderlistDTO = reminderlistService.findReminderListByUuidExternalAppAndStatus(uuidExternalApp, GenericStatusEnums.ATIVO.getShortValue());
+            return Objects.nonNull(reminderlistDTO)
+                ? new ResponseEntity<>(reminderlistDTO, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (ListReminderNotFoundException ex) {
+        } catch (ReminderListNotFoundException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch(CommoditieBaseException e) {
             return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
@@ -328,18 +328,18 @@ public class ListReminderCommoditieController
         }
     }
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo ListReminder foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo ListReminder foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo ReminderList foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo ReminderList foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
     @GetMapping(params = "uuidExternalUser")
-    public ResponseEntity<ListReminderDTO> findListReminderByUuidExternalUser(@RequestParam(ListReminderConstantes.UUIDEXTERNALUSER) UUID uuidExternalUser) {
+    public ResponseEntity<ReminderListDTO> findReminderListByUuidExternalUser(@RequestParam(ReminderListConstantes.UUIDEXTERNALUSER) UUID uuidExternalUser) {
         try{
-            ListReminderDTO listreminderDTO = listreminderService.findListReminderByUuidExternalUserAndStatus(uuidExternalUser, GenericStatusEnums.ATIVO.getShortValue());
-            return Objects.nonNull(listreminderDTO)
-                ? new ResponseEntity<>(listreminderDTO, HttpStatus.OK)
+            ReminderListDTO reminderlistDTO = reminderlistService.findReminderListByUuidExternalUserAndStatus(uuidExternalUser, GenericStatusEnums.ATIVO.getShortValue());
+            return Objects.nonNull(reminderlistDTO)
+                ? new ResponseEntity<>(reminderlistDTO, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (ListReminderNotFoundException ex) {
+        } catch (ReminderListNotFoundException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch(CommoditieBaseException e) {
             return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
@@ -348,18 +348,18 @@ public class ListReminderCommoditieController
         }
     }
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo ListReminder foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo ListReminder foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo ReminderList foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo ReminderList foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
     @GetMapping(params = "uuidExternalList")
-    public ResponseEntity<ListReminderDTO> findListReminderByUuidExternalList(@RequestParam(ListReminderConstantes.UUIDEXTERNALLIST) UUID uuidExternalList) {
+    public ResponseEntity<ReminderListDTO> findReminderListByUuidExternalList(@RequestParam(ReminderListConstantes.UUIDEXTERNALLIST) UUID uuidExternalList) {
         try{
-            ListReminderDTO listreminderDTO = listreminderService.findListReminderByUuidExternalListAndStatus(uuidExternalList, GenericStatusEnums.ATIVO.getShortValue());
-            return Objects.nonNull(listreminderDTO)
-                ? new ResponseEntity<>(listreminderDTO, HttpStatus.OK)
+            ReminderListDTO reminderlistDTO = reminderlistService.findReminderListByUuidExternalListAndStatus(uuidExternalList, GenericStatusEnums.ATIVO.getShortValue());
+            return Objects.nonNull(reminderlistDTO)
+                ? new ResponseEntity<>(reminderlistDTO, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (ListReminderNotFoundException ex) {
+        } catch (ReminderListNotFoundException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch(CommoditieBaseException e) {
             return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
@@ -368,18 +368,18 @@ public class ListReminderCommoditieController
         }
     }
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo ListReminder foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo ListReminder foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo ReminderList foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo ReminderList foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
     @GetMapping(params = "title")
-    public ResponseEntity<ListReminderDTO> findListReminderByTitle(@RequestParam(ListReminderConstantes.TITLE) String title) {
+    public ResponseEntity<ReminderListDTO> findReminderListByTitle(@RequestParam(ReminderListConstantes.TITLE) String title) {
         try{
-            ListReminderDTO listreminderDTO = listreminderService.findListReminderByTitleAndStatus(title, GenericStatusEnums.ATIVO.getShortValue());
-            return Objects.nonNull(listreminderDTO)
-                ? new ResponseEntity<>(listreminderDTO, HttpStatus.OK)
+            ReminderListDTO reminderlistDTO = reminderlistService.findReminderListByTitleAndStatus(title, GenericStatusEnums.ATIVO.getShortValue());
+            return Objects.nonNull(reminderlistDTO)
+                ? new ResponseEntity<>(reminderlistDTO, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (ListReminderNotFoundException ex) {
+        } catch (ReminderListNotFoundException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch(CommoditieBaseException e) {
             return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
@@ -388,18 +388,18 @@ public class ListReminderCommoditieController
         }
     }
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo ListReminder foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo ListReminder foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo ReminderList foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo ReminderList foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
     @GetMapping(params = "dateCreated")
-    public ResponseEntity<ListReminderDTO> findListReminderByDateCreated(@RequestParam(ListReminderConstantes.DATECREATED) Date dateCreated) {
+    public ResponseEntity<ReminderListDTO> findReminderListByDateCreated(@RequestParam(ReminderListConstantes.DATECREATED) Date dateCreated) {
         try{
-            ListReminderDTO listreminderDTO = listreminderService.findListReminderByDateCreatedAndStatus(dateCreated, GenericStatusEnums.ATIVO.getShortValue());
-            return Objects.nonNull(listreminderDTO)
-                ? new ResponseEntity<>(listreminderDTO, HttpStatus.OK)
+            ReminderListDTO reminderlistDTO = reminderlistService.findReminderListByDateCreatedAndStatus(dateCreated, GenericStatusEnums.ATIVO.getShortValue());
+            return Objects.nonNull(reminderlistDTO)
+                ? new ResponseEntity<>(reminderlistDTO, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (ListReminderNotFoundException ex) {
+        } catch (ReminderListNotFoundException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch(CommoditieBaseException e) {
             return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
@@ -408,18 +408,18 @@ public class ListReminderCommoditieController
         }
     }
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo ListReminder foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo ListReminder foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo ReminderList foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo ReminderList foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
     @GetMapping(params = "dateUpdated")
-    public ResponseEntity<ListReminderDTO> findListReminderByDateUpdated(@RequestParam(ListReminderConstantes.DATEUPDATED) Date dateUpdated) {
+    public ResponseEntity<ReminderListDTO> findReminderListByDateUpdated(@RequestParam(ReminderListConstantes.DATEUPDATED) Date dateUpdated) {
         try{
-            ListReminderDTO listreminderDTO = listreminderService.findListReminderByDateUpdatedAndStatus(dateUpdated, GenericStatusEnums.ATIVO.getShortValue());
-            return Objects.nonNull(listreminderDTO)
-                ? new ResponseEntity<>(listreminderDTO, HttpStatus.OK)
+            ReminderListDTO reminderlistDTO = reminderlistService.findReminderListByDateUpdatedAndStatus(dateUpdated, GenericStatusEnums.ATIVO.getShortValue());
+            return Objects.nonNull(reminderlistDTO)
+                ? new ResponseEntity<>(reminderlistDTO, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (ListReminderNotFoundException ex) {
+        } catch (ReminderListNotFoundException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch(CommoditieBaseException e) {
             return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());

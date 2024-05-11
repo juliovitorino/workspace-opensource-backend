@@ -21,57 +21,57 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 
 package br.com.jcv.reminder.corelayer.builder;
 
-import br.com.jcv.reminder.corelayer.model.ListReminder;
+import br.com.jcv.reminder.corelayer.dto.ReminderListDTO;
 
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
-public class ListReminderModelBuilder {
+public class ReminderListDTOBuilder {
 
-    private ListReminder listreminder;
+    private ReminderListDTO reminderlistDTO;
 
-    private ListReminderModelBuilder(){}
-    public static ListReminderModelBuilder newListReminderModelTestBuilder() {
-        ListReminderModelBuilder builder = new ListReminderModelBuilder();
-        builder.listreminder = new ListReminder();
+    private ReminderListDTOBuilder(){}
+    public static ReminderListDTOBuilder newReminderListDTOTestBuilder() {
+        ReminderListDTOBuilder builder = new ReminderListDTOBuilder();
+        builder.reminderlistDTO = new ReminderListDTO();
         return builder;
     }
 
-    public ListReminder now() {
-        return this.listreminder;
+    public ReminderListDTO now() {
+        return this.reminderlistDTO;
     }
 
-    public ListReminderModelBuilder id(Long id){
-        this.listreminder.setId(id);
+    public ReminderListDTOBuilder id(Long id){
+        this.reminderlistDTO.setId(id);
         return this;
     }
-    public ListReminderModelBuilder uuidExternalApp(UUID uuidExternalApp){
-        this.listreminder.setUuidExternalApp(uuidExternalApp);
+    public ReminderListDTOBuilder uuidExternalApp(UUID uuidExternalApp){
+        this.reminderlistDTO.setUuidExternalApp(uuidExternalApp);
         return this;
     }
-    public ListReminderModelBuilder uuidExternalUser(UUID uuidExternalUser){
-        this.listreminder.setUuidExternalUser(uuidExternalUser);
+    public ReminderListDTOBuilder uuidExternalUser(UUID uuidExternalUser){
+        this.reminderlistDTO.setUuidExternalUser(uuidExternalUser);
         return this;
     }
-    public ListReminderModelBuilder uuidExternalList(UUID uuidExternalList){
-        this.listreminder.setUuidExternalList(uuidExternalList);
+    public ReminderListDTOBuilder uuidExternalList(UUID uuidExternalList){
+        this.reminderlistDTO.setUuidExternalList(uuidExternalList);
         return this;
     }
-    public ListReminderModelBuilder title(String title){
-        this.listreminder.setTitle(title);
+    public ReminderListDTOBuilder title(String title){
+        this.reminderlistDTO.setTitle(title);
         return this;
     }
-    public ListReminderModelBuilder status(String status){
-        this.listreminder.setStatus(status);
+    public ReminderListDTOBuilder status(String status){
+        this.reminderlistDTO.setStatus(status);
         return this;
     }
-    public ListReminderModelBuilder dateCreated(Date dateCreated){
-        this.listreminder.setDateCreated(dateCreated);
+    public ReminderListDTOBuilder dateCreated(Date dateCreated){
+        this.reminderlistDTO.setDateCreated(dateCreated);
         return this;
     }
-    public ListReminderModelBuilder dateUpdated(Date dateUpdated){
-        this.listreminder.setDateUpdated(dateUpdated);
+    public ReminderListDTOBuilder dateUpdated(Date dateUpdated){
+        this.reminderlistDTO.setDateUpdated(dateUpdated);
         return this;
     }
 

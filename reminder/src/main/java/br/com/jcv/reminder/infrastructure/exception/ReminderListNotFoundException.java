@@ -28,20 +28,20 @@ import org.springframework.http.HttpStatus;
 import java.util.Map;
 
 
-public class ListReminderNotFoundException extends CommoditieBaseException {
-    public ListReminderNotFoundException(String input, HttpStatus httpStatus, String msgcode, Map<String,String> mapParams) {
+public class ReminderListNotFoundException extends CommoditieBaseException {
+    public ReminderListNotFoundException(String input, HttpStatus httpStatus, String msgcode, Map<String,String> mapParams) {
         super(input, httpStatus, msgcode, mapParams);
     }
 
-    public ListReminderNotFoundException(String input, HttpStatus httpStatus, String msgcode) {
+    public ReminderListNotFoundException(String input, HttpStatus httpStatus, String msgcode) {
         this(input, httpStatus, msgcode, null);
     }
 
-    public ListReminderNotFoundException(String input, HttpStatus httpStatus) {
+    public ReminderListNotFoundException(String input, HttpStatus httpStatus) {
       this(input, httpStatus, null, new HashMap<>());
     }
 
-    public ListReminderNotFoundException(String input, int httpStatus) {
+    public ReminderListNotFoundException(String input, int httpStatus) {
       this(input, HttpStatus.valueOf(httpStatus), null, new HashMap<>());
     }
 }

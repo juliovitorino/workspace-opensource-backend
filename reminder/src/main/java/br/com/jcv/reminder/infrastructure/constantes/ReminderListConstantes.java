@@ -22,14 +22,14 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 package br.com.jcv.reminder.infrastructure.constantes;
 
 /**
-* ListReminderConstantes - Constantes para geral das Entity e DTO
+* ReminderListConstantes - Constantes para geral das Entity e DTO
 *
-* @author ListReminder
-* @since Sat May 11 14:30:00 BRT 2024
+* @author ReminderList
+* @since Sat May 11 17:44:44 BRT 2024
 */
 
-public class ListReminderConstantes {
-    private ListReminderConstantes() {}
+public class ReminderListConstantes {
+    private ReminderListConstantes() {}
     public static final String ID = "id";
     public static final String UUIDEXTERNALAPP = "uuidExternalApp";
     public static final String UUIDEXTERNALUSER = "uuidExternalUser";
