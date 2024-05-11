@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.jcv.codegen.codegenerator.dto.WritableCode;
 import br.com.jcv.codegen.codegenerator.exception.CodeGeneratorFolderStructureNotFound;
 import br.com.jcv.codegen.codegenerator.factory.codegen.ICodeGeneratorBatch;
-import br.com.jcv.reminder.corelayer.model.ListReminder;
+import br.com.jcv.reminder.corelayer.model.ReminderList;
 
 @RestController
 @RequestMapping("/v1/api/codegen")
@@ -23,7 +23,7 @@ public class CodeGeneratorLibController {
     @GetMapping("/model")
     public ResponseEntity generateCode() {
         try {
-            List<WritableCode> one = generatorMainStream.generate(ListReminder.class);
+            List<WritableCode> one = generatorMainStream.generate(ReminderList.class);
             generatorMainStream.flushCode(one);
 
             return ResponseEntity.ok().build();

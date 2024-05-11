@@ -30,7 +30,7 @@ import com.google.gson.annotations.SerializedName;
 
 import br.com.jcv.commons.library.commodities.dto.DTOPadrao;
 import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
-import br.com.jcv.reminder.infrastructure.constantes.ListReminderConstantes;
+import br.com.jcv.reminder.infrastructure.constantes.ReminderListConstantes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -40,10 +40,10 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
-* ListReminderDTO - Data Transfer Object
+* ReminderListDTO - Data Transfer Object
 *
-* @author ListReminder
-* @since Sat May 11 14:30:00 BRT 2024
+* @author ReminderList
+* @since Sat May 11 17:44:44 BRT 2024
 */
 
 @NoArgsConstructor
@@ -54,23 +54,23 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ListReminderDTO extends DTOPadrao implements Serializable
+public class ReminderListDTO extends DTOPadrao implements Serializable
 {
     
-    @SerializedName(ListReminderConstantes.UUIDEXTERNALAPP)
-    @JsonProperty(ListReminderConstantes.UUIDEXTERNALAPP)
+    @SerializedName(ReminderListConstantes.UUIDEXTERNALAPP)
+    @JsonProperty(ReminderListConstantes.UUIDEXTERNALAPP)
     private UUID uuidExternalApp;
     
-    @SerializedName(ListReminderConstantes.UUIDEXTERNALUSER)
-    @JsonProperty(ListReminderConstantes.UUIDEXTERNALUSER)
+    @SerializedName(ReminderListConstantes.UUIDEXTERNALUSER)
+    @JsonProperty(ReminderListConstantes.UUIDEXTERNALUSER)
     private UUID uuidExternalUser;
     
-    @SerializedName(ListReminderConstantes.UUIDEXTERNALLIST)
-    @JsonProperty(ListReminderConstantes.UUIDEXTERNALLIST)
+    @SerializedName(ReminderListConstantes.UUIDEXTERNALLIST)
+    @JsonProperty(ReminderListConstantes.UUIDEXTERNALLIST)
     private UUID uuidExternalList;
     
-    @SerializedName(ListReminderConstantes.TITLE)
-    @JsonProperty(ListReminderConstantes.TITLE)
+    @SerializedName(ReminderListConstantes.TITLE)
+    @JsonProperty(ReminderListConstantes.TITLE)
     private String title;
 
 
