@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.jcv.bei.corelayer.model.EconomicIndex;
+import br.com.jcv.bei.corelayer.model.EconomicIndexData;
 import br.com.jcv.codegen.codegenerator.dto.WritableCode;
 import br.com.jcv.codegen.codegenerator.exception.CodeGeneratorFolderStructureNotFound;
 import br.com.jcv.codegen.codegenerator.factory.codegen.ICodeGeneratorBatch;
@@ -23,7 +23,7 @@ public class CodeGeneratorLibController {
     @GetMapping("/model")
     public ResponseEntity generateCode() {
         try {
-            List<WritableCode> one = generatorMainStream.generate(EconomicIndex.class);
+            List<WritableCode> one = generatorMainStream.generate(EconomicIndexData.class);
             generatorMainStream.flushCode(one);
 
             return ResponseEntity.ok().build();
