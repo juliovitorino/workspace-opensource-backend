@@ -19,7 +19,7 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 
-package br.com.jcv.bei.adapter;
+package br.com.jcv.bei.corelayer.controller;
 
 import br.com.jcv.commons.library.commodities.dto.GenericErrorResponse;
 import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
@@ -44,7 +44,7 @@ public class ApiControllerAdvice {
     public ResponseEntity<GenericErrorResponse<Map<String, ? extends Serializable>>> handle(CommoditieBaseException e) {
         List<Map<String, ? extends Serializable>> stackTraceList = Stream
                 .of(e.getStackTrace())
-                .filter(filter -> filter.getClassName().startsWith("br.com.jcv.bei"))
+                .filter(filter -> filter.getClassName().startsWith("br.com.jcv.bei.corelayer"))
                 .map(map -> Map.of("class", map.getClassName(), "lineNumber", map.getLineNumber()))
                 .collect(Collectors.toList());
 
