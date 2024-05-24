@@ -112,26 +112,17 @@ List<EconomicIndexData> findEconomicIndexDataByFilter(
 
 
      @Modifying
-     @Query(value = "UPDATE economic_index_data SET id_economic_index = :economicIndexId, dt_updated = current_timestamp  WHERE id = :id", nativeQuery = true)
+     @Query(value = "UPDATE economic_index_data SET id_economic_index = :economicIndexId, date_updated = current_timestamp  WHERE id = :id", nativeQuery = true)
      void updateEconomicIndexIdById(@Param("id") Long id, @Param(EconomicIndexDataConstantes.ECONOMICINDEXID) Long economicIndexId);
      @Modifying
-     @Query(value = "UPDATE economic_index_data SET dt_economic_index = :indexDate, dt_updated = current_timestamp  WHERE id = :id", nativeQuery = true)
+     @Query(value = "UPDATE economic_index_data SET dt_economic_index = :indexDate, date_updated = current_timestamp  WHERE id = :id", nativeQuery = true)
      void updateIndexDateById(@Param("id") Long id, @Param(EconomicIndexDataConstantes.INDEXDATE) LocalDate indexDate);
      @Modifying
-     @Query(value = "UPDATE economic_index_data SET vl_economic_index = :indexValue, dt_updated = current_timestamp  WHERE id = :id", nativeQuery = true)
+     @Query(value = "UPDATE economic_index_data SET vl_economic_index = :indexValue, date_updated = current_timestamp  WHERE id = :id", nativeQuery = true)
      void updateIndexValueById(@Param("id") Long id, @Param(EconomicIndexDataConstantes.INDEXVALUE) Double indexValue);
      @Modifying
-     @Query(value = "UPDATE economic_index_data SET status = :status, dt_updated = current_timestamp  WHERE id = :id", nativeQuery = true)
+     @Query(value = "UPDATE economic_index_data SET status = :status, date_updated = current_timestamp  WHERE id = :id", nativeQuery = true)
      void updateStatusById(@Param("id") Long id, @Param(EconomicIndexDataConstantes.STATUS) String status);
-
-
-     long countByIdAndStatus(Long id, String status);
-     long countByEconomicIndexIdAndStatus(Long economicIndexId, String status);
-     long countByIndexDateAndStatus(LocalDate indexDate, String status);
-     long countByIndexValueAndStatus(Double indexValue, String status);
-     long countByDateCreatedAndStatus(Date dateCreated, String status);
-     long countByDateUpdatedAndStatus(Date dateUpdated, String status);
-
 
     @Query(value = "SELECT * FROM economic_index_data WHERE id = (SELECT MAX(id) AS maxid FROM economic_index_data WHERE id = :id AND  status = :status) ", nativeQuery = true)
     Optional<EconomicIndexData> findByIdAndStatus(Long id, String status);

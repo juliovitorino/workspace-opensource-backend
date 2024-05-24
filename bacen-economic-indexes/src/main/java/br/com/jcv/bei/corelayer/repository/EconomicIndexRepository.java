@@ -52,6 +52,9 @@ import java.util.UUID;
 @Repository
 public interface EconomicIndexRepository extends JpaRepository<EconomicIndex, Long>
 {
+
+    List<EconomicIndex> findByLastDateValueNullAndStatus(String status);
+
     @Query(value = "SELECT * FROM economic_index WHERE  status = :status", nativeQuery = true)
     List<EconomicIndex> findAllByStatus(@Param(EconomicIndexConstantes.STATUS) String status);
 
@@ -112,16 +115,16 @@ List<EconomicIndex> findEconomicIndexByFilter(
 
 
      @Modifying
-     @Query(value = "UPDATE economic_index SET tx_economic_index = :economicIndex, dt_updated = current_timestamp  WHERE id = :id", nativeQuery = true)
+     @Query(value = "UPDATE economic_index SET tx_economic_index = :economicIndex, date_updated = current_timestamp  WHERE id = :id", nativeQuery = true)
      void updateEconomicIndexById(@Param("id") Long id, @Param(EconomicIndexConstantes.ECONOMICINDEX) String economicIndex);
      @Modifying
-     @Query(value = "UPDATE economic_index SET cd_serie_bacen = :bacenSerieCode, dt_updated = current_timestamp  WHERE id = :id", nativeQuery = true)
+     @Query(value = "UPDATE economic_index SET cd_serie_bacen = :bacenSerieCode, date_updated = current_timestamp  WHERE id = :id", nativeQuery = true)
      void updateBacenSerieCodeById(@Param("id") Long id, @Param(EconomicIndexConstantes.BACENSERIECODE) String bacenSerieCode);
      @Modifying
-     @Query(value = "UPDATE economic_index SET dt_last_date_value = :lastDateValue, dt_updated = current_timestamp  WHERE id = :id", nativeQuery = true)
+     @Query(value = "UPDATE economic_index SET dt_last_date_value = :lastDateValue, date_updated = current_timestamp  WHERE id = :id", nativeQuery = true)
      void updateLastDateValueById(@Param("id") Long id, @Param(EconomicIndexConstantes.LASTDATEVALUE) LocalDate lastDateValue);
      @Modifying
-     @Query(value = "UPDATE economic_index SET status = :status, dt_updated = current_timestamp  WHERE id = :id", nativeQuery = true)
+     @Query(value = "UPDATE economic_index SET status = :status, date_updated = current_timestamp  WHERE id = :id", nativeQuery = true)
      void updateStatusById(@Param("id") Long id, @Param(EconomicIndexConstantes.STATUS) String status);
 
 

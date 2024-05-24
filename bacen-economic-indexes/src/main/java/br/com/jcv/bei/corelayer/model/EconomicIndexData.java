@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import br.com.jcv.codegen.codegenerator.annotation.CodeGeneratorDescriptor;
 import br.com.jcv.codegen.codegenerator.annotation.CodeGeneratorFieldDescriptor;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
