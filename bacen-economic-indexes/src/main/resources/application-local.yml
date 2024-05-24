@@ -49,3 +49,6 @@ mq:
   queues:
     notifier:
       add: AddNotifier.INPUT
+
+economic-index:
+  url-api-bacen: https://api.bcb.gov.br/dados/serie/bcdata.sgs.{codigo-bacen-serie}/dados?formato=json
