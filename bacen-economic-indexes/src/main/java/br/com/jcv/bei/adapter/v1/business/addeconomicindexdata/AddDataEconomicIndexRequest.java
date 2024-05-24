@@ -19,13 +19,13 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 
-package br.com.jcv.bei.corebusiness.addeconomicindex;
+package br.com.jcv.bei.adapter.v1.business.addeconomicindexdata;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -42,7 +42,9 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AddEconomicIndexResponse implements Serializable
+public class AddDataEconomicIndexRequest implements Serializable
 {
-    private MensagemResponse mensagemResponse;
+    private String economicIndex;
+    private LocalDate indexDate;
+    private Double indexValue;
 }

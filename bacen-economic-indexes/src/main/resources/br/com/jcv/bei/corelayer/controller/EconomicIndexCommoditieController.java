@@ -19,7 +19,7 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 
-package br.com.jcv.bei.adapter;
+package br.com.jcv.bei.corelayer.controller;
 
 import java.net.URI;
 import java.time.LocalDate;
