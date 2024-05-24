@@ -19,17 +19,12 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 
-package br.com.jcv.bei.corebusiness.addeconomicindex;
+package br.com.jcv.bei.infrastructure.response;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.gson.annotations.SerializedName;
 
-import br.com.jcv.bei.infrastructure.constantes.EconomicIndexConstantes;
-import br.com.jcv.commons.library.commodities.dto.DTOPadrao;
 import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,8 +42,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AddEconomicIndexRequest implements Serializable
+public class BaseResponse implements Serializable
 {
-    private String economicIndex;
-    private String bacenSerieCode;
+    private MensagemResponse mensagemResponse;
 }

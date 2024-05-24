@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jcv.bei.corebusiness.addeconomicindex.AddEconomicIndexBusinessService;
-import br.com.jcv.bei.corebusiness.addeconomicindex.AddEconomicIndexRequest;
-import br.com.jcv.bei.corebusiness.addeconomicindex.AddEconomicIndexResponse;
+import br.com.jcv.bei.infrastructure.response.BaseResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -21,7 +20,7 @@ public class AddEconomicIndexController {
     private final AddEconomicIndexBusinessService addEconomicIndexBusinessService;
 
     @PostMapping
-    public ResponseEntity<AddEconomicIndexResponse> addEconomicIndex(@RequestBody AddEconomicIndexRequest request) {
+    public ResponseEntity<BaseResponse> addEconomicIndex(@RequestBody AddEconomicIndexRequest request) {
         return ResponseEntity.ok(addEconomicIndexBusinessService.execute(UUID.randomUUID(), request));
     }
 }

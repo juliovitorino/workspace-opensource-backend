@@ -2,12 +2,13 @@ package br.com.jcv.bei.corebusiness.addeconomicindex;
 
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.jcv.bei.adapter.v1.business.addeconomicindex.AddEconomicIndexRequest;
 import br.com.jcv.bei.corelayer.service.EconomicIndexService;
 import br.com.jcv.bei.infrastructure.dto.EconomicIndexDTO;
 import br.com.jcv.bei.infrastructure.helper.BeiHelperService;
+import br.com.jcv.bei.infrastructure.response.BaseResponse;
 import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,7 @@ public class AddEconomicIndexBusinessServiceImpl implements AddEconomicIndexBusi
     private final BeiHelperService beiHelperService;
 
     @Override
-    public AddEconomicIndexResponse execute(UUID processId, AddEconomicIndexRequest addEconomicIndexRequest) {
+    public BaseResponse execute(UUID processId, AddEconomicIndexRequest addEconomicIndexRequest) {
         EconomicIndexDTO saved = economicIndexService.salvar(getEntityInstance(addEconomicIndexRequest));
         economicIndexService.updateStatusById(saved.getId(), GenericStatusEnums.ATIVO.getShortValue());
         return beiHelperService.getResponse(
