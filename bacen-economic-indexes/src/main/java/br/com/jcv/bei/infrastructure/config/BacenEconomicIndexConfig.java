@@ -20,4 +20,7 @@ public class BacenEconomicIndexConfig {
     @Value("${spring.datasource.url}")
     private String dbUrl;
 
+    @Value("${economic-index.url-api-bacen}")
+    private String indicadoresEconomicosUrlApiBacen;
+
 }
