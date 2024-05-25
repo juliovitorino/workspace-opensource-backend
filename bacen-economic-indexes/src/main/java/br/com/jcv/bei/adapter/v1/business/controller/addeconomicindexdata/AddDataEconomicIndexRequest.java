@@ -19,7 +19,7 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 
-package br.com.jcv.bei.adapter.v1.business.addeconomicindexdata;
+package br.com.jcv.bei.adapter.v1.business.controller.addeconomicindexdata;
 
 import java.io.Serializable;
 import java.time.LocalDate;

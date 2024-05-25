@@ -7,14 +7,17 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import br.com.jcv.bei.adapter.v1.business.addeconomicindexdata.AddDataEconomicIndexRequest;
+import br.com.jcv.bei.adapter.v1.business.controller.addeconomicindexdata.AddDataEconomicIndexRequest;
 import br.com.jcv.bei.corebusiness.addeconomicindexdata.AddDataEconomicIndexBusinessService;
 import br.com.jcv.bei.corelayer.repository.EconomicIndexRepository;
 import br.com.jcv.bei.corelayer.service.EconomicIndexDataService;
 import br.com.jcv.bei.corelayer.service.EconomicIndexService;
 import br.com.jcv.bei.infrastructure.dto.EconomicIndexDTO;
-import br.com.jcv.bei.infrastructure.dto.EconomicIndexDataDTO;
+import br.com.jcv.bei.infrastructure.enums.EconomicIndexStatusProcessEnum;
+import br.com.jcv.bei.infrastructure.exception.EconomicIndexNotFoundException;
 import br.com.jcv.bei.infrastructure.helper.EconomicIndexHelperService;
 import br.com.jcv.bei.infrastructure.response.BacenSerieItemResponse;
 import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
@@ -45,6 +48,10 @@ public class LoadEconomicIndexDataSerieBacenBusinessServiceImpl implements LoadE
             log.info("There is no data serie to process in full mode");
             return Boolean.FALSE;
         }
+
+        economicIndexList.forEach(
+                economicIndex -> economicIndexService.updateStatusProcessById(economicIndex.getId(), EconomicIndexStatusProcessEnum.WAITING)
+        );
         economicIndexList.forEach(this::processEconomicIndexDataSerie);
         log.info("execute:: process for load new economic data index has been finished.");
 
@@ -53,12 +60,16 @@ public class LoadEconomicIndexDataSerieBacenBusinessServiceImpl implements LoadE
 
     private void processEconomicIndexDataSerie(EconomicIndexDTO economicIndexDTO) {
         log.info("processEconomicIndexDataSerie :: full charge {} ", economicIndexDTO.getBacenSerieCode());
+        economicIndexService.updateStatusProcessById(economicIndexDTO.getId(), EconomicIndexStatusProcessEnum.WORKING);
+
         List<BacenSerieItemResponse> dadosBacenSerie =
                 indicadoresEconomicosHelperService.acessarSerieHistoricaBacen(economicIndexDTO);
 
         dadosBacenSerie.forEach(
                 bacenSerieItemResponse -> salvarIndicador(bacenSerieItemResponse, economicIndexDTO )
         );
+        economicIndexService.updateStatusProcessById(economicIndexDTO.getId(), EconomicIndexStatusProcessEnum.DONE);
+
     }
 
     private void salvarIndicador(BacenSerieItemResponse bacenSerieItemResponse, EconomicIndexDTO indicadorEconomico) {
@@ -70,13 +81,8 @@ public class LoadEconomicIndexDataSerieBacenBusinessServiceImpl implements LoadE
                 .indexDate(DateUtility.toLocalDate(bacenSerieItemResponse.getData(), PATTERN_BACEN_DD_MM_YYYY))
                 .indexValue(bacenSerieItemResponse.getValor())
                 .build();
-//        EconomicIndexDataDTO indicadorEconomicoDados = EconomicIndexDataDTO.builder()
-//                .economicIndexId(indicadorEconomico.getId())
-//                .indexDate(DateUtility.toLocalDate(bacenSerieItemResponse.getData(), PATTERN_BACEN_DD_MM_YYYY))
-//                .indexValue(bacenSerieItemResponse.getValor())
-//                .build();
+
         addDataEconomicIndexBusinessService.execute(UUID.randomUUID(),addDataEconomicIndexRequest);
-//        economicIndexDataService.salvar(indicadorEconomicoDados);
         LocalDate dataEmProcessamento = DateUtility.toLocalDate(bacenSerieItemResponse.getData(), PATTERN_BACEN_DD_MM_YYYY);
 
         if(dataEmProcessamento.isAfter(indicadorEconomico.getLastDateValue())) {

@@ -27,6 +27,7 @@ import java.util.List;
 
 import br.com.jcv.bei.corelayer.model.EconomicIndex;
 import br.com.jcv.bei.infrastructure.dto.EconomicIndexDTO;
+import br.com.jcv.bei.infrastructure.enums.EconomicIndexStatusProcessEnum;
 import br.com.jcv.commons.library.commodities.service.CommoditieBaseService;
 
 /**
@@ -62,6 +63,7 @@ public interface EconomicIndexService extends CommoditieBaseService<EconomicInde
     EconomicIndexDTO updateBacenSerieCodeById(Long id, String bacenSerieCode);
     EconomicIndexDTO updateLastDateValueById(Long id, LocalDate lastDateValue);
     EconomicIndexDTO updateStatusById(Long id, String status);
+    EconomicIndexDTO updateStatusProcessById(Long id, EconomicIndexStatusProcessEnum statusProcess);
 
 
 }
