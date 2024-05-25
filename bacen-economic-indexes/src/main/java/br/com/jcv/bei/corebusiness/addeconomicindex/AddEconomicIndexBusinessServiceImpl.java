@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import br.com.jcv.bei.adapter.v1.business.addeconomicindex.AddEconomicIndexRequest;
+import br.com.jcv.bei.adapter.v1.business.controller.addeconomicindex.AddEconomicIndexRequest;
 import br.com.jcv.bei.corelayer.service.EconomicIndexService;
 import br.com.jcv.bei.infrastructure.dto.EconomicIndexDTO;
 import br.com.jcv.bei.infrastructure.helper.BeiHelperService;

@@ -29,6 +29,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 
 import br.com.jcv.bei.infrastructure.constantes.EconomicIndexConstantes;
+import br.com.jcv.bei.infrastructure.enums.EconomicIndexStatusProcessEnum;
 import br.com.jcv.commons.library.commodities.dto.DTOPadrao;
 import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import lombok.AllArgsConstructor;
@@ -68,6 +69,8 @@ public class EconomicIndexDTO extends DTOPadrao implements Serializable
     @SerializedName(EconomicIndexConstantes.LASTDATEVALUE)
     @JsonProperty(EconomicIndexConstantes.LASTDATEVALUE)
     private LocalDate lastDateValue;
+
+    private EconomicIndexStatusProcessEnum statusProcess;
 
     @SerializedName("mensagemResponse")
     @JsonProperty("mensagemResponse")

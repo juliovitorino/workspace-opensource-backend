@@ -25,6 +25,7 @@ import java.time.LocalDate;
 import java.util.List;
 import br.com.jcv.bei.corelayer.model.EconomicIndex;
 import br.com.jcv.bei.infrastructure.constantes.EconomicIndexConstantes;
+import br.com.jcv.bei.infrastructure.enums.EconomicIndexStatusProcessEnum;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -123,6 +124,9 @@ List<EconomicIndex> findEconomicIndexByFilter(
      @Modifying
      @Query(value = "UPDATE economic_index SET dt_last_date_value = :lastDateValue, date_updated = current_timestamp  WHERE id = :id", nativeQuery = true)
      void updateLastDateValueById(@Param("id") Long id, @Param(EconomicIndexConstantes.LASTDATEVALUE) LocalDate lastDateValue);
+     @Modifying
+     @Query(value = "UPDATE economic_index SET status_process = :statusProcess, date_updated = current_timestamp  WHERE id = :id", nativeQuery = true)
+     void updateStatusProcessById(@Param("id") Long id, @Param("statusProcess") String statusProcess);
      @Modifying
      @Query(value = "UPDATE economic_index SET status = :status, date_updated = current_timestamp  WHERE id = :id", nativeQuery = true)
      void updateStatusById(@Param("id") Long id, @Param(EconomicIndexConstantes.STATUS) String status);

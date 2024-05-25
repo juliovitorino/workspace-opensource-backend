@@ -1,4 +1,4 @@
-package br.com.jcv.bei.adapter.v1.business.addeconomicindex;
+package br.com.jcv.bei.adapter.v1.business.controller.addeconomicindex;
 
 import java.util.UUID;
 

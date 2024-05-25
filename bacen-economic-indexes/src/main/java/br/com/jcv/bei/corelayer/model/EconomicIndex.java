@@ -6,6 +6,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +15,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import br.com.jcv.bei.infrastructure.enums.EconomicIndexStatusProcessEnum;
 import br.com.jcv.codegen.codegenerator.annotation.CodeGeneratorDescriptor;
 import br.com.jcv.codegen.codegenerator.annotation.CodeGeneratorFieldDescriptor;
 import lombok.AllArgsConstructor;
@@ -46,6 +49,11 @@ public class EconomicIndex {
     @Column(name = "dt_last_date_value")
     @CodeGeneratorFieldDescriptor(fieldDescription = "last update date for economic index")
     private LocalDate lastDateValue;
+
+    @CodeGeneratorFieldDescriptor(fieldDescription = "last status process field")
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "status_process")
+    private EconomicIndexStatusProcessEnum statusProcess;
 
     @CodeGeneratorFieldDescriptor(fieldDescription = "Status field")
     @Column(length = 1)

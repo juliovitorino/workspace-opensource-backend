@@ -44,6 +44,7 @@ import br.com.jcv.bei.corelayer.repository.EconomicIndexRepository;
 import br.com.jcv.bei.corelayer.service.EconomicIndexService;
 import br.com.jcv.bei.infrastructure.constantes.EconomicIndexConstantes;
 import br.com.jcv.bei.infrastructure.dto.EconomicIndexDTO;
+import br.com.jcv.bei.infrastructure.enums.EconomicIndexStatusProcessEnum;
 import br.com.jcv.bei.infrastructure.exception.EconomicIndexNotFoundException;
 import br.com.jcv.commons.library.commodities.dto.RequestFilter;
 import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
@@ -546,6 +547,17 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
         return findById(id);
     }
 
+    @Override
+    @Transactional(
+    transactionManager = "transactionManager",
+    propagation = Propagation.REQUIRED,
+    rollbackFor = Throwable.class)
+    public EconomicIndexDTO updateStatusProcessById(Long id, EconomicIndexStatusProcessEnum statusProcess) {
+        findById(id);
+        economicindexRepository.updateStatusProcessById(id, statusProcess.toString());
+        return findById(id);
+    }
+
 
     public EconomicIndexDTO toDTO(EconomicIndex economicindex) {
         EconomicIndexDTO economicindexDTO = new EconomicIndexDTO();
@@ -553,6 +565,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                 economicindexDTO.setEconomicIndex(economicindex.getEconomicIndex());
                 economicindexDTO.setBacenSerieCode(economicindex.getBacenSerieCode());
                 economicindexDTO.setLastDateValue(economicindex.getLastDateValue());
+                economicindexDTO.setStatusProcess(economicindex.getStatusProcess());
                 economicindexDTO.setStatus(economicindex.getStatus());
                 economicindexDTO.setDateCreated(economicindex.getDateCreated());
                 economicindexDTO.setDateUpdated(economicindex.getDateUpdated());
@@ -563,13 +576,14 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     public EconomicIndex toEntity(EconomicIndexDTO economicindexDTO) {
         EconomicIndex economicindex = null;
         economicindex = new EconomicIndex();
-                    economicindex.setId(economicindexDTO.getId());
-                    economicindex.setEconomicIndex(economicindexDTO.getEconomicIndex());
-                    economicindex.setBacenSerieCode(economicindexDTO.getBacenSerieCode());
-                    economicindex.setLastDateValue(economicindexDTO.getLastDateValue());
-                    economicindex.setStatus(economicindexDTO.getStatus());
-                    economicindex.setDateCreated(economicindexDTO.getDateCreated());
-                    economicindex.setDateUpdated(economicindexDTO.getDateUpdated());
+        economicindex.setId(economicindexDTO.getId());
+        economicindex.setEconomicIndex(economicindexDTO.getEconomicIndex());
+        economicindex.setBacenSerieCode(economicindexDTO.getBacenSerieCode());
+        economicindex.setLastDateValue(economicindexDTO.getLastDateValue());
+        economicindex.setStatusProcess(economicindexDTO.getStatusProcess());
+        economicindex.setStatus(economicindexDTO.getStatus());
+        economicindex.setDateCreated(economicindexDTO.getDateCreated());
+        economicindex.setDateUpdated(economicindexDTO.getDateUpdated());
 
         return economicindex;
     }

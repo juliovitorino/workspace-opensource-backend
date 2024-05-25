@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS public.economic_index (
     tx_economic_index varchar(100) NOT NULL,
     cd_serie_bacen varchar(10) NOT NULL,
     dt_last_date_value date,
+    status_process VARCHAR(50),
     status VARCHAR(1) NOT NULL,
     date_created timestamp NOT NULL,
     date_updated timestamp NOT NULL,
