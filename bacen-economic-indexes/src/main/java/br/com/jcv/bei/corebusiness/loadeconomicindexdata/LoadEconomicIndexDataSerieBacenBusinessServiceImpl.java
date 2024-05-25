@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +34,6 @@ public class LoadEconomicIndexDataSerieBacenBusinessServiceImpl implements LoadE
     public static final String PATTERN_BACEN_DD_MM_YYYY = "dd/MM/yyyy";
 
     private final EconomicIndexService economicIndexService;
-    private final EconomicIndexDataService economicIndexDataService;
     private final EconomicIndexRepository economicIndexRepository;
     private final EconomicIndexHelperService indicadoresEconomicosHelperService;
     private final AddDataEconomicIndexBusinessService addDataEconomicIndexBusinessService;
