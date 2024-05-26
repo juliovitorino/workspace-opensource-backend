@@ -54,6 +54,7 @@ import java.util.UUID;
 public interface EconomicIndexRepository extends JpaRepository<EconomicIndex, Long>
 {
 
+    List<EconomicIndex> findByLastDateValueNotNullAndStatusAndStatusProcess(String status, EconomicIndexStatusProcessEnum statusProcess);
     List<EconomicIndex> findByLastDateValueNullAndStatus(String status);
 
     @Query(value = "SELECT * FROM economic_index WHERE  status = :status", nativeQuery = true)
