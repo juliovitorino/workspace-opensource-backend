@@ -1,0 +1,54 @@
+spring:
+  application:
+    name: bei-app
+
+  # solve problem in swagger 'documentationPluginsBootstrapper'
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  datasource:
+    url: jdbc:postgresql://pg-bei:5432/bei
+    username: postgres
+    password: postgres
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  threads:
+    virtual:
+      enabled: true;
+  cache:
+    type: redis
+  redis:
+    host: redis-opensource.opensource_opensource-net
+    port: 6379
+
+server:
+  tomcat:
+    threads:
+      max: 10
+
+guardian:
+  openfeign-url: http://app-guardian:8080
+  application:
+    preferences:
+      uuid: 6c65a392-1207-4deb-9559-df10880a0f95
+
+# configuration for rabbit MQ
+rabbitMQ:
+  virtualhost: /
+  host: rabbitmq
+  port: 5672
+  username: guest
+  password: guest
+mq:
+  queues:
+    notifier:
+      add: AddNotifier.INPUT
+
+economic-index:
+  url-api-bacen: https://api.bcb.gov.br/dados/serie/bcdata.sgs.{codigo-bacen-serie}/dados?formato=json

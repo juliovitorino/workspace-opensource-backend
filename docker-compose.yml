@@ -66,6 +66,34 @@ services:
     volumes:
       - postgresql_opensource:/var/lib/postgresql
       - postgresql_data_notifier:/var/lib/postgresql/data
+  pg-reminder:
+    container_name: pg-reminder
+    image: postgres:9.6
+    ports:
+      - "5123:5432"
+    networks:
+      - opensource-net
+    environment:
+      - POSTGRES_DB=reminder
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgresql_opensource:/var/lib/postgresql
+      - postgresql_data_reminder:/var/lib/postgresql/data
+  pg-bei:
+    container_name: pg-bei
+    image: postgres:9.6
+    ports:
+      - "5124:5432"
+    networks:
+      - opensource-net
+    environment:
+      - POSTGRES_DB=bei
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgresql_opensource:/var/lib/postgresql
+      - postgresql_data_bei:/var/lib/postgresql/data
   app-guardian:
     container_name: app-guardian
     image: juliovitorino/guardian:latest
@@ -96,11 +124,26 @@ services:
     depends_on:
       - pg-preferences
       - redis-opensource
+  app-bei:
+    container_name: app-bei
+    image: juliovitorino/bei:latest
+    ports:
+      - "9092:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://pg-bei:5432/bei
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    networks:
+      - opensource-net
+    depends_on:
+      - pg-bei
+      - redis-opensource
   app-notifier:
     container_name: app-notifier
     image: juliovitorino/notifier:latest
     ports:
-      - "9092:8080"
+      - "9093:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=local
       - SPRING_DATASOURCE_URL=jdbc:postgresql://pg-notifier:5432/notifier
@@ -120,6 +163,8 @@ volumes:
   postgresql_data_guardian:
   postgresql_data_preferences:
   postgresql_data_notifier:
+  postgresql_data_reminder:
+  postgresql_data_bei:
   redis_data_guardian:
   rabbitmq_data_opensource:
 
