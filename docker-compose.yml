@@ -94,6 +94,20 @@ services:
     volumes:
       - postgresql_opensource:/var/lib/postgresql
       - postgresql_data_bei:/var/lib/postgresql/data
+  pg-star-rating:
+    container_name: pg-star-rating
+    image: postgres:9.6
+    ports:
+      - "5125:5432"
+    networks:
+      - opensource-net
+    environment:
+      - POSTGRES_DB=star_rating
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgresql_opensource:/var/lib/postgresql
+      - postgresql_data_star_rating:/var/lib/postgresql/data
   app-guardian:
     container_name: app-guardian
     image: juliovitorino/guardian:latest
@@ -165,6 +179,7 @@ volumes:
   postgresql_data_notifier:
   postgresql_data_reminder:
   postgresql_data_bei:
+  postgresql_data_star_rating:
   redis_data_guardian:
   rabbitmq_data_opensource:
 
