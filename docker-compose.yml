@@ -124,11 +124,26 @@ services:
     depends_on:
       - pg-preferences
       - redis-opensource
+  app-bei:
+    container_name: app-bei
+    image: juliovitorino/bei:latest
+    ports:
+      - "9092:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://pg-bei:5432/bei
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    networks:
+      - opensource-net
+    depends_on:
+      - pg-bei
+      - redis-opensource
   app-notifier:
     container_name: app-notifier
     image: juliovitorino/notifier:latest
     ports:
-      - "9092:8080"
+      - "9093:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=local
       - SPRING_DATASOURCE_URL=jdbc:postgresql://pg-notifier:5432/notifier

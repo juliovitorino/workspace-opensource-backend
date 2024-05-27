@@ -15,7 +15,7 @@ public class UpdateNewEconomicIndexDataSerieBacenScheduler implements SchedulerB
 
     private final UpdateNewEconomicIndexDataSerieBacenBusinessService updateNewEconomicIndexDataSerieBacenBusinessService;
 
-    @Scheduled(cron="0 */2 * * * ?")
+    @Scheduled(cron="0 * */2 * * ?")
     @Override
     public void execute() {
         updateNewEconomicIndexDataSerieBacenBusinessService.execute(UUID.randomUUID(), Boolean.TRUE);

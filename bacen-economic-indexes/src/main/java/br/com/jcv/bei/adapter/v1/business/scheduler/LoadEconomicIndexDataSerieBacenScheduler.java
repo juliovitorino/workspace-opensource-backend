@@ -15,7 +15,7 @@ public class LoadEconomicIndexDataSerieBacenScheduler implements SchedulerBusine
 
     private final LoadEconomicIndexDataSerieBacenBusinessService loadEconomicIndexDataSerieBacenBusinessService;
 
-    @Scheduled(cron="0 */2 * * * ?")
+    @Scheduled(cron="0 * */6 * * ?")
     @Override
     public void execute() {
         loadEconomicIndexDataSerieBacenBusinessService.execute(UUID.randomUUID(), Boolean.TRUE);
