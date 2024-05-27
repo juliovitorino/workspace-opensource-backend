@@ -39,6 +39,7 @@ public class LoadEconomicIndexDataSerieBacenBusinessServiceImpl implements LoadE
     private final AddDataEconomicIndexBusinessService addDataEconomicIndexBusinessService;
 
     @Override
+    @Async(value = "taskExecutor")
     public Boolean execute(UUID processId, Boolean aBoolean) {
         List<EconomicIndexDTO> economicIndexList = economicIndexRepository.findByLastDateValueNullAndStatus(GenericStatusEnums.ATIVO.getShortValue())
                 .stream()
@@ -58,6 +59,7 @@ public class LoadEconomicIndexDataSerieBacenBusinessServiceImpl implements LoadE
         return Boolean.TRUE;
     }
 
+    @Async(value = "taskExecutor")
     private void processEconomicIndexDataSerie(EconomicIndexDTO economicIndexDTO) {
         log.info("processEconomicIndexDataSerie :: full charge {} ", economicIndexDTO.getBacenSerieCode());
         economicIndexService.updateStatusProcessById(economicIndexDTO.getId(), EconomicIndexStatusProcessEnum.WORKING);

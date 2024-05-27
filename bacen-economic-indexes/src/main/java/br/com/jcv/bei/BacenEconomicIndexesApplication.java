@@ -16,7 +16,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 		"br.com.jcv.codegen.codegenerator"
 })
 @EnableScheduling
-@EnableAsync
+//@EnableAsync
 @EnableFeignClients
 public class BacenEconomicIndexesApplication {
 

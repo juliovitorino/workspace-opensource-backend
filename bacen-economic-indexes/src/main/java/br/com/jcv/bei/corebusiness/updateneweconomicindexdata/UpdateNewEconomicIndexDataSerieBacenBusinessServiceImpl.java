@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import br.com.jcv.bei.adapter.v1.business.controller.addeconomicindexdata.AddDataEconomicIndexRequest;
@@ -35,6 +36,7 @@ public class UpdateNewEconomicIndexDataSerieBacenBusinessServiceImpl implements 
     private final AddDataEconomicIndexBusinessService addDataEconomicIndexBusinessService;
 
     @Override
+    @Async(value = "taskExecutor")
     public Boolean execute(UUID processId, Boolean aBoolean) {
         List<EconomicIndexDTO> economicIndexList = economicIndexRepository.findByLastDateValueNotNullAndStatusAndStatusProcess(
                 GenericStatusEnums.ATIVO.getShortValue(), EconomicIndexStatusProcessEnum.DONE)
@@ -55,6 +57,7 @@ public class UpdateNewEconomicIndexDataSerieBacenBusinessServiceImpl implements 
         return Boolean.TRUE;
     }
 
+    @Async(value = "taskExecutor")
     private void processEconomicIndexDataSerie(EconomicIndexDTO economicIndexDTO) {
         log.info("processEconomicIndexDataSerie :: full charge {} ", economicIndexDTO.getBacenSerieCode());
         economicIndexService.updateStatusProcessById(economicIndexDTO.getId(), EconomicIndexStatusProcessEnum.WORKING);
