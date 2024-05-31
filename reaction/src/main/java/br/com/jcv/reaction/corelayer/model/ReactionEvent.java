@@ -47,6 +47,10 @@ public class ReactionEvent {
     @CodeGeneratorFieldDescriptor(fieldDescription = "User UUID")
     private UUID externalUserUUID;
 
+    @Column(name = "tx_hash_md5")
+    @CodeGeneratorFieldDescriptor(fieldDescription = "Reaction MD5 hash")
+    private String hashMD5;
+
     @CodeGeneratorFieldDescriptor(fieldDescription = "Status field")
     @Column(length = 1)
     private String status;

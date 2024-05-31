@@ -37,6 +37,7 @@ import br.com.jcv.reaction.infrastructure.dto.ReactionEventDTO;
 
 public interface ReactionEventService extends CommoditieBaseService<ReactionEventDTO,ReactionEvent>
 {
+    ReactionEventDTO findReactionEventByHashMD5AndStatus(String hashMD5, String status);
     ReactionEventDTO findReactionEventByIdAndStatus(Long id);
     ReactionEventDTO findReactionEventByIdAndStatus(Long id, String status);
     ReactionEventDTO findReactionEventByReactionIdAndStatus(Long reactionId);
