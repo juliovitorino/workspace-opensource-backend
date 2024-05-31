@@ -22,7 +22,6 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 package br.com.jcv.reaction.infrastructure.dto;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -51,6 +50,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Builder
+@EqualsAndHashCode(callSuper = false)
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ReactionDTO extends DTOPadrao implements Serializable
@@ -72,18 +72,4 @@ public class ReactionDTO extends DTOPadrao implements Serializable
     @SerializedName("mensagemResponse")
     @JsonProperty("mensagemResponse")
     private MensagemResponse mensagemResponse;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        ReactionDTO that = (ReactionDTO) o;
-        return Objects.equals(name, that.name) && Objects.equals(icon, that.icon) && Objects.equals(tag, that.tag);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), name, icon, tag);
-    }
 }
