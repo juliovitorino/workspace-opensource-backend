@@ -19,18 +19,13 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 
-package br.com.jcv.reaction.infrastructure.dto;
+package br.com.jcv.reaction.adapter.controller.v1.business.reaction;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.gson.annotations.SerializedName;
 
 import br.com.jcv.commons.library.commodities.dto.DTOPadrao;
-import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
-import br.com.jcv.reaction.infrastructure.constantes.ReactionConstantes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -39,51 +34,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-/**
-* ReactionDTO - Data Transfer Object
-*
-* @author Reaction
-* @since Tue May 28 16:08:23 BRT 2024
-*/
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Builder
+@EqualsAndHashCode(callSuper = false)
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ReactionDTO extends DTOPadrao implements Serializable
+public class ReactionRequest extends DTOPadrao implements Serializable
 {
-    
-    @SerializedName(ReactionConstantes.NAME)
-    @JsonProperty(ReactionConstantes.NAME)
     private String name;
-    
-    @SerializedName(ReactionConstantes.ICON)
-    @JsonProperty(ReactionConstantes.ICON)
     private String icon;
-    
-    @SerializedName(ReactionConstantes.TAG)
-    @JsonProperty(ReactionConstantes.TAG)
     private String tag;
-
-
-    @SerializedName("mensagemResponse")
-    @JsonProperty("mensagemResponse")
-    private MensagemResponse mensagemResponse;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        ReactionDTO that = (ReactionDTO) o;
-        return Objects.equals(name, that.name) && Objects.equals(icon, that.icon) && Objects.equals(tag, that.tag);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), name, icon, tag);
-    }
 }
