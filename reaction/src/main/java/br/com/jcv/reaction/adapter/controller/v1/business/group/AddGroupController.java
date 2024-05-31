@@ -13,7 +13,7 @@ import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import br.com.jcv.reaction.businesslayer.group.AddGroupBusinessService;
 
 @RestController
-@RequestMapping("/v1/api/business/group/add")
+@RequestMapping("/v1/api/business/group")
 public class AddGroupController {
 
     @Autowired private AddGroupBusinessService addGroupBusinessService;
