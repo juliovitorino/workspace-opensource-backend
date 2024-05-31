@@ -106,6 +106,8 @@ List<ReactionEvent> findReactionEventByFilter(
      Long loadMaxIdByReactionIdAndStatus(Long reactionId, String status);
      @Query(value = "SELECT MAX(id) AS maxid FROM tb_reaction_event WHERE uuid_external_item = :externalItemUUID AND status = :status ", nativeQuery = true)
      Long loadMaxIdByExternalItemUUIDAndStatus(Long externalItemUUID, String status);
+     @Query(value = "SELECT MAX(id) AS maxid FROM tb_reaction_event WHERE tx_hash_md5 = :hashMD5 AND status = :status ", nativeQuery = true)
+     Long loadMaxIdByHashMD5AndStatus(String hashMD5, String status);
      @Query(value = "SELECT MAX(id) AS maxid FROM tb_reaction_event WHERE uuid_external_app = :externalAppUUID AND status = :status ", nativeQuery = true)
      Long loadMaxIdByExternalAppUUIDAndStatus(Long externalAppUUID, String status);
      @Query(value = "SELECT MAX(id) AS maxid FROM tb_reaction_event WHERE uuid_external_user = :externalUserUUID AND status = :status ", nativeQuery = true)

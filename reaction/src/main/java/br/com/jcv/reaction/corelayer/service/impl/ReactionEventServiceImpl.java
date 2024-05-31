@@ -431,6 +431,25 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                 );
         return reactioneventData.map(this::toDTO).orElse(null);
     }
+    @Override
+    @Transactional(transactionManager="transactionManager",
+    propagation = Propagation.REQUIRED,
+    rollbackFor = Throwable.class,
+    noRollbackFor = ReactionEventNotFoundException.class
+    )
+    public ReactionEventDTO findReactionEventByHashMD5AndStatus(String hashMD5, String status) {
+        Long maxId = reactioneventRepository.loadMaxIdByHashMD5AndStatus(hashMD5, status);
+        if(maxId == null) maxId = 0L;
+        Optional<ReactionEvent> reactioneventData =
+            Optional.ofNullable( reactioneventRepository
+                .findById(maxId)
+                .orElseThrow(
+                    () -> new ReactionEventNotFoundException(REACTIONEVENT_NOTFOUND_WITH_EXTERNALITEMUUID + hashMD5,
+                        HttpStatus.NOT_FOUND,
+                        REACTIONEVENT_NOTFOUND_WITH_EXTERNALITEMUUID + hashMD5))
+                );
+        return reactioneventData.map(this::toDTO).orElse(null);
+    }
 
     @Override
     @Transactional(transactionManager="transactionManager",
@@ -611,6 +630,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                 reactioneventDTO.setExternalItemUUID(reactionevent.getExternalItemUUID());
                 reactioneventDTO.setExternalAppUUID(reactionevent.getExternalAppUUID());
                 reactioneventDTO.setExternalUserUUID(reactionevent.getExternalUserUUID());
+                reactioneventDTO.setHashMD5(reactionevent.getHashMD5());
                 reactioneventDTO.setStatus(reactionevent.getStatus());
                 reactioneventDTO.setDateCreated(reactionevent.getDateCreated());
                 reactioneventDTO.setDateUpdated(reactionevent.getDateUpdated());
@@ -621,14 +641,15 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     public ReactionEvent toEntity(ReactionEventDTO reactioneventDTO) {
         ReactionEvent reactionevent = null;
         reactionevent = new ReactionEvent();
-                    reactionevent.setId(reactioneventDTO.getId());
-                    reactionevent.setReactionId(reactioneventDTO.getReactionId());
-                    reactionevent.setExternalItemUUID(reactioneventDTO.getExternalItemUUID());
-                    reactionevent.setExternalAppUUID(reactioneventDTO.getExternalAppUUID());
-                    reactionevent.setExternalUserUUID(reactioneventDTO.getExternalUserUUID());
-                    reactionevent.setStatus(reactioneventDTO.getStatus());
-                    reactionevent.setDateCreated(reactioneventDTO.getDateCreated());
-                    reactionevent.setDateUpdated(reactioneventDTO.getDateUpdated());
+        reactionevent.setId(reactioneventDTO.getId());
+        reactionevent.setReactionId(reactioneventDTO.getReactionId());
+        reactionevent.setExternalItemUUID(reactioneventDTO.getExternalItemUUID());
+        reactionevent.setExternalAppUUID(reactioneventDTO.getExternalAppUUID());
+        reactionevent.setExternalUserUUID(reactioneventDTO.getExternalUserUUID());
+        reactionevent.setHashMD5(reactioneventDTO.getHashMD5());
+        reactionevent.setStatus(reactioneventDTO.getStatus());
+        reactionevent.setDateCreated(reactioneventDTO.getDateCreated());
+        reactionevent.setDateUpdated(reactioneventDTO.getDateUpdated());
 
         return reactionevent;
     }

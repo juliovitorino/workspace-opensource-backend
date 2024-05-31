@@ -19,7 +19,7 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 
-package br.com.jcv.reaction.infrastructure.dto;
+package br.com.jcv.reaction.adapter.controller.v1.business.reaction;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -29,7 +29,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 
 import br.com.jcv.commons.library.commodities.dto.DTOPadrao;
-import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import br.com.jcv.reaction.infrastructure.constantes.ReactionEventConstantes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,13 +38,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-/**
-* ReactionEventDTO - Data Transfer Object
-*
-* @author ReactionEvent
-* @since Tue May 28 16:48:27 BRT 2024
-*/
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -54,29 +46,10 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ReactionEventDTO extends DTOPadrao implements Serializable
+public class ReactionEventRequest extends DTOPadrao implements Serializable
 {
-    
-    @SerializedName(ReactionEventConstantes.REACTIONID)
-    @JsonProperty(ReactionEventConstantes.REACTIONID)
-    private Long reactionId;
-    
-    @SerializedName(ReactionEventConstantes.EXTERNALITEMUUID)
-    @JsonProperty(ReactionEventConstantes.EXTERNALITEMUUID)
+    private String reaction;
     private UUID externalItemUUID;
-    
-    @SerializedName(ReactionEventConstantes.EXTERNALAPPUUID)
-    @JsonProperty(ReactionEventConstantes.EXTERNALAPPUUID)
     private UUID externalAppUUID;
-    
-    @SerializedName(ReactionEventConstantes.EXTERNALUSERUUID)
-    @JsonProperty(ReactionEventConstantes.EXTERNALUSERUUID)
     private UUID externalUserUUID;
-
-    private String hashMD5;
-
-
-    @SerializedName("mensagemResponse")
-    @JsonProperty("mensagemResponse")
-    private MensagemResponse mensagemResponse;
 }

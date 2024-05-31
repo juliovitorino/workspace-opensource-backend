@@ -34,6 +34,7 @@ create table public.tb_reaction_event (
     uuid_external_item UUID NOT NULL,
     uuid_external_app UUID NOT NULL,
     uuid_external_user UUID NOT NULL,
+    tx_hash_md5 VARCHAR(100) NOT NULL,
     status VARCHAR(1) NOT NULL,
     dt_created timestamp NOT NULL,
     dt_updated timestamp NOT NULL,
