@@ -1,6 +1,10 @@
-package br.com.jcv.security.guardian.controller.v1.business.groupuser;
+package br.com.jcv.restclient.infrastructure.response;
+
+import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -8,9 +12,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.io.Serializable;
-import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,8 +21,6 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CreateGroupUserRequest implements Serializable {
-    private UUID externalUserUUID;
-    private UUID externalAppUUID;
-    private String groupName;
+public class ControllerGenericResponse implements Serializable {
+    private MensagemResponse response;
 }
