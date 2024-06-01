@@ -23,8 +23,6 @@ import java.util.UUID;
 @Slf4j
 public class CreateGroupUserRelationshipBusinessServiceImpl extends AbstractGuardianBusinessService implements CreateGroupUserRelationshipBusinessService {
 
-    @Autowired private GApplicationService gApplicationService;
-
     @Override
     public ControllerGenericResponse execute(UUID processId, String jwtToken, CreateGroupUserRequest request) {
         log.info("execute :: processId = {} :: has started", processId);
