@@ -12,7 +12,6 @@ import br.com.jcv.commons.library.helper.MensagemResponseHelperService;
 import br.com.jcv.reaction.adapter.controller.v1.business.reaction.ReactionRequest;
 import br.com.jcv.reaction.corelayer.service.ReactionService;
 import br.com.jcv.reaction.infrastructure.dto.ReactionDTO;
-import br.com.jcv.reaction.infrastructure.exception.GroupNotFoundException;
 import br.com.jcv.reaction.infrastructure.exception.ReactionNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
