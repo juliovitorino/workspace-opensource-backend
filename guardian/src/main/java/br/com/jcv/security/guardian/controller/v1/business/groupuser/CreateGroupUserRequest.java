@@ -22,5 +22,6 @@ import java.util.UUID;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CreateGroupUserRequest implements Serializable {
     private UUID externalUserUUID;
+    private UUID externalAppUUID;
     private String groupName;
 }
