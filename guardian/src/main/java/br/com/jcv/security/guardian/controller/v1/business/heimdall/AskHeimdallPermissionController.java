@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +19,7 @@ import br.com.jcv.security.guardian.controller.v1.business.ControllerGenericResp
 @RequestMapping("/v1/api/business/heimdall")
 public class AskHeimdallPermissionController {
     @Autowired private AskHeimdallPermissionBusinessService service;
-    @GetMapping(params = "role")
+    @PostMapping(params = "role")
     public ResponseEntity<ControllerGenericResponse> askHeimdallHandler(
             @RequestHeader(name = HttpHeaders.AUTHORIZATION) String jwtToken,
             @RequestParam @Valid String role) {
