@@ -26,7 +26,7 @@ public class AddReactionEventController {
     @PostMapping
     public ResponseEntity<MensagemResponse> addReactionEvent(
 //            @RequestHeader(name = HttpHeaders.AUTHORIZATION) String jwtToken,
-            @RequestBody ReactionEventRequest request) {
+            @RequestBody ReactionEventRequest request)  {
 
         // EXEMPLO DA IMPLEMENTAÇÃO
         String jwtToken = guardianRestClientConsumer.login(LoginRequest.builder()
@@ -35,6 +35,7 @@ public class AddReactionEventController {
                 .applicationExternalUUID(UUID.fromString("7dfb41dc-eefa-453d-9338-5a3a8f0ceef6"))
                 .build());
 
+        guardianRestClientConsumer.askHeimdallPermission(jwtToken,"ADMIN_SUPER_POWER");
 
         log.info("addReactionEvent :: Token = {}", jwtToken);
         return ResponseEntity.ok(addReactionEventBusinessService.execute(UUID.randomUUID(), request));
