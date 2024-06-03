@@ -18,7 +18,7 @@ public class GroupController {
     @Autowired private CreateGroupBusinessService service;
 
     @PostMapping
-    public ResponseEntity createGroupUserRelationship(
+    public ResponseEntity createGroup(
             @RequestHeader(name = HttpHeaders.AUTHORIZATION) String jwtToken,
             @RequestBody @Valid GroupRequest request) {
         final UUID processId = UUID.randomUUID();
