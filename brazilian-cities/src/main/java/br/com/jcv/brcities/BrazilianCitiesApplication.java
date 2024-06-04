@@ -11,7 +11,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @ComponentScan(basePackages = {
 		"br.com.jcv.brcities",
 		"br.com.jcv.commons.library",
-		"br.com.jcv.restclient",
 		"br.com.jcv.codegen.codegenerator"
 })
 @EnableScheduling

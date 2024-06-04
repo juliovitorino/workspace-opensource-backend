@@ -41,6 +41,7 @@ public interface UfService extends CommoditieBaseService<UfDTO,Uf>
     UfDTO findUfByIdAndStatus(Long id, String status);
     UfDTO findUfByNameAndStatus(String name);
     UfDTO findUfByNameAndStatus(String name, String status);
+    UfDTO findUfByNicknameAndStatus(String nickname, String status);
     UfDTO findUfByDateCreatedAndStatus(Date dateCreated);
     UfDTO findUfByDateCreatedAndStatus(Date dateCreated, String status);
     UfDTO findUfByDateUpdatedAndStatus(Date dateUpdated);

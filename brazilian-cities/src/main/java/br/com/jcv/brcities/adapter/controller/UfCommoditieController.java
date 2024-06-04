@@ -331,6 +331,26 @@ public class UfCommoditieController
             @ApiResponse(code = 200, message = "Indica que o processo Uf foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
+    @GetMapping(params = "nickname")
+    public ResponseEntity<UfDTO> findUfByNickname(@RequestParam("nickname") String nickname) {
+        try{
+            UfDTO ufDTO = ufService.findUfByNicknameAndStatus(nickname, GenericStatusEnums.ATIVO.getShortValue());
+            return Objects.nonNull(ufDTO)
+                ? new ResponseEntity<>(ufDTO, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (UfNotFoundException ex) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch(CommoditieBaseException e) {
+            return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
+        } catch(Exception ex) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "Indica que o processo Uf foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo Uf foi executado com sucesso"),
+            @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
+    })
     @GetMapping(params = "dateCreated")
     public ResponseEntity<UfDTO> findUfByDateCreated(@RequestParam(UfConstantes.DATECREATED) Date dateCreated) {
         try{

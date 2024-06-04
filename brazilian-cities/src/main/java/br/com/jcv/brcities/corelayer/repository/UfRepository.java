@@ -92,6 +92,9 @@ List<Uf> findUfByFilter(
      Long loadMaxIdByIdAndStatus(Long id, String status);
      @Query(value = "SELECT MAX(id) AS maxid FROM uf WHERE nm_uf = :name AND status = :status ", nativeQuery = true)
      Long loadMaxIdByNameAndStatus(String name, String status);
+
+     @Query(value = "SELECT MAX(id) AS maxid FROM uf WHERE sg_uf = :nickname AND status = :status ", nativeQuery = true)
+     Long loadMaxIdByNicknameAndStatus(String nickname, String status);
      @Query(value = "SELECT MAX(id) AS maxid FROM uf WHERE dt_created = :dateCreated AND status = :status ", nativeQuery = true)
      Long loadMaxIdByDateCreatedAndStatus(Date dateCreated, String status);
      @Query(value = "SELECT MAX(id) AS maxid FROM uf WHERE dt_updated = :dateUpdated AND status = :status ", nativeQuery = true)

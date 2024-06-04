@@ -356,6 +356,26 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     rollbackFor = Throwable.class,
     noRollbackFor = UfNotFoundException.class
     )
+    public UfDTO findUfByNicknameAndStatus(String nickname, String status) {
+        Long maxId = ufRepository.loadMaxIdByNicknameAndStatus(nickname, status);
+        if(maxId == null) maxId = 0L;
+        Optional<Uf> ufData =
+            Optional.ofNullable( ufRepository
+                .findById(maxId)
+                .orElseThrow(
+                    () -> new UfNotFoundException(UF_NOTFOUND_WITH_NAME + nickname,
+                        HttpStatus.NOT_FOUND,
+                        UF_NOTFOUND_WITH_NAME + nickname))
+                );
+        return ufData.map(this::toDTO).orElse(null);
+    }
+
+    @Override
+    @Transactional(transactionManager="transactionManager",
+    propagation = Propagation.REQUIRED,
+    rollbackFor = Throwable.class,
+    noRollbackFor = UfNotFoundException.class
+    )
     public UfDTO findUfByNameAndStatus(String name) {
         return this.findUfByNameAndStatus(name, GenericStatusEnums.ATIVO.getShortValue());
     }
