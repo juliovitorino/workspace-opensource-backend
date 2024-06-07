@@ -1,33 +1,33 @@
 
 
 /* Data for the UF table  (Records 1 - 27) */
-INSERT INTO UF(id,nm_uf)  VALUES ('RJ', 'Rio de Janeiro');
-INSERT INTO UF(id,nm_uf)  VALUES ('SP', 'São Paulo');
-INSERT INTO UF(id,nm_uf)  VALUES ('ES', 'Espírito Santo');
-INSERT INTO UF(id,nm_uf)  VALUES ('BA', 'Bahia');
-INSERT INTO UF(id,nm_uf)  VALUES ('MG', 'Minas Gerais');
-INSERT INTO UF(id,nm_uf)  VALUES ('TO', 'Tocantins');
-INSERT INTO UF(id,nm_uf)  VALUES ('PA', 'Pará');
-INSERT INTO UF(id,nm_uf)  VALUES ('AL', 'Alagoas');
-INSERT INTO UF(id,nm_uf)  VALUES ('CE', 'Ceará');
-INSERT INTO UF(id,nm_uf)  VALUES ('RS', 'Rio Grande do Sul');
-INSERT INTO UF(id,nm_uf)  VALUES ('PR', 'Paraná');
-INSERT INTO UF(id,nm_uf)  VALUES ('MT', 'Mato Grosso');
-INSERT INTO UF(id,nm_uf)  VALUES ('PB', 'Paraíba');
-INSERT INTO UF(id,nm_uf)  VALUES ('AP', 'Amapá');
-INSERT INTO UF(id,nm_uf)  VALUES ('DF', 'Distrito Federal');
-INSERT INTO UF(id,nm_uf)  VALUES ('GO', 'Goiás');
-INSERT INTO UF(id,nm_uf)  VALUES ('AM', 'Amazonas');
-INSERT INTO UF(id,nm_uf)  VALUES ('SC', 'Santa Catarina');
-INSERT INTO UF(id,nm_uf)  VALUES ('MS', 'Mato Grosso do Sul');
-INSERT INTO UF(id,nm_uf)  VALUES ('MA', 'Maranhão');
-INSERT INTO UF(id,nm_uf)  VALUES ('AC', 'Acre');
-INSERT INTO UF(id,nm_uf)  VALUES ('PE', 'Pernambuco');
-INSERT INTO UF(id,nm_uf)  VALUES ('RN', 'Rio Grande do Norte');
-INSERT INTO UF(id,nm_uf)  VALUES ('SE', 'Sergipe');
-INSERT INTO UF(id,nm_uf)  VALUES ('RO', 'Rondônia');
-INSERT INTO UF(id,nm_uf)  VALUES ('RR', 'Roraima');
-INSERT INTO UF(id,nm_uf)  VALUES ('PI', 'Piauí');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (01,'RJ', 'Rio de Janeiro');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (02,'SP', 'São Paulo');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (03,'ES', 'Espírito Santo');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (04,'BA', 'Bahia');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (05,'MG', 'Minas Gerais');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (06,'TO', 'Tocantins');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (07,'PA', 'Pará');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (08,'AL', 'Alagoas');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (09,'CE', 'Ceará');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (10,'RS', 'Rio Grande do Sul');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (11,'PR', 'Paraná');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (12,'MT', 'Mato Grosso');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (13,'PB', 'Paraíba');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (14,'AP', 'Amapá');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (15,'DF', 'Distrito Federal');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (16,'GO', 'Goiás');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (17,'AM', 'Amazonas');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (18,'SC', 'Santa Catarina');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (19,'MS', 'Mato Grosso do Sul');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (20,'MA', 'Maranhão');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (21,'AC', 'Acre');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (22,'PE', 'Pernambuco');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (23,'RN', 'Rio Grande do Norte');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (24,'SE', 'Sergipe');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (25,'RO', 'Rondônia');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (26,'RR', 'Roraima');
+INSERT INTO UF(id,sg_uf,nm_uf)  VALUES (27,'PI', 'Piauí');
 
 
 /* Data for the CIDADES table  (Records 1 - 500) */
@@ -10468,9 +10468,9 @@ INSERT INTO city_item(id,id_uf,id_city) VALUES (5316,'SP', 4711);
 INSERT INTO city_item(id,id_uf,id_city) VALUES (5317,'DF', 5361);
 INSERT INTO city_item(id,id_uf,id_city) VALUES (5319,'MS', 253);
 
-update uf set in_status = 'A', dt_created = current_timestamp , dt_updated = current_timestamp ;
-update city set in_status = 'A', dt_created = current_timestamp , dt_updated = current_timestamp ;
-update city_item  set in_status = 'A', dt_created = current_timestamp , dt_updated = current_timestamp ;
+update uf set status = 'A', dt_created = current_timestamp , dt_updated = current_timestamp ;
+update city set status = 'A', dt_created = current_timestamp , dt_updated = current_timestamp ;
+update city_item  set status = 'A', dt_created = current_timestamp , dt_updated = current_timestamp ;
 
 /* atualiza os DDDs das cidades sem comprometer o trabalho acima que foi feito há anos */
 
