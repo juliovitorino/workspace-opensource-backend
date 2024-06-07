@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jcv.brcities.corelayer.model.City;
+import br.com.jcv.brcities.corelayer.model.CityUf;
 import br.com.jcv.codegen.codegenerator.dto.WritableCode;
 import br.com.jcv.codegen.codegenerator.exception.CodeGeneratorFolderStructureNotFound;
 import br.com.jcv.codegen.codegenerator.factory.codegen.ICodeGeneratorBatch;
@@ -24,7 +25,7 @@ public class CodeGeneratorLibController {
     public ResponseEntity generateCode() {
         try {
 
-            List<WritableCode> one = generatorMainStream.generate(City.class);
+            List<WritableCode> one = generatorMainStream.generate(CityUf.class);
             generatorMainStream.flushCode(one);
 
             return ResponseEntity.ok().build();

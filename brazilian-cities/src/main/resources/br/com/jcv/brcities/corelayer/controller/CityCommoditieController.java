@@ -19,7 +19,7 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 
-package br.com.jcv.brcities.adapter.controller;
+package br.com.jcv.brcities.corelayer.controller;
 
 import java.net.URI;
 import java.util.Date;
@@ -47,10 +47,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.jcv.brcities.corelayer.service.UfService;
-import br.com.jcv.brcities.infrastructure.constantes.UfConstantes;
-import br.com.jcv.brcities.infrastructure.dto.UfDTO;
-import br.com.jcv.brcities.infrastructure.exception.UfNotFoundException;
+import br.com.jcv.brcities.corelayer.service.CityService;
+import br.com.jcv.brcities.infrastructure.constantes.CityConstantes;
+import br.com.jcv.brcities.infrastructure.dto.CityDTO;
+import br.com.jcv.brcities.infrastructure.exception.CityNotFoundException;
 import br.com.jcv.commons.library.commodities.dto.RequestFilter;
 import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
 import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
@@ -59,35 +59,35 @@ import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 
 /**
-* UfCommoditieController - Controller for Uf API
+* CityCommoditieController - Controller for City API
 *
-* @author Uf
-* @since Mon Jun 03 16:53:27 BRT 2024
+* @author City
+* @since Mon Jun 03 17:37:14 BRT 2024
 */
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/api/uf")
-public class UfCommoditieController
+@RequestMapping("/v1/api/city")
+public class CityCommoditieController
 {
-     @Autowired private UfService ufService;
+     @Autowired private CityService cityService;
 
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo Uf foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo Uf foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo City foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo City foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
 
     @GetMapping("/list")
-    public ResponseEntity<List<UfDTO>> findAllUf() {
+    public ResponseEntity<List<CityDTO>> findAllCity() {
         try {
-            List<UfDTO> ufs = ufService.findAllByStatus(GenericStatusEnums.ATIVO.getShortValue());
+            List<CityDTO> citys = cityService.findAllByStatus(GenericStatusEnums.ATIVO.getShortValue());
 
-            if (ufs.isEmpty()) {
+            if (citys.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
 
-            return new ResponseEntity<>(ufs, HttpStatus.OK);
+            return new ResponseEntity<>(citys, HttpStatus.OK);
         } catch(CommoditieBaseException e) {
             return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
         } catch (Exception e) {
@@ -96,21 +96,21 @@ public class UfCommoditieController
     }
 
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo Uf foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo Uf foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo City foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo City foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
 
     @GetMapping("/list/{status}")
-    public ResponseEntity<List<UfDTO>> findAllUf(@PathVariable("status") String status) {
+    public ResponseEntity<List<CityDTO>> findAllCity(@PathVariable("status") String status) {
         try {
-            List<UfDTO> ufs = ufService.findAllByStatus(status);
+            List<CityDTO> citys = cityService.findAllByStatus(status);
 
-            if (ufs.isEmpty()) {
+            if (citys.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
 
-            return new ResponseEntity<>(ufs, HttpStatus.OK);
+            return new ResponseEntity<>(citys, HttpStatus.OK);
         } catch(CommoditieBaseException e) {
             return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
         } catch (Exception e) {
@@ -119,15 +119,15 @@ public class UfCommoditieController
     }
 
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo Uf foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo Uf foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo City foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo City foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
 
     @GetMapping("/findAllByFilter")
-    public ResponseEntity<List<UfDTO>> findAllUfByFilter(@RequestBody RequestFilter filtro) {
+    public ResponseEntity<List<CityDTO>> findAllCityByFilter(@RequestBody RequestFilter filtro) {
         try{
-            List<UfDTO> response = ufService.findAllByFilter(filtro);
+            List<CityDTO> response = cityService.findAllByFilter(filtro);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -136,15 +136,15 @@ public class UfCommoditieController
 
 
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo Uf foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo Uf foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo City foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo City foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
 
     @GetMapping("/pagefilter")
-    public ResponseEntity<Map<String,Object>> pageFilterUfDinamico(@RequestBody RequestFilter filtro) {
+    public ResponseEntity<Map<String,Object>> pageFilterCityDinamico(@RequestBody RequestFilter filtro) {
         try{
-            Map<String,Object> responseFilter = ufService.findPageByFilter(filtro);
+            Map<String,Object> responseFilter = cityService.findPageByFilter(filtro);
             return new ResponseEntity<>(responseFilter, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -153,17 +153,17 @@ public class UfCommoditieController
 
 
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo Uf foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo Uf foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo City foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo City foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteUf(@PathVariable("id") long id) {
+    public ResponseEntity<HttpStatus> deleteCity(@PathVariable("id") long id) {
         try {
-            ufService.delete(id);
+            cityService.delete(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch(UfNotFoundException ex) {
+        } catch(CityNotFoundException ex) {
             return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch(CommoditieBaseException e) {
             return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
@@ -173,19 +173,19 @@ public class UfCommoditieController
     }
 
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo Uf foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo Uf foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo City foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo City foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
 
     @PostMapping
-    public ResponseEntity<Long> createUf(@RequestBody @Valid UfDTO ufDTO) {
+    public ResponseEntity<Long> createCity(@RequestBody @Valid CityDTO cityDTO) {
         try {
-            UfDTO ufSaved = ufService.salvar(ufDTO);
+            CityDTO citySaved = cityService.salvar(cityDTO);
                 URI location = ServletUriComponentsBuilder
                         .fromCurrentRequest()
                         .path("/{id}")
-                        .buildAndExpand(ufSaved.getId())
+                        .buildAndExpand(citySaved.getId())
                         .toUri();
                 return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.LOCATION, String.valueOf(location)).build();
         } catch(CommoditieBaseException e) {
@@ -197,18 +197,18 @@ public class UfCommoditieController
 
 
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo Uf foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo Uf foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo City foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo City foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
 
     @GetMapping("/{id}")
-    public ResponseEntity<UfDTO> getUfById(@PathVariable("id") Long id) {
+    public ResponseEntity<CityDTO> getCityById(@PathVariable("id") Long id) {
       try {
-           UfDTO ufDTO = ufService.findById(id);
+           CityDTO cityDTO = cityService.findById(id);
 
-           if (ufDTO != null) {
-               return new ResponseEntity<>(ufDTO, HttpStatus.OK);
+           if (cityDTO != null) {
+               return new ResponseEntity<>(cityDTO, HttpStatus.OK);
            } else {
                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
            }
@@ -220,24 +220,24 @@ public class UfCommoditieController
     }
 
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo Uf foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo Uf foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo City foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo City foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
 
     @PutMapping("/{id}")
-    public ResponseEntity<UfDTO> updateUf(@PathVariable("id") Long id, @RequestBody @Valid UfDTO ufDTO) {
-        UfDTO ufData = ufService.findById(id);
+    public ResponseEntity<CityDTO> updateCity(@PathVariable("id") Long id, @RequestBody @Valid CityDTO cityDTO) {
+        CityDTO cityData = cityService.findById(id);
 
-        if(ufData == null) {
+        if(cityData == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         try {
-            ufDTO.setId(id);
-            ufDTO.setDateUpdated(new Date());
-            UfDTO ufSaved = ufService.salvar(ufDTO);
-            return new ResponseEntity<>(ufSaved, HttpStatus.OK);
+            cityDTO.setId(id);
+            cityDTO.setDateUpdated(new Date());
+            CityDTO citySaved = cityService.salvar(cityDTO);
+            return new ResponseEntity<>(citySaved, HttpStatus.OK);
         } catch(CommoditieBaseException e) {
             return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
         } catch (Exception e) {
@@ -247,8 +247,8 @@ public class UfCommoditieController
 
 
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo Uf foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo Uf foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo City foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo City foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
 
@@ -258,26 +258,26 @@ public class UfCommoditieController
     public ResponseEntity partialUpdateGeneric(
             @RequestBody Map<String, Object> updates,
             @PathVariable("id") Long id) {
-        UfDTO ufData = ufService.findById(id);
-        if (ufData == null || !ufService.partialUpdate(id, updates)) {
+        CityDTO cityData = cityService.findById(id);
+        if (cityData == null || !cityService.partialUpdate(id, updates)) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok("Uf atualizada");
+        return ResponseEntity.ok("City atualizada");
     }
 
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo Uf foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo Uf foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo City foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo City foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
 
     @PatchMapping("/{id}/{status}")
-    public ResponseEntity<UfDTO> updateStatusById(
+    public ResponseEntity<CityDTO> updateStatusById(
             @PathVariable("id") Long id, @PathVariable("status") String status) {
       try {
-        UfDTO ufUpdated = ufService.updateStatusById(id, status);
-        return new ResponseEntity<>(ufUpdated, HttpStatus.OK);
-      } catch(UfNotFoundException e) {
+        CityDTO cityUpdated = cityService.updateStatusById(id, status);
+        return new ResponseEntity<>(cityUpdated, HttpStatus.OK);
+      } catch(CityNotFoundException e) {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       } catch(CommoditieBaseException e) {
         return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
@@ -287,18 +287,18 @@ public class UfCommoditieController
     }
 
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo Uf foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo Uf foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo City foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo City foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
     @GetMapping(params = "id")
-    public ResponseEntity<UfDTO> findUfById(@RequestParam(UfConstantes.ID) Long id) {
+    public ResponseEntity<CityDTO> findCityById(@RequestParam(CityConstantes.ID) Long id) {
         try{
-            UfDTO ufDTO = ufService.findUfByIdAndStatus(id, GenericStatusEnums.ATIVO.getShortValue());
-            return Objects.nonNull(ufDTO)
-                ? new ResponseEntity<>(ufDTO, HttpStatus.OK)
+            CityDTO cityDTO = cityService.findCityByIdAndStatus(id, GenericStatusEnums.ATIVO.getShortValue());
+            return Objects.nonNull(cityDTO)
+                ? new ResponseEntity<>(cityDTO, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (UfNotFoundException ex) {
+        } catch (CityNotFoundException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch(CommoditieBaseException e) {
             return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
@@ -307,18 +307,18 @@ public class UfCommoditieController
         }
     }
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo Uf foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo Uf foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo City foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo City foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
     @GetMapping(params = "name")
-    public ResponseEntity<UfDTO> findUfByName(@RequestParam(UfConstantes.NAME) String name) {
+    public ResponseEntity<CityDTO> findCityByName(@RequestParam(CityConstantes.NAME) String name) {
         try{
-            UfDTO ufDTO = ufService.findUfByNameAndStatus(name, GenericStatusEnums.ATIVO.getShortValue());
-            return Objects.nonNull(ufDTO)
-                ? new ResponseEntity<>(ufDTO, HttpStatus.OK)
+            CityDTO cityDTO = cityService.findCityByNameAndStatus(name, GenericStatusEnums.ATIVO.getShortValue());
+            return Objects.nonNull(cityDTO)
+                ? new ResponseEntity<>(cityDTO, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (UfNotFoundException ex) {
+        } catch (CityNotFoundException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch(CommoditieBaseException e) {
             return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
@@ -327,38 +327,18 @@ public class UfCommoditieController
         }
     }
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo Uf foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo Uf foi executado com sucesso"),
-            @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
-    })
-    @GetMapping(params = "nickname")
-    public ResponseEntity<UfDTO> findUfByNickname(@RequestParam("nickname") String nickname) {
-        try{
-            UfDTO ufDTO = ufService.findUfByNicknameAndStatus(nickname, GenericStatusEnums.ATIVO.getShortValue());
-            return Objects.nonNull(ufDTO)
-                ? new ResponseEntity<>(ufDTO, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (UfNotFoundException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch(CommoditieBaseException e) {
-            return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
-        } catch(Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo Uf foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo Uf foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo City foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo City foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
     @GetMapping(params = "dateCreated")
-    public ResponseEntity<UfDTO> findUfByDateCreated(@RequestParam(UfConstantes.DATECREATED) Date dateCreated) {
+    public ResponseEntity<CityDTO> findCityByDateCreated(@RequestParam(CityConstantes.DATECREATED) Date dateCreated) {
         try{
-            UfDTO ufDTO = ufService.findUfByDateCreatedAndStatus(dateCreated, GenericStatusEnums.ATIVO.getShortValue());
-            return Objects.nonNull(ufDTO)
-                ? new ResponseEntity<>(ufDTO, HttpStatus.OK)
+            CityDTO cityDTO = cityService.findCityByDateCreatedAndStatus(dateCreated, GenericStatusEnums.ATIVO.getShortValue());
+            return Objects.nonNull(cityDTO)
+                ? new ResponseEntity<>(cityDTO, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (UfNotFoundException ex) {
+        } catch (CityNotFoundException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch(CommoditieBaseException e) {
             return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
@@ -367,18 +347,18 @@ public class UfCommoditieController
         }
     }
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo Uf foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo Uf foi executado com sucesso"),
+            @ApiResponse(code = 204, message = "Indica que o processo City foi executado com sucesso"),
+            @ApiResponse(code = 200, message = "Indica que o processo City foi executado com sucesso"),
             @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
     })
     @GetMapping(params = "dateUpdated")
-    public ResponseEntity<UfDTO> findUfByDateUpdated(@RequestParam(UfConstantes.DATEUPDATED) Date dateUpdated) {
+    public ResponseEntity<CityDTO> findCityByDateUpdated(@RequestParam(CityConstantes.DATEUPDATED) Date dateUpdated) {
         try{
-            UfDTO ufDTO = ufService.findUfByDateUpdatedAndStatus(dateUpdated, GenericStatusEnums.ATIVO.getShortValue());
-            return Objects.nonNull(ufDTO)
-                ? new ResponseEntity<>(ufDTO, HttpStatus.OK)
+            CityDTO cityDTO = cityService.findCityByDateUpdatedAndStatus(dateUpdated, GenericStatusEnums.ATIVO.getShortValue());
+            return Objects.nonNull(cityDTO)
+                ? new ResponseEntity<>(cityDTO, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (UfNotFoundException ex) {
+        } catch (CityNotFoundException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch(CommoditieBaseException e) {
             return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
