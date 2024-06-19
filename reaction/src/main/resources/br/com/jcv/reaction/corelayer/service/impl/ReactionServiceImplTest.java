@@ -106,11 +106,11 @@ public class ReactionServiceImplTest {
     @Test
     public void shouldReturnListOfReactionWhenFindAllByFilterIsCalled() {
         // scenario
-        Long id = 40133L;
-        String name = "LBQdH10C4Pr98azOpb3MriTPnRuR1WaCTgHO5qf14fgAvYTAsY";
-        String icon = "EpLYXakUgXaVL4eg6wOm4G0W94DEQfM1AdM79hsbmxGLmawxvt";
-        String tag = "DDEfBXlfFJcsIgapAJxI4OnUmz0EBTi9p0SiXMhh5bRCiXqIJC";
-        String status = "wEBPbF1D4cqGDctfvHPstVpi7aH8RPpxhTfIjgkJCmBoWW4JV0";
+        Long id = 45023L;
+        String name = "vVQaQXYwFjh2fTAIQJoPTldaLBLlDu1jeAjHBYTvmABu0FfyDM";
+        String icon = "QOTpGsJNwDCCx5CXyjOhxlUOtsBMLmRtplwe0MAs7kukOEa5qQ";
+        String tag = "XpmFM3LVjri9SI0ndD4nqIDlYopoSGrfgwhnkM0OcG5JHe0HbG";
+        String status = "bruDgI2RqtIslxlhrUMUogfHPcTRpzr0jpjSOlOvjzTm61XHEq";
         String dateCreated = "2025-10-07";
         String dateUpdated = "2025-10-07";
 
@@ -160,11 +160,11 @@ public class ReactionServiceImplTest {
     @Test
     public void shouldReturnMapWithReactionListWhenFindPageByFilterIsCalled() {
         // scenario
-        Long id = 50076L;
-        String name = "pcHhnAOK6xp6ivA1FXd09zk7X00wHzD1xdo0rxi0n1e1hm4iKB";
-        String icon = "HRGDhxRpIo7ezLF1id4RxftMm8Dk6aW3cBNeEpmNv1kCQt90OF";
-        String tag = "L1NGzJaaB1lBx07I8rfoR1qkqgpOMiWpNkwWxc8igCXYumsofX";
-        String status = "9qmU9KwL2BIsWKpEK8M5zB1i4uJxbIaOJPs9TVDJsF6HgKjET9";
+        Long id = 51803L;
+        String name = "W6DM04NhEhS3ylyh6jLqzrc501r7uMz4xTuxOYU2W9saQdPtOI";
+        String icon = "jUzbjg1aPprFbvnNotQvVzqVy4dzxKPv8un1tFaADx4eg3sDSk";
+        String tag = "Id4JtCSWeQkOwk5EnLmOGeVvFmelWz0G7Ft1yXTMWSqQxbB3Mt";
+        String status = "epH8oQ2QHV4F2T0rVmR8Iy9H0C28MI5QN0J0azDrr8ATst9q6m";
         String dateCreated = "2025-10-07";
         String dateUpdated = "2025-10-07";
 
@@ -255,7 +255,7 @@ public class ReactionServiceImplTest {
     @Test
     public void shouldReturnReactionNotFoundExceptionWhenUpdateStatusByIdForInexistentId() {
         // scenario
-        Long idMock = 21308L;
+        Long idMock = 3848L;
         Optional<Reaction> reactionNonExistentMock = Optional.empty();
         Mockito.when(reactionRepositoryMock.findById(idMock)).thenReturn(reactionNonExistentMock);
 
@@ -270,7 +270,7 @@ public class ReactionServiceImplTest {
     @Test
     public void shouldThrowReactionNotFoundExceptionWhenUpdateStatusByIdForInexistentId() {
         // scenario
-        Long idMock = 61048L;
+        Long idMock = 2078L;
         Mockito.when(reactionRepositoryMock.findById(idMock))
                 .thenThrow(new ReactionNotFoundException(REACTION_NOTFOUND_WITH_ID,
                 HttpStatus.NOT_FOUND,
@@ -287,23 +287,23 @@ public class ReactionServiceImplTest {
     @Test
     public void shouldReturnReactionDTOAfterUpdateStatusById() {
         // scenario
-        Long idMock = 68148L;
+        Long idMock = 38100L;
         Optional<Reaction> reactionModelMock = Optional.ofNullable(
                 ReactionModelBuilder.newReactionModelTestBuilder()
                         .id(idMock)
-                        .name("Jm1R1Gl6WJplvJro4wIMRxP8qbuo49uDfc6RVqa3kpzvmc4mg4")
-                        .icon("OeVmb4redDFqOR4Dd87OMbbiiKXaSbsgHRmuAdSSyRVFGmNg20")
-                        .tag("47uFhXEuCAbAmBxUO3vse0vq0us3tNpeEeNP4vMU0DBIzyrvUn")
+                        .name("Pkt3cgYtNH7NTDzngwULmruMA9O8vBtA3BpHXPWHnioUDB5LFm")
+                        .icon("vj8NOi9AiNQqn1YomAMVUGpcj9lgSxcCvK0Vc7Q45XueDqGrp7")
+                        .tag("pp076zEbvdkgQyYYDW0Ir5ENcXsKjYi0kXRBc4Wodif0C0k61i")
 
                         .status("X")
                         .now()
         );
         Reaction reactionToSaveMock = reactionModelMock.orElse(null);
         Reaction reactionSavedMck = ReactionModelBuilder.newReactionModelTestBuilder()
-                        .id(33578L)
-                        .name("mv64GfnLO1wrpmesu2L3gnzxEhkGyI6zKIa9Nag4ohaBQ5yPN4")
-                        .icon("37KNHwhd0l1bsS0zqkwm6y8iYm4ksgqsD8fyfBVo6K7qOGlV6w")
-                        .tag("K4Vwmbz4dUk96Q7IT6ghU0KkBjBMKK6LEsV59eRp7dfrrcY7c5")
+                        .id(46103L)
+                        .name("rYLF6dYJWSMn6xyIgfywxNGv5MwiV97qVI7bFlh0cgB80UbxKL")
+                        .icon("uc900qCrmzr0wYORBLuhlqkDA7G70bEmQs1B0t0AWza5NWUe8a")
+                        .tag("mWY06h6UbHYRAj3fT0ateYspVAOSqQkKctJlsXQt1knDMOYouN")
 
                         .status("A")
                         .now();
@@ -334,10 +334,10 @@ public class ReactionServiceImplTest {
     public void shouldSearchReactionByIdAndReturnDTO() {
         // scenario
         Optional<Reaction> reactionModelMock = Optional.ofNullable(ReactionModelBuilder.newReactionModelTestBuilder()
-                .id(5148L)
-                .name("RQtaxNntDwWTRJacYDXA8wMl6EL5ApMyj56B80jnDlx4T63vPG")
-                .icon("7NxlaA2lkLk7iLAVXBSjLtqerjep34h5jwnU9GnrNwFx2mEcH6")
-                .tag("CqlWB19DiIBxqVtEC0FdnOwIJkAVN5DkrBC2CLpfAxlgQkbz6y")
+                .id(55020L)
+                .name("5N90EBuWVbIROepuRHQgovX1jVkmNYUloGlOks9kamb0OI60Yz")
+                .icon("XusiyX5Yny4bmeqTPDji8QbI1BquDQMUxMOLOBIYyK30a0GEWe")
+                .tag("gmPbA1j0xYEj00cxS3NbVwceTky5vco0QdvEgLkoe8WNpKkY4V")
 
                 .status("A")
                 .dateCreated(dateTimeMock.getToday())
@@ -382,10 +382,10 @@ public class ReactionServiceImplTest {
     public void ShouldSaveUpdateExistingReactionWithSucess() {
         // scenario
         ReactionDTO reactionDTOMock = ReactionDTOBuilder.newReactionDTOTestBuilder()
-                .id(30605L)
-                .name("IlY4z1Hw87JfuyjVVcPwc5JQll0DBauS2Q914WNeHtYOH1kgsB")
-                .icon("VWrqYMoLImXyG9VMjSNu7Yve9mMSMn7l0xyz6cXJo8WWHyKa2w")
-                .tag("GpKU0HPVAWexI2hUchQAl4cGbWHEWbysMgmQ718Js9Eq5hCK0d")
+                .id(35200L)
+                .name("DGSxoKM12AycCpeeO0A5YJQ5XCgsclkqXlDFuD62roxj4SnvvX")
+                .icon("b2bKac5arTSFocOklmWto70pcrIR5UPYvQcRbhMl8OEE0UH5Ow")
+                .tag("3nwsqhc08z878CI87E0mVK07lJPXR300GxHTJR6Ui4uEsnJxci")
 
                 .status("P")
                 .dateCreated(dateTimeMock.getToday())
@@ -427,9 +427,9 @@ public class ReactionServiceImplTest {
         // scenario
         ReactionDTO reactionDTOMock = ReactionDTOBuilder.newReactionDTOTestBuilder()
                 .id(null)
-                .name("T0zaT0MPJak4eVQ58OSarmctuz3r5CGeCMHn7pGWtWo9DQowAw")
-                .icon("sdY39EFgvQhKYqIYNVKtD6e0P5n3HLq0hsV1Bu4tovQKlG6jc2")
-                .tag("L93LdIc5B0s2bxLqVadY00F6b1zGvb2hkn0lHNrMWrf4H4RCfe")
+                .name("2z46S064eBKBbEUh4obfJu0NvJrCutorofElW7cf0aOxWKut94")
+                .icon("oKYt0qgXIk303owdks1yi0N0XdHGOiRumN57BWA6UNwRNwNbKx")
+                .tag("568PL3aIhj7KG0gUs3motVt8g5xEH9XRjfCOeg8FkEga2EJXkI")
 
                 .status("P")
                 .dateCreated(dateTimeMock.getToday())
@@ -471,19 +471,19 @@ public class ReactionServiceImplTest {
     public void shouldExecutePartialUpdateWithSucess() {
         // scenario
         Map<String, Object> mapReactionDTOMock = new HashMap<>();
-        mapReactionDTOMock.put(ReactionConstantes.NAME,"lY7gGG6eIThO2uKqdfP5bAEUEvtE7cl0FXgq0I9b4SFgVhVV6v");
-        mapReactionDTOMock.put(ReactionConstantes.ICON,"FG0BF9kMB2B5eIDbF3SMcTznxAsmqUf04kMF0IB7MPMlXdursp");
-        mapReactionDTOMock.put(ReactionConstantes.TAG,"7UUICp8cYNSYspy4oqPV3V7QNEvfqWMYgcjL1ElQTA5AmFuHBz");
-        mapReactionDTOMock.put(ReactionConstantes.STATUS,"rG0T4WwQ1QbD98OGwEzryPiBP3WBPywJSatJn0hE9WmaPBliAy");
+        mapReactionDTOMock.put(ReactionConstantes.NAME,"3UEiU2V7qVCkVFxcPVu88r0NstcUWlYNxWj2dg5tiYwaTQeyvd");
+        mapReactionDTOMock.put(ReactionConstantes.ICON,"q2JgG5EzEbuFBjlLyWjavdprGmESwFSj2HQu4jxWkOOtKQA3rD");
+        mapReactionDTOMock.put(ReactionConstantes.TAG,"OPfmlVIameBKx0SCjQsK5klnYPT58PEg9K5cT8RJTVssv24u2N");
+        mapReactionDTOMock.put(ReactionConstantes.STATUS,"IMdWgsI5dctNynB54lgVRmBYN30oiHYEI4exCORkvJaVAeDUot");
 
 
         Optional<Reaction> reactionModelMock = Optional.ofNullable(
                 ReactionModelBuilder.newReactionModelTestBuilder()
-                        .id(11888L)
-                        .name("in0oEUiI80Rl4GlMghbGpIIHahWOlRfEQ9i9ECNdSEfShEfRGh")
-                        .icon("cCj0FmAmGrMbxYk1qCjRF0lLYbPNyavG4f59O8zVDYdcy4W54U")
-                        .tag("D77s56llarX1FmvKyzojJVRSymIsrOpiSoWwtidB8SAfb8KQvt")
-                        .status("J67C8jKmJ90rvRAjxC0RuLo36Wg0WILbeVtu3zo0YhlFf8BMd4")
+                        .id(71852L)
+                        .name("5n8UDLI0dU01g8OHKJmj7QOUnyOteJFek8EQWWPSw1zFeR49kF")
+                        .icon("MeU9Uv4Jws6cMl5Re4taAIcD8FbbUBrqkV7fpMUuF4ie7AzJDH")
+                        .tag("pmcI4WOdsRb7wv5ux0KLPxXSy7rhSg20FGzXgWA6hcjrxs02G0")
+                        .status("cqUdNHHB3z5tWk16oFVu21vgsc2Liv4F8Vqq6BrFjanEj8mKLm")
 
                         .now()
         );
@@ -501,10 +501,10 @@ public class ReactionServiceImplTest {
     public void shouldReturnReactionNotFoundExceptionWhenTrySearchNotExistentId() {
         // scenario
         Map<String, Object> mapReactionDTOMock = new HashMap<>();
-        mapReactionDTOMock.put(ReactionConstantes.NAME,"jRT2LNEtAhCW4y0oFcJHCzqFKjli0DAT1yVMCN5O9SwB3gHGqH");
-        mapReactionDTOMock.put(ReactionConstantes.ICON,"woBYH3OqcJEOajhQ30P03xRaorTr2dwLKWkrXgXRsVaB8eWqFq");
-        mapReactionDTOMock.put(ReactionConstantes.TAG,"mKP3SXQ404YRQAvztBV2dMHUq8L1uPwv50Lix1ApcYaKdxP6bU");
-        mapReactionDTOMock.put(ReactionConstantes.STATUS,"BRhXy82vbEg9RkOzUWUSEVR03zSuDy1uWUgxkFry2sPl7JSxkr");
+        mapReactionDTOMock.put(ReactionConstantes.NAME,"fWPhb2Iccd5TdFTiUQKJ6qvQrltgbLnXfefdb4It0uzajqD67n");
+        mapReactionDTOMock.put(ReactionConstantes.ICON,"ws8FWbI6XwwfnLgEtb37FqbgKYeKEuIBNQqYuK6oNOAasCBYA7");
+        mapReactionDTOMock.put(ReactionConstantes.TAG,"5gBMJP4mqAaMszwsXi644LX0ybulNKiwOpEUHj1RuIJNLyHiRH");
+        mapReactionDTOMock.put(ReactionConstantes.STATUS,"x5xywyG92QHGt3t4wIf2WVkfFI7wY5R5KTCiP2OdlT7rKIoKIw");
 
 
         Mockito.when(reactionRepositoryMock.findById(1L)).thenReturn(Optional.empty());
@@ -528,10 +528,10 @@ public class ReactionServiceImplTest {
             ReactionModelBuilder.newReactionModelTestBuilder().now()
         );
 
-        Mockito.when(reactionRepositoryMock.findAllByIdAndStatus(12810L, "A")).thenReturn(reactions);
+        Mockito.when(reactionRepositoryMock.findAllByIdAndStatus(10528L, "A")).thenReturn(reactions);
 
         // action
-        List<ReactionDTO> result = reactionService.findAllReactionByIdAndStatus(12810L, "A");
+        List<ReactionDTO> result = reactionService.findAllReactionByIdAndStatus(10528L, "A");
 
         // validate
         Assertions.assertInstanceOf(List.class, result);
@@ -546,10 +546,10 @@ public class ReactionServiceImplTest {
             ReactionModelBuilder.newReactionModelTestBuilder().now()
         );
 
-        Mockito.when(reactionRepositoryMock.findAllByNameAndStatus("QYpdLHqt5fsrvtRkiCLRpJxJUnaypJyyKBClPFIHPqSRewPycI", "A")).thenReturn(reactions);
+        Mockito.when(reactionRepositoryMock.findAllByNameAndStatus("vRaxXzx0SplMfRE5WpgaxwrbsSAvHjkmW0PXetYwzRACktwUFh", "A")).thenReturn(reactions);
 
         // action
-        List<ReactionDTO> result = reactionService.findAllReactionByNameAndStatus("QYpdLHqt5fsrvtRkiCLRpJxJUnaypJyyKBClPFIHPqSRewPycI", "A");
+        List<ReactionDTO> result = reactionService.findAllReactionByNameAndStatus("vRaxXzx0SplMfRE5WpgaxwrbsSAvHjkmW0PXetYwzRACktwUFh", "A");
 
         // validate
         Assertions.assertInstanceOf(List.class, result);
@@ -564,10 +564,10 @@ public class ReactionServiceImplTest {
             ReactionModelBuilder.newReactionModelTestBuilder().now()
         );
 
-        Mockito.when(reactionRepositoryMock.findAllByIconAndStatus("Y1mpI6vyUbDQW9SOzrbtsWtw4ujDPsCqfV1hbCVTwAkuUEWPzv", "A")).thenReturn(reactions);
+        Mockito.when(reactionRepositoryMock.findAllByIconAndStatus("073IP8opJ4yqViV0tChPFucLYXuyxz20T89YQmdfKIjpkehjFw", "A")).thenReturn(reactions);
 
         // action
-        List<ReactionDTO> result = reactionService.findAllReactionByIconAndStatus("Y1mpI6vyUbDQW9SOzrbtsWtw4ujDPsCqfV1hbCVTwAkuUEWPzv", "A");
+        List<ReactionDTO> result = reactionService.findAllReactionByIconAndStatus("073IP8opJ4yqViV0tChPFucLYXuyxz20T89YQmdfKIjpkehjFw", "A");
 
         // validate
         Assertions.assertInstanceOf(List.class, result);
@@ -582,10 +582,10 @@ public class ReactionServiceImplTest {
             ReactionModelBuilder.newReactionModelTestBuilder().now()
         );
 
-        Mockito.when(reactionRepositoryMock.findAllByTagAndStatus("gH6thpMGxSD79ylo1bGoJDyLNlc8zj0rClFGJCfhUUM7YA3UeV", "A")).thenReturn(reactions);
+        Mockito.when(reactionRepositoryMock.findAllByTagAndStatus("2ryc8lrh1O1m95h1uU6XK80GmtP3T8ceFwzjeuu6sdiEQQGFpU", "A")).thenReturn(reactions);
 
         // action
-        List<ReactionDTO> result = reactionService.findAllReactionByTagAndStatus("gH6thpMGxSD79ylo1bGoJDyLNlc8zj0rClFGJCfhUUM7YA3UeV", "A");
+        List<ReactionDTO> result = reactionService.findAllReactionByTagAndStatus("2ryc8lrh1O1m95h1uU6XK80GmtP3T8ceFwzjeuu6sdiEQQGFpU", "A");
 
         // validate
         Assertions.assertInstanceOf(List.class, result);
@@ -632,11 +632,11 @@ public class ReactionServiceImplTest {
     public void shouldReturnExistentReactionDTOWhenFindReactionByIdAndStatus() {
         // scenario
         Optional<Reaction> reactionModelMock = Optional.ofNullable(ReactionModelBuilder.newReactionModelTestBuilder().now());
-        Mockito.when(reactionRepositoryMock.loadMaxIdByIdAndStatus(3040L, "A")).thenReturn(1L);
+        Mockito.when(reactionRepositoryMock.loadMaxIdByIdAndStatus(48078L, "A")).thenReturn(1L);
         Mockito.when(reactionRepositoryMock.findById(1L)).thenReturn(reactionModelMock);
 
         // action
-        ReactionDTO result = reactionService.findReactionByIdAndStatus(3040L, "A");
+        ReactionDTO result = reactionService.findReactionByIdAndStatus(48078L, "A");
 
         // validate
         Assertions.assertInstanceOf(ReactionDTO.class,result);
@@ -644,11 +644,11 @@ public class ReactionServiceImplTest {
     @Test
     public void shouldReturnReactionNotFoundExceptionWhenNonExistenceReactionIdAndStatus() {
         // scenario
-        Mockito.when(reactionRepositoryMock.loadMaxIdByIdAndStatus(3040L, "A")).thenReturn(0L);
+        Mockito.when(reactionRepositoryMock.loadMaxIdByIdAndStatus(48078L, "A")).thenReturn(0L);
         Mockito.when(reactionRepositoryMock.findById(0L)).thenReturn(Optional.empty());
         // action
         ReactionNotFoundException exception = Assertions.assertThrows(ReactionNotFoundException.class,
-                ()->reactionService.findReactionByIdAndStatus(3040L, "A"));
+                ()->reactionService.findReactionByIdAndStatus(48078L, "A"));
 
         // validate
         Assertions.assertTrue(exception.getMessage().contains(REACTION_NOTFOUND_WITH_ID));
@@ -657,11 +657,11 @@ public class ReactionServiceImplTest {
     public void shouldReturnExistentReactionDTOWhenFindReactionByNameAndStatus() {
         // scenario
         Optional<Reaction> reactionModelMock = Optional.ofNullable(ReactionModelBuilder.newReactionModelTestBuilder().now());
-        Mockito.when(reactionRepositoryMock.loadMaxIdByNameAndStatus("9c8Q0e8HHYczw2Rrv42rxN8gqSm7cVu3Xoy00CjgbDRnAlb8Fr", "A")).thenReturn(1L);
+        Mockito.when(reactionRepositoryMock.loadMaxIdByNameAndStatus("yc9piIUoKaaBB07vSMh3XbLnCxu9BNtPPqwGzPptY2HkfW8Jue", "A")).thenReturn(1L);
         Mockito.when(reactionRepositoryMock.findById(1L)).thenReturn(reactionModelMock);
 
         // action
-        ReactionDTO result = reactionService.findReactionByNameAndStatus("9c8Q0e8HHYczw2Rrv42rxN8gqSm7cVu3Xoy00CjgbDRnAlb8Fr", "A");
+        ReactionDTO result = reactionService.findReactionByNameAndStatus("yc9piIUoKaaBB07vSMh3XbLnCxu9BNtPPqwGzPptY2HkfW8Jue", "A");
 
         // validate
         Assertions.assertInstanceOf(ReactionDTO.class,result);
@@ -669,11 +669,11 @@ public class ReactionServiceImplTest {
     @Test
     public void shouldReturnReactionNotFoundExceptionWhenNonExistenceReactionNameAndStatus() {
         // scenario
-        Mockito.when(reactionRepositoryMock.loadMaxIdByNameAndStatus("9c8Q0e8HHYczw2Rrv42rxN8gqSm7cVu3Xoy00CjgbDRnAlb8Fr", "A")).thenReturn(0L);
+        Mockito.when(reactionRepositoryMock.loadMaxIdByNameAndStatus("yc9piIUoKaaBB07vSMh3XbLnCxu9BNtPPqwGzPptY2HkfW8Jue", "A")).thenReturn(0L);
         Mockito.when(reactionRepositoryMock.findById(0L)).thenReturn(Optional.empty());
         // action
         ReactionNotFoundException exception = Assertions.assertThrows(ReactionNotFoundException.class,
-                ()->reactionService.findReactionByNameAndStatus("9c8Q0e8HHYczw2Rrv42rxN8gqSm7cVu3Xoy00CjgbDRnAlb8Fr", "A"));
+                ()->reactionService.findReactionByNameAndStatus("yc9piIUoKaaBB07vSMh3XbLnCxu9BNtPPqwGzPptY2HkfW8Jue", "A"));
 
         // validate
         Assertions.assertTrue(exception.getMessage().contains(REACTION_NOTFOUND_WITH_NAME));
@@ -682,11 +682,11 @@ public class ReactionServiceImplTest {
     public void shouldReturnExistentReactionDTOWhenFindReactionByIconAndStatus() {
         // scenario
         Optional<Reaction> reactionModelMock = Optional.ofNullable(ReactionModelBuilder.newReactionModelTestBuilder().now());
-        Mockito.when(reactionRepositoryMock.loadMaxIdByIconAndStatus("HGotN0JKrJeYSbeBbP3HXw3zXFW7IK0A0SSxpn5sTCbz1lo6B5", "A")).thenReturn(1L);
+        Mockito.when(reactionRepositoryMock.loadMaxIdByIconAndStatus("G70oMyrRUoDOHNuQ4kX9GdqbjloVXvItQVLkxwoHuTt01y7H3R", "A")).thenReturn(1L);
         Mockito.when(reactionRepositoryMock.findById(1L)).thenReturn(reactionModelMock);
 
         // action
-        ReactionDTO result = reactionService.findReactionByIconAndStatus("HGotN0JKrJeYSbeBbP3HXw3zXFW7IK0A0SSxpn5sTCbz1lo6B5", "A");
+        ReactionDTO result = reactionService.findReactionByIconAndStatus("G70oMyrRUoDOHNuQ4kX9GdqbjloVXvItQVLkxwoHuTt01y7H3R", "A");
 
         // validate
         Assertions.assertInstanceOf(ReactionDTO.class,result);
@@ -694,11 +694,11 @@ public class ReactionServiceImplTest {
     @Test
     public void shouldReturnReactionNotFoundExceptionWhenNonExistenceReactionIconAndStatus() {
         // scenario
-        Mockito.when(reactionRepositoryMock.loadMaxIdByIconAndStatus("HGotN0JKrJeYSbeBbP3HXw3zXFW7IK0A0SSxpn5sTCbz1lo6B5", "A")).thenReturn(0L);
+        Mockito.when(reactionRepositoryMock.loadMaxIdByIconAndStatus("G70oMyrRUoDOHNuQ4kX9GdqbjloVXvItQVLkxwoHuTt01y7H3R", "A")).thenReturn(0L);
         Mockito.when(reactionRepositoryMock.findById(0L)).thenReturn(Optional.empty());
         // action
         ReactionNotFoundException exception = Assertions.assertThrows(ReactionNotFoundException.class,
-                ()->reactionService.findReactionByIconAndStatus("HGotN0JKrJeYSbeBbP3HXw3zXFW7IK0A0SSxpn5sTCbz1lo6B5", "A"));
+                ()->reactionService.findReactionByIconAndStatus("G70oMyrRUoDOHNuQ4kX9GdqbjloVXvItQVLkxwoHuTt01y7H3R", "A"));
 
         // validate
         Assertions.assertTrue(exception.getMessage().contains(REACTION_NOTFOUND_WITH_ICON));
@@ -707,11 +707,11 @@ public class ReactionServiceImplTest {
     public void shouldReturnExistentReactionDTOWhenFindReactionByTagAndStatus() {
         // scenario
         Optional<Reaction> reactionModelMock = Optional.ofNullable(ReactionModelBuilder.newReactionModelTestBuilder().now());
-        Mockito.when(reactionRepositoryMock.loadMaxIdByTagAndStatus("1jRPRMIEmVaHOOeS3unNbrv6A20X61R1VHVtuTmb2nve90e27h", "A")).thenReturn(1L);
+        Mockito.when(reactionRepositoryMock.loadMaxIdByTagAndStatus("1zcDvRnIWN4n5bRk3VoPfYIyuDBniXJQQJ28ULxL5SDUrvnhL3", "A")).thenReturn(1L);
         Mockito.when(reactionRepositoryMock.findById(1L)).thenReturn(reactionModelMock);
 
         // action
-        ReactionDTO result = reactionService.findReactionByTagAndStatus("1jRPRMIEmVaHOOeS3unNbrv6A20X61R1VHVtuTmb2nve90e27h", "A");
+        ReactionDTO result = reactionService.findReactionByTagAndStatus("1zcDvRnIWN4n5bRk3VoPfYIyuDBniXJQQJ28ULxL5SDUrvnhL3", "A");
 
         // validate
         Assertions.assertInstanceOf(ReactionDTO.class,result);
@@ -719,11 +719,11 @@ public class ReactionServiceImplTest {
     @Test
     public void shouldReturnReactionNotFoundExceptionWhenNonExistenceReactionTagAndStatus() {
         // scenario
-        Mockito.when(reactionRepositoryMock.loadMaxIdByTagAndStatus("1jRPRMIEmVaHOOeS3unNbrv6A20X61R1VHVtuTmb2nve90e27h", "A")).thenReturn(0L);
+        Mockito.when(reactionRepositoryMock.loadMaxIdByTagAndStatus("1zcDvRnIWN4n5bRk3VoPfYIyuDBniXJQQJ28ULxL5SDUrvnhL3", "A")).thenReturn(0L);
         Mockito.when(reactionRepositoryMock.findById(0L)).thenReturn(Optional.empty());
         // action
         ReactionNotFoundException exception = Assertions.assertThrows(ReactionNotFoundException.class,
-                ()->reactionService.findReactionByTagAndStatus("1jRPRMIEmVaHOOeS3unNbrv6A20X61R1VHVtuTmb2nve90e27h", "A"));
+                ()->reactionService.findReactionByTagAndStatus("1zcDvRnIWN4n5bRk3VoPfYIyuDBniXJQQJ28ULxL5SDUrvnhL3", "A"));
 
         // validate
         Assertions.assertTrue(exception.getMessage().contains(REACTION_NOTFOUND_WITH_TAG));
@@ -732,7 +732,7 @@ public class ReactionServiceImplTest {
     @Test
     public void shouldReturnReactionDTOWhenUpdateExistingNameById() {
         // scenario
-        String nameUpdateMock = "xtddL7dOEOt0ejsqyRbcseYQYx5ToIisSf2m5qI1WL003NI8A2";
+        String nameUpdateMock = "pVnuGst6ofoAhT5irALb8q1SxjM4UwMFEuyrL33eBNTAvRITwp";
         Optional<Reaction> reactionModelMock = Optional.ofNullable(ReactionModelBuilder.newReactionModelTestBuilder()
                         .id(420L)
                 .now());
@@ -748,7 +748,7 @@ public class ReactionServiceImplTest {
     @Test
     public void shouldReturnReactionDTOWhenUpdateExistingIconById() {
         // scenario
-        String iconUpdateMock = "0XvRz0YFd7hmp0x6dMzOGek9Hky16Cebq1ti8dIyA4rnAFLk0B";
+        String iconUpdateMock = "dh2yeKxVcz15sYpflfgPRBPOKus3QhvmAxAWLz0gQLEcWA2AyW";
         Optional<Reaction> reactionModelMock = Optional.ofNullable(ReactionModelBuilder.newReactionModelTestBuilder()
                         .id(420L)
                 .now());
@@ -764,7 +764,7 @@ public class ReactionServiceImplTest {
     @Test
     public void shouldReturnReactionDTOWhenUpdateExistingTagById() {
         // scenario
-        String tagUpdateMock = "q0DyKNozVB053kzO4OeatnwSJP7gAFW4IJYzRjNtGwnDNkl3hB";
+        String tagUpdateMock = "kLQ6QK0rJdX6T5uuGEcTyqCDm1sMaP9PV9twn9UdyLAREYQjHs";
         Optional<Reaction> reactionModelMock = Optional.ofNullable(ReactionModelBuilder.newReactionModelTestBuilder()
                         .id(420L)
                 .now());
@@ -783,7 +783,7 @@ public class ReactionServiceImplTest {
     @Test
     public void showReturnExistingReactionDTOWhenFindReactionByIdAndStatusActiveAnonimous() {
         // scenario
-        Long idMock = 70061L;
+        Long idMock = 48500L;
         Long maxIdMock = 1972L;
         Optional<Reaction> reactionModelMock = Optional.ofNullable(ReactionModelBuilder.newReactionModelTestBuilder()
                 .id(idMock)
@@ -802,7 +802,7 @@ public class ReactionServiceImplTest {
     @Test
     public void showReturnReactionNotFoundExceptionWhenNonExistenceFindReactionByIdAndStatusActiveAnonimous() {
         // scenario
-        Long idMock = 70061L;
+        Long idMock = 48500L;
         Long noMaxIdMock = 0L;
         Optional<Reaction> reactionModelMock = Optional.empty();
         Mockito.when(reactionRepositoryMock.loadMaxIdByIdAndStatus(idMock, "A")).thenReturn(noMaxIdMock);
@@ -821,7 +821,7 @@ public class ReactionServiceImplTest {
     @Test
     public void showReturnExistingReactionDTOWhenFindReactionByNameAndStatusActiveAnonimous() {
         // scenario
-        String nameMock = "8oF20Us1QG3LhUSTcKfSv5HSo9AdftVLtLPVw2EcKhLHaughpD";
+        String nameMock = "DjcTS0CiIPM0r1WsRuguV0gSxvsw0gWQQUqmO9CKaNf40HClUM";
         Long maxIdMock = 1972L;
         Optional<Reaction> reactionModelMock = Optional.ofNullable(ReactionModelBuilder.newReactionModelTestBuilder()
                 .name(nameMock)
@@ -840,7 +840,7 @@ public class ReactionServiceImplTest {
     @Test
     public void showReturnReactionNotFoundExceptionWhenNonExistenceFindReactionByNameAndStatusActiveAnonimous() {
         // scenario
-        String nameMock = "8oF20Us1QG3LhUSTcKfSv5HSo9AdftVLtLPVw2EcKhLHaughpD";
+        String nameMock = "DjcTS0CiIPM0r1WsRuguV0gSxvsw0gWQQUqmO9CKaNf40HClUM";
         Long noMaxIdMock = 0L;
         Optional<Reaction> reactionModelMock = Optional.empty();
         Mockito.when(reactionRepositoryMock.loadMaxIdByNameAndStatus(nameMock, "A")).thenReturn(noMaxIdMock);
@@ -859,7 +859,7 @@ public class ReactionServiceImplTest {
     @Test
     public void showReturnExistingReactionDTOWhenFindReactionByIconAndStatusActiveAnonimous() {
         // scenario
-        String iconMock = "4Tz8F1K5WurSu2Y8NG06PvdVTOfFQv1VFGimuV0vpU0pOiy1Cs";
+        String iconMock = "AVCqReRYgnyoq0VI3sAWTcwNLLEvDkPV5gbsTNpPAjedo7skQk";
         Long maxIdMock = 1972L;
         Optional<Reaction> reactionModelMock = Optional.ofNullable(ReactionModelBuilder.newReactionModelTestBuilder()
                 .icon(iconMock)
@@ -878,7 +878,7 @@ public class ReactionServiceImplTest {
     @Test
     public void showReturnReactionNotFoundExceptionWhenNonExistenceFindReactionByIconAndStatusActiveAnonimous() {
         // scenario
-        String iconMock = "4Tz8F1K5WurSu2Y8NG06PvdVTOfFQv1VFGimuV0vpU0pOiy1Cs";
+        String iconMock = "AVCqReRYgnyoq0VI3sAWTcwNLLEvDkPV5gbsTNpPAjedo7skQk";
         Long noMaxIdMock = 0L;
         Optional<Reaction> reactionModelMock = Optional.empty();
         Mockito.when(reactionRepositoryMock.loadMaxIdByIconAndStatus(iconMock, "A")).thenReturn(noMaxIdMock);
@@ -897,7 +897,7 @@ public class ReactionServiceImplTest {
     @Test
     public void showReturnExistingReactionDTOWhenFindReactionByTagAndStatusActiveAnonimous() {
         // scenario
-        String tagMock = "dfo9ApQqoncseHi39gPKdYSx00J4XEAGjnWfcWhxaGROYriGmQ";
+        String tagMock = "3hlhsfdu1Q5jSEO2Ed1L1KrwiAhRWC13aOpydPDD9lrflSPfHm";
         Long maxIdMock = 1972L;
         Optional<Reaction> reactionModelMock = Optional.ofNullable(ReactionModelBuilder.newReactionModelTestBuilder()
                 .tag(tagMock)
@@ -916,7 +916,7 @@ public class ReactionServiceImplTest {
     @Test
     public void showReturnReactionNotFoundExceptionWhenNonExistenceFindReactionByTagAndStatusActiveAnonimous() {
         // scenario
-        String tagMock = "dfo9ApQqoncseHi39gPKdYSx00J4XEAGjnWfcWhxaGROYriGmQ";
+        String tagMock = "3hlhsfdu1Q5jSEO2Ed1L1KrwiAhRWC13aOpydPDD9lrflSPfHm";
         Long noMaxIdMock = 0L;
         Optional<Reaction> reactionModelMock = Optional.empty();
         Mockito.when(reactionRepositoryMock.loadMaxIdByTagAndStatus(tagMock, "A")).thenReturn(noMaxIdMock);

@@ -29,7 +29,7 @@
   <properties>
     <!-- controle das versoes dos microservicos do projeto -->
     <jcv-code-generator.version>1.0.11-SNAPSHOT</jcv-code-generator.version>
-    <commons-library.version>1.0.15-SNAPSHOT</commons-library.version>
+    <commons-library.version>1.0.16-SNAPSHOT</commons-library.version>
     <restclient-library.version>1.0.0-SNAPSHOT</restclient-library.version>
 
     <!-- outras versoes de dependencias comuns a todos os modulos do projeto ms -->
