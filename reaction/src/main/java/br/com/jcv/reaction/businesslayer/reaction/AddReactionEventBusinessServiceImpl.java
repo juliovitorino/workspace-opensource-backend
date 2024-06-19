@@ -17,6 +17,7 @@ import br.com.jcv.reaction.corelayer.service.ReactionService;
 import br.com.jcv.reaction.infrastructure.dto.ReactionDTO;
 import br.com.jcv.reaction.infrastructure.dto.ReactionEventDTO;
 import br.com.jcv.reaction.infrastructure.exception.ReactionEventNotFoundException;
+import br.com.jcv.restclient.guardian.GuardianRestClientConsumer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,9 +27,14 @@ import lombok.extern.slf4j.Slf4j;
 public class AddReactionEventBusinessServiceImpl implements AddReactionEventBusinessService {
     @Autowired private ReactionEventService reactionEventService;
     @Autowired private ReactionService reactionService;
+    @Autowired private GuardianRestClientConsumer guardianRestClientConsumer;
 
     @Override
     public MensagemResponse execute(UUID processId, ReactionEventRequest reactionRequest) {
+        Boolean executed = guardianRestClientConsumer.validateApplicationCode(reactionRequest.getExternalAppUUID());
+        if(executed.equals(Boolean.FALSE)) {
+            return MensagemResponseHelperService.getInstance("RECT-0842", "Invalid Application Code.");
+        }
         ReactionDTO reactionByNameAndStatus = reactionService.findReactionByNameAndStatus(reactionRequest.getReaction());
 
         ReactionEventDTO reactionEventDTO = this.toDto(reactionRequest, reactionByNameAndStatus);
