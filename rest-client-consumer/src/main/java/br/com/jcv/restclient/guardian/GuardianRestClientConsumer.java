@@ -30,6 +30,7 @@ import br.com.jcv.restclient.infrastructure.response.ControllerGenericResponse;
 public interface GuardianRestClientConsumer {
     String login(LoginRequest request) ;
     ControllerGenericResponse askHeimdallPermission(String jwtToken,String role);
+    public Boolean validateApplicationCode(UUID uuidExternalApp) ;
     RegisterApplicationResponse registerApp(RegisterApplicationRequest request,String jwtToken);
 
     CreateNewAccountResponse createAccount(CreateNewAccountRequest request);
