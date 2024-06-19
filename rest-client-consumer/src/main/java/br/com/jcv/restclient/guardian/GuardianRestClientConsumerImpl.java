@@ -67,6 +67,19 @@ public class GuardianRestClientConsumerImpl implements GuardianRestClientConsume
     }
 
     @Override
+    public Boolean validateApplicationCode(UUID uuidExternalApp) {
+
+        Boolean response;
+        try {
+            response = httpURLConnection.sendGET(
+                    GUARDIAN_SERVICE_URL + "/application/" + uuidExternalApp.toString(),
+                    Boolean.class);
+        } catch (IOException e) {
+            throw new GuardianRestClientConsumerException(GUARDIAN_MICROSERVICE_ERROR, HttpStatus.BAD_GATEWAY, e.getMessage());
+        }
+        return response;    }
+
+    @Override
     public RegisterApplicationResponse registerApp(RegisterApplicationRequest request, String jwtToken) {
 
         RegisterApplicationResponse response = null;
