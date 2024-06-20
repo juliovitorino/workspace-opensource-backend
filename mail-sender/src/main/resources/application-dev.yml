@@ -1,0 +1,54 @@
+spring:
+  application:
+    name: mailsender-app
+
+  cloud:
+    loadbalancer:
+      ribbon:
+        enable: true
+  # solve problem in swagger 'documentationPluginsBootstrapper'
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  datasource:
+    url: jdbc:postgresql://localhost:5129/mailsender
+    username: postgres
+    password: postgres
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  threads:
+    virtual:
+      enabled: false;
+  cache:
+    type: redis
+  redis:
+    host: localhost
+    port: 16379
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+server:
+  tomcat:
+    threads:
+      max: 8
+
+guardian:
+  openfeign-url: http://localhost:8080
+  application:
+    preferences:
+      uuid: 6c65a392-1207-4deb-9559-df10880a0f95

@@ -22,7 +22,10 @@
     <module>guardian</module>
     <module>preferences</module>
     <module>notifier</module>
+    <module>brazilian-cities</module>
     <module>bacen-economic-indexes</module>
+    <module>mail-sender</module>
+    <module>reaction</module>
 
   </modules>
 
