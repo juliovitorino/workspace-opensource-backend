@@ -2,6 +2,7 @@ package br.com.jcv.brcities.corelayer.specs;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
@@ -20,6 +21,7 @@ public interface CityUfSpecification extends JpaRepository<CityUf, Long>, JpaSpe
     }
 
     static Specification<CityUf> getAllCitiesFromUfUsingFilter(AbstractCriteria criteria) {
+        if (Objects.isNull(criteria)) return null;
 
         JoinDataSupplier<CityUf> joinDataSupplier = (root, query) -> {
             Map<String, Join<Object,Object>> joinMap = new LinkedHashMap<>();
@@ -32,7 +34,7 @@ public interface CityUfSpecification extends JpaRepository<CityUf, Long>, JpaSpe
             return joinMap;
         };
 
-        return new GenericSpecification<CityUf>(criteria,joinDataSupplier);
+        return new GenericSpecification<>(criteria, joinDataSupplier);
     }
 
 }

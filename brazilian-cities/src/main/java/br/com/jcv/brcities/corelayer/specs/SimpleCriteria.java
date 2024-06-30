@@ -10,14 +10,18 @@ import javax.persistence.criteria.Root;
 
 public class SimpleCriteria<T> extends AbstractCriteria {
 
-    private final Criteria criteria;
+    private final CriteriaClause<T> criteriaClause;
 
-    public SimpleCriteria(Criteria<T> criteria) {
-        this.criteria = criteria;
+    public SimpleCriteria(CriteriaClause<T> criteriaClause) {
+        this.criteriaClause = criteriaClause;
     }
 
     @Override
-    public Predicate toPredicate(Root root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder, Map<String, Join<Object, Object>> attributeToJoin) {
-        return getPredicateFromFilter(criteria,root,criteriaBuilder,attributeToJoin);
+    public <X> Predicate toPredicate(
+            Root<X> root,
+            CriteriaQuery<?> query,
+            CriteriaBuilder criteriaBuilder,
+            Map<String, Join<Object, Object>> attributeToJoin) {
+        return getPredicateFromFilter(criteriaClause,root,criteriaBuilder,attributeToJoin);
     }
 }

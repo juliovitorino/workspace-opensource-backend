@@ -12,16 +12,21 @@ import javax.persistence.criteria.Root;
 
 public class AndCriteria extends AbstractCriteria {
 
-    private final List<AbstractCriteria> criterias;
+    private final List<AbstractCriteria> criteriaList;
 
-    public AndCriteria(List<AbstractCriteria> criterias) {
-        this.criterias = criterias;
+    public AndCriteria(List<AbstractCriteria> criteriaList) {
+        this.criteriaList = criteriaList;
     }
 
     @Override
-    public Predicate toPredicate(Root root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder, Map<String, Join<Object, Object>> attributeToJoin ) {
+    public <T> Predicate toPredicate(
+            Root<T> root,
+            CriteriaQuery<?> query,
+            CriteriaBuilder criteriaBuilder,
+            Map<String, Join<Object, Object>> attributeToJoin ) {
         return criteriaBuilder.and(
-                criterias.stream().map(filter -> filter.toPredicate(root,query,criteriaBuilder,attributeToJoin))
+                criteriaList.stream()
+                        .map(filter -> filter.toPredicate(root,query,criteriaBuilder,attributeToJoin))
                         .collect(Collectors.toList())
                         .toArray(Predicate[]::new));
     }

@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Criteria<T> {
+public class CriteriaClause<T> {
 
    /* Name of the variable from Entity class on which filter has to be applied */
    private final String field;
@@ -19,7 +19,7 @@ public class Criteria<T> {
    /* Join identifier */
    private final String entityName;
 
-    public Criteria(String field, EnumCriteriaOperator operator, T value, String entityName) {
+    public CriteriaClause(String field, EnumCriteriaOperator operator, T value, String entityName) {
         this.field = field;
         this.operator = operator;
         this.value = value;
