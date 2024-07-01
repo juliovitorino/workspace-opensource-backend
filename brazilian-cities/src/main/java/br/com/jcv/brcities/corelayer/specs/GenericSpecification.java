@@ -1,7 +1,10 @@
 package br.com.jcv.brcities.corelayer.specs;
 
+import java.util.Map;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -9,13 +12,14 @@ import org.springframework.data.jpa.domain.Specification;
 
 public class GenericSpecification<T> implements Specification<T> {
 
-   private final AbstractCriteria criteriaConcrete;
-   private final JoinDataSupplier<T> joinDataSupplier;
+    private final AbstractCriteria criteriaConcrete;
+    private final JoinTableMap<T> joinTableMap;
 
-    public GenericSpecification(AbstractCriteria criteriaConcrete, JoinDataSupplier<T> joinDataSupplier) {
+    public GenericSpecification(AbstractCriteria criteriaConcrete, JoinTableMap<T> joinTableMap) {
         this.criteriaConcrete = criteriaConcrete;
-        this.joinDataSupplier = joinDataSupplier;
+        this.joinTableMap = joinTableMap;
     }
+
 
     @Override
    public Predicate toPredicate(
@@ -23,8 +27,8 @@ public class GenericSpecification<T> implements Specification<T> {
            CriteriaQuery<?> query,
            CriteriaBuilder criteriaBuilder) {
 
-      if (joinDataSupplier != null && criteriaConcrete !=null) {
-         return criteriaConcrete.toPredicate(root, query, criteriaBuilder, joinDataSupplier.getJoinData(root,query));
+      if (joinTableMap != null && criteriaConcrete !=null) {
+         return criteriaConcrete.toPredicate(root, query, criteriaBuilder,  joinTableMap.getJoinTableMap(root, query));
       }
       return criteriaBuilder.conjunction();
    }
