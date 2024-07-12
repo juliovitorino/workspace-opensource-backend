@@ -10,6 +10,8 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 
+import lombok.NonNull;
+
 public class GenericSpecification<T> implements Specification<T> {
 
     private final AbstractCriteria criteriaConcrete;

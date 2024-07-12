@@ -23,10 +23,10 @@ public class OrCriteria extends AbstractCriteria {
             Root<T> root,
             CriteriaQuery<?> query,
             CriteriaBuilder criteriaBuilder,
-            Map<String, Join<Object, Object>> attributeToJoin) {
+            Map<String, Join<Object, Object>> joinMap) {
         return criteriaBuilder.or(
                 criteriaList.stream()
-                .map(criteria -> criteria.toPredicate(root, query, criteriaBuilder, attributeToJoin))
+                .map(criteria -> criteria.toPredicate(root, query, criteriaBuilder, joinMap))
                 .collect(Collectors.toList())
                 .toArray(Predicate[]::new));
     }

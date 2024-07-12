@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.jcv.brcities.adapter.controller.v1.business.city.CitiesResponse;
 import br.com.jcv.brcities.corelayer.model.CityUf;
+import br.com.jcv.brcities.corelayer.repository.CityUfRepository;
 import br.com.jcv.brcities.corelayer.specs.CityUfSpecification;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,9 +18,11 @@ import lombok.extern.slf4j.Slf4j;
 public class ListAllCitiesFromUfBusinessServiceImpl implements ListAllCitiesFromUfBusinessService {
 
     private final CityUfSpecification cityUfSpecification;
+    private final CityUfRepository cityUfRepository;
 
-    public ListAllCitiesFromUfBusinessServiceImpl(CityUfSpecification cityUfSpecification) {
+    public ListAllCitiesFromUfBusinessServiceImpl(CityUfSpecification cityUfSpecification, CityUfRepository cityUfRepository) {
         this.cityUfSpecification = cityUfSpecification;
+        this.cityUfRepository = cityUfRepository;
     }
 
     @Override
@@ -27,7 +30,7 @@ public class ListAllCitiesFromUfBusinessServiceImpl implements ListAllCitiesFrom
 
         // modo 1
         Specification<CityUf> cityUfSpecByUfId = CityUfSpecification.byUfId(uf);
-        List<CityUf> allCities = cityUfSpecification.findAll(cityUfSpecByUfId);
+        List<CityUf> allCities = cityUfRepository.findAll(cityUfSpecByUfId);
 
         return responseMapper(uf, allCities);
     }

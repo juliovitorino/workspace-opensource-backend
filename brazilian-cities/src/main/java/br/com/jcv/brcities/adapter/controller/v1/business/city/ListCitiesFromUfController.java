@@ -21,7 +21,7 @@ public class ListCitiesFromUfController {
     private final ListCitiesFromUfBusinessService listCitiesFromUfBusinessService;
 
     @GetMapping(params = "uf")
-    public ResponseEntity<Boolean> ListAllCitiesFromUf(@Valid @RequestParam(name = "uf") String uf) {
+    public ResponseEntity<CitiesResponse> ListAllCitiesFromUf(@Valid @RequestParam(name = "uf") String uf) {
         return ResponseEntity.ok(listCitiesFromUfBusinessService.execute(UUID.randomUUID(), uf.toUpperCase()));
     }
 }

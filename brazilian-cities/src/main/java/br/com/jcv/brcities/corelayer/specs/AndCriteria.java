@@ -23,10 +23,10 @@ public class AndCriteria extends AbstractCriteria {
             Root<T> root,
             CriteriaQuery<?> query,
             CriteriaBuilder criteriaBuilder,
-            Map<String, Join<Object, Object>> attributeToJoin ) {
+            Map<String, Join<Object, Object>> joinMap) {
         return criteriaBuilder.and(
                 criteriaList.stream()
-                        .map(filter -> filter.toPredicate(root,query,criteriaBuilder,attributeToJoin))
+                        .map(filter -> filter.toPredicate(root,query,criteriaBuilder, joinMap))
                         .collect(Collectors.toList())
                         .toArray(Predicate[]::new));
     }

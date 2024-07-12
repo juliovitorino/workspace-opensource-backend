@@ -20,7 +20,7 @@ public abstract class AbstractCriteria {
             Root<T> root,
             CriteriaQuery<?> query,
             CriteriaBuilder criteriaBuilder,
-            Map<String, Join<Object, Object>> attributeToJoin);
+            Map<String, Join<Object, Object>> joinMap);
 
     public <T> Predicate getPredicate(
             CriteriaClause<T> criteriaClause,

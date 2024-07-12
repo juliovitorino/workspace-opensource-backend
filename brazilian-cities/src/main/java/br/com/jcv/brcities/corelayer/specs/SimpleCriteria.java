@@ -21,7 +21,7 @@ public class SimpleCriteria<T> extends AbstractCriteria {
             Root<X> root,
             CriteriaQuery<?> query,
             CriteriaBuilder criteriaBuilder,
-            Map<String, Join<Object, Object>> attributeToJoin) {
-        return getPredicateFromFilter(criteriaClause,root,criteriaBuilder,attributeToJoin);
+            Map<String, Join<Object, Object>> joinMap) {
+        return getPredicateFromFilter(criteriaClause,root,criteriaBuilder, joinMap);
     }
 }
