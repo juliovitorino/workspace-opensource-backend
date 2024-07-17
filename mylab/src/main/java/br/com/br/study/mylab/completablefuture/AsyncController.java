@@ -27,10 +27,19 @@ public class AsyncController {
                 .collect(Collectors.toList());
 
         log.info("executeAsyncTasks :: all task ids have been sent. Tasks will be executed unordered.");
+
+        //waiting all futures end
         CompletableFuture<Void> allOf = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
 
         return allOf.thenApply(v -> futures.stream()
                 .map(CompletableFuture::join)
                 .collect(Collectors.toList()));
+    }
+
+    @GetMapping("/async-single-task")
+    public CompletableFuture<String> executeAsyncSingleTasks() {
+        CompletableFuture<String> future = asyncService.performAsyncTask();
+
+        return future.thenApply(v -> "resultado do processamento assincrono: " + v);
     }
 }

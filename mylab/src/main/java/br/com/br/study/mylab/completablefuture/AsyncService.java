@@ -22,4 +22,15 @@ public class AsyncService {
         }
         return CompletableFuture.completedFuture("Tarefa " + taskId + " concluída!");
     }
+    @Async
+    public CompletableFuture<String> performAsyncTask() {
+        try {
+            // Simular um processamento demorado
+            log.info("performAsyncTask :: executing single task");
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return CompletableFuture.completedFuture("Tarefa concluída!");
+    }
 }
