@@ -11,9 +11,9 @@ import br.com.jcv.brcities.adapter.controller.v1.business.city.CitiesResponse;
 import br.com.jcv.brcities.corelayer.model.CityUf;
 import br.com.jcv.brcities.corelayer.repository.CityUfRepository;
 import br.com.jcv.brcities.corelayer.specs.CityUfSpecification;
-import br.com.jcv.brcities.corelayer.specs.CriteriaClause;
-import br.com.jcv.brcities.corelayer.specs.EnumCriteriaOperator;
-import br.com.jcv.brcities.corelayer.specs.SimpleCriteria;
+import br.com.jcv.commons.library.specs.CriteriaClause;
+import br.com.jcv.commons.library.specs.EnumCriteriaOperator;
+import br.com.jcv.commons.library.specs.SimpleCriteria;
 
 @Service
 public class ListCitiesFromUfBusinessServiceImpl implements ListCitiesFromUfBusinessService{
