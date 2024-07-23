@@ -3,18 +3,17 @@ package br.com.jcv.brcities.corelayer.specs;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import br.com.jcv.brcities.corelayer.model.CityUf;
+import br.com.jcv.commons.library.specs.AbstractCriteria;
+import br.com.jcv.commons.library.specs.GenericSpecification;
+import br.com.jcv.commons.library.specs.JoinTableMap;
 
 @Service
 public class CityUfSpecification  {
