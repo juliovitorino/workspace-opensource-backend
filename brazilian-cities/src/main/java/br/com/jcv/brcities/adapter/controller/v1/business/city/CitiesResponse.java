@@ -23,5 +23,5 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CitiesResponse implements Serializable {
     public String uf;
-    public List<String> name;
+    public List<String> cityName;
 }

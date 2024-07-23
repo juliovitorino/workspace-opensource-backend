@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jcv.brcities.businesslayer.city.ListAllCitiesFromUfBusinessService;
+import lombok.RequiredArgsConstructor;
 
 @RestController@RequestMapping("/v1/api/business/city")
+@RequiredArgsConstructor
 public class ListAllCitiesFromUfController {
 
-    @Autowired private ListAllCitiesFromUfBusinessService listAllCitiesFromUfBusinessService;
+    private final ListAllCitiesFromUfBusinessService listAllCitiesFromUfBusinessService;
 
     @GetMapping("{uf}")
     public ResponseEntity<CitiesResponse> ListAllCitiesFromUf(@Valid @PathVariable(name = "uf") String uf) {
