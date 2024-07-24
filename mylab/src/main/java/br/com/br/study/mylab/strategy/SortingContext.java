@@ -13,4 +13,9 @@ class SortingContext {
     public void sortNumbers(List<Integer> numbers) {
         strategy.execute(numbers);
     }
+
+    public void setStrategyAndExecute(SortStrategy strategy, List<Integer> numbers) {
+        this.setStrategy(strategy);
+        strategy.execute(numbers);
+    }
 }

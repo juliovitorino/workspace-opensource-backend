@@ -22,6 +22,9 @@ public class StrategyPatternController {
 
         context.setStrategy(new QuickSortStrategy());
         context.sortNumbers(numbers);
+
+        //or
+        context.setStrategyAndExecute(new QuickSortStrategy(), numbers);
         return ResponseEntity.ok(Boolean.TRUE);
     }
 }
