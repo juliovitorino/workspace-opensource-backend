@@ -2,6 +2,7 @@ package br.com.jcv.security.guardian.controller.v1.business;
 
 import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -20,6 +21,9 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ControllerGenericResponse implements Serializable {
+public class ControllerGenericResponse<T> implements Serializable {
     private MensagemResponse response;
+
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
+    private T objectResponse;
 }
