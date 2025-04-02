@@ -75,7 +75,8 @@ public class InitialGuardianSetupBusinessServiceImpl extends AbstractGuardianBus
                 GenericStatusEnums.PENDENTE.getShortValue()
         );
         ValidateAccountRequest validateAccountRequest = ValidateAccountRequest.builder()
-                .externalUUID(applicationUserDTO.getExternalAppUserUUID())
+                .externalAppUUID(applicationUserDTO.getExternalAppUserUUID())
+                .externalUserUUID(applicationUserDTO.getExternalUserUUID())
                 .requiredCode(applicationUserDTO.getActivationCode())
                 .build();
         validateAccountService.execute(processId,validateAccountRequest);
