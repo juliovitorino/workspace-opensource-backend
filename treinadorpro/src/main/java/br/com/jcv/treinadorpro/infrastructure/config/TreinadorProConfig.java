@@ -1,11 +1,11 @@
 package br.com.jcv.treinadorpro.infrastructure.config;
 
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.UUID;
+
 @Configuration
-@Getter
 public class TreinadorProConfig {
     @Value("${spring.datasource.driverClassName}")
     private String dbDriverClassName;
@@ -19,4 +19,25 @@ public class TreinadorProConfig {
     @Value("${spring.datasource.url}")
     private String dbUrl;
 
+    @Value("${spring.apikey.uuid}")
+    private UUID apiKeyUUID;
+
+    public String getDbDriverClassName() {
+        return dbDriverClassName;
+    }
+    public String getDbUsername() {
+        return dbUsername;
+    }
+
+    public String getDbPassword() {
+        return dbPassword;
+    }
+
+    public String getDbUrl() {
+        return dbUrl;
+    }
+
+    public UUID getApiKeyUUID() {
+        return apiKeyUUID;
+    }
 }

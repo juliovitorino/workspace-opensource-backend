@@ -11,7 +11,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAutoConfiguration
 @ComponentScan(basePackages = {
 		"br.com.jcv.treinadorpro",
-		"br.com.jcv.commons.library"
+		"br.com.jcv.commons.library",
+		"br.com.jcv.restclient"
 })
 @EnableScheduling
 @EnableFeignClients

@@ -25,6 +25,7 @@
 		<jjwt-jackson.version>0.11.1</jjwt-jackson.version>
 		<redis.client.version>3.6.0</redis.client.version>
 		<spring-data-redis.version>2.5.1</spring-data-redis.version>
+		<model-mapper.version>3.1.1</model-mapper.version>
 	</properties>
 
 	<dependencies>
@@ -83,10 +84,15 @@
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>${model-mapper.version}</version>
+		</dependency>
+
 
 	</dependencies>
 
 	<build>
 	</build>
-
 </project>
