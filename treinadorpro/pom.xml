@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>br.com.jcv.opensource.modularization</groupId>
+		<artifactId>opensource-modular</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
+	</parent>
+
+
+	<groupId>br.com.jcv.treinadorpro</groupId>
+	<artifactId>treinadorpro</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>treinadorpro</name>
+	<description>Demo project for Spring Boot</description>
+
+	<properties>
+		<postgresql.version>42.6.0</postgresql.version>
+		<commons-codec.version>1.11</commons-codec.version>
+		<jjwt-api.version>0.11.1</jjwt-api.version>
+		<jjwt-impl.version>0.11.1</jjwt-impl.version>
+		<jjwt-jackson.version>0.11.1</jjwt-jackson.version>
+		<redis.client.version>3.6.0</redis.client.version>
+		<spring-data-redis.version>2.5.1</spring-data-redis.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>${commons-codec.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>${postgresql.version}</version>
+		</dependency>
+
+		<!-- dependencies for JWT -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>${jjwt-api.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>${jjwt-impl.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>${jjwt-jackson.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- REDIS cache system dependency -->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>${redis.client.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<version>${spring-data-redis.version}</version>
+		</dependency>
+
+		<!-- OpenFeign Sync Http call -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+
+
+	</dependencies>
+
+	<build>
+	</build>
+
+</project>

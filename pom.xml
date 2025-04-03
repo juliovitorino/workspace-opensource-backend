@@ -23,6 +23,7 @@
     <module>preferences</module>
     <module>notifier</module>
     <module>bacen-economic-indexes</module>
+    <module>treinadorpro</module>
 
   </modules>
 
