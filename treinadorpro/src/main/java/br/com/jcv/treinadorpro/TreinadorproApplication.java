@@ -15,6 +15,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 		"br.com.jcv.restclient"
 })
 @EnableScheduling
+//@EnableFeignClients(basePackages = "br.com.jcv.restclient")
 @EnableFeignClients
 public class TreinadorproApplication {
 

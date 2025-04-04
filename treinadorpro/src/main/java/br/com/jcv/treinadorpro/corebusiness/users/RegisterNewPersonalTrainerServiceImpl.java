@@ -3,10 +3,11 @@ package br.com.jcv.treinadorpro.corebusiness.users;
 import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
-import br.com.jcv.restclient.guardian.GuardianRestClientConsumer;
 import br.com.jcv.restclient.guardian.request.CreateNewAccountRequest;
+import br.com.jcv.restclient.guardian.response.CreateNewAccountResponse;
 import br.com.jcv.treinadorpro.corelayer.dto.UserDTO;
 import br.com.jcv.treinadorpro.corelayer.enums.UserProfileEnum;
+import br.com.jcv.treinadorpro.corelayer.feignclient.GuardianRestClientConsumer;
 import br.com.jcv.treinadorpro.corelayer.mapper.UserMapper;
 import br.com.jcv.treinadorpro.corelayer.model.User;
 import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
@@ -51,7 +52,7 @@ public class RegisterNewPersonalTrainerServiceImpl implements RegisterNewPersona
         }
 
         CreateNewAccountRequest createNewAccountRequest = getInstanceCreateNewAccountRequest(registerRequest);
-        // TODO Criar a conta no Guardian
+        CreateNewAccountResponse accountGuardianResponse = guardianRestClientConsumer.createNewAccount(createNewAccountRequest);
 
         // mapping user data for local process
         UserDTO userDTO = getInstanceUserDTO(registerRequest);

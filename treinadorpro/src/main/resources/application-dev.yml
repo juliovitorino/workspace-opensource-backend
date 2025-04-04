@@ -45,7 +45,16 @@ server:
   tomcat:
     threads:
       max: 8
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full
 
 guardian:
   admin:
     magicSeed: B7CdeU3QtR1FQctrSV0JatNEcGeAaFUfSBW2XdDIgpF2eMmUIM
+  api:
+    url: http://localhost:9090 # ou a URL do serviço real
