@@ -22,7 +22,7 @@ spring:
         format_sql: true
   threads:
     virtual:
-      enabled: false;
+      enabled: false
   cache:
     type: redis
   redis:

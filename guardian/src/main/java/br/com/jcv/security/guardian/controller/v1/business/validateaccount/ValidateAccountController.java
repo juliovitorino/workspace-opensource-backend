@@ -17,10 +17,13 @@ public class ValidateAccountController {
 
     @Autowired private ValidateAccountService validateAccountService;
 
-    @PostMapping("/{externalAppUUID}")
-    public ResponseEntity validateAccount(@PathVariable @Valid UUID externalAppUUID, @RequestBody @Valid ValidateAccountRequest request) {
+    @PostMapping("/{externalAppUUID}/{externalUserUUID}")
+    public ResponseEntity validateAccount(@PathVariable @Valid UUID externalAppUUID,
+                                          @PathVariable @Valid UUID externalUserUUID,
+                                          @RequestBody @Valid ValidateAccountRequest request) {
         final UUID processId = UUID.randomUUID();
-        request.setExternalUUID(externalAppUUID);
+        request.setExternalAppUUID(externalAppUUID);
+        request.setExternalUserUUID(externalUserUUID);
         return ResponseEntity.ok(validateAccountService.execute(processId, request));
     }
 
