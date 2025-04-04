@@ -2,6 +2,7 @@ package br.com.jcv.reaction.businesslayer.reaction;
 
 import java.util.UUID;
 
+import br.com.jcv.restclient.guardian.GuardianRestClientConsumer;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
