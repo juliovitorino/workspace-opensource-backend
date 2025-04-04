@@ -1,5 +1,7 @@
 package br.com.jcv.security.guardian.controller.v1.business.group;
 
+import br.com.jcv.security.guardian.controller.v1.business.ControllerGenericResponse;
+import br.com.jcv.security.guardian.dto.GroupDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,7 @@ public class GroupController {
     @Autowired private CreateGroupBusinessService service;
 
     @PostMapping
-    public ResponseEntity createGroup(
+    public ResponseEntity<ControllerGenericResponse<GroupDTO>> createGroup(
             @RequestHeader(name = HttpHeaders.AUTHORIZATION) String jwtToken,
             @RequestBody @Valid GroupRequest request) {
         final UUID processId = UUID.randomUUID();

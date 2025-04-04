@@ -5,6 +5,7 @@ import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
 import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
 import br.com.jcv.commons.library.utility.DateUtility;
 import br.com.jcv.commons.library.utility.StringUtility;
+import br.com.jcv.security.guardian.controller.v1.business.ControllerGenericResponse;
 import br.com.jcv.security.guardian.dto.ApplicationUserDTO;
 import br.com.jcv.security.guardian.dto.GApplicationDTO;
 import br.com.jcv.security.guardian.dto.UsersDTO;
@@ -21,7 +22,7 @@ import java.util.UUID;
 @Slf4j
 public class CreateNewAccountBusinessService extends AbstractGuardianBusinessService implements CreateNewAccount{
     @Override
-    public CreateNewAccountResponse execute(UUID processId, CreateNewAccountRequest request) {
+    public ControllerGenericResponse<UUID> execute(UUID processId, CreateNewAccountRequest request) {
         log.info("execute :: processId = {} :: has been started", processId);
         if(!request.getPasswd().equals(request.getPasswdCheck())) {
             throw new CommoditieBaseException("Your secret password doesn't match with request", HttpStatus.BAD_REQUEST);
@@ -66,13 +67,14 @@ public class CreateNewAccountBusinessService extends AbstractGuardianBusinessSer
         log.info("execute :: processId = {} :: has been sent an email for {}", processId, request.getEmail());
 
         log.info("execute :: processId = {} :: has been finished successfully", processId);
-        MensagemResponse response = MensagemResponse.builder()
+        MensagemResponse mensagemResponse = MensagemResponse.builder()
                 .msgcode("GRDN-1933")
                 .mensagem("Your account has been created successfully, but it's depending on confirmation. A 6-digit code for activation has been sent to " + request.getEmail() + ". Check it out!")
                 .build();
-        return CreateNewAccountResponse.builder()
-                .response(response)
-                .build();
+        ControllerGenericResponse<UUID> response = new ControllerGenericResponse<>();
+        response.setResponse(mensagemResponse);
+        response.setObjectResponse(applicationUserDTO.getExternalUserUUID());
+        return response;
     }
 
     private UsersDTO mapperToDto(CreateNewAccountRequest request) {

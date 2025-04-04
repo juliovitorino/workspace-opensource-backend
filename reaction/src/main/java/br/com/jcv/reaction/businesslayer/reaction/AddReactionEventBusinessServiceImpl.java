@@ -17,7 +17,6 @@ import br.com.jcv.reaction.corelayer.service.ReactionService;
 import br.com.jcv.reaction.infrastructure.dto.ReactionDTO;
 import br.com.jcv.reaction.infrastructure.dto.ReactionEventDTO;
 import br.com.jcv.reaction.infrastructure.exception.ReactionEventNotFoundException;
-import br.com.jcv.restclient.guardian.GuardianRestClientConsumer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

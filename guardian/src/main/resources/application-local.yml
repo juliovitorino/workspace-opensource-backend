@@ -20,7 +20,7 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   threads:
     virtual:
-      enabled: true;
+      enabled: true
   cache:
     type: redis
   redis:
