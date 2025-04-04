@@ -2,7 +2,7 @@ package br.com.jcv.security.guardian.controller.v1.business.scheduling.cleanolde
 
 import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
-import br.com.jcv.security.guardian.controller.v1.business.ControllerGenericResponse;
+import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.security.guardian.repository.SessionStateRepository;
 import br.com.jcv.security.guardian.service.AbstractGuardianBusinessService;
 import lombok.extern.slf4j.Slf4j;

@@ -51,6 +51,7 @@ public class LoginServiceImpl extends AbstractGuardianBusinessService implements
         SessionStateDTO sessionStateDTO = new SessionStateDTO();
         sessionStateDTO.setIdToken(idToken);
         sessionStateDTO.setIdUserUUID(applicationUserDTO.getExternalUserUUID());
+        sessionStateDTO.setIdApplicationUUID(applicationUserDTO.getExternalAppUserUUID());
 
         SessionStateDTO saved = sessionStateService.salvar(sessionStateDTO);
         sessionStateService.updateStatusById(saved.getId(), GenericStatusEnums.ATIVO.getShortValue());

@@ -3,18 +3,18 @@ package br.com.jcv.security.guardian.controller.v1.business.createaccount;
 import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
 import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
+import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.commons.library.utility.DateUtility;
 import br.com.jcv.commons.library.utility.StringUtility;
-import br.com.jcv.security.guardian.controller.v1.business.ControllerGenericResponse;
 import br.com.jcv.security.guardian.dto.ApplicationUserDTO;
 import br.com.jcv.security.guardian.dto.GApplicationDTO;
 import br.com.jcv.security.guardian.dto.UsersDTO;
 import br.com.jcv.security.guardian.exception.ApplicationUserNotFoundException;
 import br.com.jcv.security.guardian.service.AbstractGuardianBusinessService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -22,6 +22,7 @@ import java.util.UUID;
 @Slf4j
 public class CreateNewAccountBusinessService extends AbstractGuardianBusinessService implements CreateNewAccount{
     @Override
+    @Transactional
     public ControllerGenericResponse<UUID> execute(UUID processId, CreateNewAccountRequest request) {
         log.info("execute :: processId = {} :: has been started", processId);
         if(!request.getPasswd().equals(request.getPasswdCheck())) {
@@ -55,7 +56,7 @@ public class CreateNewAccountBusinessService extends AbstractGuardianBusinessSer
         applicationUserDTO.setExternalUserUUID(UUID.randomUUID());
         applicationUserDTO.setEncodedPassPhrase(md5Hex);
         applicationUserDTO.setActivationCode(StringUtility.getRandomCodeNumber(6));
-        applicationUserDTO.setDueDateActivation(DateUtility.addDays(dateTime.getToday(),1));
+        applicationUserDTO.setDueDateActivation(DateUtility.addDaysLDT(dateTime.getToday(),1));
         applicationUserDTO.setUrlTokenActivation(StringUtility.getRandomCodeStringUpperLower(32));
 
         UsersDTO savedUserAccount = usersService.salvar(usersDTO);

@@ -1,6 +1,6 @@
 package br.com.jcv.security.guardian.controller.v1.business.createaccount;
 
-import br.com.jcv.security.guardian.controller.v1.business.ControllerGenericResponse;
+import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -41,6 +41,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -228,7 +229,7 @@ public class UserRoleCommoditieController
 
         try {
             userroleDTO.setId(id);
-            userroleDTO.setDateUpdated(new Date());
+            userroleDTO.setDateUpdated(LocalDateTime.now());
             UserRoleDTO userroleSaved = userroleService.salvar(userroleDTO);
             return new ResponseEntity<>(userroleSaved, HttpStatus.OK);
         } catch(CommoditieBaseException e) {

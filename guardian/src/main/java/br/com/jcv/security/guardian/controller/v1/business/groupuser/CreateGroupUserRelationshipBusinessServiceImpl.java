@@ -2,18 +2,16 @@ package br.com.jcv.security.guardian.controller.v1.business.groupuser;
 
 import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
 import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
+import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.security.guardian.RoleEnums;
-import br.com.jcv.security.guardian.controller.v1.business.ControllerGenericResponse;
 import br.com.jcv.security.guardian.dto.ApplicationUserDTO;
 import br.com.jcv.security.guardian.dto.GApplicationDTO;
 import br.com.jcv.security.guardian.dto.GroupDTO;
 import br.com.jcv.security.guardian.dto.GroupUserDTO;
 import br.com.jcv.security.guardian.exception.GroupUserNotFoundException;
 import br.com.jcv.security.guardian.service.AbstractGuardianBusinessService;
-import br.com.jcv.security.guardian.service.GApplicationService;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 

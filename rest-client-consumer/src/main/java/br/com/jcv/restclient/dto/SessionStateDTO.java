@@ -19,29 +19,20 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 
-package br.com.jcv.security.guardian.dto;
-import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
+package br.com.jcv.restclient.dto;
+
 import br.com.jcv.commons.library.commodities.dto.DTOPadrao;
-import br.com.jcv.commons.library.commodities.annotation.RegexValidation;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.io.Serializable;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
-import br.com.jcv.security.guardian.constantes.UsersConstantes;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.gson.annotations.SerializedName;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.UUID;
-
-/**
-* UsersDTO - Data Transfer Object
-*
-* @author Users
-* @since Thu Nov 16 09:03:28 BRT 2023
-*/
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -51,20 +42,8 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UsersDTO extends DTOPadrao implements Serializable
+public class SessionStateDTO extends DTOPadrao implements Serializable
 {
-    
-    @SerializedName(UsersConstantes.NAME)
-    @JsonProperty(UsersConstantes.NAME)
-    private String name;
-    
-    @SerializedName(UsersConstantes.BIRTHDAY)
-    @JsonProperty(UsersConstantes.BIRTHDAY)
-    private LocalDate birthday;
-
-
-    @SerializedName("mensagemResponse")
-    @JsonProperty("mensagemResponse")
-    @JsonInclude(value = JsonInclude.Include.NON_NULL)
-    private MensagemResponse mensagemResponse;
+    private UUID idToken;
+    private UUID idUserUUID;
 }

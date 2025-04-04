@@ -47,6 +47,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
 
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -104,7 +105,7 @@ public class GroupRoleServiceImpl implements GroupRoleService
         noRollbackFor = GroupRoleNotFoundException.class
     )
     public GroupRoleDTO salvar(GroupRoleDTO grouproleDTO) {
-        Date now = dateTime.getToday();
+        LocalDateTime now = LocalDateTime.now();
         if(Objects.nonNull(grouproleDTO.getId()) && grouproleDTO.getId() != 0) {
             grouproleDTO.setDateUpdated(now);
         } else {
@@ -164,7 +165,7 @@ public class GroupRoleServiceImpl implements GroupRoleService
                 if(entry.getKey().equalsIgnoreCase(GroupRoleConstantes.IDGROUP)) grouprole.setIdGroup((Long)entry.getValue());
 
         }
-        if(updates.get(GroupRoleConstantes.DATEUPDATED) == null) grouprole.setDateUpdated(new Date());
+        if(updates.get(GroupRoleConstantes.DATEUPDATED) == null) grouprole.setDateUpdated(LocalDateTime.now());
         grouproleRepository.save(grouprole);
         return true;
     }
@@ -189,7 +190,7 @@ public class GroupRoleServiceImpl implements GroupRoleService
                 );
         GroupRole grouprole = grouproleData.orElseGet(GroupRole::new);
         grouprole.setStatus(status);
-        grouprole.setDateUpdated(new Date());
+        grouprole.setDateUpdated(LocalDateTime.now());
         return toDTO(grouproleRepository.save(grouprole));
 
     }
