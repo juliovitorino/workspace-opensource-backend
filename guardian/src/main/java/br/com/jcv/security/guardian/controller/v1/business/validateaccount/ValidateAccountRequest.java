@@ -21,6 +21,7 @@ import java.util.UUID;
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ValidateAccountRequest implements Serializable {
-    private UUID externalUUID;
+    private UUID externalAppUUID;
+    private UUID externalUserUUID;
     private String requiredCode;
 }

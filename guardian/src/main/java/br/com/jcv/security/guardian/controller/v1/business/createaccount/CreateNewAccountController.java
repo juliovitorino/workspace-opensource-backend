@@ -1,5 +1,6 @@
 package br.com.jcv.security.guardian.controller.v1.business.createaccount;
 
+import br.com.jcv.security.guardian.controller.v1.business.ControllerGenericResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,8 @@ public class CreateNewAccountController {
 
     @Autowired private CreateNewAccount createNewAccount;
     @PostMapping
-    public ResponseEntity createAccount(@RequestBody @Valid CreateNewAccountRequest request) {
-        UUID processId = UUID.randomUUID();
-        return ResponseEntity.status(HttpStatus.CREATED).body(createNewAccount.execute(processId, request));
+    public ResponseEntity<ControllerGenericResponse<UUID>> createAccount(@RequestBody @Valid CreateNewAccountRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(createNewAccount.execute(UUID.randomUUID(), request));
 
     }
 }

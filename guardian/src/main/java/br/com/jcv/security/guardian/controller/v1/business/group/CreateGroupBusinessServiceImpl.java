@@ -17,7 +17,7 @@ import java.util.UUID;
 @Slf4j
 public class CreateGroupBusinessServiceImpl extends AbstractGuardianBusinessService implements CreateGroupBusinessService{
     @Override
-    public ControllerGenericResponse execute(UUID processId, String jwtToken, GroupRequest request) {
+    public ControllerGenericResponse<GroupDTO> execute(UUID processId, String jwtToken, GroupRequest request) {
         askHeimdallPermission(jwtToken, RoleEnums.GUARDIAN_CREATE_GROUP.name());
 
         try {
@@ -31,11 +31,12 @@ public class CreateGroupBusinessServiceImpl extends AbstractGuardianBusinessServ
         GroupDTO groupSaved = groupService.salvar(groupDTO);
         groupService.updateStatusById(groupSaved.getId(), GenericStatusEnums.ATIVO.getShortValue());
 
-        return ControllerGenericResponse.builder()
-                .response(MensagemResponse.builder()
-                        .msgcode("GRDN-1227")
-                        .mensagem("Your group has been created successfully")
-                        .build())
-                .build();
+        ControllerGenericResponse<GroupDTO> groupResponse = new ControllerGenericResponse<>();
+        groupResponse.setObjectResponse(groupSaved);
+        groupResponse.setResponse(MensagemResponse.builder()
+                .msgcode("GRDN-1227")
+                .mensagem("Your group has been created successfully")
+                .build());
+        return groupResponse;
     }
 }
