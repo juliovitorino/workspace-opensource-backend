@@ -2,6 +2,9 @@ spring:
   application:
     name: treinadorpro-app
 
+  apikey:
+    uuid: 2409aeab-9179-4ad7-b400-891ce338b57a
+
   # solve problem in swagger 'documentationPluginsBootstrapper'
   mvc:
     pathmatch:
@@ -38,11 +41,24 @@ logging:
           descriptor:
             sql:
               BasicBinder: TRACE
+    feign:
+      Logger: DEBUG
+    br.com.jcv.restclient.guardian: DEBUG
+
 server:
   tomcat:
     threads:
       max: 8
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full
 
 guardian:
   admin:
     magicSeed: B7CdeU3QtR1FQctrSV0JatNEcGeAaFUfSBW2XdDIgpF2eMmUIM
+  api:
+    url: http://localhost:8081 # ou a URL do serviço real

@@ -2,6 +2,9 @@ spring:
   application:
     name: guardian-app
 
+  apikey:
+    uuid: 2409aeab-9179-4ad7-b400-891ce338b57a
+
   # solve problem in swagger 'documentationPluginsBootstrapper'
   mvc:
     pathmatch:
@@ -31,6 +34,16 @@ server:
     threads:
       max: 10
 
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: BASIC
+
 guardian:
   admin:
     magicSeed: B7CdeU3QtR1FQctrSV0JatNEcGeAaFUfSBW2XdDIgpF2eMmUIM
+  api:
+    url: http://localhost:8081 # ou a URL do serviço real
