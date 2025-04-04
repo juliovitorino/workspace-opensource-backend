@@ -27,7 +27,9 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -49,7 +51,7 @@ import br.com.jcv.brcities.infrastructure.constantes.CityUfConstantes;
 *
 */
 @Repository
-public interface CityUfRepository extends JpaRepository<CityUf, Long>
+public interface CityUfRepository extends JpaRepository<CityUf, Long>, JpaSpecificationExecutor<CityUf>
 {
     @Query(value = "SELECT * FROM city_item WHERE  status = :status", nativeQuery = true)
     List<CityUf> findAllByStatus(@Param(CityUfConstantes.STATUS) String status);
