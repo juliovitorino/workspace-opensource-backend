@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -60,6 +61,9 @@ public class User {
 
     @Column(name = "master_language", length = 10)
     private String masterLanguage = "pt-BR";
+
+    @Column(name = "guardian_integration")
+    private UUID guardianIntegrationUUID;
 
     @Column(length = 1)
     private String status = "A"; // A = Active, B = Blocked, I = Inactive

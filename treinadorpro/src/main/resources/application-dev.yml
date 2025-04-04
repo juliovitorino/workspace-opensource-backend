@@ -41,6 +41,10 @@ logging:
           descriptor:
             sql:
               BasicBinder: TRACE
+    feign:
+      Logger: DEBUG
+    br.com.jcv.restclient.guardian: DEBUG
+
 server:
   tomcat:
     threads:
@@ -57,4 +61,4 @@ guardian:
   admin:
     magicSeed: B7CdeU3QtR1FQctrSV0JatNEcGeAaFUfSBW2XdDIgpF2eMmUIM
   api:
-    url: http://localhost:9090 # ou a URL do serviço real
+    url: http://localhost:8081 # ou a URL do serviço real

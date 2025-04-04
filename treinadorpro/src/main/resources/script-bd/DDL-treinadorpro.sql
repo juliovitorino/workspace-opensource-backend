@@ -10,6 +10,7 @@ CREATE TABLE users (
     url_photo_profile TEXT,
     user_profile VARCHAR(50) DEFAULT 'PERSONAL_TRAINER' CHECK (user_profile IN ('PERSONAL_TRAINER', 'STUDENT')),
     master_language VARCHAR(10) DEFAULT 'pt-BR' CHECK (master_language IN ('pt-BR', 'en-US', 'es-ES')),
+    guardian_integration UUID UNIQUE NOT NULL,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
     last_login TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -27,6 +28,7 @@ COMMENT ON COLUMN users.gender IS 'User gender: F = Female ou M = Male)';
 COMMENT ON COLUMN users.url_photo_profile IS 'URL of the user''s profile photo';
 COMMENT ON COLUMN users.user_profile IS 'Type of user profile: PERSONAL_TRAINER or STUDENT';
 COMMENT ON COLUMN users.master_language IS 'User''s preferred language (e.g., pt-BR)';
+COMMENT ON COLUMN users.guardian_integration IS 'Guardian user link integration';
 COMMENT ON COLUMN users.status IS 'User status: A = Active, B = Blocked, I = Inactive, P = Pending';
 COMMENT ON COLUMN users.last_login IS 'Timestamp of the user''s last login';
 COMMENT ON COLUMN users.created_at IS 'Timestamp of when the user was created';

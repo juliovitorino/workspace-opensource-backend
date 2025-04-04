@@ -24,7 +24,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ControllerGenericResponse<UserDTO>> adicionarPersonalTrainer(@RequestBody RegisterRequest userdto) {
+    public ResponseEntity<ControllerGenericResponse<UserDTO>> registerPersonalTrainer(@RequestBody RegisterRequest userdto) {
         return ResponseEntity.ok(registerNewPersonalTrainerService.execute(UUID.randomUUID(), userdto));
     }
 }

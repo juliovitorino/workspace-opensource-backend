@@ -3,11 +3,10 @@ package br.com.jcv.treinadorpro.corebusiness.users;
 import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
+import br.com.jcv.restclient.guardian.GuardianRestClientConsumer;
 import br.com.jcv.restclient.guardian.request.CreateNewAccountRequest;
-import br.com.jcv.restclient.guardian.response.CreateNewAccountResponse;
 import br.com.jcv.treinadorpro.corelayer.dto.UserDTO;
 import br.com.jcv.treinadorpro.corelayer.enums.UserProfileEnum;
-import br.com.jcv.treinadorpro.corelayer.feignclient.GuardianRestClientConsumer;
 import br.com.jcv.treinadorpro.corelayer.mapper.UserMapper;
 import br.com.jcv.treinadorpro.corelayer.model.User;
 import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
@@ -52,10 +51,10 @@ public class RegisterNewPersonalTrainerServiceImpl implements RegisterNewPersona
         }
 
         CreateNewAccountRequest createNewAccountRequest = getInstanceCreateNewAccountRequest(registerRequest);
-        CreateNewAccountResponse accountGuardianResponse = guardianRestClientConsumer.createNewAccount(createNewAccountRequest);
+        ControllerGenericResponse<UUID> accountGuardianResponse = guardianRestClientConsumer.createNewAccount(createNewAccountRequest);
 
         // mapping user data for local process
-        UserDTO userDTO = getInstanceUserDTO(registerRequest);
+        UserDTO userDTO = getInstanceUserDTO(registerRequest, accountGuardianResponse);
 
         User userEntity = userMapper.toEntity(userDTO);
         User userSaved = userRepository.save(userEntity);
@@ -63,17 +62,18 @@ public class RegisterNewPersonalTrainerServiceImpl implements RegisterNewPersona
         ControllerGenericResponse<UserDTO> response = new ControllerGenericResponse<>();
         response.setResponse(MensagemResponse.builder()
                         .msgcode("MSG-0001")
-                        .mensagem("Command has been executed sucessfully")
+                        .mensagem(accountGuardianResponse.getResponse().getMensagem())
                 .build());
         response.setObjectResponse(userMapper.toDTO(userSaved));
 
         return response;
     }
 
-    private UserDTO getInstanceUserDTO(RegisterRequest registerRequest) {
+    private UserDTO getInstanceUserDTO(RegisterRequest registerRequest, ControllerGenericResponse<UUID> accountGuardianResponse) {
         UserDTO userDTO = modelMapper.map(registerRequest, UserDTO.class);
         userDTO.setUserProfile(UserProfileEnum.PERSONAL_TRAINER);
         userDTO.setStatus("A");
+        userDTO.setGuardianIntegrationUUID(accountGuardianResponse.getObjectResponse());
         return userDTO;
     }
 

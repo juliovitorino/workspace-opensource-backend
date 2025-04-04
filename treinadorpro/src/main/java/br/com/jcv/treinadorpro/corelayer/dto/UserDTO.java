@@ -5,6 +5,7 @@ import br.com.jcv.treinadorpro.corelayer.enums.UserProfileEnum;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class UserDTO {
 
@@ -19,6 +20,7 @@ public class UserDTO {
     private String urlPhotoProfile;
     private UserProfileEnum userProfile;
     private String masterLanguage;
+    private UUID guardianIntegrationUUID;
     private String status;
     private LocalDateTime lastLogin;
     private LocalDateTime createdAt;
@@ -162,6 +164,14 @@ public class UserDTO {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public UUID getGuardianIntegrationUUID() {
+        return guardianIntegrationUUID;
+    }
+
+    public void setGuardianIntegrationUUID(UUID guardianIntegrationUUID) {
+        this.guardianIntegrationUUID = guardianIntegrationUUID;
     }
 
     @Override
