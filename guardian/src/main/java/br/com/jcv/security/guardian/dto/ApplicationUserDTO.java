@@ -26,11 +26,14 @@ import br.com.jcv.commons.library.commodities.annotation.RegexValidation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import br.com.jcv.security.guardian.constantes.ApplicationUserConstantes;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -52,44 +55,24 @@ import java.util.UUID;
 public class ApplicationUserDTO extends DTOPadrao implements Serializable
 {
     
-    @SerializedName(ApplicationUserConstantes.IDAPPLICATION)
-    @JsonProperty(ApplicationUserConstantes.IDAPPLICATION)
     private Long idApplication;
 
-    @SerializedName(ApplicationUserConstantes.IDUSER)
-    @JsonProperty(ApplicationUserConstantes.IDUSER)
     private Long idUser;
 
-    @SerializedName(ApplicationUserConstantes.EMAIL)
-    @JsonProperty(ApplicationUserConstantes.EMAIL)
     private String email;
     
-    @SerializedName(ApplicationUserConstantes.ENCODEDPASSPHRASE)
-    @JsonProperty(ApplicationUserConstantes.ENCODEDPASSPHRASE)
     private String encodedPassPhrase;
     
-    @SerializedName(ApplicationUserConstantes.EXTERNALAPPUSERUUID)
-    @JsonProperty(ApplicationUserConstantes.EXTERNALAPPUSERUUID)
     private UUID externalAppUserUUID;
 
-    @SerializedName(ApplicationUserConstantes.EXTERNALUSERUUID)
-    @JsonProperty(ApplicationUserConstantes.EXTERNALUSERUUID)
     private UUID externalUserUUID;
     
-    @SerializedName(ApplicationUserConstantes.URLTOKENACTIVATION)
-    @JsonProperty(ApplicationUserConstantes.URLTOKENACTIVATION)
     private String urlTokenActivation;
     
-    @SerializedName(ApplicationUserConstantes.ACTIVATIONCODE)
-    @JsonProperty(ApplicationUserConstantes.ACTIVATIONCODE)
     private String activationCode;
     
-    @SerializedName(ApplicationUserConstantes.DUEDATEACTIVATION)
-    @JsonProperty(ApplicationUserConstantes.DUEDATEACTIVATION)
-    private Date dueDateActivation;
+    private LocalDateTime dueDateActivation;
 
-
-    @SerializedName("mensagemResponse")
-    @JsonProperty("mensagemResponse")
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     private MensagemResponse mensagemResponse;
 }

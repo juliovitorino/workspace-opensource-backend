@@ -1,6 +1,6 @@
 package br.com.jcv.security.guardian.controller.v1.business.group;
 
-import br.com.jcv.security.guardian.controller.v1.business.ControllerGenericResponse;
+import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.security.guardian.dto.GroupDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

@@ -47,6 +47,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
 
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -104,7 +105,7 @@ public class UserRoleServiceImpl implements UserRoleService
         noRollbackFor = UserRoleNotFoundException.class
     )
     public UserRoleDTO salvar(UserRoleDTO userroleDTO) {
-        Date now = dateTime.getToday();
+        LocalDateTime now = LocalDateTime.now();
         if(Objects.nonNull(userroleDTO.getId()) && userroleDTO.getId() != 0) {
             userroleDTO.setDateUpdated(now);
         } else {
@@ -164,7 +165,7 @@ public class UserRoleServiceImpl implements UserRoleService
                 if(entry.getKey().equalsIgnoreCase(UserRoleConstantes.IDUSER)) userrole.setIdUser((Long)entry.getValue());
 
         }
-        if(updates.get(UserRoleConstantes.DATEUPDATED) == null) userrole.setDateUpdated(new Date());
+        if(updates.get(UserRoleConstantes.DATEUPDATED) == null) userrole.setDateUpdated(LocalDateTime.now());
         userroleRepository.save(userrole);
         return true;
     }
@@ -189,7 +190,7 @@ public class UserRoleServiceImpl implements UserRoleService
                 );
         UserRole userrole = userroleData.orElseGet(UserRole::new);
         userrole.setStatus(status);
-        userrole.setDateUpdated(new Date());
+        userrole.setDateUpdated(LocalDateTime.now());
         return toDTO(userroleRepository.save(userrole));
 
     }

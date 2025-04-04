@@ -5,6 +5,8 @@ import br.com.jcv.codegen.codegenerator.annotation.CodeGeneratorFieldDescriptor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -65,18 +68,20 @@ public class ApplicationUser {
 
     @Column(name = "dt_due_activation")
     @CodeGeneratorFieldDescriptor(fieldDescription = "Due date for account activation")
-    private Date dueDateActivation;
+    private LocalDateTime dueDateActivation;
 
     @CodeGeneratorFieldDescriptor(fieldDescription = "Status field")
     @Column(length = 1)
     private String status;
 
     @CodeGeneratorFieldDescriptor(fieldDescription = "record created at")
-    @Column(name = "date_created")
-    private Date dateCreated;
+    @Column(name = "date_created",updatable = false)
+    @CreationTimestamp
+    private LocalDateTime dateCreated;
 
     @CodeGeneratorFieldDescriptor(fieldDescription = "record updated at")
     @Column(name = "date_updated")
-    private Date dateUpdated;
+    @UpdateTimestamp
+    private LocalDateTime dateUpdated;
 
 }

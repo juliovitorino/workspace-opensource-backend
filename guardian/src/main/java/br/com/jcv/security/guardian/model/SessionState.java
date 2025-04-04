@@ -5,7 +5,9 @@ import br.com.jcv.codegen.codegenerator.annotation.CodeGeneratorFieldDescriptor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -39,17 +42,23 @@ public class SessionState {
     @CodeGeneratorFieldDescriptor(fieldDescription = "user external token")
     private UUID idUserUUID;
 
+    @Column(name = "id_application_uuid")
+    @CodeGeneratorFieldDescriptor(fieldDescription = "Application external token")
+    private UUID idApplicationUUID;
+
     @CodeGeneratorFieldDescriptor(fieldDescription = "Status field")
     @Column(length = 1)
     private String status;
 
     @CodeGeneratorFieldDescriptor(fieldDescription = "record created at")
-    @Column(name = "date_created")
-    private Date dateCreated;
+    @Column(name = "date_created", updatable = false)
+    @CreationTimestamp
+    private LocalDateTime dateCreated;
 
     @CodeGeneratorFieldDescriptor(fieldDescription = "record updated at")
     @Column(name = "date_updated")
-    private Date dateUpdated;
+    @UpdateTimestamp
+    private LocalDateTime dateUpdated;
 
 
 

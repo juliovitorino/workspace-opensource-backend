@@ -43,6 +43,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -100,7 +101,7 @@ public class RoleServiceImpl implements RoleService
         noRollbackFor = RoleNotFoundException.class
     )
     public RoleDTO salvar(RoleDTO roleDTO) {
-        Date now = dateTime.getToday();
+        LocalDateTime now = LocalDateTime.now();
         if(Objects.nonNull(roleDTO.getId()) && roleDTO.getId() != 0) {
             roleDTO.setDateUpdated(now);
         } else {
@@ -157,7 +158,7 @@ public class RoleServiceImpl implements RoleService
                 if(entry.getKey().equalsIgnoreCase(RoleConstantes.NAME)) role.setName((String)entry.getValue());
 
         }
-        if(updates.get(RoleConstantes.DATEUPDATED) == null) role.setDateUpdated(new Date());
+        if(updates.get(RoleConstantes.DATEUPDATED) == null) role.setDateUpdated(LocalDateTime.now());
         roleRepository.save(role);
         return true;
     }
@@ -182,7 +183,7 @@ public class RoleServiceImpl implements RoleService
                 );
         Role role = roleData.orElseGet(Role::new);
         role.setStatus(status);
-        role.setDateUpdated(new Date());
+        role.setDateUpdated(LocalDateTime.now());
         return toDTO(roleRepository.save(role));
 
     }

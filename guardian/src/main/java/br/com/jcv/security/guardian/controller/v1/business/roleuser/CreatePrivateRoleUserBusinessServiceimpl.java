@@ -1,8 +1,8 @@
 package br.com.jcv.security.guardian.controller.v1.business.roleuser;
 
 import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
+import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.security.guardian.RoleEnums;
-import br.com.jcv.security.guardian.controller.v1.business.ControllerGenericResponse;
 import br.com.jcv.security.guardian.dto.ApplicationUserDTO;
 import br.com.jcv.security.guardian.dto.RoleDTO;
 import br.com.jcv.security.guardian.dto.UserRoleDTO;

@@ -41,6 +41,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -228,7 +229,7 @@ public class SessionStateCommoditieController
 
         try {
             sessionstateDTO.setId(id);
-            sessionstateDTO.setDateUpdated(new Date());
+            sessionstateDTO.setDateUpdated(LocalDateTime.now());
             SessionStateDTO sessionstateSaved = sessionstateService.salvar(sessionstateDTO);
             return new ResponseEntity<>(sessionstateSaved, HttpStatus.OK);
         } catch(CommoditieBaseException e) {

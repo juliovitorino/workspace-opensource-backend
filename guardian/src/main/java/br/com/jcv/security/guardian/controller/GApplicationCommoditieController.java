@@ -41,6 +41,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -228,7 +229,7 @@ public class GApplicationCommoditieController
 
         try {
             gapplicationDTO.setId(id);
-            gapplicationDTO.setDateUpdated(new Date());
+            gapplicationDTO.setDateUpdated(LocalDateTime.now());
             GApplicationDTO gapplicationSaved = gapplicationService.salvar(gapplicationDTO);
             return new ResponseEntity<>(gapplicationSaved, HttpStatus.OK);
         } catch(CommoditieBaseException e) {

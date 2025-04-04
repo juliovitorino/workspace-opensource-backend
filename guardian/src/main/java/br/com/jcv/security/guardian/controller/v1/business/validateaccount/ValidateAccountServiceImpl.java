@@ -3,7 +3,7 @@ package br.com.jcv.security.guardian.controller.v1.business.validateaccount;
 import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
 import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
-import br.com.jcv.security.guardian.controller.v1.business.ControllerGenericResponse;
+import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.security.guardian.dto.ApplicationUserDTO;
 import br.com.jcv.security.guardian.dto.UsersDTO;
 import br.com.jcv.security.guardian.service.AbstractGuardianBusinessService;
