@@ -3,6 +3,7 @@ package br.com.jcv.security.guardian.controller.v1.business.validateaccount;
 import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
 import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
+import br.com.jcv.security.guardian.controller.v1.business.ControllerGenericResponse;
 import br.com.jcv.security.guardian.dto.ApplicationUserDTO;
 import br.com.jcv.security.guardian.dto.UsersDTO;
 import br.com.jcv.security.guardian.service.AbstractGuardianBusinessService;
@@ -16,11 +17,12 @@ import java.util.UUID;
 @Slf4j
 public class ValidateAccountServiceImpl extends AbstractGuardianBusinessService implements ValidateAccountService {
     @Override
-    public ValidateAccountResponse execute(UUID processId, ValidateAccountRequest request) {
+    public ControllerGenericResponse<?> execute(UUID processId, ValidateAccountRequest request) {
         log.info("execute :: processId = {} : has been started", processId);
         ApplicationUserDTO applicationUserDTO =
-                applicationUserService.findApplicationUserByExternalAppUserUUIDAndStatus(
-                        request.getExternalUUID(),
+                applicationUserService.findApplicationUserByExternalAppUserUUIDAndExternalUserUUIDAndStatus(
+                        request.getExternalAppUUID(),
+                        request.getExternalUserUUID(),
                         GenericStatusEnums.PENDENTE.getShortValue());
         UsersDTO usersDTO = usersService.findById(applicationUserDTO.getIdUser());
 
@@ -38,7 +40,7 @@ public class ValidateAccountServiceImpl extends AbstractGuardianBusinessService 
         applicationUserService.salvar(updateTo);
 
         log.info("execute :: processId = {} : Account has been activated successfully", processId);
-        return ValidateAccountResponse.builder()
+        return ControllerGenericResponse.builder()
                 .response(
                         MensagemResponse.builder()
                                 .msgcode("GRDN-1351")

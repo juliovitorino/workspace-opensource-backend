@@ -136,6 +136,20 @@ services:
     volumes:
       - postgresql_opensource:/var/lib/postgresql
       - postgresql_data_brcities:/var/lib/postgresql/data
+  pg-treinadorpro:
+    container_name: pg-treinadorpro
+    image: postgres:9.6
+    ports:
+      - "5130:5432"
+    networks:
+      - opensource-net
+    environment:
+      - POSTGRES_DB=treinadorpro
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgresql_opensource:/var/lib/postgresql
+      - postgresql_data_treinadorpro:/var/lib/postgresql/data
   app-guardian:
     container_name: app-guardian
     image: juliovitorino/guardian:latest
@@ -210,6 +224,7 @@ volumes:
   postgresql_data_star_rating:
   postgresql_data_reaction:
   postgresql_data_brcities:
+  postgresql_data_treinadorpro:
   redis_data_guardian:
   rabbitmq_data_opensource:
 

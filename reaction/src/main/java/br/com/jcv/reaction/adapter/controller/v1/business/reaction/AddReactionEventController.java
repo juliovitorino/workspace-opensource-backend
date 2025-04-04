@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import br.com.jcv.reaction.businesslayer.reaction.AddReactionEventBusinessService;
-import br.com.jcv.restclient.guardian.GuardianRestClientConsumer;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController

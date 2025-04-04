@@ -4,9 +4,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import br.com.jcv.codegen.codegenerator.annotation.CodeGeneratorDescriptor;
@@ -33,6 +36,10 @@ public class CityUf {
     @Column(name = "id_city")
     @CodeGeneratorFieldDescriptor(fieldDescription = "City Id")
     private Long cityId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_city", nullable = false, insertable = false, updatable = false)
+    private City city;
 
     @Column(name = "id_uf")
     @CodeGeneratorFieldDescriptor(fieldDescription = "UF Id")
