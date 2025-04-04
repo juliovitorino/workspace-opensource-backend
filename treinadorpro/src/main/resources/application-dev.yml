@@ -1,0 +1,64 @@
+spring:
+  application:
+    name: treinadorpro-app
+
+  apikey:
+    uuid: 2409aeab-9179-4ad7-b400-891ce338b57a
+
+  # solve problem in swagger 'documentationPluginsBootstrapper'
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  datasource:
+    url: jdbc:postgresql://localhost:5130/treinadorpro
+    username: postgres
+    password: postgres
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  threads:
+    virtual:
+      enabled: false
+  cache:
+    type: redis
+  redis:
+    host: localhost
+    port: 16379
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+    feign:
+      Logger: DEBUG
+    br.com.jcv.restclient.guardian: DEBUG
+
+server:
+  tomcat:
+    threads:
+      max: 8
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full
+
+guardian:
+  admin:
+    magicSeed: B7CdeU3QtR1FQctrSV0JatNEcGeAaFUfSBW2XdDIgpF2eMmUIM
+  api:
+    url: http://localhost:8081 # ou a URL do serviço real

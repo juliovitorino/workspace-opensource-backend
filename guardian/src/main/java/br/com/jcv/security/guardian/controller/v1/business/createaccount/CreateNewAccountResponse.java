@@ -23,6 +23,7 @@ import java.time.LocalDate;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Deprecated
 public class CreateNewAccountResponse implements Serializable {
     private MensagemResponse response;
 }

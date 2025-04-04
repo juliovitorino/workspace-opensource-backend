@@ -609,6 +609,36 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     rollbackFor = Throwable.class,
     noRollbackFor = ApplicationUserNotFoundException.class
     )
+    public ApplicationUserDTO findApplicationUserByExternalAppUserUUIDAndExternalUserUUIDAndStatus(UUID externalAppUserUUID, UUID externalUserUUID, String status) {
+
+        ApplicationUserDTO cache = redisProvider.getValue("applicationUser-" + externalAppUserUUID + status,ApplicationUserDTO.class);
+        if(Objects.nonNull(cache)) return cache;
+
+
+        Long maxId = applicationuserRepository.loadMaxIdByExternalAppUserUUIDAndExternalUserUUIDAndStatus(externalAppUserUUID, externalUserUUID, status);
+        if(maxId == null) maxId = 0L;
+        Optional<ApplicationUser> applicationuserData =
+            Optional.ofNullable( applicationuserRepository
+                .findById(maxId)
+                .orElseThrow(
+                    () -> new ApplicationUserNotFoundException(APPLICATIONUSER_NOTFOUND_WITH_EXTERNALAPPUSERUUID + externalAppUserUUID,
+                        HttpStatus.NOT_FOUND,
+                        APPLICATIONUSER_NOTFOUND_WITH_EXTERNALAPPUSERUUID + externalAppUserUUID))
+                );
+
+        ApplicationUserDTO response = applicationuserData.map(this::toDTO).orElse(null);
+        if(Objects.nonNull(response)) {
+            redisProvider.setValue("applicationUser-" + externalAppUserUUID + status, gson.toJson(response),120);
+        }
+        return response;
+    }
+
+    @Override
+    @Transactional(transactionManager="transactionManager",
+    propagation = Propagation.REQUIRED,
+    rollbackFor = Throwable.class,
+    noRollbackFor = ApplicationUserNotFoundException.class
+    )
     public ApplicationUserDTO findApplicationUserByExternalUserUUIDAndStatus(UUID externalUserUUID, String status) {
 
         ApplicationUserDTO cache = redisProvider.getValue("applicationUser-" + externalUserUUID + status,ApplicationUserDTO.class);
