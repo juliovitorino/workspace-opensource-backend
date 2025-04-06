@@ -40,9 +40,6 @@ public class Exercise {
     @Column(name = "name_es", length = 100)
     private String nameEs;
 
-    @OneToMany(mappedBy = "exercise", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ModalityExercise> modalityExercises;
-
     @Column(name = "created_at", updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
