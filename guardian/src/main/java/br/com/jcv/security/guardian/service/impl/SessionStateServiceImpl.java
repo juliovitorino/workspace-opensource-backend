@@ -47,6 +47,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
 
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -105,7 +106,7 @@ public class SessionStateServiceImpl implements SessionStateService
         noRollbackFor = SessionStateNotFoundException.class
     )
     public SessionStateDTO salvar(SessionStateDTO sessionstateDTO) {
-        Date now = dateTime.getToday();
+        LocalDateTime now = LocalDateTime.now();
         if(Objects.nonNull(sessionstateDTO.getId()) && sessionstateDTO.getId() != 0) {
             sessionstateDTO.setDateUpdated(now);
         } else {
@@ -157,7 +158,7 @@ public class SessionStateServiceImpl implements SessionStateService
                 if(entry.getKey().equalsIgnoreCase(SessionStateConstantes.IDUSERUUID)) sessionstate.setIdUserUUID((UUID)entry.getValue());
 
         }
-        if(updates.get(SessionStateConstantes.DATEUPDATED) == null) sessionstate.setDateUpdated(new Date());
+        if(updates.get(SessionStateConstantes.DATEUPDATED) == null) sessionstate.setDateUpdated(LocalDateTime.now());
         sessionstateRepository.save(sessionstate);
         return true;
     }
@@ -182,7 +183,7 @@ public class SessionStateServiceImpl implements SessionStateService
                 );
         SessionState sessionstate = sessionstateData.orElseGet(SessionState::new);
         sessionstate.setStatus(status);
-        sessionstate.setDateUpdated(new Date());
+        sessionstate.setDateUpdated(LocalDateTime.now());
         return toDTO(sessionstateRepository.save(sessionstate));
 
     }
@@ -526,6 +527,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                 sessionstateDTO.setId(sessionstate.getId());
                 sessionstateDTO.setIdToken(sessionstate.getIdToken());
                 sessionstateDTO.setIdUserUUID(sessionstate.getIdUserUUID());
+                sessionstateDTO.setIdApplicationUUID(sessionstate.getIdApplicationUUID());
                 sessionstateDTO.setStatus(sessionstate.getStatus());
                 sessionstateDTO.setDateCreated(sessionstate.getDateCreated());
                 sessionstateDTO.setDateUpdated(sessionstate.getDateUpdated());
@@ -539,6 +541,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
                     sessionstate.setId(sessionstateDTO.getId());
                     sessionstate.setIdToken(sessionstateDTO.getIdToken());
                     sessionstate.setIdUserUUID(sessionstateDTO.getIdUserUUID());
+                    sessionstate.setIdApplicationUUID(sessionstateDTO.getIdApplicationUUID());
                     sessionstate.setStatus(sessionstateDTO.getStatus());
                     sessionstate.setDateCreated(sessionstateDTO.getDateCreated());
                     sessionstate.setDateUpdated(sessionstateDTO.getDateUpdated());

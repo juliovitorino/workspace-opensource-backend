@@ -41,6 +41,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -228,7 +229,7 @@ public class GroupUserCommoditieController
 
         try {
             groupuserDTO.setId(id);
-            groupuserDTO.setDateUpdated(new Date());
+            groupuserDTO.setDateUpdated(LocalDateTime.now());
             GroupUserDTO groupuserSaved = groupuserService.salvar(groupuserDTO);
             return new ResponseEntity<>(groupuserSaved, HttpStatus.OK);
         } catch(CommoditieBaseException e) {

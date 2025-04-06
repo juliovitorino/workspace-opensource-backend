@@ -43,7 +43,7 @@ public class ApiControllerAdvice {
     public ResponseEntity<GenericErrorResponse<Map<String, ? extends Serializable>>> handle(CommoditieBaseException e) {
         List<Map<String, ? extends Serializable>> stackTraceList = Stream
                 .of(e.getStackTrace())
-                .filter(filter -> filter.getClassName().startsWith("br.com.jcv.bei"))
+                .filter(filter -> filter.getClassName().startsWith("br.com.jcv.treinadorpro"))
                 .map(map -> Map.of("class", map.getClassName(), "lineNumber", map.getLineNumber()))
                 .collect(Collectors.toList());
 

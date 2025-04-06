@@ -26,6 +26,8 @@ import br.com.jcv.commons.library.commodities.annotation.RegexValidation;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import br.com.jcv.security.guardian.constantes.UsersConstantes;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -63,5 +65,6 @@ public class UsersDTO extends DTOPadrao implements Serializable
 
     @SerializedName("mensagemResponse")
     @JsonProperty("mensagemResponse")
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     private MensagemResponse mensagemResponse;
 }

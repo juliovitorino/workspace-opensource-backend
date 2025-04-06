@@ -43,6 +43,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -108,7 +109,7 @@ public class ApplicationUserServiceImpl implements ApplicationUserService
         noRollbackFor = ApplicationUserNotFoundException.class
     )
     public ApplicationUserDTO salvar(ApplicationUserDTO applicationuserDTO) {
-        Date now = dateTime.getToday();
+        LocalDateTime now = LocalDateTime.now();
         if(Objects.nonNull(applicationuserDTO.getId()) && applicationuserDTO.getId() != 0) {
             applicationuserDTO.setDateUpdated(now);
         } else {
@@ -169,10 +170,10 @@ public class ApplicationUserServiceImpl implements ApplicationUserService
                 if(entry.getKey().equalsIgnoreCase(ApplicationUserConstantes.EXTERNALAPPUSERUUID)) applicationuser.setExternalAppUserUUID((UUID)entry.getValue());
                 if(entry.getKey().equalsIgnoreCase(ApplicationUserConstantes.URLTOKENACTIVATION)) applicationuser.setUrlTokenActivation((String)entry.getValue());
                 if(entry.getKey().equalsIgnoreCase(ApplicationUserConstantes.ACTIVATIONCODE)) applicationuser.setActivationCode((String)entry.getValue());
-                if(entry.getKey().equalsIgnoreCase(ApplicationUserConstantes.DUEDATEACTIVATION)) applicationuser.setDueDateActivation((Date)entry.getValue());
+                if(entry.getKey().equalsIgnoreCase(ApplicationUserConstantes.DUEDATEACTIVATION)) applicationuser.setDueDateActivation((LocalDateTime) entry.getValue());
 
         }
-        if(updates.get(ApplicationUserConstantes.DATEUPDATED) == null) applicationuser.setDateUpdated(new Date());
+        if(updates.get(ApplicationUserConstantes.DATEUPDATED) == null) applicationuser.setDateUpdated(LocalDateTime.now());
         applicationuserRepository.save(applicationuser);
         return true;
     }
@@ -197,7 +198,7 @@ public class ApplicationUserServiceImpl implements ApplicationUserService
                 );
         ApplicationUser applicationuser = applicationuserData.orElseGet(ApplicationUser::new);
         applicationuser.setStatus(status);
-        applicationuser.setDateUpdated(new Date());
+        applicationuser.setDateUpdated(LocalDateTime.now());
         return toDTO(applicationuserRepository.save(applicationuser));
 
     }
@@ -603,12 +604,12 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
         return response;
     }
 
-    @Override
-    @Transactional(transactionManager="transactionManager",
-    propagation = Propagation.REQUIRED,
-    rollbackFor = Throwable.class,
-    noRollbackFor = ApplicationUserNotFoundException.class
+    @Transactional(transactionManager = "transactionManager",
+            propagation = Propagation.REQUIRED,
+            rollbackFor = Throwable.class,
+            noRollbackFor = ApplicationUserNotFoundException.class
     )
+    @Override
     public ApplicationUserDTO findApplicationUserByExternalAppUserUUIDAndExternalUserUUIDAndStatus(UUID externalAppUserUUID, UUID externalUserUUID, String status) {
 
         ApplicationUserDTO cache = redisProvider.getValue("applicationUser-" + externalAppUserUUID + status,ApplicationUserDTO.class);

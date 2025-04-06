@@ -48,6 +48,7 @@ import org.springframework.transaction.annotation.Propagation;
 
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -105,7 +106,7 @@ public class UsersServiceImpl implements UsersService
         noRollbackFor = UsersNotFoundException.class
     )
     public UsersDTO salvar(UsersDTO usersDTO) {
-        Date now = dateTime.getToday();
+        LocalDateTime now = LocalDateTime.now();
         if(Objects.nonNull(usersDTO.getId()) && usersDTO.getId() != 0) {
             usersDTO.setDateUpdated(now);
         } else {
@@ -165,7 +166,7 @@ public class UsersServiceImpl implements UsersService
                 if(entry.getKey().equalsIgnoreCase(UsersConstantes.BIRTHDAY)) users.setBirthday((LocalDate)entry.getValue());
 
         }
-        if(updates.get(UsersConstantes.DATEUPDATED) == null) users.setDateUpdated(new Date());
+        if(updates.get(UsersConstantes.DATEUPDATED) == null) users.setDateUpdated(LocalDateTime.now());
         usersRepository.save(users);
         return true;
     }
@@ -190,7 +191,7 @@ public class UsersServiceImpl implements UsersService
                 );
         Users users = usersData.orElseGet(Users::new);
         users.setStatus(status);
-        users.setDateUpdated(new Date());
+        users.setDateUpdated(LocalDateTime.now());
         return toDTO(usersRepository.save(users));
 
     }

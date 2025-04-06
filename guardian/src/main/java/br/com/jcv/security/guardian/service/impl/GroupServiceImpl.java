@@ -47,6 +47,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
 
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -103,7 +104,7 @@ public class GroupServiceImpl implements GroupService
         noRollbackFor = GroupNotFoundException.class
     )
     public GroupDTO salvar(GroupDTO groupDTO) {
-        Date now = dateTime.getToday();
+        LocalDateTime now = LocalDateTime.now();
         if(Objects.nonNull(groupDTO.getId()) && groupDTO.getId() != 0) {
             groupDTO.setDateUpdated(now);
         } else {
@@ -162,7 +163,7 @@ public class GroupServiceImpl implements GroupService
                 if(entry.getKey().equalsIgnoreCase(GroupConstantes.NAME)) group.setName(entry.getValue().toString());
 
         }
-        if(updates.get(GroupConstantes.DATEUPDATED) == null) group.setDateUpdated(new Date());
+        if(updates.get(GroupConstantes.DATEUPDATED) == null) group.setDateUpdated(LocalDateTime.now());
         groupRepository.save(group);
         return true;
     }
@@ -187,7 +188,7 @@ public class GroupServiceImpl implements GroupService
                 );
         Group group = groupData.orElseGet(Group::new);
         group.setStatus(status);
-        group.setDateUpdated(new Date());
+        group.setDateUpdated(LocalDateTime.now());
         return toDTO(groupRepository.save(group));
 
     }

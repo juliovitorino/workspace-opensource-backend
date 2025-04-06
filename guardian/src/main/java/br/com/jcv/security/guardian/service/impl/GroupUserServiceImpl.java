@@ -41,6 +41,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
@@ -98,7 +99,7 @@ public class GroupUserServiceImpl implements GroupUserService
         noRollbackFor = GroupUserNotFoundException.class
     )
     public GroupUserDTO salvar(GroupUserDTO groupuserDTO) {
-        Date now = dateTime.getToday();
+        LocalDateTime now = LocalDateTime.now();
         if(Objects.nonNull(groupuserDTO.getId()) && groupuserDTO.getId() != 0) {
             groupuserDTO.setDateUpdated(now);
         } else {
@@ -158,7 +159,7 @@ public class GroupUserServiceImpl implements GroupUserService
                 if(entry.getKey().equalsIgnoreCase(GroupUserConstantes.IDGROUP)) groupuser.setIdGroup((Long)entry.getValue());
 
         }
-        if(updates.get(GroupUserConstantes.DATEUPDATED) == null) groupuser.setDateUpdated(new Date());
+        if(updates.get(GroupUserConstantes.DATEUPDATED) == null) groupuser.setDateUpdated(LocalDateTime.now());
         groupuserRepository.save(groupuser);
         return true;
     }
@@ -183,7 +184,7 @@ public class GroupUserServiceImpl implements GroupUserService
                 );
         GroupUser groupuser = groupuserData.orElseGet(GroupUser::new);
         groupuser.setStatus(status);
-        groupuser.setDateUpdated(new Date());
+        groupuser.setDateUpdated(LocalDateTime.now());
         return toDTO(groupuserRepository.save(groupuser));
 
     }

@@ -2,8 +2,8 @@ package br.com.jcv.security.guardian.controller.v1.business.rolegroup;
 
 import br.com.jcv.commons.library.commodities.enums.GenericStatusEnums;
 import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
+import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.security.guardian.RoleEnums;
-import br.com.jcv.security.guardian.controller.v1.business.ControllerGenericResponse;
 import br.com.jcv.security.guardian.dto.GroupDTO;
 import br.com.jcv.security.guardian.dto.GroupRoleDTO;
 import br.com.jcv.security.guardian.dto.RoleDTO;

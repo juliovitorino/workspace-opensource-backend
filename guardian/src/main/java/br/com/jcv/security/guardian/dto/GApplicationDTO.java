@@ -25,6 +25,7 @@ import br.com.jcv.commons.library.commodities.dto.DTOPadrao;
 import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import br.com.jcv.security.guardian.constantes.GApplicationConstantes;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
@@ -69,5 +70,6 @@ public class GApplicationDTO extends DTOPadrao implements Serializable
 
     @SerializedName("mensagemResponse")
     @JsonProperty("mensagemResponse")
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     private MensagemResponse mensagemResponse;
 }

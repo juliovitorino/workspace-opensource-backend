@@ -47,6 +47,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
 
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -103,7 +104,7 @@ public class GApplicationServiceImpl implements GApplicationService
         noRollbackFor = GApplicationNotFoundException.class
     )
     public GApplicationDTO salvar(GApplicationDTO gapplicationDTO) {
-        Date now = dateTime.getToday();
+        LocalDateTime now = LocalDateTime.now();
         if(Objects.nonNull(gapplicationDTO.getId()) && gapplicationDTO.getId() != 0) {
             gapplicationDTO.setDateUpdated(now);
         } else {
@@ -163,7 +164,7 @@ public class GApplicationServiceImpl implements GApplicationService
                 if(entry.getKey().equalsIgnoreCase(GApplicationConstantes.EXTERNALCODEUUID)) gapplication.setExternalCodeUUID((UUID)entry.getValue());
 
         }
-        if(updates.get(GApplicationConstantes.DATEUPDATED) == null) gapplication.setDateUpdated(new Date());
+        if(updates.get(GApplicationConstantes.DATEUPDATED) == null) gapplication.setDateUpdated(LocalDateTime.now());
         gapplicationRepository.save(gapplication);
         return true;
     }
@@ -188,7 +189,7 @@ public class GApplicationServiceImpl implements GApplicationService
                 );
         GApplication gapplication = gapplicationData.orElseGet(GApplication::new);
         gapplication.setStatus(status);
-        gapplication.setDateUpdated(new Date());
+        gapplication.setDateUpdated(LocalDateTime.now());
         return toDTO(gapplicationRepository.save(gapplication));
 
     }
