@@ -104,7 +104,7 @@ INSERT INTO modality (id, name_pt, name_en, name_es) VALUES
 (101, 'Exergames', 'Exergames', 'Exergames'),
 (102, 'Atividades ao Ar Livre', 'Outdoor Activities', 'Actividades al Aire Libre');
 
--- Inserção de Exercícios para Musculação
+-- Inserção de Exercícios para Musculação (id=1)
 INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
 (1, 'Supino reto', 'Flat Bench Press', 'Press de banca plano'),
 (2, 'Agachamento livre', 'Barbell Squat', 'Sentadilla con barra'),
@@ -118,7 +118,7 @@ INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
 (10, 'Crucifixo', 'Dumbbell Fly', 'Aperturas con mancuernas');
 -- Adicione mais exercícios conforme necessário
 
--- Inserção de Exercícios para Treinamento Funcional
+-- Inserção de Exercícios para Treinamento Funcional (id=2)
 INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
 (11, 'Burpee', 'Burpee', 'Burpee'),
 (12, 'Agachamento com kettlebell', 'Goblet Squat', 'Sentadilla con kettlebell'),
@@ -132,7 +132,7 @@ INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
 (20, 'Prancha lateral', 'Side Plank', 'Plancha lateral');
 -- Adicione mais exercícios conforme necessário
 
--- Inserção de Exercícios para Yoga
+-- Inserção de Exercícios para Yoga (id=3)
 INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
 (21, 'Postura da criança', 'Child''s Pose', 'Postura del niño'),
 (22, 'Cão olhando para baixo', 'Downward-Facing Dog', 'Perro boca abajo'),
@@ -146,7 +146,7 @@ INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
 (30, 'Torção sentada', 'Seated Twist', 'Torsión sentada');
 -- Adicione mais exercícios conforme necessário
 
--- Inserção de Exercícios para Pilates
+-- Inserção de Exercícios para Pilates (id=4)
 INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
 (31, 'The Hundred', 'The Hundred', 'El Cien'),
 (32, 'Roll Up', 'Roll Up', 'Rodar hacia arriba'),
@@ -160,7 +160,7 @@ INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
 (40, 'Shoulder Bridge', 'Shoulder Bridge', 'Puente de hombros');
 -- Adicione mais exercícios conforme necessário
 
--- Inserção de Exercícios para CrossFit
+-- Inserção de Exercícios para CrossFit (id=5)
 INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
 (41, 'Snatch', 'Snatch', 'Arranque'),
 (42, 'Clean and Jerk', 'Clean and Jerk', 'Dos tiempos'),
@@ -173,4 +173,19 @@ INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
 (49, 'Handstand Push-up', 'Handstand Push-up', 'Flexión de parada de manos'),
 (50, 'Overhead Squat', 'Overhead Squat', 'Sentadilla sobre la cabeza');
 -- Adicione mais exercícios conforme necessário
+
+-- creating relationship between bodybuilding modality and their exercises
+insert into modality_exercise (modality_id,exercise_id) select 1, e.id from exercise e where e.id between 1 and 10;
+
+-- creating relationship between 'Functional Training' and their exercises
+insert into modality_exercise (modality_id,exercise_id) select 2, e.id from exercise e where e.id between 11 and 20;
+
+-- creating relationship between 'Yoga' and their exercises
+insert into modality_exercise (modality_id,exercise_id) select 3, e.id from exercise e where e.id between 21 and 30;
+
+-- creating relationship between 'Pilates' and their exercises
+insert into modality_exercise (modality_id,exercise_id) select 4, e.id from exercise e where e.id between 31 and 40;
+
+-- creating relationship between 'CrossFit' and their exercises
+insert into modality_exercise (modality_id,exercise_id) select 5, e.id from exercise e where e.id between 41 and 50;
 
