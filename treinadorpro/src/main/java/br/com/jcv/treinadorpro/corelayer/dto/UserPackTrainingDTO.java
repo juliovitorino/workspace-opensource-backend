@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -22,6 +23,7 @@ public class UserPackTrainingDTO {
     private String startTime;
     private String endTime;
     private String daysOfWeek;
+    private List<UserWorkoutCalendarDTO> workoutCalendar;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
