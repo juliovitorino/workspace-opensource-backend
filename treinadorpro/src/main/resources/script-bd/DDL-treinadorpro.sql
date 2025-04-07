@@ -1,3 +1,12 @@
+-- parameters table
+CREATE TABLE parameters (
+    id SERIAL PRIMARY KEY,
+    keytag VARCHAR(500) UNIQUE NOT NULL,
+    valuetag VARCHAR(2000) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Users Table
 
 CREATE TABLE users (
