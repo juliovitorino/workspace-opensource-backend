@@ -1,3 +1,8 @@
+-- insert parameters
+INSERT INTO parameters (keytag, valuetag) VALUES (
+'LIMIT_FREEMIUM_PER_STUDENT_PACK_TRAINING', '3'
+);
+
 
 -- Insert modalities
 INSERT INTO modality (id, name_pt, name_en, name_es) VALUES
