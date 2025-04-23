@@ -3,6 +3,18 @@ INSERT INTO parameters (keytag, valuetag) VALUES (
 'LIMIT_FREEMIUM_PER_STUDENT_PACK_TRAINING', '3'
 );
 
+insert into plan_template (
+description, price, status, recuring_payment_type) values
+    ('FREEMIUM', 67, 'A','MONTHLY'),
+    ('BASIC', 804, 'A','ANNUALLY'),
+    ('BASIC', 90, 'A','MONTHLY'),
+    ('PREMIUM', 1164, 'A','ANNUALLY'),
+    ('PREMIUM', 130, 'A','MONTHLY')
+;
+
+insert into parameters (keytag,valuetag)
+select 'FREEMIUM_PLAN_ID', id
+from plan_template where description = 'FREEMIUM' LIMIT 1;
 
 -- Insert modalities
 INSERT INTO modality (id, name_pt, name_en, name_es) VALUES
