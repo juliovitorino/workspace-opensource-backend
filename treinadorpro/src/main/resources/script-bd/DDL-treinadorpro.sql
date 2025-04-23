@@ -12,7 +12,7 @@ CREATE TABLE plan_template (
     id serial PRIMARY KEY,
     description VARCHAR(500) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
-    recuring_payment_type VARCHAR(10) DEFAULT 'MONTHLY' check (recuring_payment_type in ('MONTHLY', 'ANNUALLY')),
+    payment_frequency VARCHAR(10) DEFAULT 'MONTHLY' check (payment_frequency in ('MONTHLY', 'ANNUALLY')),
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -28,7 +28,7 @@ CREATE TABLE active_personal_plan (
     price DECIMAL(10,2) NOT NULL,
     amount_discount DECIMAL(10,2) NOT NULL,
     plan_expiration_date DATE NOT NULL,
-    recuring_payment_type VARCHAR(10) DEFAULT 'MONTHLY' check (recuring_payment_type in ('MONTHLY', 'ANNUALLY')),
+    payment_frequency VARCHAR(10) DEFAULT 'MONTHLY' check (payment_frequency in ('MONTHLY', 'ANNUALLY')),
     qty_user_pack_training_allowed INTEGER DEFAULT 0 NOT NULL,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
