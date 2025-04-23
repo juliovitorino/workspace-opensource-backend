@@ -7,6 +7,48 @@ CREATE TABLE parameters (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- plan_template table
+CREATE TABLE plan_template (
+    id serial PRIMARY KEY,
+    description VARCHAR(500) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+-- active_personal_plan table
+CREATE TABLE active_personal_plan (
+    id serial PRIMARY KEY,
+    plan_template_id INTEGER NOT NULL REFERENCES plan_template(id) ON DELETE CASCADE,
+    personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    description VARCHAR(500) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    amount_discount DECIMAL(10,2) NOT NULL,
+    plan_expiration_date DATE NOT NULL,
+    recuring_payment_type VARCHAR(10) DEFAULT 'MONTHLY' check (recuring_payment_type in ('MONTHLY', 'ANNUALLY')),
+    qty_user_pack_training_allowed INTEGER DEFAULT 0 NOT NULL,
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+-- personal_trainer_payments table
+CREATE TABLE personal_trainer_payments (
+    id serial PRIMARY KEY,
+    active_personal_plan_id INTEGER NOT NULL REFERENCES active_personal_plan(id) ON DELETE CASCADE,
+    expected_amount DECIMAL(10,2) NOT NULL,
+    expected_date DATE NOT NULL,
+    amount_discount DECIMAL(10,2) NOT NULL,
+    amount_paid DECIMAL(10,2) NOT NULL,
+    paid_date DATE NOT NULL,
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Users Table
 
 CREATE TABLE users (
@@ -21,7 +63,7 @@ CREATE TABLE users (
     url_photo_profile TEXT,
     user_profile VARCHAR(50) DEFAULT 'PERSONAL_TRAINER' CHECK (user_profile IN ('PERSONAL_TRAINER', 'STUDENT')),
     master_language VARCHAR(10) DEFAULT 'pt-BR' CHECK (master_language IN ('pt-BR', 'en-US', 'es-ES')),
-    guardian_integration UUID UNIQUE NOT NULL,
+    guardian_integration UUID,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
     last_login TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -44,6 +86,37 @@ COMMENT ON COLUMN users.status IS 'User status: A = Active, B = Blocked, I = Ina
 COMMENT ON COLUMN users.last_login IS 'Timestamp of the user''s last login';
 COMMENT ON COLUMN users.created_at IS 'Timestamp of when the user was created';
 COMMENT ON COLUMN users.updated_at IS 'Timestamp of the last update to the user record';
+
+
+CREATE TABLE student_feature (
+    id bigserial PRIMARY KEY,
+    student_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    password VARCHAR(100) NOT NULL,
+    height INTEGER,
+    weight DECIMAL(10,2),
+    weight_unit VARCHAR(10),
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+
+CREATE TABLE personal_feature (
+    id bigserial PRIMARY KEY,
+    personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    mon_period VARCHAR(11),
+    tue_period VARCHAR(11),
+    wed_period VARCHAR(11),
+    thu_period VARCHAR(11),
+    fri_period VARCHAR(11),
+    sat_period VARCHAR(11),
+    sun_period VARCHAR(11),
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 
 -- Modality table
 CREATE TABLE modality (
@@ -127,6 +200,18 @@ COMMENT ON COLUMN user_pack_training.days_of_week IS 'Days of the week when the 
 COMMENT ON COLUMN user_pack_training.created_at IS 'Date and time when the record was created.';
 COMMENT ON COLUMN user_pack_training.updated_at IS 'Date and time of the last update to the record.';
 
+-- student payments
+CREATE TABLE student_payments(
+    id serial PRIMARY KEY,
+    user_pack_training_id INTEGER NOT NULL REFERENCES user_pack_training(id) ON DELETE CASCADE,
+    amount DECIMAL(10,2) NOT NULL,
+    expected_date DATE NOT NULL,
+    payment_date DATE,
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+);
 
 -- User Workout Calendar
 CREATE TABLE user_workout_calendar (
