@@ -7,9 +7,11 @@ insert into plan_template (
 description, price, status, recuring_payment_type) values
     ('FREEMIUM', 67, 'A','MONTHLY'),
     ('BASIC', 804, 'A','ANNUALLY'),
-    ('BASIC', 90, 'A','MONTHLY'),
-    ('PREMIUM', 1164, 'A','ANNUALLY'),
-    ('PREMIUM', 130, 'A','MONTHLY')
+    ('BASIC', 97, 'A','MONTHLY'),
+    ('PROFESSIONAL', 1164, 'A','ANNUALLY'),
+    ('PROFESSIONAL', 130, 'A','MONTHLY'),
+    ('PREMIUM', 1560, 'A','ANNUALLY'),
+    ('PREMIUM', 197, 'A','MONTHLY')
 ;
 
 insert into parameters (keytag,valuetag)
