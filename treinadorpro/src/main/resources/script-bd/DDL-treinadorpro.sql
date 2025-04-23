@@ -12,6 +12,7 @@ CREATE TABLE plan_template (
     id serial PRIMARY KEY,
     description VARCHAR(500) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
+    recuring_payment_type VARCHAR(10) DEFAULT 'MONTHLY' check (recuring_payment_type in ('MONTHLY', 'ANNUALLY')),
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
