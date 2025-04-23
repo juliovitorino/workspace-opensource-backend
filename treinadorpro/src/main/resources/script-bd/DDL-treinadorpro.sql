@@ -12,7 +12,9 @@ CREATE TABLE plan_template (
     id serial PRIMARY KEY,
     description VARCHAR(500) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
+    amount_discount DECIMAL(10,2) DEFAULT 0,
     payment_frequency VARCHAR(10) DEFAULT 'MONTHLY' check (payment_frequency in ('MONTHLY', 'ANNUALLY')),
+    qty_user_pack_training_allowed INTEGER DEFAULT 0 NOT NULL,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -26,7 +28,7 @@ CREATE TABLE active_personal_plan (
     personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     description VARCHAR(500) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
-    amount_discount DECIMAL(10,2) NOT NULL,
+    amount_discount DECIMAL(10,2) DEFAULT 0 NOT NULL,
     plan_expiration_date DATE NOT NULL,
     payment_frequency VARCHAR(10) DEFAULT 'MONTHLY' check (payment_frequency in ('MONTHLY', 'ANNUALLY')),
     qty_user_pack_training_allowed INTEGER DEFAULT 0 NOT NULL,
