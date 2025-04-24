@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -28,7 +29,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ControllerGenericResponse<UserDTO>> registerPersonalTrainer(@RequestBody RegisterRequest userdto) {
+    public ResponseEntity<ControllerGenericResponse<UserDTO>> registerPersonalTrainer(@RequestBody @Valid RegisterRequest userdto) {
         return ResponseEntity.ok(registerNewPersonalTrainerService.execute(UUID.randomUUID(), userdto));
     }
 

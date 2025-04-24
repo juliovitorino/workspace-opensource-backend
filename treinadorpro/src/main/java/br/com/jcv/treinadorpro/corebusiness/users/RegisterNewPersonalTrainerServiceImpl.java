@@ -13,9 +13,11 @@ import br.com.jcv.treinadorpro.corelayer.mapper.ActivePersonalPlanMapper;
 import br.com.jcv.treinadorpro.corelayer.mapper.PlanTemplateMapper;
 import br.com.jcv.treinadorpro.corelayer.mapper.UserMapper;
 import br.com.jcv.treinadorpro.corelayer.model.ActivePersonalPlan;
+import br.com.jcv.treinadorpro.corelayer.model.Parameter;
 import br.com.jcv.treinadorpro.corelayer.model.PlanTemplate;
 import br.com.jcv.treinadorpro.corelayer.model.User;
 import br.com.jcv.treinadorpro.corelayer.repository.ActivePersonalPlanRepository;
+import br.com.jcv.treinadorpro.corelayer.repository.ParameterRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.PlanTemplateRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
 import br.com.jcv.treinadorpro.corelayer.request.RegisterRequest;
@@ -42,6 +44,7 @@ public class RegisterNewPersonalTrainerServiceImpl implements RegisterNewPersona
     private final GuardianRestClientConsumer guardianRestClientConsumer;
     private final PlanTemplateRepository planTemplateRepository;
     private final ActivePersonalPlanRepository activePersonalPlanRepository;
+    private final ParameterRepository parameterRepository;
 
     public RegisterNewPersonalTrainerServiceImpl(UserRepository userRepository,
                                                  UserMapper userMapper, ActivePersonalPlanMapper activePersonalPlanMapper,
@@ -50,7 +53,7 @@ public class RegisterNewPersonalTrainerServiceImpl implements RegisterNewPersona
                                                  ModelMapper modelMapper,
                                                  GuardianRestClientConsumer guardianRestClientConsumer,
                                                  PlanTemplateRepository planTemplateRepository,
-                                                 ActivePersonalPlanRepository activePersonalPlanRepository) {
+                                                 ActivePersonalPlanRepository activePersonalPlanRepository, ParameterRepository parameterRepository) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.activePersonalPlanMapper = activePersonalPlanMapper;
@@ -60,6 +63,7 @@ public class RegisterNewPersonalTrainerServiceImpl implements RegisterNewPersona
         this.guardianRestClientConsumer = guardianRestClientConsumer;
         this.planTemplateRepository = planTemplateRepository;
         this.activePersonalPlanRepository = activePersonalPlanRepository;
+        this.parameterRepository = parameterRepository;
     }
 
     @Override
@@ -71,11 +75,21 @@ public class RegisterNewPersonalTrainerServiceImpl implements RegisterNewPersona
             throw new CommoditieBaseException("Email has already exist!", HttpStatus.BAD_REQUEST,"MSG-1922");
         }
 
-        PlanTemplateDTO planTemplateDTO = planTemplateMapper.toDTO(planTemplateRepository.findByDescriptionAndPaymentFrequencyAndStatus(
-                registerRequest.getPlanRequest().getDescription(),
-                registerRequest.getPlanRequest().getFrequency(),
-                "A")
-                .orElseThrow(() -> new CommoditieBaseException("Invalid Plan", HttpStatus.BAD_REQUEST, "MSG-0914")));
+        PlanTemplateDTO planTemplateDTO;
+        if(Objects.isNull(registerRequest.getPlanRequest())) {
+            Long freemiumPlanId = Long.valueOf(parameterRepository.findByKeytag("FREEMIUM_PLAN_ID")
+                    .orElseThrow(() -> new CommoditieBaseException("Freemium Keytag not found.", HttpStatus.UNPROCESSABLE_ENTITY, "MSG-1649"))
+                    .getValuetag());
+
+            planTemplateDTO = planTemplateMapper.toDTO(planTemplateRepository.findById(freemiumPlanId)
+                    .orElseThrow(() -> new CommoditieBaseException("Invalid Freemium Id.", HttpStatus.UNPROCESSABLE_ENTITY,"MSG-1653")));
+        } else {
+            planTemplateDTO = planTemplateMapper.toDTO(planTemplateRepository.findByDescriptionAndPaymentFrequencyAndStatus(
+                            registerRequest.getPlanRequest().getDescription(),
+                            registerRequest.getPlanRequest().getFrequency(),
+                            "A")
+                    .orElseThrow(() -> new CommoditieBaseException("Invalid Plan", HttpStatus.BAD_REQUEST, "MSG-0914")));
+        }
 
         CreateNewAccountRequest createNewAccountRequest = getInstanceCreateNewAccountRequest(registerRequest);
         ControllerGenericResponse<UUID> accountGuardianResponse = guardianRestClientConsumer.createNewAccount(createNewAccountRequest);

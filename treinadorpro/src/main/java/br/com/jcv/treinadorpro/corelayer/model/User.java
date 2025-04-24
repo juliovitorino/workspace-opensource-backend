@@ -39,10 +39,10 @@ public class User {
     @Column(name = "first_name", nullable = false, length = 100)
     private String firstName;
 
-    @Column(name = "middle_name", nullable = false, length = 100)
+    @Column(name = "middle_name", length = 100)
     private String middleName;
 
-    @Column(name = "last_name", nullable = false, length = 100)
+    @Column(name = "last_name", length = 100)
     private String lastName;
 
     @Column(nullable = false, unique = true, length = 150)
@@ -51,6 +51,7 @@ public class User {
     @Column(length = 20)
     private String cellphone;
 
+    @Column(name = "birthday", nullable = false)
     private LocalDate birthday;
 
     @Column(length = 1)

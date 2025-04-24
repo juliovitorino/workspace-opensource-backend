@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -17,11 +19,14 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequest implements Serializable {
+    @NotNull
     private String firstName;
     private String middleName;
     private String lastName;
     private String email;
     private String cellphone;
+
+    @NotNull
     private LocalDate birthday;
     private GenderEnum gender;
     private String masterLanguage;
