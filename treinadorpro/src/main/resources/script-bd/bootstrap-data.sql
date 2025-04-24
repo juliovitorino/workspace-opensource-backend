@@ -1,7 +1,7 @@
 -- insert parameters
-INSERT INTO parameters (keytag, valuetag) VALUES (
-'LIMIT_FREEMIUM_PER_STUDENT_PACK_TRAINING', '3'
-);
+INSERT INTO parameters (keytag, valuetag) VALUES
+    ('ACTIVE_ENVIRONMENT', 'DEVELOPMENT')
+;
 
 insert into plan_template (
 description, price, status, recuring_payment_type) values
