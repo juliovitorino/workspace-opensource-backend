@@ -1,0 +1,64 @@
+package br.com.jcv.treinadorpro.corelayer.model;
+
+
+import br.com.jcv.treinadorpro.corelayer.enums.PaymentFrequencyEnum;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "plan_template")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class PlanTemplate {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "description", length = 500, nullable = false)
+    private String description;
+
+    @Column(name = "price", precision = 10, scale = 2, nullable = false)
+    private BigDecimal price;
+
+    @Column(name = "amount_discount", precision = 10, scale = 2, nullable = false)
+    private BigDecimal amountDiscount;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "payment_frequency", nullable = false)
+    private PaymentFrequencyEnum paymentFrequency;
+
+    @Column(name = "qty_user_pack_training_allowed", nullable = false)
+    private Long qtyUserPackTrainingAllowed;
+
+
+    @Column(name = "status", length = 1)
+    private String status;
+
+    @Column(name = "created_at", updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+
+}
