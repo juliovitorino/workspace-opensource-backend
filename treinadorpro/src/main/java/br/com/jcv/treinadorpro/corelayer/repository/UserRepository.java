@@ -4,6 +4,7 @@ import br.com.jcv.treinadorpro.corelayer.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -11,4 +12,5 @@ import java.util.UUID;
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
     User findByGuardianIntegrationUUID(UUID userUUID);
+    Optional<User> findByUuidId(UUID uuidId);
 }

@@ -1,6 +1,7 @@
 package br.com.jcv.treinadorpro.corelayer.model;
 
 import br.com.jcv.treinadorpro.corelayer.enums.GenderEnum;
+import br.com.jcv.treinadorpro.corelayer.enums.MasterLanguageEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.UserProfileEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -39,6 +40,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "uuid_id", nullable = false)
+    private UUID uuidId;
+
     @Column(name = "first_name", nullable = false, length = 100)
     private String firstName;
 
@@ -69,7 +73,7 @@ public class User {
     private UserProfileEnum userProfile = UserProfileEnum.PERSONAL_TRAINER;
 
     @Column(name = "master_language", length = 10)
-    private String masterLanguage = "pt-BR";
+    private String masterLanguage = MasterLanguageEnum.PT_BR.getLanguage();
 
     @Column(name = "guardian_integration")
     private UUID guardianIntegrationUUID;

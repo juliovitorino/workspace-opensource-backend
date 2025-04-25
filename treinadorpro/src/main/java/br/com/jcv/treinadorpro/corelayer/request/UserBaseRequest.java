@@ -1,6 +1,7 @@
-package br.com.jcv.treinadorpro.corelayer.dto;
+package br.com.jcv.treinadorpro.corelayer.request;
 
 import br.com.jcv.treinadorpro.corelayer.enums.GenderEnum;
+import br.com.jcv.treinadorpro.corelayer.enums.MasterLanguageEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.UserProfileEnum;
 import lombok.AllArgsConstructor;
@@ -14,15 +15,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Getter
 @Setter
 @ToString
-public class UserDTO {
+public abstract class UserBaseRequest {
 
-    private Long id;
     private UUID uuidId;
     private String firstName;
     private String middleName;
@@ -32,11 +29,5 @@ public class UserDTO {
     private LocalDate birthday;
     private GenderEnum gender;
     private String urlPhotoProfile;
-    private UserProfileEnum userProfile;
     private String masterLanguage;
-    private UUID guardianIntegrationUUID;
-    private StatusEnum status;
-    private LocalDateTime lastLogin;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 }
