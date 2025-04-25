@@ -107,22 +107,42 @@ public class RegisterNewPersonalTrainerServiceImpl extends AbstractUserService i
     }
 
     private PlanTemplateDTO getInstancePlanTemplate(RegisterRequest registerRequest) {
-        PlanTemplateDTO planTemplateDTO;
-        if(Objects.isNull(registerRequest.getPlanRequest())) {
-            Long freemiumPlanId = Long.valueOf(parameterRepository.findByKeytag("FREEMIUM_PLAN_ID")
-                    .orElseThrow(() -> new CommoditieBaseException("Freemium Keytag not found.", HttpStatus.UNPROCESSABLE_ENTITY, "MSG-1649"))
-                    .getValuetag());
+        return Objects.isNull(registerRequest.getPlanRequest())
+                ? getFreemiumPlanTemplate()
+                : getCustomPlanTemplate(registerRequest);
+    }
 
-            planTemplateDTO = planTemplateMapper.toDTO(planTemplateRepository.findById(freemiumPlanId)
-                    .orElseThrow(() -> new CommoditieBaseException("Invalid Freemium Id.", HttpStatus.UNPROCESSABLE_ENTITY,"MSG-1653")));
-        } else {
-            planTemplateDTO = planTemplateMapper.toDTO(planTemplateRepository.findByDescriptionAndPaymentFrequencyAndStatus(
-                            registerRequest.getPlanRequest().getDescription(),
-                            registerRequest.getPlanRequest().getFrequency(),
-                            "A")
-                    .orElseThrow(() -> new CommoditieBaseException("Invalid Plan", HttpStatus.BAD_REQUEST, "MSG-0914")));
-        }
+    private PlanTemplateDTO getFreemiumPlanTemplate() {
+        PlanTemplateDTO planTemplateDTO;
+        Long freemiumPlanId = Long.valueOf(parameterRepository.findByKeytag("FREEMIUM_PLAN_ID")
+                .orElseThrow(this::freemiumKeytagNotFound)
+                .getValuetag());
+
+        planTemplateDTO = planTemplateMapper.toDTO(planTemplateRepository.findById(freemiumPlanId)
+                .orElseThrow(this::invalidFreemiumId));
         return planTemplateDTO;
+    }
+
+    private PlanTemplateDTO getCustomPlanTemplate(RegisterRequest registerRequest) {
+        PlanTemplateDTO planTemplateDTO;
+        planTemplateDTO = planTemplateMapper.toDTO(planTemplateRepository.findByDescriptionAndPaymentFrequencyAndStatus(
+                        registerRequest.getPlanRequest().getDescription(),
+                        registerRequest.getPlanRequest().getFrequency(),
+                        "A")
+                .orElseThrow(this::invalidPlan));
+        return planTemplateDTO;
+    }
+
+    private CommoditieBaseException freemiumKeytagNotFound() {
+        return new CommoditieBaseException("Freemium Keytag not found.", HttpStatus.UNPROCESSABLE_ENTITY, "MSG-1649");
+    }
+
+    private CommoditieBaseException invalidFreemiumId() {
+        return new CommoditieBaseException("Invalid Freemium Id.", HttpStatus.UNPROCESSABLE_ENTITY, "MSG-1653");
+    }
+
+    private CommoditieBaseException invalidPlan() {
+        return new CommoditieBaseException("Invalid Plan", HttpStatus.BAD_REQUEST, "MSG-0914");
     }
 
     private UserDTO getInstanceUserDTO(RegisterRequest registerRequest, ControllerGenericResponse<UUID> accountGuardianResponse) {
