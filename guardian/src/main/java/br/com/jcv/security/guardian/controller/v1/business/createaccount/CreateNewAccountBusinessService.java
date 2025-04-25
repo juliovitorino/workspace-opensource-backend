@@ -80,7 +80,6 @@ public class CreateNewAccountBusinessService extends AbstractGuardianBusinessSer
 
     private UsersDTO mapperToDto(CreateNewAccountRequest request) {
         UsersDTO dto = new UsersDTO();
-        dto.setBirthday(request.getBirthday());
         dto.setName(request.getName());
         return dto;
     }
