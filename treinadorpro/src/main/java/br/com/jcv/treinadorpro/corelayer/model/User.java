@@ -18,7 +18,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -93,5 +96,8 @@ public class User {
 
     @OneToMany(mappedBy = "studentUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserPackTraining> studentUserPackTrainingList;
+
+    @OneToOne(mappedBy = "studentUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private StudentFeature studentFeature;
 
 }

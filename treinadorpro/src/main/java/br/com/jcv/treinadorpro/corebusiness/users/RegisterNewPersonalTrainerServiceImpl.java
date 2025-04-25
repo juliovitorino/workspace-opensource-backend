@@ -8,6 +8,7 @@ import br.com.jcv.restclient.guardian.request.CreateNewAccountRequest;
 import br.com.jcv.treinadorpro.corelayer.dto.ActivePersonalPlanDTO;
 import br.com.jcv.treinadorpro.corelayer.dto.PlanTemplateDTO;
 import br.com.jcv.treinadorpro.corelayer.dto.UserDTO;
+import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.UserProfileEnum;
 import br.com.jcv.treinadorpro.corelayer.mapper.ActivePersonalPlanMapper;
 import br.com.jcv.treinadorpro.corelayer.mapper.PlanTemplateMapper;
@@ -33,7 +34,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class RegisterNewPersonalTrainerServiceImpl implements RegisterNewPersonalTrainerService {
+public class RegisterNewPersonalTrainerServiceImpl extends AbstractUserService implements RegisterNewPersonalTrainerService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -54,6 +55,7 @@ public class RegisterNewPersonalTrainerServiceImpl implements RegisterNewPersona
                                                  GuardianRestClientConsumer guardianRestClientConsumer,
                                                  PlanTemplateRepository planTemplateRepository,
                                                  ActivePersonalPlanRepository activePersonalPlanRepository, ParameterRepository parameterRepository) {
+        super(userRepository);
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.activePersonalPlanMapper = activePersonalPlanMapper;
@@ -70,26 +72,9 @@ public class RegisterNewPersonalTrainerServiceImpl implements RegisterNewPersona
     @Transactional
     public ControllerGenericResponse<UserDTO> execute(UUID processId, RegisterRequest registerRequest) {
 
-        Optional<User> userByEmail = userRepository.findByEmail(registerRequest.getEmail());
-        if (userByEmail.isPresent()) {
-            throw new CommoditieBaseException("Email has already exist!", HttpStatus.BAD_REQUEST,"MSG-1922");
-        }
+        checkExistingEmail(registerRequest);
 
-        PlanTemplateDTO planTemplateDTO;
-        if(Objects.isNull(registerRequest.getPlanRequest())) {
-            Long freemiumPlanId = Long.valueOf(parameterRepository.findByKeytag("FREEMIUM_PLAN_ID")
-                    .orElseThrow(() -> new CommoditieBaseException("Freemium Keytag not found.", HttpStatus.UNPROCESSABLE_ENTITY, "MSG-1649"))
-                    .getValuetag());
-
-            planTemplateDTO = planTemplateMapper.toDTO(planTemplateRepository.findById(freemiumPlanId)
-                    .orElseThrow(() -> new CommoditieBaseException("Invalid Freemium Id.", HttpStatus.UNPROCESSABLE_ENTITY,"MSG-1653")));
-        } else {
-            planTemplateDTO = planTemplateMapper.toDTO(planTemplateRepository.findByDescriptionAndPaymentFrequencyAndStatus(
-                            registerRequest.getPlanRequest().getDescription(),
-                            registerRequest.getPlanRequest().getFrequency(),
-                            "A")
-                    .orElseThrow(() -> new CommoditieBaseException("Invalid Plan", HttpStatus.BAD_REQUEST, "MSG-0914")));
-        }
+        PlanTemplateDTO planTemplateDTO = getInstancePlanTemplate(registerRequest);
 
         CreateNewAccountRequest createNewAccountRequest = getInstanceCreateNewAccountRequest(registerRequest);
         ControllerGenericResponse<UUID> accountGuardianResponse = guardianRestClientConsumer.createNewAccount(createNewAccountRequest);
@@ -121,10 +106,29 @@ public class RegisterNewPersonalTrainerServiceImpl implements RegisterNewPersona
         return response;
     }
 
+    private PlanTemplateDTO getInstancePlanTemplate(RegisterRequest registerRequest) {
+        PlanTemplateDTO planTemplateDTO;
+        if(Objects.isNull(registerRequest.getPlanRequest())) {
+            Long freemiumPlanId = Long.valueOf(parameterRepository.findByKeytag("FREEMIUM_PLAN_ID")
+                    .orElseThrow(() -> new CommoditieBaseException("Freemium Keytag not found.", HttpStatus.UNPROCESSABLE_ENTITY, "MSG-1649"))
+                    .getValuetag());
+
+            planTemplateDTO = planTemplateMapper.toDTO(planTemplateRepository.findById(freemiumPlanId)
+                    .orElseThrow(() -> new CommoditieBaseException("Invalid Freemium Id.", HttpStatus.UNPROCESSABLE_ENTITY,"MSG-1653")));
+        } else {
+            planTemplateDTO = planTemplateMapper.toDTO(planTemplateRepository.findByDescriptionAndPaymentFrequencyAndStatus(
+                            registerRequest.getPlanRequest().getDescription(),
+                            registerRequest.getPlanRequest().getFrequency(),
+                            "A")
+                    .orElseThrow(() -> new CommoditieBaseException("Invalid Plan", HttpStatus.BAD_REQUEST, "MSG-0914")));
+        }
+        return planTemplateDTO;
+    }
+
     private UserDTO getInstanceUserDTO(RegisterRequest registerRequest, ControllerGenericResponse<UUID> accountGuardianResponse) {
         UserDTO userDTO = modelMapper.map(registerRequest, UserDTO.class);
         userDTO.setUserProfile(UserProfileEnum.PERSONAL_TRAINER);
-        userDTO.setStatus("A");
+        userDTO.setStatus(StatusEnum.A);
         userDTO.setGuardianIntegrationUUID(accountGuardianResponse.getObjectResponse());
         return userDTO;
     }
