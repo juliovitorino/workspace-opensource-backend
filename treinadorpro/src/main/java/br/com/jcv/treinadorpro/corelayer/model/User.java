@@ -51,7 +51,7 @@ public class User {
     @Column(length = 20)
     private String cellphone;
 
-    @Column(name = "birthday", nullable = false)
+    @Column(name = "birthday")
     private LocalDate birthday;
 
     @Column(length = 1)
