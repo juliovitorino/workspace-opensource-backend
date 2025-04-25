@@ -135,7 +135,6 @@ public class RegisterNewPersonalTrainerServiceImpl implements RegisterNewPersona
         createNewAccountRequest.setPasswd(registerRequest.getPasswd());
         createNewAccountRequest.setPasswdCheck(registerRequest.getPasswdCheck());
         createNewAccountRequest.setExternalApplicationUUID(config.getApiKeyUUID());
-        createNewAccountRequest.setBirthday(registerRequest.getBirthday());
         createNewAccountRequest.setName(
                 String.join(" ",
                         registerRequest.getFirstName(),
