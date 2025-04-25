@@ -40,7 +40,7 @@ public class CreateStudentAccountServiceImpl extends AbstractUserService impleme
     }
 
     @Override
-    public ControllerGenericResponse<UserDTO> execute(UUID processId, RegisterRequest registerRequest) {
+    public ControllerGenericResponse<String> execute(UUID processId, RegisterRequest registerRequest) {
         checkExistingEmail(registerRequest);
 
         User userEntity = getInstanceUserEntity(registerRequest);
@@ -49,11 +49,12 @@ public class CreateStudentAccountServiceImpl extends AbstractUserService impleme
         StudentFeature instanceStudentFeatureEntity = getInstanceStudentFeatureEntity(userSaved, registerRequest);
         studentFeatureRepository.save(instanceStudentFeatureEntity);
 
-        ControllerGenericResponse<UserDTO> response = new ControllerGenericResponse<>();
+        ControllerGenericResponse<String> response = new ControllerGenericResponse<>();
         response.setResponse(MensagemResponse.builder()
                 .msgcode("MSG-0001")
-                .mensagem("Your student account has been created. Initial password " + INITIAL_PASSWORD)
+                .mensagem("Your student account has been created. Initial password is listed below.")
                 .build());
+        response.setObjectResponse(INITIAL_PASSWORD);
 
         return response;
     }
