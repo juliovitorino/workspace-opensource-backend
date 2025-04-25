@@ -72,7 +72,6 @@ public class UsersServiceImpl implements UsersService
 {
     private static final String USERS_NOTFOUND_WITH_ID = "Users não encontrada com id = ";
     private static final String USERS_NOTFOUND_WITH_NAME = "Users não encontrada com name = ";
-    private static final String USERS_NOTFOUND_WITH_BIRTHDAY = "Users não encontrada com birthday = ";
     private static final String USERS_NOTFOUND_WITH_STATUS = "Users não encontrada com status = ";
     private static final String USERS_NOTFOUND_WITH_DATECREATED = "Users não encontrada com dateCreated = ";
     private static final String USERS_NOTFOUND_WITH_DATEUPDATED = "Users não encontrada com dateUpdated = ";
@@ -163,7 +162,6 @@ public class UsersServiceImpl implements UsersService
 
             for (Map.Entry<String,Object> entry : updates.entrySet()) {
                 if(entry.getKey().equalsIgnoreCase(UsersConstantes.NAME)) users.setName((String)entry.getValue());
-                if(entry.getKey().equalsIgnoreCase(UsersConstantes.BIRTHDAY)) users.setBirthday((LocalDate)entry.getValue());
 
         }
         if(updates.get(UsersConstantes.DATEUPDATED) == null) users.setDateUpdated(LocalDateTime.now());
@@ -214,7 +212,6 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     List<Users> lstUsers;
     Long id = null;
     String name = null;
-    String birthday = null;
     String status = null;
     String dateCreated = null;
     String dateUpdated = null;
@@ -223,7 +220,6 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     for (Map.Entry<String,Object> entry : filtro.getCamposFiltro().entrySet()) {
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.ID)) id = Objects.isNull(entry.getValue()) ? null : Long.valueOf(entry.getValue().toString());
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.NAME)) name = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
-        if(entry.getKey().equalsIgnoreCase(UsersConstantes.BIRTHDAY)) birthday = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.STATUS)) status = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.DATECREATED)) dateCreated = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.DATEUPDATED)) dateUpdated = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
@@ -234,7 +230,6 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     Page<Users> paginaUsers = usersRepository.findUsersByFilter(paging,
         id
         ,name
-        ,birthday
         ,status
         ,dateCreated
         ,dateUpdated
@@ -260,7 +255,6 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     public List<UsersDTO> findAllByFilter(RequestFilter filtro) {
     Long id = null;
     String name = null;
-    String birthday = null;
     String status = null;
     String dateCreated = null;
     String dateUpdated = null;
@@ -268,7 +262,6 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
         for (Map.Entry<String,Object> entry : filtro.getCamposFiltro().entrySet()) {
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.ID)) id = Objects.isNull(entry.getValue()) ? null : Long.valueOf(entry.getValue().toString());
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.NAME)) name = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
-        if(entry.getKey().equalsIgnoreCase(UsersConstantes.BIRTHDAY)) birthday = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.STATUS)) status = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.DATECREATED)) dateCreated = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
         if(entry.getKey().equalsIgnoreCase(UsersConstantes.DATEUPDATED)) dateUpdated = Objects.isNull(entry.getValue()) ? null : entry.getValue().toString();
@@ -278,7 +271,6 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
         List<Users> lstUsers = usersRepository.findUsersByFilter(
             id
             ,name
-            ,birthday
             ,status
             ,dateCreated
             ,dateUpdated
@@ -306,15 +298,7 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     public List<UsersDTO> findAllUsersByNameAndStatus(String name, String status) {
         return usersRepository.findAllByNameAndStatus(name, status).stream().map(this::toDTO).collect(Collectors.toList());
     }
-    @Override
-    @Transactional(transactionManager="transactionManager",
-    propagation = Propagation.REQUIRED,
-    rollbackFor = Throwable.class,
-    noRollbackFor = UsersNotFoundException.class
-    )
-    public List<UsersDTO> findAllUsersByBirthdayAndStatus(LocalDate birthday, String status) {
-        return usersRepository.findAllByBirthdayAndStatus(birthday, status).stream().map(this::toDTO).collect(Collectors.toList());
-    }
+
     @Override
     @Transactional(transactionManager="transactionManager",
     propagation = Propagation.REQUIRED,
@@ -419,45 +403,6 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
     rollbackFor = Throwable.class,
     noRollbackFor = UsersNotFoundException.class
     )
-    public UsersDTO findUsersByBirthdayAndStatus(LocalDate birthday, String status) {
-
-        UsersDTO cache = redisProvider.getValue("userRole-cache-by-birthday-status-" + birthday + status,UsersDTO.class);
-        if(Objects.nonNull(cache)) return cache;
-
-        Long maxId = usersRepository.loadMaxIdByBirthdayAndStatus(birthday, status);
-        if(maxId == null) maxId = 0L;
-        Optional<Users> usersData =
-            Optional.ofNullable( usersRepository
-                .findById(maxId)
-                .orElseThrow(
-                    () -> new UsersNotFoundException(USERS_NOTFOUND_WITH_BIRTHDAY + birthday,
-                        HttpStatus.NOT_FOUND,
-                        USERS_NOTFOUND_WITH_BIRTHDAY + birthday))
-                );
-
-        UsersDTO response = usersData.map(this::toDTO).orElse(null);
-        if(Objects.nonNull(response)) {
-            redisProvider.setValue("userRole-cache-by-birthday-status-" + birthday + status, gson.toJson(response),120);
-        }
-        return response;
-    }
-
-    @Override
-    @Transactional(transactionManager="transactionManager",
-    propagation = Propagation.REQUIRED,
-    rollbackFor = Throwable.class,
-    noRollbackFor = UsersNotFoundException.class
-    )
-    public UsersDTO findUsersByBirthdayAndStatus(LocalDate birthday) {
-        return this.findUsersByBirthdayAndStatus(birthday, GenericStatusEnums.ATIVO.getShortValue());
-    }
-
-    @Override
-    @Transactional(transactionManager="transactionManager",
-    propagation = Propagation.REQUIRED,
-    rollbackFor = Throwable.class,
-    noRollbackFor = UsersNotFoundException.class
-    )
     public UsersDTO findUsersByDateCreatedAndStatus(Date dateCreated, String status) {
         Long maxId = usersRepository.loadMaxIdByDateCreatedAndStatus(dateCreated, status);
         if(maxId == null) maxId = 0L;
@@ -522,23 +467,11 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
         usersRepository.updateNameById(id, name);
         return findById(id);
     }
-    @Override
-    @Transactional(
-    transactionManager = "transactionManager",
-    propagation = Propagation.REQUIRED,
-    rollbackFor = Throwable.class)
-    public UsersDTO updateBirthdayById(Long id, LocalDate birthday) {
-        findById(id);
-        usersRepository.updateBirthdayById(id, birthday);
-        return findById(id);
-    }
-
 
     public UsersDTO toDTO(Users users) {
         UsersDTO usersDTO = new UsersDTO();
                 usersDTO.setId(users.getId());
                 usersDTO.setName(users.getName());
-                usersDTO.setBirthday(users.getBirthday());
                 usersDTO.setStatus(users.getStatus());
                 usersDTO.setDateCreated(users.getDateCreated());
                 usersDTO.setDateUpdated(users.getDateUpdated());
@@ -551,7 +484,6 @@ public Map<String, Object> findPageByFilter(RequestFilter filtro) {
         users = new Users();
                     users.setId(usersDTO.getId());
                     users.setName(usersDTO.getName());
-                    users.setBirthday(usersDTO.getBirthday());
                     users.setStatus(usersDTO.getStatus());
                     users.setDateCreated(usersDTO.getDateCreated());
                     users.setDateUpdated(usersDTO.getDateUpdated());

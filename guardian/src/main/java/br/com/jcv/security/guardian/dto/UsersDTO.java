@@ -58,11 +58,6 @@ public class UsersDTO extends DTOPadrao implements Serializable
     @JsonProperty(UsersConstantes.NAME)
     private String name;
     
-    @SerializedName(UsersConstantes.BIRTHDAY)
-    @JsonProperty(UsersConstantes.BIRTHDAY)
-    private LocalDate birthday;
-
-
     @SerializedName("mensagemResponse")
     @JsonProperty("mensagemResponse")
     @JsonInclude(value = JsonInclude.Include.NON_NULL)

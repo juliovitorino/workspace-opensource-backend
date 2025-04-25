@@ -38,10 +38,6 @@ public class Users {
     @CodeGeneratorFieldDescriptor(fieldDescription = "User name")
     private String name;
 
-    @Column(name = "dt_birthday")
-    @CodeGeneratorFieldDescriptor(fieldDescription = "Birthday")
-    private LocalDate birthday;
-
     @CodeGeneratorFieldDescriptor(fieldDescription = "Status field")
     @Column(length = 1)
     private String status;

@@ -45,7 +45,6 @@ CREATE UNIQUE INDEX uix_cd_external ON tb_application(cd_external);
 create table tb_user (
     id_user bigserial NOT NULL,
     tx_name VARCHAR NOT NULL,
-    dt_birthday date NOT NULL,
     status VARCHAR(1) NOT NULL,
     date_created timestamp NOT NULL,
     date_updated timestamp NOT NULL,
