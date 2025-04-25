@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @PostMapping("/register/student")
-    public ResponseEntity<ControllerGenericResponse<UserDTO>> createStudentAccount(@RequestBody @Valid RegisterRequest request) {
+    public ResponseEntity<ControllerGenericResponse<String>> createStudentAccount(@RequestBody @Valid RegisterRequest request) {
         return ResponseEntity.ok(createStudentAccountService.execute(UUID.randomUUID(), request));
 
     }
