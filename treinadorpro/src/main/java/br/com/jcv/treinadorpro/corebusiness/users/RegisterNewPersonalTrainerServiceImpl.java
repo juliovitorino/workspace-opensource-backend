@@ -127,6 +127,7 @@ public class RegisterNewPersonalTrainerServiceImpl extends AbstractUserService i
 
     private UserDTO getInstanceUserDTO(RegisterRequest registerRequest, ControllerGenericResponse<UUID> accountGuardianResponse) {
         UserDTO userDTO = modelMapper.map(registerRequest, UserDTO.class);
+        userDTO.setUuidId(UUID.randomUUID());
         userDTO.setUserProfile(UserProfileEnum.PERSONAL_TRAINER);
         userDTO.setStatus(StatusEnum.A);
         userDTO.setGuardianIntegrationUUID(accountGuardianResponse.getObjectResponse());

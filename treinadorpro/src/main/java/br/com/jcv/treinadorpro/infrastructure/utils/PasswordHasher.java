@@ -6,13 +6,24 @@ import java.security.NoSuchAlgorithmException;
 
 public class PasswordHasher {
 
+    private final static String SHA256_ALGO = "SHA-256";
+    private final static String MD5_ALGO = "MD5";
+
     public static String hashSHA256(String password) {
+        return hash(password, SHA256_ALGO);
+    }
+
+    public static String hashMD5(String password) {
+        return hash(password, MD5_ALGO);
+    }
+
+    private static String hash(String password, String algorithm) {
         try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            MessageDigest digest = MessageDigest.getInstance(algorithm);
             byte[] encodedHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
             return bytesToHex(encodedHash);
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Error generating hash SHA-256", e);
+            throw new RuntimeException("Error generating hash algorithm " + algorithm, e);
         }
     }
 
@@ -25,5 +36,6 @@ public class PasswordHasher {
         }
         return hexString.toString();
     }
+
 
 }

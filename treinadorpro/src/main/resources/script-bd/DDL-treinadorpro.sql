@@ -56,6 +56,7 @@ CREATE TABLE personal_trainer_payments (
 
 CREATE TABLE users (
     id bigserial PRIMARY KEY,
+    uuid_id UUID UNIQUE NOT NULL,
     first_name VARCHAR(100) NOT NULL,
     middle_name VARCHAR(100),
     last_name VARCHAR(100),
