@@ -3,9 +3,81 @@ CREATE TABLE parameters (
     id SERIAL PRIMARY KEY,
     keytag VARCHAR(500) UNIQUE NOT NULL,
     valuetag VARCHAR(2000) NOT NULL,
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- program table
+CREATE TABLE program (
+    id SERIAL PRIMARY KEY,
+    name_pt VARCHAR(100),
+    name_en VARCHAR(100),
+    name_es VARCHAR(100),
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- goal table
+CREATE TABLE goal (
+    id SERIAL PRIMARY KEY,
+    name_pt VARCHAR(100),
+    name_en VARCHAR(100),
+    name_es VARCHAR(100),
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- work_group table
+CREATE TABLE work_group (
+    id SERIAL PRIMARY KEY,
+    name_pt VARCHAR(100),
+    name_en VARCHAR(100),
+    name_es VARCHAR(100),
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Modality table
+CREATE TABLE modality (
+    id SERIAL PRIMARY KEY,
+    name_pt VARCHAR(100),
+    name_en VARCHAR(100),
+    name_es VARCHAR(100),
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+COMMENT ON TABLE modality IS 'Tabela que armazena as modalidades disponíveis no sistema.';
+COMMENT ON COLUMN modality.id IS 'Identificador único da modalidade.';
+COMMENT ON COLUMN modality.name_pt IS 'Nome da modalidade em português.';
+COMMENT ON COLUMN modality.name_en IS 'Nome da modalidade em inglês.';
+COMMENT ON COLUMN modality.name_es IS 'Nome da modalidade em espanhol.';
+COMMENT ON COLUMN modality.created_at IS 'Data e hora de criação do registro.';
+COMMENT ON COLUMN modality.updated_at IS 'Data e hora da última atualização do registro.';
+
+-- Exercise table
+CREATE TABLE exercise (
+    id SERIAL PRIMARY KEY,
+    name_pt VARCHAR(100),
+    name_en VARCHAR(100),
+    name_es VARCHAR(100),
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+COMMENT ON TABLE exercise IS 'Tabela que armazena os exercícios cadastrados.';
+COMMENT ON COLUMN exercise.id IS 'Identificador único do exercício.';
+COMMENT ON COLUMN exercise.name_pt IS 'Nome do exercício em português.';
+COMMENT ON COLUMN exercise.name_en IS 'Nome do exercício em inglês.';
+COMMENT ON COLUMN exercise.name_es IS 'Nome do exercício em espanhol.';
+COMMENT ON COLUMN exercise.created_at IS 'Data e hora de criação do registro.';
+COMMENT ON COLUMN exercise.updated_at IS 'Data e hora da última atualização do registro.';
 
 -- plan_template table
 CREATE TABLE plan_template (
@@ -15,38 +87,6 @@ CREATE TABLE plan_template (
     amount_discount DECIMAL(10,2) DEFAULT 0,
     payment_frequency VARCHAR(10) DEFAULT 'MONTHLY' check (payment_frequency in ('MONTHLY', 'ANNUALLY')),
     qty_user_pack_training_allowed INTEGER DEFAULT 0 NOT NULL,
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-
--- active_personal_plan table
-CREATE TABLE active_personal_plan (
-    id serial PRIMARY KEY,
-    plan_template_id INTEGER NOT NULL REFERENCES plan_template(id) ON DELETE CASCADE,
-    personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    description VARCHAR(500) NOT NULL,
-    price DECIMAL(10,2) NOT NULL,
-    amount_discount DECIMAL(10,2) DEFAULT 0 NOT NULL,
-    plan_expiration_date DATE NOT NULL,
-    payment_frequency VARCHAR(10) DEFAULT 'MONTHLY' check (payment_frequency in ('MONTHLY', 'ANNUALLY')),
-    qty_user_pack_training_allowed INTEGER DEFAULT 0 NOT NULL,
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-
--- personal_trainer_payments table
-CREATE TABLE personal_trainer_payments (
-    id serial PRIMARY KEY,
-    active_personal_plan_id INTEGER NOT NULL REFERENCES active_personal_plan(id) ON DELETE CASCADE,
-    expected_amount DECIMAL(10,2) NOT NULL,
-    expected_date DATE NOT NULL,
-    amount_discount DECIMAL(10,2) NOT NULL,
-    amount_paid DECIMAL(10,2) NOT NULL,
-    paid_date DATE NOT NULL,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -68,8 +108,8 @@ CREATE TABLE users (
     user_profile VARCHAR(50) NOT NULL DEFAULT 'PERSONAL_TRAINER' CHECK (user_profile IN ('ADMIN','PERSONAL_TRAINER', 'STUDENT')),
     master_language VARCHAR(10) NOT NULL DEFAULT 'pt-BR' CHECK (master_language IN ('pt-BR', 'en-US', 'es-ES')),
     guardian_integration UUID,
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
     last_login TIMESTAMP,
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -91,7 +131,35 @@ COMMENT ON COLUMN users.last_login IS 'Timestamp of the user''s last login';
 COMMENT ON COLUMN users.created_at IS 'Timestamp of when the user was created';
 COMMENT ON COLUMN users.updated_at IS 'Timestamp of the last update to the user record';
 
+-- active_personal_plan table
+CREATE TABLE active_personal_plan (
+    id serial PRIMARY KEY,
+    plan_template_id INTEGER NOT NULL REFERENCES plan_template(id) ON DELETE CASCADE,
+    personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    description VARCHAR(500) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    amount_discount DECIMAL(10,2) DEFAULT 0 NOT NULL,
+    plan_expiration_date DATE NOT NULL,
+    payment_frequency VARCHAR(10) DEFAULT 'MONTHLY' check (payment_frequency in ('MONTHLY', 'ANNUALLY')),
+    qty_user_pack_training_allowed INTEGER DEFAULT 0 NOT NULL,
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
+-- personal_trainer_payments table
+CREATE TABLE personal_trainer_payments (
+    id serial PRIMARY KEY,
+    active_personal_plan_id INTEGER NOT NULL REFERENCES active_personal_plan(id) ON DELETE CASCADE,
+    expected_amount DECIMAL(10,2) NOT NULL,
+    expected_date DATE NOT NULL,
+    amount_discount DECIMAL(10,2) NOT NULL,
+    amount_paid DECIMAL(10,2) NOT NULL,
+    paid_date DATE NOT NULL,
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 CREATE TABLE student_feature (
     id bigserial PRIMARY KEY,
     student_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -103,8 +171,6 @@ CREATE TABLE student_feature (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
-
 
 CREATE TABLE personal_feature (
     id bigserial PRIMARY KEY,
@@ -121,48 +187,12 @@ CREATE TABLE personal_feature (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-
--- Modality table
-CREATE TABLE modality (
-    id SERIAL PRIMARY KEY,
-    name_pt VARCHAR(100),
-    name_en VARCHAR(100),
-    name_es VARCHAR(100),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-COMMENT ON TABLE modality IS 'Tabela que armazena as modalidades disponíveis no sistema.';
-COMMENT ON COLUMN modality.id IS 'Identificador único da modalidade.';
-COMMENT ON COLUMN modality.name_pt IS 'Nome da modalidade em português.';
-COMMENT ON COLUMN modality.name_en IS 'Nome da modalidade em inglês.';
-COMMENT ON COLUMN modality.name_es IS 'Nome da modalidade em espanhol.';
-COMMENT ON COLUMN modality.created_at IS 'Data e hora de criação do registro.';
-COMMENT ON COLUMN modality.updated_at IS 'Data e hora da última atualização do registro.';
-
--- Exercise table
-CREATE TABLE exercise (
-    id SERIAL PRIMARY KEY,
-    name_pt VARCHAR(100),
-    name_en VARCHAR(100),
-    name_es VARCHAR(100),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-COMMENT ON TABLE exercise IS 'Tabela que armazena os exercícios cadastrados.';
-COMMENT ON COLUMN exercise.id IS 'Identificador único do exercício.';
-COMMENT ON COLUMN exercise.name_pt IS 'Nome do exercício em português.';
-COMMENT ON COLUMN exercise.name_en IS 'Nome do exercício em inglês.';
-COMMENT ON COLUMN exercise.name_es IS 'Nome do exercício em espanhol.';
-COMMENT ON COLUMN exercise.created_at IS 'Data e hora de criação do registro.';
-COMMENT ON COLUMN exercise.updated_at IS 'Data e hora da última atualização do registro.';
-
 -- Modality x Exercise relationship table
 CREATE TABLE modality_exercise (
     id SERIAL PRIMARY KEY,
     modality_id INTEGER NOT NULL REFERENCES modality(id) ON DELETE CASCADE,
     exercise_id INTEGER NOT NULL REFERENCES exercise(id) ON DELETE CASCADE,
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -185,6 +215,7 @@ CREATE TABLE user_pack_training (
     start_time VARCHAR(5) NOT NULL,
     end_time VARCHAR(5) NOT NULL,
     days_of_week VARCHAR(14) NOT NULL,
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -217,15 +248,55 @@ CREATE TABLE student_payments(
 
 );
 
+CREATE TABLE program_template(
+    id serial PRIMARY KEY,
+    modality_id INTEGER NOT NULL REFERENCES modality(id) ON DELETE CASCADE,
+    work_group_id INTEGER NOT NULL REFERENCES work_group(id) ON DELETE CASCADE,
+    goal_id INTEGER NOT NULL REFERENCES goal(id) ON DELETE CASCADE,
+    exercise_id INTEGER NOT NULL REFERENCES exercise(id) ON DELETE CASCADE,
+    program_id INTEGER NOT NULL REFERENCES program(id) ON DELETE CASCADE,
+    execution VARCHAR(100),
+    execution_time VARCHAR(5),
+    rest_time VARCHAR(5),
+    weight INTEGER,
+    weight_unit VARCHAR(10),
+    comments VARCHAR(500),
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE personal_trainer_program(
+    id serial PRIMARY KEY,
+    personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    modality_id INTEGER NOT NULL REFERENCES modality(id) ON DELETE CASCADE,
+    work_group_id INTEGER NOT NULL REFERENCES work_group(id) ON DELETE CASCADE,
+    goal_id INTEGER NOT NULL REFERENCES goal(id) ON DELETE CASCADE,
+    exercise_id INTEGER REFERENCES exercise(id) ON DELETE CASCADE,
+    program_id INTEGER NOT NULL REFERENCES program(id) ON DELETE CASCADE,
+    custom_exercise VARCHAR(100),
+    custom_program VARCHAR(100),
+    execution VARCHAR(100),
+    execution_time VARCHAR(5),
+    rest_time VARCHAR(5),
+    weight INTEGER,
+    weight_unit VARCHAR(10),
+    comments VARCHAR(500),
+    obs VARCHAR(500),
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- User Workout Calendar
 CREATE TABLE user_workout_calendar (
     id SERIAL PRIMARY KEY,
     user_pack_training_id INTEGER NOT NULL REFERENCES user_pack_training(id) ON DELETE CASCADE,
-    modality_exercise_id INTEGER NOT NULL REFERENCES modality_exercise(id) ON DELETE CASCADE,
+    personal_trainer_program_id INTEGER NOT NULL REFERENCES personal_trainer_program(id) ON DELETE CASCADE,
     training_date DATE NOT NULL,
     start_time VARCHAR(5) NOT NULL,
     end_time VARCHAR(5) NOT NULL,
-    execution VARCHAR(100) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -236,8 +307,6 @@ COMMENT ON TABLE user_workout_calendar IS 'Stores scheduled workouts for users, 
 -- Column comments
 COMMENT ON COLUMN user_workout_calendar.id IS 'Primary key for the user workout calendar entry.';
 COMMENT ON COLUMN user_workout_calendar.user_pack_training_id IS 'Foreign key referencing the user_pack_training table, indicating which training pack this workout is part of.';
-COMMENT ON COLUMN user_workout_calendar.modality_exercise_id IS 'Foreign key referencing the modality_exercise table, specifying the exercise modality.';
 COMMENT ON COLUMN user_workout_calendar.training_date IS 'Date on which the workout is scheduled to occur.';
 COMMENT ON COLUMN user_workout_calendar.start_time IS 'Scheduled start time of the workout (HH:MM).';
 COMMENT ON COLUMN user_workout_calendar.end_time IS 'Scheduled end time of the workout (HH:MM).';
-COMMENT ON COLUMN user_workout_calendar.execution IS 'Details or notes regarding the execution of the workout.';
