@@ -3,8 +3,130 @@ INSERT INTO parameters (keytag, valuetag) VALUES
     ('ACTIVE_ENVIRONMENT', 'DEVELOPMENT')
 ;
 
+INSERT INTO goal (name_pt, name_en, name_es, status)
+VALUES
+('Hipertrofia', 'Hypertrophy', 'Hipertrofia', 'A'),
+('Perda de Peso', 'Weight Loss', 'Pérdida de Peso', 'A'),
+('Emagrecimento', 'Slimming', 'Adelgazamiento', 'A'),
+('Definição Muscular', 'Muscle Definition', 'Definición Muscular', 'A'),
+('Condicionamento Físico', 'Physical Conditioning', 'Condicionamiento Físico', 'A'),
+('Ganho de Força', 'Strength Gain', 'Ganancia de Fuerza', 'A'),
+('Resistência Cardiorrespiratória', 'Cardiorespiratory Endurance', 'Resistencia Cardiorrespiratoria', 'A'),
+('Flexibilidade', 'Flexibility', 'Flexibilidad', 'A'),
+('Melhora da Mobilidade', 'Mobility Improvement', 'Mejora de la Movilidad', 'A'),
+('Reabilitação Física', 'Physical Rehabilitation', 'Rehabilitación Física', 'A'),
+('Prevenção de Lesões', 'Injury Prevention', 'Prevención de Lesiones', 'A'),
+('Manutenção da Saúde', 'Health Maintenance', 'Mantenimiento de la Salud', 'A'),
+('Preparação para Corridas', 'Race Preparation', 'Preparación para Carreras', 'A'),
+('Aumento de Energia', 'Energy Boost', 'Aumento de Energía', 'A');
+
+INSERT INTO work_group (name_pt, name_en, name_es, status)
+VALUES
+('Peitoral', 'Chest', 'Pectorales', 'A'),
+('Costas', 'Back', 'Espalda', 'A'),
+('Ombros', 'Shoulders', 'Hombros', 'A'),
+('Bíceps', 'Biceps', 'Bíceps', 'A'),
+('Tríceps', 'Triceps', 'Tríceps', 'A'),
+('Abdômen', 'Abdomen', 'Abdomen', 'A'),
+('Glúteos', 'Glutes', 'Glúteos', 'A'),
+('Quadríceps', 'Quadriceps', 'Cuádriceps', 'A'),
+('Posterior de Coxa', 'Hamstrings', 'Isquiotibiales', 'A'),
+('Panturrilhas', 'Calves', 'Pantorrillas', 'A'),
+('Antebraço', 'Forearm', 'Antebrazo', 'A'),
+('Trapézio', 'Trapezius', 'Trapecio', 'A'),
+('Adutores', 'Adductors', 'Aductores', 'A'),
+('Abdutores', 'Abductors', 'Abductores', 'A'),
+('Corpo inteiro', 'Full Body', 'Cuerpo entero', 'A'),
+('Lombar', 'Lower Back', 'Zona Lumbar', 'A');
+
+INSERT INTO program (name_pt, name_en, name_es, status)
+VALUES
+-- Hipertrofia
+('Programa de Hipertrofia 18-30 anos', 'Hypertrophy Program 18-30 years', 'Programa de Hipertrofia 18-30 años', 'A'),
+('Programa de Hipertrofia 31-45 anos', 'Hypertrophy Program 31-45 years', 'Programa de Hipertrofia 31-45 años', 'A'),
+('Programa de Hipertrofia 46-55 anos', 'Hypertrophy Program 46-55 years', 'Programa de Hipertrofia 46-55 años', 'A'),
+('Programa de Hipertrofia 55+ anos', 'Hypertrophy Program 55+ years', 'Programa de Hipertrofia 55+ años', 'A'),
+
+-- Perda de Peso
+('Programa de Perda de Peso 18-30 anos', 'Weight Loss Program 18-30 years', 'Programa de Pérdida de Peso 18-30 años', 'A'),
+('Programa de Perda de Peso 31-45 anos', 'Weight Loss Program 31-45 years', 'Programa de Pérdida de Peso 31-45 años', 'A'),
+('Programa de Perda de Peso 46-55 anos', 'Weight Loss Program 46-55 years', 'Programa de Pérdida de Peso 46-55 años', 'A'),
+('Programa de Perda de Peso 55+ anos', 'Weight Loss Program 55+ years', 'Programa de Pérdida de Peso 55+ años', 'A'),
+
+-- Emagrecimento
+('Programa de Emagrecimento 18-30 anos', 'Slimming Program 18-30 years', 'Programa de Adelgazamiento 18-30 años', 'A'),
+('Programa de Emagrecimento 31-45 anos', 'Slimming Program 31-45 years', 'Programa de Adelgazamiento 31-45 años', 'A'),
+('Programa de Emagrecimento 46-55 anos', 'Slimming Program 46-55 years', 'Programa de Adelgazamiento 46-55 años', 'A'),
+('Programa de Emagrecimento 55+ anos', 'Slimming Program 55+ years', 'Programa de Adelgazamiento 55+ años', 'A'),
+
+-- Definição Muscular
+('Programa de Definição Muscular 18-30 anos', 'Muscle Definition Program 18-30 years', 'Programa de Definición Muscular 18-30 años', 'A'),
+('Programa de Definição Muscular 31-45 anos', 'Muscle Definition Program 31-45 years', 'Programa de Definición Muscular 31-45 años', 'A'),
+('Programa de Definição Muscular 46-55 anos', 'Muscle Definition Program 46-55 years', 'Programa de Definición Muscular 46-55 años', 'A'),
+('Programa de Definição Muscular 55+ anos', 'Muscle Definition Program 55+ years', 'Programa de Definición Muscular 55+ años', 'A'),
+
+-- Condicionamento Físico
+('Programa de Condicionamento Físico 18-30 anos', 'Physical Conditioning Program 18-30 years', 'Programa de Acondicionamiento Físico 18-30 años', 'A'),
+('Programa de Condicionamento Físico 31-45 anos', 'Physical Conditioning Program 31-45 years', 'Programa de Acondicionamiento Físico 31-45 años', 'A'),
+('Programa de Condicionamento Físico 46-55 anos', 'Physical Conditioning Program 46-55 years', 'Programa de Acondicionamiento Físico 46-55 años', 'A'),
+('Programa de Condicionamento Físico 55+ anos', 'Physical Conditioning Program 55+ years', 'Programa de Acondicionamiento Físico 55+ años', 'A'),
+
+-- Ganho de Força
+('Programa de Ganho de Força 18-30 anos', 'Strength Gain Program 18-30 years', 'Programa de Ganancia de Fuerza 18-30 años', 'A'),
+('Programa de Ganho de Força 31-45 anos', 'Strength Gain Program 31-45 years', 'Programa de Ganancia de Fuerza 31-45 años', 'A'),
+('Programa de Ganho de Força 46-55 anos', 'Strength Gain Program 46-55 years', 'Programa de Ganancia de Fuerza 46-55 años', 'A'),
+('Programa de Ganho de Força 55+ anos', 'Strength Gain Program 55+ years', 'Programa de Ganancia de Fuerza 55+ años', 'A'),
+
+-- Resistência Cardiorrespiratória
+('Programa de Resistência Cardiorrespiratória 18-30 anos', 'Cardiorespiratory Endurance Program 18-30 years', 'Programa de Resistencia Cardiorrespiratoria 18-30 años', 'A'),
+('Programa de Resistência Cardiorrespiratória 31-45 anos', 'Cardiorespiratory Endurance Program 31-45 years', 'Programa de Resistencia Cardiorrespiratoria 31-45 años', 'A'),
+('Programa de Resistência Cardiorrespiratória 46-55 anos', 'Cardiorespiratory Endurance Program 46-55 years', 'Programa de Resistencia Cardiorrespiratoria 46-55 años', 'A'),
+('Programa de Resistência Cardiorrespiratória 55+ anos', 'Cardiorespiratory Endurance Program 55+ years', 'Programa de Resistencia Cardiorrespiratoria 55+ años', 'A'),
+
+-- Flexibilidade
+('Programa de Flexibilidade 18-30 anos', 'Flexibility Program 18-30 years', 'Programa de Flexibilidad 18-30 años', 'A'),
+('Programa de Flexibilidade 31-45 anos', 'Flexibility Program 31-45 years', 'Programa de Flexibilidad 31-45 años', 'A'),
+('Programa de Flexibilidade 46-55 anos', 'Flexibility Program 46-55 years', 'Programa de Flexibilidad 46-55 años', 'A'),
+('Programa de Flexibilidade 55+ anos', 'Flexibility Program 55+ years', 'Programa de Flexibilidad 55+ años', 'A'),
+
+-- Melhora da Mobilidade
+('Programa de Melhora da Mobilidade 18-30 anos', 'Mobility Improvement Program 18-30 years', 'Programa de Mejora de la Movilidad 18-30 años', 'A'),
+('Programa de Melhora da Mobilidade 31-45 anos', 'Mobility Improvement Program 31-45 years', 'Programa de Mejora de la Movilidad 31-45 años', 'A'),
+('Programa de Melhora da Mobilidade 46-55 anos', 'Mobility Improvement Program 46-55 years', 'Programa de Mejora de la Movilidad 46-55 años', 'A'),
+('Programa de Melhora da Mobilidade 55+ anos', 'Mobility Improvement Program 55+ years', 'Programa de Mejora de la Movilidad 55+ años', 'A'),
+
+-- Reabilitação Física
+('Programa de Reabilitação Física 18-30 anos', 'Physical Rehabilitation Program 18-30 years', 'Programa de Rehabilitación Física 18-30 años', 'A'),
+('Programa de Reabilitação Física 31-45 anos', 'Physical Rehabilitation Program 31-45 years', 'Programa de Rehabilitación Física 31-45 años', 'A'),
+('Programa de Reabilitação Física 46-55 anos', 'Physical Rehabilitation Program 46-55 years', 'Programa de Rehabilitación Física 46-55 años', 'A'),
+('Programa de Reabilitação Física 55+ anos', 'Physical Rehabilitation Program 55+ years', 'Programa de Rehabilitación Física 55+ años', 'A'),
+
+-- Prevenção de Lesões
+('Programa de Prevenção de Lesões 18-30 anos', 'Injury Prevention Program 18-30 years', 'Programa de Prevención de Lesiones 18-30 años', 'A'),
+('Programa de Prevenção de Lesões 31-45 anos', 'Injury Prevention Program 31-45 years', 'Programa de Prevención de Lesiones 31-45 años', 'A'),
+('Programa de Prevenção de Lesões 46-55 anos', 'Injury Prevention Program 46-55 years', 'Programa de Prevención de Lesiones 46-55 años', 'A'),
+('Programa de Prevenção de Lesões 55+ anos', 'Injury Prevention Program 55+ years', 'Programa de Prevención de Lesiones 55+ años', 'A'),
+
+-- Manutenção da Saúde
+('Programa de Manutenção da Saúde 18-30 anos', 'Health Maintenance Program 18-30 years', 'Programa de Mantenimiento de la Salud 18-30 años', 'A'),
+('Programa de Manutenção da Saúde 31-45 anos', 'Health Maintenance Program 31-45 years', 'Programa de Mantenimiento de la Salud 31-45 años', 'A'),
+('Programa de Manutenção da Saúde 46-55 anos', 'Health Maintenance Program 46-55 years', 'Programa de Mantenimiento de la Salud 46-55 años', 'A'),
+('Programa de Manutenção da Saúde 55+ anos', 'Health Maintenance Program 55+ years', 'Programa de Mantenimiento de la Salud 55+ años', 'A'),
+
+-- Preparação para Corridas
+('Programa de Preparação para Corridas 18-30 anos', 'Running Preparation Program 18-30 years', 'Programa de Preparación para Carreras 18-30 años', 'A'),
+('Programa de Preparação para Corridas 31-45 anos', 'Running Preparation Program 31-45 years', 'Programa de Preparación para Carreras 31-45 años', 'A'),
+('Programa de Preparação para Corridas 46-55 anos', 'Running Preparation Program 46-55 years', 'Programa de Preparación para Carreras 46-55 años', 'A'),
+('Programa de Preparação para Corridas 55+ anos', 'Running Preparation Program 55+ years', 'Programa de Preparación para Carreras 55+ años', 'A'),
+
+-- Aumento de Energia
+('Programa de Aumento de Energia 18-30 anos', 'Energy Boost Program 18-30 years', 'Programa de Aumento de Energía 18-30 años', 'A'),
+('Programa de Aumento de Energia 31-45 anos', 'Energy Boost Program 31-45 years', 'Programa de Aumento de Energía 31-45 años', 'A'),
+('Programa de Aumento de Energia 46-55 anos', 'Energy Boost Program 46-55 years', 'Programa de Aumento de Energía 46-55 años', 'A'),
+('Programa de Aumento de Energia 55+ anos', 'Energy Boost Program 55+ years', 'Programa de Aumento de Energía 55+ años', 'A');
+
 insert into plan_template (
-description, price, status, recuring_payment_type) values
+description, price, status, payment_frequency) values
     ('FREEMIUM', 67, 'A','MONTHLY'),
     ('BASIC', 804, 'A','ANNUALLY'),
     ('BASIC', 97, 'A','MONTHLY'),
