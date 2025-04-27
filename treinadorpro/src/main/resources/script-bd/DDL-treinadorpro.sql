@@ -80,7 +80,6 @@ COMMENT ON COLUMN work_group.status IS 'Status of the work group: A (Active), B 
 COMMENT ON COLUMN work_group.created_at IS 'Timestamp when the work group was created.';
 COMMENT ON COLUMN work_group.updated_at IS 'Timestamp when the work group was last updated.';
 
-
 -- Modality table
 CREATE TABLE modality (
     id SERIAL PRIMARY KEY,
@@ -92,13 +91,16 @@ CREATE TABLE modality (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-COMMENT ON TABLE modality IS 'Tabela que armazena as modalidades disponíveis no sistema.';
-COMMENT ON COLUMN modality.id IS 'Identificador único da modalidade.';
-COMMENT ON COLUMN modality.name_pt IS 'Nome da modalidade em português.';
-COMMENT ON COLUMN modality.name_en IS 'Nome da modalidade em inglês.';
-COMMENT ON COLUMN modality.name_es IS 'Nome da modalidade em espanhol.';
-COMMENT ON COLUMN modality.created_at IS 'Data e hora de criação do registro.';
-COMMENT ON COLUMN modality.updated_at IS 'Data e hora da última atualização do registro.';
+COMMENT ON TABLE modality IS 'Table that stores the available modalities in the system.';
+
+COMMENT ON COLUMN modality.id IS 'Unique identifier of the modality.';
+COMMENT ON COLUMN modality.name_pt IS 'Name of the modality in Portuguese.';
+COMMENT ON COLUMN modality.name_en IS 'Name of the modality in English.';
+COMMENT ON COLUMN modality.name_es IS 'Name of the modality in Spanish.';
+COMMENT ON COLUMN modality.status IS 'Status of the modality (A = Active, B = Blocked, I = Inactive, P = Pending).';
+COMMENT ON COLUMN modality.created_at IS 'Timestamp when the record was created.';
+COMMENT ON COLUMN modality.updated_at IS 'Timestamp when the record was last updated.';
+
 
 -- Exercise table
 CREATE TABLE exercise (
@@ -111,13 +113,15 @@ CREATE TABLE exercise (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-COMMENT ON TABLE exercise IS 'Tabela que armazena os exercícios cadastrados.';
-COMMENT ON COLUMN exercise.id IS 'Identificador único do exercício.';
-COMMENT ON COLUMN exercise.name_pt IS 'Nome do exercício em português.';
-COMMENT ON COLUMN exercise.name_en IS 'Nome do exercício em inglês.';
-COMMENT ON COLUMN exercise.name_es IS 'Nome do exercício em espanhol.';
-COMMENT ON COLUMN exercise.created_at IS 'Data e hora de criação do registro.';
-COMMENT ON COLUMN exercise.updated_at IS 'Data e hora da última atualização do registro.';
+COMMENT ON TABLE exercise IS 'Table that stores the registered exercises.';
+
+COMMENT ON COLUMN exercise.id IS 'Unique identifier of the exercise.';
+COMMENT ON COLUMN exercise.name_pt IS 'Name of the exercise in Portuguese.';
+COMMENT ON COLUMN exercise.name_en IS 'Name of the exercise in English.';
+COMMENT ON COLUMN exercise.name_es IS 'Name of the exercise in Spanish.';
+COMMENT ON COLUMN exercise.status IS 'Status of the exercise (A = Active, B = Blocked, I = Inactive, P = Pending).';
+COMMENT ON COLUMN exercise.created_at IS 'Timestamp when the record was created.';
+COMMENT ON COLUMN exercise.updated_at IS 'Timestamp when the record was last updated.';
 
 -- modality_exercise table
 CREATE TABLE modality_exercise (
