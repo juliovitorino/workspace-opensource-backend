@@ -222,7 +222,7 @@ CREATE TABLE personal_trainer_payments (
     expected_date DATE NOT NULL,
     amount_discount DECIMAL(10,2) NOT NULL,
     amount_paid DECIMAL(10,2) NOT NULL,
-    paid_date DATE NOT NULL,
+    paid_date DATE,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
