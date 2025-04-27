@@ -8,16 +8,35 @@ CREATE TABLE parameters (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+COMMENT ON TABLE parameters IS 'Table that stores system parameters.';
+
+COMMENT ON COLUMN parameters.id IS 'Unique identifier for the parameter.';
+COMMENT ON COLUMN parameters.keytag IS 'Key that identifies the parameter.';
+COMMENT ON COLUMN parameters.valuetag IS 'Value associated with the parameter key.';
+COMMENT ON COLUMN parameters.status IS 'Status of the parameter: A (Active), B (Blocked), I (Inactive), P (Pending).';
+COMMENT ON COLUMN parameters.created_at IS 'Timestamp when the parameter was created.';
+COMMENT ON COLUMN parameters.updated_at IS 'Timestamp when the parameter was last updated.';
+
 -- program table
 CREATE TABLE program (
     id SERIAL PRIMARY KEY,
     name_pt VARCHAR(100),
     name_en VARCHAR(100),
     name_es VARCHAR(100),
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+COMMENT ON TABLE program IS 'Table that stores the exercises programs';
+
+COMMENT ON COLUMN program.id IS 'Unique identifier for the program.';
+COMMENT ON COLUMN program.name_pt IS 'Program name in Portuguese. Perda de peso com calistenia';
+COMMENT ON COLUMN program.name_en IS 'Program name in English, such as Fat Loss with Calisthenics';
+COMMENT ON COLUMN program.name_es IS 'Program name in Spanish.';
+COMMENT ON COLUMN program.status IS 'Status of the program: A (Active), B (Blocked), I (Inactive), P (Pending).';
+COMMENT ON COLUMN program.created_at IS 'Timestamp when the program was created.';
+COMMENT ON COLUMN program.updated_at IS 'Timestamp when the program was last updated.';
 
 -- goal table
 CREATE TABLE goal (
@@ -25,10 +44,20 @@ CREATE TABLE goal (
     name_pt VARCHAR(100),
     name_en VARCHAR(100),
     name_es VARCHAR(100),
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+COMMENT ON TABLE goal IS 'Table that stores the goals with multilingual names.';
+
+COMMENT ON COLUMN goal.id IS 'Unique identifier for the goal.';
+COMMENT ON COLUMN goal.name_pt IS 'Goal name in Portuguese, ex: Perda de peso; Hipertrofia';
+COMMENT ON COLUMN goal.name_en IS 'Goal name in English., i.e: Fat loss; Hypertrophy';
+COMMENT ON COLUMN goal.name_es IS 'Goal name in Spanish.';
+COMMENT ON COLUMN goal.status IS 'Status of the goal: A (Active), B (Blocked), I (Inactive), P (Pending).';
+COMMENT ON COLUMN goal.created_at IS 'Timestamp when the goal was created.';
+COMMENT ON COLUMN goal.updated_at IS 'Timestamp when the goal was last updated.';
 
 -- work_group table
 CREATE TABLE work_group (
@@ -36,10 +65,21 @@ CREATE TABLE work_group (
     name_pt VARCHAR(100),
     name_en VARCHAR(100),
     name_es VARCHAR(100),
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+COMMENT ON TABLE work_group IS 'Table that stores body work groups with multilingual names.';
+
+COMMENT ON COLUMN work_group.id IS 'Unique identifier for the work group.';
+COMMENT ON COLUMN work_group.name_pt IS 'Work group name in Portuguese, ex: Peitoral; Pernas; Abdominais';
+COMMENT ON COLUMN work_group.name_en IS 'Work group name in English, i.e.: Chest; Legs; Abs';
+COMMENT ON COLUMN work_group.name_es IS 'Work group name in Spanish.';
+COMMENT ON COLUMN work_group.status IS 'Status of the work group: A (Active), B (Blocked), I (Inactive), P (Pending).';
+COMMENT ON COLUMN work_group.created_at IS 'Timestamp when the work group was created.';
+COMMENT ON COLUMN work_group.updated_at IS 'Timestamp when the work group was last updated.';
+
 
 -- Modality table
 CREATE TABLE modality (
@@ -85,12 +125,24 @@ CREATE TABLE plan_template (
     description VARCHAR(500) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     amount_discount DECIMAL(10,2) DEFAULT 0,
-    payment_frequency VARCHAR(10) DEFAULT 'MONTHLY' check (payment_frequency in ('MONTHLY', 'ANNUALLY')),
+    payment_frequency VARCHAR(10) DEFAULT 'MONTHLY' CHECK (payment_frequency IN ('MONTHLY', 'ANNUALLY')),
     qty_user_pack_training_allowed INTEGER DEFAULT 0 NOT NULL,
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+COMMENT ON TABLE plan_template IS 'Table that stores plan templates for user subscription plans.';
+
+COMMENT ON COLUMN plan_template.id IS 'Unique identifier for the plan template.';
+COMMENT ON COLUMN plan_template.description IS 'Description of the plan template. i.e.: FREEMIUM; BASIC; PRO; PREMIUM';
+COMMENT ON COLUMN plan_template.price IS 'Price of the plan.';
+COMMENT ON COLUMN plan_template.amount_discount IS 'Discount amount applied to the plan.';
+COMMENT ON COLUMN plan_template.payment_frequency IS 'Payment frequency for the plan: MONTHLY or ANNUALLY.';
+COMMENT ON COLUMN plan_template.qty_user_pack_training_allowed IS 'Number of user training packages allowed in the plan.';
+COMMENT ON COLUMN plan_template.status IS 'Status of the plan template: A (Active), B (Blocked), I (Inactive), P (Pending).';
+COMMENT ON COLUMN plan_template.created_at IS 'Timestamp when the plan template was created.';
+COMMENT ON COLUMN plan_template.updated_at IS 'Timestamp when the plan template was last updated.';
 
 -- Users Table
 
@@ -140,12 +192,27 @@ CREATE TABLE active_personal_plan (
     price DECIMAL(10,2) NOT NULL,
     amount_discount DECIMAL(10,2) DEFAULT 0 NOT NULL,
     plan_expiration_date DATE NOT NULL,
-    payment_frequency VARCHAR(10) DEFAULT 'MONTHLY' check (payment_frequency in ('MONTHLY', 'ANNUALLY')),
+    payment_frequency VARCHAR(10) DEFAULT 'MONTHLY' CHECK (payment_frequency IN ('MONTHLY', 'ANNUALLY')),
     qty_user_pack_training_allowed INTEGER DEFAULT 0 NOT NULL,
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+COMMENT ON TABLE active_personal_plan IS 'Table that stores active personal plans linked to personal trainers.';
+
+COMMENT ON COLUMN active_personal_plan.id IS 'Unique identifier for the active personal plan.';
+COMMENT ON COLUMN active_personal_plan.plan_template_id IS 'Reference to the associated plan template.';
+COMMENT ON COLUMN active_personal_plan.personal_user_id IS 'Reference to the personal trainer user.';
+COMMENT ON COLUMN active_personal_plan.description IS 'Description of the active personal plan.';
+COMMENT ON COLUMN active_personal_plan.price IS 'Price of the active personal plan.';
+COMMENT ON COLUMN active_personal_plan.amount_discount IS 'Discount amount applied to the plan.';
+COMMENT ON COLUMN active_personal_plan.plan_expiration_date IS 'Expiration date of the active personal plan.';
+COMMENT ON COLUMN active_personal_plan.payment_frequency IS 'Payment frequency of the plan: MONTHLY or ANNUALLY.';
+COMMENT ON COLUMN active_personal_plan.qty_user_pack_training_allowed IS 'Number of user training packages allowed.';
+COMMENT ON COLUMN active_personal_plan.status IS 'Status of the active personal plan: A (Active), B (Blocked), I (Inactive), P (Pending).';
+COMMENT ON COLUMN active_personal_plan.created_at IS 'Timestamp when the active personal plan was created.';
+COMMENT ON COLUMN active_personal_plan.updated_at IS 'Timestamp when the active personal plan was last updated.';
 
 -- personal_trainer_payments table
 CREATE TABLE personal_trainer_payments (
@@ -156,10 +223,25 @@ CREATE TABLE personal_trainer_payments (
     amount_discount DECIMAL(10,2) NOT NULL,
     amount_paid DECIMAL(10,2) NOT NULL,
     paid_date DATE NOT NULL,
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+COMMENT ON TABLE personal_trainer_payments IS 'Table that stores payments related to personal trainers'' active plans.';
+
+COMMENT ON COLUMN personal_trainer_payments.id IS 'Unique identifier for the payment record.';
+COMMENT ON COLUMN personal_trainer_payments.active_personal_plan_id IS 'Reference to the associated active personal plan.';
+COMMENT ON COLUMN personal_trainer_payments.expected_amount IS 'Expected payment amount.';
+COMMENT ON COLUMN personal_trainer_payments.expected_date IS 'Expected payment date.';
+COMMENT ON COLUMN personal_trainer_payments.amount_discount IS 'Discount applied to the expected amount.';
+COMMENT ON COLUMN personal_trainer_payments.amount_paid IS 'Actual amount paid.';
+COMMENT ON COLUMN personal_trainer_payments.paid_date IS 'Date when the payment was made.';
+COMMENT ON COLUMN personal_trainer_payments.status IS 'Status of the payment record: A (Active), B (Blocked), I (Inactive), P (Pending).';
+COMMENT ON COLUMN personal_trainer_payments.created_at IS 'Timestamp when the payment record was created.';
+COMMENT ON COLUMN personal_trainer_payments.updated_at IS 'Timestamp when the payment record was last updated.';
+
+-- student_feature table
 CREATE TABLE student_feature (
     id bigserial PRIMARY KEY,
     student_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -167,11 +249,24 @@ CREATE TABLE student_feature (
     height INTEGER,
     weight DECIMAL(10,2),
     weight_unit VARCHAR(10),
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+COMMENT ON TABLE student_feature IS 'Table that stores physical features and credentials of students.';
+
+COMMENT ON COLUMN student_feature.id IS 'Unique identifier for the student feature record.';
+COMMENT ON COLUMN student_feature.student_user_id IS 'Reference to the associated student user.';
+COMMENT ON COLUMN student_feature.password IS 'Password for the student account.';
+COMMENT ON COLUMN student_feature.height IS 'Height of the student (in centimeters).';
+COMMENT ON COLUMN student_feature.weight IS 'Weight of the student.';
+COMMENT ON COLUMN student_feature.weight_unit IS 'Measurement unit for the weight (e.g., kg, lbs).';
+COMMENT ON COLUMN student_feature.status IS 'Status of the student feature record: A (Active), B (Blocked), I (Inactive), P (Pending).';
+COMMENT ON COLUMN student_feature.created_at IS 'Timestamp when the student feature record was created.';
+COMMENT ON COLUMN student_feature.updated_at IS 'Timestamp when the student feature record was last updated.';
+
+-- personal_feature table
 CREATE TABLE personal_feature (
     id bigserial PRIMARY KEY,
     personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -182,27 +277,25 @@ CREATE TABLE personal_feature (
     fri_period VARCHAR(11),
     sat_period VARCHAR(11),
     sun_period VARCHAR(11),
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Modality x Exercise relationship table
-CREATE TABLE modality_exercise (
-    id SERIAL PRIMARY KEY,
-    modality_id INTEGER NOT NULL REFERENCES modality(id) ON DELETE CASCADE,
-    exercise_id INTEGER NOT NULL REFERENCES exercise(id) ON DELETE CASCADE,
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+COMMENT ON TABLE personal_feature IS 'Table that stores availability periods for personal trainers.';
 
-COMMENT ON TABLE modality_exercise IS 'Tabela que relaciona modalidades aos seus respectivos exercícios.';
-COMMENT ON COLUMN modality_exercise.id IS 'Identificador único do relacionamento.';
-COMMENT ON COLUMN modality_exercise.modality_id IS 'Chave estrangeira que referencia a tabela modality.';
-COMMENT ON COLUMN modality_exercise.exercise_id IS 'Chave estrangeira que referencia a tabela exercise.';
-COMMENT ON COLUMN modality_exercise.created_at IS 'Data e hora de criação do relacionamento.';
-COMMENT ON COLUMN modality_exercise.updated_at IS 'Data e hora da última atualização do relacionamento.';
+COMMENT ON COLUMN personal_feature.id IS 'Unique identifier for the personal feature record.';
+COMMENT ON COLUMN personal_feature.personal_user_id IS 'Reference to the associated personal trainer user.';
+COMMENT ON COLUMN personal_feature.mon_period IS 'Available period on Monday. i.e.: 08:00;16:00';
+COMMENT ON COLUMN personal_feature.tue_period IS 'Available period on Tuesday. i.e.: 09:00;16:00';
+COMMENT ON COLUMN personal_feature.wed_period IS 'Available period on Wednesday. i.e.: 08:00;16:00';
+COMMENT ON COLUMN personal_feature.thu_period IS 'Available period on Thursday. i.e.: 10:00;14:00';
+COMMENT ON COLUMN personal_feature.fri_period IS 'Available period on Friday. i.e.: 09:00;15:00';
+COMMENT ON COLUMN personal_feature.sat_period IS 'Available period on Saturday. i.e.: 08:00;16:00';
+COMMENT ON COLUMN personal_feature.sun_period IS 'Available period on Sunday.';
+COMMENT ON COLUMN personal_feature.status IS 'Status of the personal feature record: A (Active), B (Blocked), I (Inactive), P (Pending).';
+COMMENT ON COLUMN personal_feature.created_at IS 'Timestamp when the personal feature record was created.';
+COMMENT ON COLUMN personal_feature.updated_at IS 'Timestamp when the personal feature record was last updated.';
 
 -- User pack tranning table
 CREATE TABLE user_pack_training (
@@ -236,19 +329,30 @@ COMMENT ON COLUMN user_pack_training.created_at IS 'Date and time when the recor
 COMMENT ON COLUMN user_pack_training.updated_at IS 'Date and time of the last update to the record.';
 
 -- student payments
-CREATE TABLE student_payments(
+CREATE TABLE student_payments (
     id serial PRIMARY KEY,
     user_pack_training_id INTEGER NOT NULL REFERENCES user_pack_training(id) ON DELETE CASCADE,
     amount DECIMAL(10,2) NOT NULL,
     expected_date DATE NOT NULL,
     payment_date DATE,
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-
 );
 
-CREATE TABLE program_template(
+COMMENT ON TABLE student_payments IS 'Table that stores student payment records for training packages.';
+
+COMMENT ON COLUMN student_payments.id IS 'Unique identifier for the student payment record.';
+COMMENT ON COLUMN student_payments.user_pack_training_id IS 'Reference to the associated user training package.';
+COMMENT ON COLUMN student_payments.amount IS 'Payment amount expected from the student.';
+COMMENT ON COLUMN student_payments.expected_date IS 'Expected date of payment.';
+COMMENT ON COLUMN student_payments.payment_date IS 'Actual date when the payment was made.';
+COMMENT ON COLUMN student_payments.status IS 'Status of the student payment record: A (Active), B (Blocked), I (Inactive), P (Pending).';
+COMMENT ON COLUMN student_payments.created_at IS 'Timestamp when the student payment record was created.';
+COMMENT ON COLUMN student_payments.updated_at IS 'Timestamp when the student payment record was last updated.';
+
+-- program_template table
+CREATE TABLE program_template (
     id serial PRIMARY KEY,
     modality_id INTEGER NOT NULL REFERENCES modality(id) ON DELETE CASCADE,
     work_group_id INTEGER NOT NULL REFERENCES work_group(id) ON DELETE CASCADE,
@@ -261,13 +365,31 @@ CREATE TABLE program_template(
     weight INTEGER,
     weight_unit VARCHAR(10),
     comments VARCHAR(500),
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+COMMENT ON TABLE program_template IS 'Table that stores templates for exercise programs.';
 
-CREATE TABLE personal_trainer_program(
+COMMENT ON COLUMN program_template.id IS 'Unique identifier for the program template.';
+COMMENT ON COLUMN program_template.modality_id IS 'Reference to the associated modality.';
+COMMENT ON COLUMN program_template.work_group_id IS 'Reference to the associated work group.';
+COMMENT ON COLUMN program_template.goal_id IS 'Reference to the associated goal.';
+COMMENT ON COLUMN program_template.exercise_id IS 'Reference to the associated exercise.';
+COMMENT ON COLUMN program_template.program_id IS 'Reference to the associated program.';
+COMMENT ON COLUMN program_template.execution IS 'Execution description or instructions.';
+COMMENT ON COLUMN program_template.execution_time IS 'Estimated time for execution (in minutes). format: hh:mi';
+COMMENT ON COLUMN program_template.rest_time IS 'Rest time between sets or exercises (in minutes). format: hh:mi';
+COMMENT ON COLUMN program_template.weight IS 'Suggested weight for the exercise.';
+COMMENT ON COLUMN program_template.weight_unit IS 'Unit of measurement for weight (e.g., kg, lbs).';
+COMMENT ON COLUMN program_template.comments IS 'Additional comments or notes about the exercise.';
+COMMENT ON COLUMN program_template.status IS 'Status of the program template: A (Active), B (Blocked), I (Inactive), P (Pending).';
+COMMENT ON COLUMN program_template.created_at IS 'Timestamp when the program template was created.';
+COMMENT ON COLUMN program_template.updated_at IS 'Timestamp when the program template was last updated.';
+
+-- personal_trainer_program table
+CREATE TABLE personal_trainer_program (
     id serial PRIMARY KEY,
     personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     modality_id INTEGER NOT NULL REFERENCES modality(id) ON DELETE CASCADE,
@@ -284,10 +406,32 @@ CREATE TABLE personal_trainer_program(
     weight_unit VARCHAR(10),
     comments VARCHAR(500),
     obs VARCHAR(500),
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+COMMENT ON TABLE personal_trainer_program IS 'Table that stores customized exercise programs created by personal trainers.';
+
+COMMENT ON COLUMN personal_trainer_program.id IS 'Unique identifier for the personal trainer program.';
+COMMENT ON COLUMN personal_trainer_program.personal_user_id IS 'Reference to the associated personal trainer user.';
+COMMENT ON COLUMN personal_trainer_program.modality_id IS 'Reference to the associated modality.';
+COMMENT ON COLUMN personal_trainer_program.work_group_id IS 'Reference to the associated work group.';
+COMMENT ON COLUMN personal_trainer_program.goal_id IS 'Reference to the associated goal.';
+COMMENT ON COLUMN personal_trainer_program.exercise_id IS 'Reference to the associated exercise (nullable if a custom exercise is provided).';
+COMMENT ON COLUMN personal_trainer_program.program_id IS 'Reference to the associated program.';
+COMMENT ON COLUMN personal_trainer_program.custom_exercise IS 'Name of the custom exercise if not using a predefined one.';
+COMMENT ON COLUMN personal_trainer_program.custom_program IS 'Name of the custom program if not using a predefined one.';
+COMMENT ON COLUMN personal_trainer_program.execution IS 'Execution description or instructions.';
+COMMENT ON COLUMN personal_trainer_program.execution_time IS 'Estimated time for execution (in minutes). format: hh:mi';
+COMMENT ON COLUMN personal_trainer_program.rest_time IS 'Rest time between sets or exercises (in minutes). format: hh:mi';
+COMMENT ON COLUMN personal_trainer_program.weight IS 'Suggested weight for the exercise.';
+COMMENT ON COLUMN personal_trainer_program.weight_unit IS 'Unit of measurement for weight (e.g., kg, lbs).';
+COMMENT ON COLUMN personal_trainer_program.comments IS 'Additional comments about the exercise or program.';
+COMMENT ON COLUMN personal_trainer_program.obs IS 'Observations or notes related to the exercise or program.';
+COMMENT ON COLUMN personal_trainer_program.status IS 'Status of the personal trainer program: A (Active), B (Blocked), I (Inactive), P (Pending).';
+COMMENT ON COLUMN personal_trainer_program.created_at IS 'Timestamp when the personal trainer program was created.';
+COMMENT ON COLUMN personal_trainer_program.updated_at IS 'Timestamp when the personal trainer program was last updated.';
 
 -- User Workout Calendar
 CREATE TABLE user_workout_calendar (
