@@ -76,17 +76,25 @@ INSERT INTO goal (id, name_pt, name_en, name_es, status, created_at, updated_at)
 (10, 'Prevenção de Lesão', 'Injury Prevention', 'Prevención de lesiones', 'A', NOW(), NOW());
 
 -- Work Group
-INSERT INTO work_group (id, name_pt, name_en, name_es, status, created_at, updated_at) VALUES
-(1, 'Grupo Corrida', 'Running Group', 'Grupo de Carrera', 'A', NOW(), NOW()),
-(2, 'Força Muscular', 'Muscle Strength', 'Fuerza Muscular', 'A', NOW(), NOW()),
-(3, 'Mobilidade', 'Mobility', 'Movilidad', 'A', NOW(), NOW()),
-(4, 'Resistência', 'Endurance', 'Resistencia', 'A', NOW(), NOW()),
-(5, 'Calistenia', 'Calisthenics', 'Calistenia', 'A', NOW(), NOW()),
-(6, 'Treinamento Funcional', 'Functional Training', 'Entrenamiento Funcional', 'A', NOW(), NOW()),
-(7, 'Aeróbico', 'Aerobic', 'Aeróbico', 'A', NOW(), NOW()),
-(8, 'Treino Idosos', 'Senior Training', 'Entrenamiento para Mayores', 'A', NOW(), NOW()),
-(9, 'Esporte', 'Sports', 'Deporte', 'A', NOW(), NOW()),
-(10, 'Postura', 'Posture', 'Postura', 'A', NOW(), NOW());
+
+INSERT INTO work_group (id, name_pt, name_en, name_es, status)
+VALUES
+(1, 'Peitoral', 'Chest', 'Pectorales', 'A'),
+(2, 'Costas', 'Back', 'Espalda', 'A'),
+(3, 'Ombros', 'Shoulders', 'Hombros', 'A'),
+(4, 'Bíceps', 'Biceps', 'Bíceps', 'A'),
+(5, 'Tríceps', 'Triceps', 'Tríceps', 'A'),
+(6, 'Abdômen', 'Abdomen', 'Abdomen', 'A'),
+(7, 'Glúteos', 'Glutes', 'Glúteos', 'A'),
+(8, 'Quadríceps', 'Quadriceps', 'Cuádriceps', 'A'),
+(9, 'Posterior de Coxa', 'Hamstrings', 'Isquiotibiales', 'A'),
+(10, 'Panturrilhas', 'Calves', 'Pantorrillas', 'A'),
+(11, 'Antebraço', 'Forearm', 'Antebrazo', 'A'),
+(12, 'Trapézio', 'Trapezius', 'Trapecio', 'A'),
+(13, 'Adutores', 'Adductors', 'Aductores', 'A'),
+(14, 'Abdutores', 'Abductors', 'Abductores', 'A'),
+(15, 'Corpo inteiro', 'Full Body', 'Cuerpo entero', 'A'),
+(16, 'Lombar', 'Lower Back', 'Zona Lumbar', 'A');
 
 --modality
 INSERT INTO modality (id, name_pt, name_en, name_es, status, created_at, updated_at)
@@ -157,7 +165,7 @@ INSERT INTO student_payments (user_pack_training_id, amount, expected_date, paym
 
 -- Program Template
 INSERT INTO program_template (modality_id, work_group_id, goal_id, exercise_id, program_id, execution, execution_time, rest_time, weight, weight_unit, comments, status, created_at, updated_at) VALUES
-(1, 1, 1, 1, 1, '3x10', '45', '60', 20, 'kg', 'No final de cada treino', 'A', NOW(), NOW());
+(1, 1, 1, 1, 1, '3s x 10rep', null, '60s', 20, 'kg', 'Atenção na respiração', 'A', NOW(), NOW());
 
 -- Personal Trainer Program
 INSERT INTO personal_trainer_program (personal_user_id, modality_id, work_group_id, goal_id, exercise_id, program_id, custom_exercise, custom_program, execution, execution_time, rest_time, weight, weight_unit, comments, obs, status, created_at, updated_at) VALUES

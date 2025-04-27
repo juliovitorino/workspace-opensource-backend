@@ -20,24 +20,24 @@ VALUES
 ('Preparação para Corridas', 'Race Preparation', 'Preparación para Carreras', 'A'),
 ('Aumento de Energia', 'Energy Boost', 'Aumento de Energía', 'A');
 
-INSERT INTO work_group (name_pt, name_en, name_es, status)
+INSERT INTO work_group (id, name_pt, name_en, name_es, status)
 VALUES
-('Peitoral', 'Chest', 'Pectorales', 'A'),
-('Costas', 'Back', 'Espalda', 'A'),
-('Ombros', 'Shoulders', 'Hombros', 'A'),
-('Bíceps', 'Biceps', 'Bíceps', 'A'),
-('Tríceps', 'Triceps', 'Tríceps', 'A'),
-('Abdômen', 'Abdomen', 'Abdomen', 'A'),
-('Glúteos', 'Glutes', 'Glúteos', 'A'),
-('Quadríceps', 'Quadriceps', 'Cuádriceps', 'A'),
-('Posterior de Coxa', 'Hamstrings', 'Isquiotibiales', 'A'),
-('Panturrilhas', 'Calves', 'Pantorrillas', 'A'),
-('Antebraço', 'Forearm', 'Antebrazo', 'A'),
-('Trapézio', 'Trapezius', 'Trapecio', 'A'),
-('Adutores', 'Adductors', 'Aductores', 'A'),
-('Abdutores', 'Abductors', 'Abductores', 'A'),
-('Corpo inteiro', 'Full Body', 'Cuerpo entero', 'A'),
-('Lombar', 'Lower Back', 'Zona Lumbar', 'A');
+(1, 'Peitoral', 'Chest', 'Pectorales', 'A'),
+(2, 'Costas', 'Back', 'Espalda', 'A'),
+(3, 'Ombros', 'Shoulders', 'Hombros', 'A'),
+(5, 'Bíceps', 'Biceps', 'Bíceps', 'A'),
+(6, 'Tríceps', 'Triceps', 'Tríceps', 'A'),
+(7, 'Abdômen', 'Abdomen', 'Abdomen', 'A'),
+(8, 'Glúteos', 'Glutes', 'Glúteos', 'A'),
+(9, 'Quadríceps', 'Quadriceps', 'Cuádriceps', 'A'),
+(10, 'Posterior de Coxa', 'Hamstrings', 'Isquiotibiales', 'A'),
+(11, 'Panturrilhas', 'Calves', 'Pantorrillas', 'A'),
+(12, 'Antebraço', 'Forearm', 'Antebrazo', 'A'),
+(13, 'Trapézio', 'Trapezius', 'Trapecio', 'A'),
+(14, 'Adutores', 'Adductors', 'Aductores', 'A'),
+(15, 'Abdutores', 'Abductors', 'Abductores', 'A'),
+(16, 'Corpo inteiro', 'Full Body', 'Cuerpo entero', 'A'),
+(17, 'Lombar', 'Lower Back', 'Zona Lumbar', 'A');
 
 INSERT INTO program (name_pt, name_en, name_es, status)
 VALUES
