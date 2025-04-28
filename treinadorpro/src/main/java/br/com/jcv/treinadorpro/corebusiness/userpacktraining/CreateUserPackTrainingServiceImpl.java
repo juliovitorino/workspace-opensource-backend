@@ -80,10 +80,6 @@ public class CreateUserPackTrainingServiceImpl implements CreateUserPackTraining
             userWorkoutCalendar.setTrainingDate(calendarItem.getTrainingDate());
             userWorkoutCalendar.setStartTime(request.getStartTime());
             userWorkoutCalendar.setEndTime(request.getEndTime());
-            userWorkoutCalendar.setExecution(calendarItem.getExecution());
-            userWorkoutCalendar.setModalityExercise(
-                    modalityExerciseRepository.findById(calendarItem.getModalityExerciseId())
-                            .orElseThrow(() -> new CommoditieBaseException("Invalid ModalityExercise ID",HttpStatus.BAD_REQUEST)));
             return userWorkoutCalendar;
         }).collect(Collectors.toList());
     }
