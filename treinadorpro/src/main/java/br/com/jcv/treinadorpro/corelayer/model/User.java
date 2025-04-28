@@ -104,4 +104,7 @@ public class User {
     @OneToOne(mappedBy = "studentUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private StudentFeature studentFeature;
 
+    @OneToOne(mappedBy = "personalUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private PersonalFeature personalFeature;
+
 }

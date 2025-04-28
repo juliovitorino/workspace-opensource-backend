@@ -1,31 +1,19 @@
 package br.com.jcv.treinadorpro.corelayer.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
-@Table(name = "modality")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class Modality {
+@Entity
+@Table(name = "goal")
+public class Goal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,15 +28,17 @@ public class Modality {
     @Column(name = "name_es", length = 100)
     private String nameEs;
 
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "status", length = 1)
+    private String status = "A";
+
     @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
     @UpdateTimestamp
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "modality", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ModalityExercise> modalityExerciseList;
-
+    @OneToMany(mappedBy = "goal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ProgramTemplate> programTemplateList;
 }

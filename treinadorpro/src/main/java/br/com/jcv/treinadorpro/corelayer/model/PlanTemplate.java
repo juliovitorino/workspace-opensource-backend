@@ -49,6 +49,9 @@ public class PlanTemplate {
     @Column(name = "qty_user_pack_training_allowed", nullable = false)
     private Long qtyUserPackTrainingAllowed;
 
+    @Column(name = "qty_user_student_allowed", nullable = false)
+    private Long qtyUserStudentAllowed;
+
 
     @Column(name = "status", length = 1)
     private String status;

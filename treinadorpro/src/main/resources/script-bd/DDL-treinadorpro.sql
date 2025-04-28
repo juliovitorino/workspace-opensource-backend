@@ -152,6 +152,7 @@ CREATE TABLE plan_template (
     amount_discount DECIMAL(10,2) DEFAULT 0,
     payment_frequency VARCHAR(10) DEFAULT 'MONTHLY' CHECK (payment_frequency IN ('MONTHLY', 'ANNUALLY')),
     qty_user_pack_training_allowed INTEGER DEFAULT 0 NOT NULL,
+    qty_user_student_allowed INTEGER DEFAULT 0 NOT NULL,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -165,6 +166,7 @@ COMMENT ON COLUMN plan_template.price IS 'Price of the plan.';
 COMMENT ON COLUMN plan_template.amount_discount IS 'Discount amount applied to the plan.';
 COMMENT ON COLUMN plan_template.payment_frequency IS 'Payment frequency for the plan: MONTHLY or ANNUALLY.';
 COMMENT ON COLUMN plan_template.qty_user_pack_training_allowed IS 'Number of user training packages allowed in the plan.';
+COMMENT ON COLUMN active_personal_plan.qty_user_student_allowed IS 'Number of user student allowed.';
 COMMENT ON COLUMN plan_template.status IS 'Status of the plan template: A (Active), B (Blocked), I (Inactive), P (Pending).';
 COMMENT ON COLUMN plan_template.created_at IS 'Timestamp when the plan template was created.';
 COMMENT ON COLUMN plan_template.updated_at IS 'Timestamp when the plan template was last updated.';
@@ -219,6 +221,7 @@ CREATE TABLE active_personal_plan (
     plan_expiration_date DATE NOT NULL,
     payment_frequency VARCHAR(10) DEFAULT 'MONTHLY' CHECK (payment_frequency IN ('MONTHLY', 'ANNUALLY')),
     qty_user_pack_training_allowed INTEGER DEFAULT 0 NOT NULL,
+    qty_user_student_allowed INTEGER DEFAULT 0 NOT NULL,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -235,6 +238,7 @@ COMMENT ON COLUMN active_personal_plan.amount_discount IS 'Discount amount appli
 COMMENT ON COLUMN active_personal_plan.plan_expiration_date IS 'Expiration date of the active personal plan.';
 COMMENT ON COLUMN active_personal_plan.payment_frequency IS 'Payment frequency of the plan: MONTHLY or ANNUALLY.';
 COMMENT ON COLUMN active_personal_plan.qty_user_pack_training_allowed IS 'Number of user training packages allowed.';
+COMMENT ON COLUMN active_personal_plan.qty_user_student_allowed IS 'Number of user student allowed.';
 COMMENT ON COLUMN active_personal_plan.status IS 'Status of the active personal plan: A (Active), B (Blocked), I (Inactive), P (Pending).';
 COMMENT ON COLUMN active_personal_plan.created_at IS 'Timestamp when the active personal plan was created.';
 COMMENT ON COLUMN active_personal_plan.updated_at IS 'Timestamp when the active personal plan was last updated.';

@@ -69,7 +69,10 @@ public class UserPackTraining {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "userPackTraining", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserWorkoutCalendar> workoutCalendars;
+    @OneToMany(mappedBy = "userPackTraining", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserWorkoutCalendar> userWorkoutCalendarList;
+
+    @OneToMany(mappedBy = "userPackTraining", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<StudentPayment> studentPaymentList;
 
 }
