@@ -19,8 +19,12 @@ public class ProgramTemplate {
     private Long id;
 
     @ManyToOne(optional = false,fetch = FetchType.LAZY)
-    @JoinColumn(name = "modality_exercise_id", nullable = false, foreignKey = @ForeignKey(name = "fk_program_template_modality_exercise"))
-    private ModalityExercise modalityExercise;
+    @JoinColumn(name = "modality_id", nullable = false)
+    private Modality modality;
+
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @JoinColumn(name = "exercise_id", nullable = false)
+    private Exercise exercise;
 
     @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JoinColumn(name = "work_group_id", nullable = false)

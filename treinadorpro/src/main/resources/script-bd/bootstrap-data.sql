@@ -1,24 +1,33 @@
 -- insert parameters
-INSERT INTO parameters (keytag, valuetag) VALUES
-    ('ACTIVE_ENVIRONMENT', 'DEVELOPMENT')
-;
+INSERT INTO parameters (keytag, valuetag, status) VALUES
+    ('ACTIVE_ENVIRONMENT', 'DEVELOPMENT', 'A'),
+    ('MAX_LOGIN_ATTEMPTS', '5', 'A'),
+    ('DEFAULT_LANGUAGE', 'pt-BR', 'A'),
+    ('MAX_SESSIONS', '3', 'A'),
+    ('APP_NAME', 'TreinadorPro', 'A'),
+    ('PASSWORD_EXPIRY_DAYS', '90', 'A'),
+    ('ENABLE_NOTIFICATIONS', 'true', 'A'),
+    ('SUPPORT_EMAIL', 'support@treinadorpro.com', 'A'),
+    ('TIMEZONE_DEFAULT', 'UTC', 'A'),
+    ('DEFAULT_CURRENCY', 'USD', 'A'),
+    ('MAINTENANCE_MODE', 'false', 'A');
 
-INSERT INTO goal (name_pt, name_en, name_es, status)
+INSERT INTO goal (id,name_pt, name_en, name_es, status)
 VALUES
-('Hipertrofia', 'Hypertrophy', 'Hipertrofia', 'A'),
-('Perda de Peso', 'Weight Loss', 'Pérdida de Peso', 'A'),
-('Emagrecimento', 'Slimming', 'Adelgazamiento', 'A'),
-('Definição Muscular', 'Muscle Definition', 'Definición Muscular', 'A'),
-('Condicionamento Físico', 'Physical Conditioning', 'Condicionamiento Físico', 'A'),
-('Ganho de Força', 'Strength Gain', 'Ganancia de Fuerza', 'A'),
-('Resistência Cardiorrespiratória', 'Cardiorespiratory Endurance', 'Resistencia Cardiorrespiratoria', 'A'),
-('Flexibilidade', 'Flexibility', 'Flexibilidad', 'A'),
-('Melhora da Mobilidade', 'Mobility Improvement', 'Mejora de la Movilidad', 'A'),
-('Reabilitação Física', 'Physical Rehabilitation', 'Rehabilitación Física', 'A'),
-('Prevenção de Lesões', 'Injury Prevention', 'Prevención de Lesiones', 'A'),
-('Manutenção da Saúde', 'Health Maintenance', 'Mantenimiento de la Salud', 'A'),
-('Preparação para Corridas', 'Race Preparation', 'Preparación para Carreras', 'A'),
-('Aumento de Energia', 'Energy Boost', 'Aumento de Energía', 'A');
+(1, 'Hipertrofia', 'Hypertrophy', 'Hipertrofia', 'A'),
+(2, 'Perda de Peso', 'Weight Loss', 'Pérdida de Peso', 'A'),
+(3, 'Emagrecimento', 'Slimming', 'Adelgazamiento', 'A'),
+(4, 'Definição Muscular', 'Muscle Definition', 'Definición Muscular', 'A'),
+(5, 'Condicionamento Físico', 'Physical Conditioning', 'Condicionamiento Físico', 'A'),
+(6, 'Ganho de Força', 'Strength Gain', 'Ganancia de Fuerza', 'A'),
+(7, 'Resistência Cardiorrespiratória', 'Cardiorespiratory Endurance', 'Resistencia Cardiorrespiratoria', 'A'),
+(8, 'Flexibilidade', 'Flexibility', 'Flexibilidad', 'A'),
+(9, 'Melhora da Mobilidade', 'Mobility Improvement', 'Mejora de la Movilidad', 'A'),
+(10, 'Reabilitação Física', 'Physical Rehabilitation', 'Rehabilitación Física', 'A'),
+(11, 'Prevenção de Lesões', 'Injury Prevention', 'Prevención de Lesiones', 'A'),
+(12, 'Manutenção da Saúde', 'Health Maintenance', 'Mantenimiento de la Salud', 'A'),
+(13, 'Preparação para Corridas', 'Race Preparation', 'Preparación para Carreras', 'A'),
+(14, 'Aumento de Energia', 'Energy Boost', 'Aumento de Energía', 'A');
 
 INSERT INTO work_group (id, name_pt, name_en, name_es, status)
 VALUES
@@ -39,91 +48,96 @@ VALUES
 (16, 'Corpo inteiro', 'Full Body', 'Cuerpo entero', 'A'),
 (17, 'Lombar', 'Lower Back', 'Zona Lumbar', 'A');
 
-INSERT INTO program (name_pt, name_en, name_es, status)
+INSERT INTO program (id, name_pt, name_en, name_es, status)
 VALUES
 -- Hipertrofia
-('Programa de Hipertrofia 18-30 anos', 'Hypertrophy Program 18-30 years', 'Programa de Hipertrofia 18-30 años', 'A'),
-('Programa de Hipertrofia 31-45 anos', 'Hypertrophy Program 31-45 years', 'Programa de Hipertrofia 31-45 años', 'A'),
-('Programa de Hipertrofia 46-55 anos', 'Hypertrophy Program 46-55 years', 'Programa de Hipertrofia 46-55 años', 'A'),
-('Programa de Hipertrofia 55+ anos', 'Hypertrophy Program 55+ years', 'Programa de Hipertrofia 55+ años', 'A'),
+(1, 'Programa de Hipertrofia 18-30 anos', 'Hypertrophy Program 18-30 years', 'Programa de Hipertrofia 18-30 años', 'A'),
+(2, 'Programa de Hipertrofia 31-45 anos', 'Hypertrophy Program 31-45 years', 'Programa de Hipertrofia 31-45 años', 'A'),
+(3, 'Programa de Hipertrofia 46-55 anos', 'Hypertrophy Program 46-55 years', 'Programa de Hipertrofia 46-55 años', 'A'),
+(4, 'Programa de Hipertrofia 55+ anos', 'Hypertrophy Program 55+ years', 'Programa de Hipertrofia 55+ años', 'A'),
 
 -- Perda de Peso
-('Programa de Perda de Peso 18-30 anos', 'Weight Loss Program 18-30 years', 'Programa de Pérdida de Peso 18-30 años', 'A'),
-('Programa de Perda de Peso 31-45 anos', 'Weight Loss Program 31-45 years', 'Programa de Pérdida de Peso 31-45 años', 'A'),
-('Programa de Perda de Peso 46-55 anos', 'Weight Loss Program 46-55 years', 'Programa de Pérdida de Peso 46-55 años', 'A'),
-('Programa de Perda de Peso 55+ anos', 'Weight Loss Program 55+ years', 'Programa de Pérdida de Peso 55+ años', 'A'),
+(5, 'Programa de Perda de Peso 18-30 anos', 'Weight Loss Program 18-30 years', 'Programa de Pérdida de Peso 18-30 años', 'A'),
+(6, 'Programa de Perda de Peso 31-45 anos', 'Weight Loss Program 31-45 years', 'Programa de Pérdida de Peso 31-45 años', 'A'),
+(7, 'Programa de Perda de Peso 46-55 anos', 'Weight Loss Program 46-55 years', 'Programa de Pérdida de Peso 46-55 años', 'A'),
+(8, 'Programa de Perda de Peso 55+ anos', 'Weight Loss Program 55+ years', 'Programa de Pérdida de Peso 55+ años', 'A'),
 
 -- Emagrecimento
-('Programa de Emagrecimento 18-30 anos', 'Slimming Program 18-30 years', 'Programa de Adelgazamiento 18-30 años', 'A'),
-('Programa de Emagrecimento 31-45 anos', 'Slimming Program 31-45 years', 'Programa de Adelgazamiento 31-45 años', 'A'),
-('Programa de Emagrecimento 46-55 anos', 'Slimming Program 46-55 years', 'Programa de Adelgazamiento 46-55 años', 'A'),
-('Programa de Emagrecimento 55+ anos', 'Slimming Program 55+ years', 'Programa de Adelgazamiento 55+ años', 'A'),
+(9, 'Programa de Emagrecimento 18-30 anos', 'Slimming Program 18-30 years', 'Programa de Adelgazamiento 18-30 años', 'A'),
+(10, 'Programa de Emagrecimento 31-45 anos', 'Slimming Program 31-45 years', 'Programa de Adelgazamiento 31-45 años', 'A'),
+(11, 'Programa de Emagrecimento 46-55 anos', 'Slimming Program 46-55 years', 'Programa de Adelgazamiento 46-55 años', 'A'),
+(12, 'Programa de Emagrecimento 55+ anos', 'Slimming Program 55+ years', 'Programa de Adelgazamiento 55+ años', 'A'),
 
 -- Definição Muscular
-('Programa de Definição Muscular 18-30 anos', 'Muscle Definition Program 18-30 years', 'Programa de Definición Muscular 18-30 años', 'A'),
-('Programa de Definição Muscular 31-45 anos', 'Muscle Definition Program 31-45 years', 'Programa de Definición Muscular 31-45 años', 'A'),
-('Programa de Definição Muscular 46-55 anos', 'Muscle Definition Program 46-55 years', 'Programa de Definición Muscular 46-55 años', 'A'),
-('Programa de Definição Muscular 55+ anos', 'Muscle Definition Program 55+ years', 'Programa de Definición Muscular 55+ años', 'A'),
+(13, 'Programa de Definição Muscular 18-30 anos', 'Muscle Definition Program 18-30 years', 'Programa de Definición Muscular 18-30 años', 'A'),
+(14, 'Programa de Definição Muscular 31-45 anos', 'Muscle Definition Program 31-45 years', 'Programa de Definición Muscular 31-45 años', 'A'),
+(15, 'Programa de Definição Muscular 46-55 anos', 'Muscle Definition Program 46-55 years', 'Programa de Definición Muscular 46-55 años', 'A'),
+(16, 'Programa de Definição Muscular 55+ anos', 'Muscle Definition Program 55+ years', 'Programa de Definición Muscular 55+ años', 'A'),
 
 -- Condicionamento Físico
-('Programa de Condicionamento Físico 18-30 anos', 'Physical Conditioning Program 18-30 years', 'Programa de Acondicionamiento Físico 18-30 años', 'A'),
-('Programa de Condicionamento Físico 31-45 anos', 'Physical Conditioning Program 31-45 years', 'Programa de Acondicionamiento Físico 31-45 años', 'A'),
-('Programa de Condicionamento Físico 46-55 anos', 'Physical Conditioning Program 46-55 years', 'Programa de Acondicionamiento Físico 46-55 años', 'A'),
-('Programa de Condicionamento Físico 55+ anos', 'Physical Conditioning Program 55+ years', 'Programa de Acondicionamiento Físico 55+ años', 'A'),
+(17, 'Programa de Condicionamento Físico 18-30 anos', 'Physical Conditioning Program 18-30 years', 'Programa de Acondicionamiento Físico 18-30 años', 'A'),
+(18, 'Programa de Condicionamento Físico 31-45 anos', 'Physical Conditioning Program 31-45 years', 'Programa de Acondicionamiento Físico 31-45 años', 'A'),
+(19, 'Programa de Condicionamento Físico 46-55 anos', 'Physical Conditioning Program 46-55 years', 'Programa de Acondicionamiento Físico 46-55 años', 'A'),
+(20, 'Programa de Condicionamento Físico 55+ anos', 'Physical Conditioning Program 55+ years', 'Programa de Acondicionamiento Físico 55+ años', 'A'),
 
 -- Ganho de Força
-('Programa de Ganho de Força 18-30 anos', 'Strength Gain Program 18-30 years', 'Programa de Ganancia de Fuerza 18-30 años', 'A'),
-('Programa de Ganho de Força 31-45 anos', 'Strength Gain Program 31-45 years', 'Programa de Ganancia de Fuerza 31-45 años', 'A'),
-('Programa de Ganho de Força 46-55 anos', 'Strength Gain Program 46-55 years', 'Programa de Ganancia de Fuerza 46-55 años', 'A'),
-('Programa de Ganho de Força 55+ anos', 'Strength Gain Program 55+ years', 'Programa de Ganancia de Fuerza 55+ años', 'A'),
+(21, 'Programa de Ganho de Força 18-30 anos', 'Strength Gain Program 18-30 years', 'Programa de Ganancia de Fuerza 18-30 años', 'A'),
+(22, 'Programa de Ganho de Força 31-45 anos', 'Strength Gain Program 31-45 years', 'Programa de Ganancia de Fuerza 31-45 años', 'A'),
+(23, 'Programa de Ganho de Força 46-55 anos', 'Strength Gain Program 46-55 years', 'Programa de Ganancia de Fuerza 46-55 años', 'A'),
+(24, 'Programa de Ganho de Força 55+ anos', 'Strength Gain Program 55+ years', 'Programa de Ganancia de Fuerza 55+ años', 'A'),
 
 -- Resistência Cardiorrespiratória
-('Programa de Resistência Cardiorrespiratória 18-30 anos', 'Cardiorespiratory Endurance Program 18-30 years', 'Programa de Resistencia Cardiorrespiratoria 18-30 años', 'A'),
-('Programa de Resistência Cardiorrespiratória 31-45 anos', 'Cardiorespiratory Endurance Program 31-45 years', 'Programa de Resistencia Cardiorrespiratoria 31-45 años', 'A'),
-('Programa de Resistência Cardiorrespiratória 46-55 anos', 'Cardiorespiratory Endurance Program 46-55 years', 'Programa de Resistencia Cardiorrespiratoria 46-55 años', 'A'),
-('Programa de Resistência Cardiorrespiratória 55+ anos', 'Cardiorespiratory Endurance Program 55+ years', 'Programa de Resistencia Cardiorrespiratoria 55+ años', 'A'),
+(25, 'Programa de Resistência Cardiorrespiratória 18-30 anos', 'Cardiorespiratory Endurance Program 18-30 years', 'Programa de Resistencia Cardiorrespiratoria 18-30 años', 'A'),
+(26, 'Programa de Resistência Cardiorrespiratória 31-45 anos', 'Cardiorespiratory Endurance Program 31-45 years', 'Programa de Resistencia Cardiorrespiratoria 31-45 años', 'A'),
+(27, 'Programa de Resistência Cardiorrespiratória 46-55 anos', 'Cardiorespiratory Endurance Program 46-55 years', 'Programa de Resistencia Cardiorrespiratoria 46-55 años', 'A'),
+(28, 'Programa de Resistência Cardiorrespiratória 55+ anos', 'Cardiorespiratory Endurance Program 55+ years', 'Programa de Resistencia Cardiorrespiratoria 55+ años', 'A'),
 
 -- Flexibilidade
-('Programa de Flexibilidade 18-30 anos', 'Flexibility Program 18-30 years', 'Programa de Flexibilidad 18-30 años', 'A'),
-('Programa de Flexibilidade 31-45 anos', 'Flexibility Program 31-45 years', 'Programa de Flexibilidad 31-45 años', 'A'),
-('Programa de Flexibilidade 46-55 anos', 'Flexibility Program 46-55 years', 'Programa de Flexibilidad 46-55 años', 'A'),
-('Programa de Flexibilidade 55+ anos', 'Flexibility Program 55+ years', 'Programa de Flexibilidad 55+ años', 'A'),
+(29, 'Programa de Flexibilidade 18-30 anos', 'Flexibility Program 18-30 years', 'Programa de Flexibilidad 18-30 años', 'A'),
+(30, 'Programa de Flexibilidade 31-45 anos', 'Flexibility Program 31-45 years', 'Programa de Flexibilidad 31-45 años', 'A'),
+(31, 'Programa de Flexibilidade 46-55 anos', 'Flexibility Program 46-55 years', 'Programa de Flexibilidad 46-55 años', 'A'),
+(32, 'Programa de Flexibilidade 55+ anos', 'Flexibility Program 55+ years', 'Programa de Flexibilidad 55+ años', 'A'),
 
 -- Melhora da Mobilidade
-('Programa de Melhora da Mobilidade 18-30 anos', 'Mobility Improvement Program 18-30 years', 'Programa de Mejora de la Movilidad 18-30 años', 'A'),
-('Programa de Melhora da Mobilidade 31-45 anos', 'Mobility Improvement Program 31-45 years', 'Programa de Mejora de la Movilidad 31-45 años', 'A'),
-('Programa de Melhora da Mobilidade 46-55 anos', 'Mobility Improvement Program 46-55 years', 'Programa de Mejora de la Movilidad 46-55 años', 'A'),
-('Programa de Melhora da Mobilidade 55+ anos', 'Mobility Improvement Program 55+ years', 'Programa de Mejora de la Movilidad 55+ años', 'A'),
+(33, 'Programa de Melhora da Mobilidade 18-30 anos', 'Mobility Improvement Program 18-30 years', 'Programa de Mejora de la Movilidad 18-30 años', 'A'),
+(34, 'Programa de Melhora da Mobilidade 31-45 anos', 'Mobility Improvement Program 31-45 years', 'Programa de Mejora de la Movilidad 31-45 años', 'A'),
+(35, 'Programa de Melhora da Mobilidade 46-55 anos', 'Mobility Improvement Program 46-55 years', 'Programa de Mejora de la Movilidad 46-55 años', 'A'),
+(36, 'Programa de Melhora da Mobilidade 55+ anos', 'Mobility Improvement Program 55+ years', 'Programa de Mejora de la Movilidad 55+ años', 'A'),
 
 -- Reabilitação Física
-('Programa de Reabilitação Física 18-30 anos', 'Physical Rehabilitation Program 18-30 years', 'Programa de Rehabilitación Física 18-30 años', 'A'),
-('Programa de Reabilitação Física 31-45 anos', 'Physical Rehabilitation Program 31-45 years', 'Programa de Rehabilitación Física 31-45 años', 'A'),
-('Programa de Reabilitação Física 46-55 anos', 'Physical Rehabilitation Program 46-55 years', 'Programa de Rehabilitación Física 46-55 años', 'A'),
-('Programa de Reabilitação Física 55+ anos', 'Physical Rehabilitation Program 55+ years', 'Programa de Rehabilitación Física 55+ años', 'A'),
+(37, 'Programa de Reabilitação Física 18-30 anos', 'Physical Rehabilitation Program 18-30 years', 'Programa de Rehabilitación Física 18-30 años', 'A'),
+(38, 'Programa de Reabilitação Física 31-45 anos', 'Physical Rehabilitation Program 31-45 years', 'Programa de Rehabilitación Física 31-45 años', 'A'),
+(39, 'Programa de Reabilitação Física 46-55 anos', 'Physical Rehabilitation Program 46-55 years', 'Programa de Rehabilitación Física 46-55 años', 'A'),
+(40, 'Programa de Reabilitação Física 55+ anos', 'Physical Rehabilitation Program 55+ years', 'Programa de Rehabilitación Física 55+ años', 'A'),
 
 -- Prevenção de Lesões
-('Programa de Prevenção de Lesões 18-30 anos', 'Injury Prevention Program 18-30 years', 'Programa de Prevención de Lesiones 18-30 años', 'A'),
-('Programa de Prevenção de Lesões 31-45 anos', 'Injury Prevention Program 31-45 years', 'Programa de Prevención de Lesiones 31-45 años', 'A'),
-('Programa de Prevenção de Lesões 46-55 anos', 'Injury Prevention Program 46-55 years', 'Programa de Prevención de Lesiones 46-55 años', 'A'),
-('Programa de Prevenção de Lesões 55+ anos', 'Injury Prevention Program 55+ years', 'Programa de Prevención de Lesiones 55+ años', 'A'),
+(41, 'Programa de Prevenção de Lesões 18-30 anos', 'Injury Prevention Program 18-30 years', 'Programa de Prevención de Lesiones 18-30 años', 'A'),
+(42, 'Programa de Prevenção de Lesões 31-45 anos', 'Injury Prevention Program 31-45 years', 'Programa de Prevención de Lesiones 31-45 años', 'A'),
+(43, 'Programa de Prevenção de Lesões 46-55 anos', 'Injury Prevention Program 46-55 years', 'Programa de Prevención de Lesiones 46-55 años', 'A'),
+(44, 'Programa de Prevenção de Lesões 55+ anos', 'Injury Prevention Program 55+ years', 'Programa de Prevención de Lesiones 55+ años', 'A'),
 
 -- Manutenção da Saúde
-('Programa de Manutenção da Saúde 18-30 anos', 'Health Maintenance Program 18-30 years', 'Programa de Mantenimiento de la Salud 18-30 años', 'A'),
-('Programa de Manutenção da Saúde 31-45 anos', 'Health Maintenance Program 31-45 years', 'Programa de Mantenimiento de la Salud 31-45 años', 'A'),
-('Programa de Manutenção da Saúde 46-55 anos', 'Health Maintenance Program 46-55 years', 'Programa de Mantenimiento de la Salud 46-55 años', 'A'),
-('Programa de Manutenção da Saúde 55+ anos', 'Health Maintenance Program 55+ years', 'Programa de Mantenimiento de la Salud 55+ años', 'A'),
+(45, 'Programa de Manutenção da Saúde 18-30 anos', 'Health Maintenance Program 18-30 years', 'Programa de Mantenimiento de la Salud 18-30 años', 'A'),
+(46, 'Programa de Manutenção da Saúde 31-45 anos', 'Health Maintenance Program 31-45 years', 'Programa de Mantenimiento de la Salud 31-45 años', 'A'),
+(47, 'Programa de Manutenção da Saúde 46-55 anos', 'Health Maintenance Program 46-55 years', 'Programa de Mantenimiento de la Salud 46-55 años', 'A'),
+(48, 'Programa de Manutenção da Saúde 55+ anos', 'Health Maintenance Program 55+ years', 'Programa de Mantenimiento de la Salud 55+ años', 'A'),
 
 -- Preparação para Corridas
-('Programa de Preparação para Corridas 18-30 anos', 'Running Preparation Program 18-30 years', 'Programa de Preparación para Carreras 18-30 años', 'A'),
-('Programa de Preparação para Corridas 31-45 anos', 'Running Preparation Program 31-45 years', 'Programa de Preparación para Carreras 31-45 años', 'A'),
-('Programa de Preparação para Corridas 46-55 anos', 'Running Preparation Program 46-55 years', 'Programa de Preparación para Carreras 46-55 años', 'A'),
-('Programa de Preparação para Corridas 55+ anos', 'Running Preparation Program 55+ years', 'Programa de Preparación para Carreras 55+ años', 'A'),
+(49, 'Programa de Preparação para Corridas 18-30 anos', 'Running Preparation Program 18-30 years', 'Programa de Preparación para Carreras 18-30 años', 'A'),
+(50, 'Programa de Preparação para Corridas 31-45 anos', 'Running Preparation Program 31-45 years', 'Programa de Preparación para Carreras 31-45 años', 'A'),
+(51, 'Programa de Preparação para Corridas 46-55 anos', 'Running Preparation Program 46-55 years', 'Programa de Preparación para Carreras 46-55 años', 'A'),
+(52, 'Programa de Preparação para Corridas 55+ anos', 'Running Preparation Program 55+ years', 'Programa de Preparación para Carreras 55+ años', 'A'),
 
 -- Aumento de Energia
-('Programa de Aumento de Energia 18-30 anos', 'Energy Boost Program 18-30 years', 'Programa de Aumento de Energía 18-30 años', 'A'),
-('Programa de Aumento de Energia 31-45 anos', 'Energy Boost Program 31-45 years', 'Programa de Aumento de Energía 31-45 años', 'A'),
-('Programa de Aumento de Energia 46-55 anos', 'Energy Boost Program 46-55 years', 'Programa de Aumento de Energía 46-55 años', 'A'),
-('Programa de Aumento de Energia 55+ anos', 'Energy Boost Program 55+ years', 'Programa de Aumento de Energía 55+ años', 'A');
+(53, 'Programa de Aumento de Energia 18-30 anos', 'Energy Boost Program 18-30 years', 'Programa de Aumento de Energía 18-30 años', 'A'),
+(54, 'Programa de Aumento de Energia 31-45 anos', 'Energy Boost Program 31-45 years', 'Programa de Aumento de Energía 31-45 años', 'A'),
+(55, 'Programa de Aumento de Energia 46-55 anos', 'Energy Boost Program 46-55 years', 'Programa de Aumento de Energía 46-55 años', 'A'),
+(56, 'Programa de Aumento de Energia 55+ anos', 'Energy Boost Program 55+ years', 'Programa de Aumento de Energía 55+ años', 'A');
+
+INSERT INTO program (id, name_pt, name_en, name_es, status) VALUES
+(57, 'Treino ABC - A (Peitoral, Ombros, Tríceps)', 'Workout ABC - A (Chest, Shoulders, Triceps)', 'Entrenamiento A (Pectorales, Hombros, Tríceps)', 'A'),
+(58, 'Treino ABC - B (Costas, Bíceps, Trapézio)', 'Workout ABC - B (Back, Biceps, Trapezius)', 'Entrenamiento B (Espalda, Bíceps, Trapecio)', 'A'),
+(59, 'Treino ABC - C (Pernas, Glúteos, Abdômen)', 'Workout ABC - C (Legs, Glutes, Abs)', 'Entrenamiento C (Piernas, Glúteos, Abdomen)', 'A');
 
 insert into plan_template (
 description, price, status, payment_frequency) values
@@ -315,18 +329,208 @@ INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
 (50, 'Overhead Squat', 'Overhead Squat', 'Sentadilla sobre la cabeza');
 -- Adicione mais exercícios conforme necessário
 
--- creating relationship between bodybuilding modality and their exercises
-insert into modality_exercise (modality_id,exercise_id) select 1, e.id from exercise e where e.id between 1 and 10;
+-- Inserção de Exercícios para Musculação focus quadriceps (id=1)
+INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
+(51, 'Agachamento Livre', 'Barbell Squat', 'Sentadilla Libre'),
+(52, 'Agachamento no Smith', 'Smith Machine Squat', 'Sentadilla en Máquina Smith'),
+(53, 'Leg Press 45°', '45 Degree Leg Press', 'Prensa de Piernas 45°'),
+(54, 'Extensão de Pernas', 'Leg Extension', 'Extensión de Piernas'),
+(55, 'Agachamento Frontal', 'Front Squat', 'Sentadilla Frontal'),
+(56, 'Agachamento Búlgaro', 'Bulgarian Split Squat', 'Sentadilla Búlgara'),
+(57, 'Passada com Halteres', 'Dumbbell Walking Lunge', 'Zancada Caminando con Mancuernas'),
+(58, 'Step-up no Banco', 'Step-up onto Bench', 'Subida al Banco'),
+(59, 'Agachamento Sumô', 'Sumo Squat', 'Sentadilla Sumo'),
+(60, 'Hack Machine', 'Hack Squat Machine', 'Máquina Hack de Sentadilla');
 
--- creating relationship between 'Functional Training' and their exercises
-insert into modality_exercise (modality_id,exercise_id) select 2, e.id from exercise e where e.id between 11 and 20;
+-- Inserção de Exercícios para Musculação focus harmstrings (id=1)
+INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
+(61, 'Mesa Flexora', 'Lying Leg Curl', 'Curl de Piernas Acostado'),
+(62, 'Flexão de Joelhos em Pé', 'Standing Leg Curl', 'Curl de Piernas de Pie'),
+(63, 'Flexão de Joelhos Sentado', 'Seated Leg Curl', 'Curl de Piernas Sentado'),
+(64, 'Stiff com Barra', 'Barbell Stiff-Leg Deadlift', 'Peso Muerto Rumano con Barra'),
+(65, 'Stiff com Halteres', 'Dumbbell Stiff-Leg Deadlift', 'Peso Muerto Rumano con Mancuernas'),
+(66, 'Glute Ham Raise', 'Glute Ham Raise', 'Elevación de Glúteos e Isquiotibiales'),
+(67, 'Good Morning', 'Good Morning Exercise', 'Buenos Días'),
+(68, 'Deadlift Romeno com Halteres', 'Dumbbell Romanian Deadlift', 'Peso Muerto Rumano con Mancuernas'),
+(69, 'Cadeira Flexora Unilateral', 'Unilateral Seated Leg Curl', 'Curl de Piernas Unilateral Sentado'),
+(70, 'Flexão Nórdica', 'Nordic Hamstring Curl', 'Curl Nórdico de Isquiotibiales');
 
--- creating relationship between 'Yoga' and their exercises
-insert into modality_exercise (modality_id,exercise_id) select 3, e.id from exercise e where e.id between 21 and 30;
+-- Inserção de Exercícios para Musculação focus calves (id=1)
+INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
+(71, 'Elevação de Gêmeos em Pé', 'Standing Calf Raise', 'Elevación de Gemelos de Pie'),
+(72, 'Elevação de Gêmeos Sentado', 'Seated Calf Raise', 'Elevación de Gemelos Sentado'),
+(73, 'Elevação de Gêmeos na Leg Press', 'Calf Press on Leg Press', 'Elevación de Gemelos en Prensa de Piernas'),
+(74, 'Elevação de Gêmeos Unilateral', 'Single-Leg Standing Calf Raise', 'Elevación de Gemelos a Una Pierna'),
+(75, 'Elevação de Gêmeos no Smith', 'Smith Machine Calf Raise', 'Elevación de Gemelos en Máquina Smith'),
+(76, 'Saltos na Corda', 'Jump Rope', 'Saltar la Cuerda'),
+(77, 'Elevação de Gêmeos na Plataforma', 'Calf Raise on Step Platform', 'Elevación de Gemelos en Plataforma'),
+(78, 'Donkey Calf Raise', 'Donkey Calf Raise', 'Elevación de Gemelos Tipo Burro'),
+(79, 'Elevação de Gêmeos com Halteres', 'Dumbbell Standing Calf Raise', 'Elevación de Gemelos con Mancuernas'),
+(80, 'Elevação de Gêmeos no Hack Machine', 'Hack Machine Calf Raise', 'Elevación de Gemelos en Máquina Hack');
 
--- creating relationship between 'Pilates' and their exercises
-insert into modality_exercise (modality_id,exercise_id) select 4, e.id from exercise e where e.id between 31 and 40;
+-- Inserção de Exercícios para Musculação focus adutores e abdutores (id=1)
+INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
+(81, 'Cadeira Abdutora', 'Seated Hip Abduction', 'Abducción de Cadera Sentado'),
+(82, 'Cadeira Adutora', 'Seated Hip Adduction', 'Aducción de Cadera Sentado'),
+(83, 'Abdução de Quadril em Pé', 'Standing Hip Abduction', 'Abducción de Cadera de Pie'),
+(84, 'Addução de Quadril em Pé', 'Standing Hip Adduction', 'Aducción de Cadera de Pie'),
+(85, 'Abdução de Quadril com Faixa Elástica', 'Resistance Band Hip Abduction', 'Abducción de Cadera con Banda de Resistencia'),
+(86, 'Addução de Quadril com Faixa Elástica', 'Resistance Band Hip Adduction', 'Aducción de Cadera con Banda de Resistencia'),
+(87, 'Abdução de Quadril no Cross Over', 'Cable Hip Abduction', 'Abducción de Cadera en Polea'),
+(88, 'Addução de Quadril no Cross Over', 'Cable Hip Adduction', 'Aducción de Cadera en Polea'),
+(89, 'Abdução de Quadril Deitado', 'Side-Lying Hip Abduction', 'Abducción de Cadera Acostado de Lado'),
+(90, 'Addução de Quadril Deitado', 'Side-Lying Hip Adduction', 'Aducción de Cadera Acostado de Lado');
 
--- creating relationship between 'CrossFit' and their exercises
-insert into modality_exercise (modality_id,exercise_id) select 5, e.id from exercise e where e.id between 41 and 50;
+-- Inserção de Exercícios para Musculação focus chest (id=1)
+INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
+(91, 'Supino Reto com Barra', 'Barbell Bench Press', 'Press de Banca con Barra'),
+(92, 'Supino Reto com Halteres', 'Dumbbell Bench Press', 'Press de Banca con Mancuernas'),
+(93, 'Supino Inclinado com Barra', 'Barbell Incline Bench Press', 'Press de Banca Inclinado con Barra'),
+(94, 'Supino Inclinado com Halteres', 'Dumbbell Incline Bench Press', 'Press de Banca Inclinado con Mancuernas'),
+(95, 'Supino Declinado com Barra', 'Barbell Decline Bench Press', 'Press de Banca Declinado con Barra'),
+(96, 'Supino Declinado com Halteres', 'Dumbbell Decline Bench Press', 'Press de Banca Declinado con Mancuernas'),
+(97, 'Crucifixo Reto com Halteres', 'Dumbbell Flat Fly', 'Aperturas Planas con Mancuernas'),
+(98, 'Crucifixo Inclinado com Halteres', 'Dumbbell Incline Fly', 'Aperturas Inclinadas con Mancuernas'),
+(99, 'Crossover no Cross Over', 'Cable Crossover', 'Cruce de Poleas'),
+(100, 'Peck Deck', 'Pec Deck Machine', 'Máquina Pec Deck'),
+(101, 'Flexão de Braços no Solo', 'Push-up', 'Flexiones de Pecho'),
+(102, 'Flexão de Braços com Pés Elevados', 'Decline Push-up', 'Flexiones Declive'),
+(103, 'Flexão de Braços com Mãos Elevadas', 'Incline Push-up', 'Flexiones Inclinadas'),
+(104, 'Crossover Baixo no Cross Over', 'Low to High Cable Crossover', 'Cruce de Poleas de Abajo a Arriba'),
+(105, 'Crossover Alto no Cross Over', 'High to Low Cable Crossover', 'Cruce de Poleas de Arriba a Abajo');
+
+-- Inserção de Exercícios para Musculação focus back (id=1)
+INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
+(106, 'Puxada Frontal na Barra Fixa', 'Pull-up', 'Dominadas'),
+(107, 'Puxada Frontal na Polia', 'Lat Pulldown', 'Jalón al Pecho'),
+(108, 'Puxada Neutra na Polia', 'Neutral-Grip Lat Pulldown', 'Jalón al Pecho con Agarre Neutro'),
+(109, 'Puxada por Trás da Nuca', 'Behind the Neck Pulldown', 'Jalón Detrás del Cuello'),
+(110, 'Remada Curvada com Barra', 'Barbell Bent-Over Row', 'Remo con Barra Inclinado'),
+(111, 'Remada Curvada com Halteres', 'Dumbbell Bent-Over Row', 'Remo con Mancuernas Inclinado'),
+(112, 'Remada Unilateral com Halter', 'One-Arm Dumbbell Row', 'Remo Unilateral con Mancuerna'),
+(113, 'Remada Baixa na Polia', 'Seated Cable Row', 'Remo en Máquina Sentado'),
+(114, 'Remada Cavalinho (T-Bar Row)', 'T-Bar Row', 'Remo T-Bar'),
+(115, 'Levantamento Terra', 'Deadlift', 'Peso Muerto'),
+(116, 'Levantamento Terra Romeno', 'Romanian Deadlift', 'Peso Muerto Rumano'),
+(117, 'Remada na Máquina Hammer', 'Hammer Strength Row', 'Remo en Máquina Hammer'),
+(118, 'Shrug com Barra', 'Barbell Shrug', 'Encogimientos de Trapecio con Barra'),
+(119, 'Shrug com Halteres', 'Dumbbell Shrug', 'Encogimientos de Trapecio con Mancuernas'),
+(120, 'Extensão Lombar no Banco', 'Back Extension', 'Extensiones de Espalda');
+
+-- Inserção de Exercícios para Musculação focus shoulders (id=1)
+INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
+(121, 'Desenvolvimento com Barra', 'Barbell Overhead Press', 'Press Militar con Barra'),
+(122, 'Desenvolvimento com Halteres', 'Dumbbell Shoulder Press', 'Press Militar con Mancuernas'),
+(123, 'Desenvolvimento na Máquina', 'Machine Shoulder Press', 'Press Militar en Máquina'),
+(124, 'Elevação Lateral com Halteres', 'Dumbbell Lateral Raise', 'Elevaciones Laterales con Mancuernas'),
+(125, 'Elevação Lateral na Polia', 'Cable Lateral Raise', 'Elevaciones Laterales en Polea'),
+(126, 'Elevação Frontal com Halteres', 'Dumbbell Front Raise', 'Elevaciones Frontales con Mancuernas'),
+(127, 'Elevação Frontal na Polia', 'Cable Front Raise', 'Elevaciones Frontales en Polea'),
+(128, 'Crucifixo Inverso com Halteres', 'Dumbbell Reverse Fly', 'Aperturas Invertidas con Mancuernas'),
+(129, 'Crucifixo Inverso na Máquina', 'Reverse Pec Deck', 'Pec Deck Invertido'),
+(130, 'Remada Alta com Barra', 'Barbell Upright Row', 'Remo Vertical con Barra'),
+(131, 'Remada Alta com Halteres', 'Dumbbell Upright Row', 'Remo Vertical con Mancuernas'),
+(132, 'Arnold Press', 'Arnold Press', 'Press Arnold'),
+(133, 'Face Pull na Polia', 'Face Pull', 'Face Pull en Polea'),
+(134, 'Desenvolvimento com Halteres Sentado', 'Seated Dumbbell Shoulder Press', 'Press Militar Sentado con Mancuernas'),
+(135, 'Elevação Lateral Unilateral na Polia', 'Single-Arm Cable Lateral Raise', 'Elevación Lateral Unilateral en Polea');
+
+-- Inserção de Exercícios para Musculação focus biceps (id=1)
+INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
+(136, 'Rosca Direta com Barra', 'Barbell Curl', 'Curl de Bíceps con Barra'),
+(137, 'Rosca Direta com Halteres', 'Dumbbell Curl', 'Curl de Bíceps con Mancuernas'),
+(138, 'Rosca Alternada com Halteres', 'Alternating Dumbbell Curl', 'Curl Alternado con Mancuernas'),
+(139, 'Rosca Scott na Barra', 'Barbell Preacher Curl', 'Curl Predicador con Barra'),
+(140, 'Rosca Scott com Halteres', 'Dumbbell Preacher Curl', 'Curl Predicador con Mancuernas'),
+(141, 'Rosca Martelo com Halteres', 'Hammer Curl', 'Curl Martillo con Mancuernas'),
+(142, 'Rosca Concentrada', 'Concentration Curl', 'Curl Concentrado'),
+(143, 'Rosca Inversa com Barra', 'Reverse Barbell Curl', 'Curl Inverso con Barra'),
+(144, 'Rosca 21', '21s Curl', 'Curl 21s'),
+(145, 'Rosca de Bíceps na Polia', 'Cable Biceps Curl', 'Curl de Bíceps en Polea'),
+(146, 'Rosca Martelo na Polia', 'Cable Hammer Curl', 'Curl Martillo en Polea'),
+(147, 'Rosca de Bíceps no Cross Over', 'Cross Cable Curl', 'Curl de Bíceps en Cruce de Poleas'),
+(148, 'Rosca de Bíceps com Barra W', 'EZ Bar Curl', 'Curl con Barra EZ'),
+(149, 'Rosca Spider com Halteres', 'Spider Dumbbell Curl', 'Curl Spider con Mancuernas'),
+(150, 'Rosca Spider com Barra', 'Spider Barbell Curl', 'Curl Spider con Barra');
+
+-- Inserção de Exercícios para Musculação focus triceps (id=1)
+INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
+(151, 'Tríceps Testa com Barra', 'Barbell Skullcrusher', 'Extensión de Tríceps con Barra Acostado'),
+(152, 'Tríceps Testa com Halteres', 'Dumbbell Skullcrusher', 'Extensión de Tríceps con Mancuernas Acostado'),
+(153, 'Tríceps na Polia com Barra Reta', 'Cable Pushdown with Straight Bar', 'Extensión de Tríceps en Polea con Barra Recta'),
+(154, 'Tríceps na Polia com Corda', 'Cable Rope Pushdown', 'Extensión de Tríceps en Polea con Cuerda'),
+(155, 'Tríceps na Polia com Barra V', 'Cable Pushdown with V Bar', 'Extensión de Tríceps en Polea con Barra V'),
+(156, 'Tríceps Coice com Halteres', 'Dumbbell Kickback', 'Patada de Tríceps con Mancuernas'),
+(157, 'Mergulho entre Bancos', 'Bench Dips', 'Fondos entre Bancos'),
+(158, 'Mergulho nas Paralelas', 'Parallel Bar Dips', 'Fondos en Paralelas'),
+(159, 'Tríceps Francês com Halteres', 'Dumbbell Overhead Triceps Extension', 'Extensión de Tríceps por Encima de la Cabeza con Mancuernas'),
+(160, 'Tríceps Francês com Barra', 'Barbell Overhead Triceps Extension', 'Extensión de Tríceps por Encima de la Cabeza con Barra'),
+(161, 'Tríceps Unilateral na Polia', 'Single-Arm Cable Pushdown', 'Extensión de Tríceps a Una Mano en Polea'),
+(162, 'Tríceps Invertido na Polia', 'Reverse Grip Cable Pushdown', 'Extensión de Tríceps en Polea con Agarre Invertido'),
+(163, 'Tríceps Kickback na Polia', 'Cable Kickback', 'Patada de Tríceps en Polea'),
+(164, 'Tríceps Crossbody com Corda', 'Cable Crossbody Triceps Extension', 'Extensión de Tríceps Cruzado en Polea'),
+(165, 'Tríceps Pullover com Halteres', 'Dumbbell Pullover Triceps', 'Pullover de Tríceps con Mancuernas');
+
+-- Inserção de Exercícios para Musculação focus abs (id=1)
+INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
+(166, 'Abdominal Supra no Solo', 'Floor Crunch', 'Abdominal Superior en el Suelo'),
+(167, 'Abdominal Infra no Solo', 'Reverse Crunch', 'Abdominal Inferior en el Suelo'),
+(168, 'Abdominal Oblíquo no Solo', 'Oblique Crunch', 'Abdominal Oblicuo en el Suelo'),
+(169, 'Prancha Frontal', 'Front Plank', 'Plancha Frontal'),
+(170, 'Prancha Lateral', 'Side Plank', 'Plancha Lateral'),
+(171, 'Abdominal Bicicleta', 'Bicycle Crunch', 'Abdominal Bicicleta'),
+(172, 'Elevação de Pernas no Solo', 'Lying Leg Raise', 'Elevación de Piernas Acostado'),
+(173, 'Elevação de Pernas na Barra Fixa', 'Hanging Leg Raise', 'Elevación de Piernas Colgado'),
+(174, 'Abdominal Canivete', 'V-Up', 'Abdominal en V'),
+(175, 'Abdominal com Corda na Polia', 'Cable Rope Crunch', 'Crunch de Abdominales en Polea con Cuerda'),
+(176, 'Abdominal na Máquina', 'Machine Crunch', 'Crunch de Abdominales en Máquina'),
+(177, 'Abdominal na Bola Suíça', 'Swiss Ball Crunch', 'Crunch de Abdominales en Balón Suizo'),
+(178, 'Toques nos Calcanhares', 'Heel Taps', 'Toques de Talón'),
+(179, 'Abdominal Reverso com Bola', 'Reverse Crunch with Ball', 'Abdominal Inverso con Balón'),
+(180, 'Mountain Climbers', 'Mountain Climbers', 'Escaladores');
+
+-- Inserção de Exercícios para Musculação focus abs (id=1)
+INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
+(181, 'Elevação de Quadril com Barra (Hip Thrust)', 'Barbell Hip Thrust', 'Elevación de Cadera con Barra (Hip Thrust)'),
+(182, 'Ponte de Glúteo no Solo', 'Glute Bridge', 'Puente de Glúteos en el Suelo'),
+(183, 'Agachamento Sumô', 'Sumo Squat', 'Sentadilla Sumo'),
+(184, 'Agachamento Búlgaro', 'Bulgarian Split Squat', 'Sentadilla Búlgara'),
+(185, 'Deadlift Romeno com Halteres', 'Dumbbell Romanian Deadlift', 'Peso Muerto Rumano con Mancuernas'),
+(186, 'Levantamento Terra com Barra', 'Barbell Deadlift', 'Peso Muerto con Barra'),
+(187, 'Kickback na Polia', 'Cable Glute Kickback', 'Patada de Glúteo en Polea'),
+(188, 'Kickback com Faixa Elástica', 'Resistance Band Glute Kickback', 'Patada de Glúteo con Banda de Resistencia'),
+(189, 'Abdução de Quadril em Pé', 'Standing Hip Abduction', 'Abducción de Cadera de Pie'),
+(190, 'Abdução de Quadril Deitado', 'Side-Lying Hip Abduction', 'Abducción de Cadera Acostado'),
+(191, 'Cadeira Abdutora', 'Seated Hip Abduction Machine', 'Máquina de Abducción de Cadera'),
+(192, 'Step-up no Banco', 'Step-up onto Bench', 'Subida al Banco'),
+(193, 'Agachamento no Smith', 'Smith Machine Squat', 'Sentadilla en Máquina Smith'),
+(194, 'Glute Ham Raise', 'Glute Ham Raise', 'Elevación de Glúteos e Isquiotibiales'),
+(195, 'Frog Pump', 'Frog Pump', 'Frog Pump para Glúteos');
+
+-- Inserção de Exercícios para Musculação focus abs (id=1)
+INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
+(196, 'Rosca de Punho com Barra', 'Barbell Wrist Curl', 'Curl de Muñeca con Barra'),
+(197, 'Rosca de Punho Invertida com Barra', 'Reverse Barbell Wrist Curl', 'Curl Inverso de Muñeca con Barra'),
+(198, 'Rosca de Punho com Halteres', 'Dumbbell Wrist Curl', 'Curl de Muñeca con Mancuernas'),
+(199, 'Rosca de Punho Invertida com Halteres', 'Reverse Dumbbell Wrist Curl', 'Curl Inverso de Muñeca con Mancuernas'),
+(200, 'Pronação de Punho com Halteres', 'Dumbbell Wrist Pronation', 'Pronación de Muñeca con Mancuernas'),
+(201, 'Supinação de Punho com Halteres', 'Dumbbell Wrist Supination', 'Supinación de Muñeca con Mancuernas'),
+(202, 'Rosca Martelo com Halteres', 'Hammer Curl', 'Curl Martillo con Mancuernas'),
+(203, 'Rosca Inversa na Barra W', 'EZ Bar Reverse Curl', 'Curl Inverso con Barra EZ'),
+(204, 'Farmer’s Walk', 'Farmer’s Walk', 'Caminata del Granjero'),
+(205, 'Dead Hang na Barra Fixa', 'Dead Hang', 'Colgado Muerto en Barra Fija');
+
+-- Inserção de Exercícios para Musculação focus trapezius (id=1)
+INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
+(206, 'Encolhimento de Ombros com Barra', 'Barbell Shrug', 'Encogimiento de Hombros con Barra'),
+(207, 'Encolhimento de Ombros com Halteres', 'Dumbbell Shrug', 'Encogimiento de Hombros con Mancuernas'),
+(208, 'Encolhimento de Ombros na Máquina Smith', 'Smith Machine Shrug', 'Encogimiento de Hombros en Máquina Smith'),
+(209, 'Encolhimento de Ombros na Barra Atrás do Corpo', 'Behind-the-Back Barbell Shrug', 'Encogimiento de Hombros Detrás de la Espalda'),
+(210, 'Remada Alta com Barra', 'Barbell Upright Row', 'Remo Vertical con Barra'),
+(211, 'Remada Alta com Halteres', 'Dumbbell Upright Row', 'Remo Vertical con Mancuernas'),
+(212, 'Remada Alta na Polia', 'Cable Upright Row', 'Remo Vertical en Polea'),
+(213, 'Encolhimento de Ombros Unilateral com Halteres', 'Single-Arm Dumbbell Shrug', 'Encogimiento de Hombros Unilateral con Mancuerna'),
+(214, 'Encolhimento de Ombros com Barra Trap Bar', 'Trap Bar Shrug', 'Encogimiento de Hombros con Barra Trap'),
+(215, 'Prancha com Retração de Escápulas', 'Scapular Retraction Plank', 'Plancha con Retracción de Escápulas');
+
 

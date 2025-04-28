@@ -1,4 +1,5 @@
 
+
 -- Cleanup
 truncate table public.parameters CASCADE;
 truncate table public.plan_template CASCADE;
@@ -6,7 +7,6 @@ truncate table public.student_feature CASCADE;
 truncate table public.personal_trainer_payments CASCADE;
 truncate table public.personal_feature CASCADE;
 truncate table public.active_personal_plan CASCADE;
-truncate table public.modality_exercise CASCADE;
 truncate table public.student_payments CASCADE;
 truncate table public.program_template CASCADE;
 truncate table public.users CASCADE;
@@ -123,24 +123,6 @@ INSERT INTO exercise (id,name_pt, name_en, name_es, status, created_at, updated_
 (20,'Bike Ergométrica', 'Stationary Bike', 'Bicicleta Estática', 'A', NOW(), NOW()),
 (21,'Pular Corda', 'Jump Rope', 'Saltar la Cuerda', 'A', NOW(), NOW());
 
-INSERT INTO modality_exercise (id, modality_id, exercise_id, status, created_at, updated_at) VALUES
-(1, 1, 1, 'A', NOW(), NOW()),
-(2, 1, 2, 'A', NOW(), NOW()),
-(3, 1, 3, 'A', NOW(), NOW()),
-(4, 1, 4, 'A', NOW(), NOW()),
-(5, 1, 5, 'A', NOW(), NOW()),
-(6, 1, 6, 'A', NOW(), NOW()),
-(7, 1, 7, 'A', NOW(), NOW()),
-(8, 1, 9, 'A', NOW(), NOW()),
-(9, 1, 10, 'A', NOW(), NOW()),
-(10, 1, 11, 'A', NOW(), NOW()),
-(11, 1, 14, 'A', NOW(), NOW()),
-(12, 1, 15, 'A', NOW(), NOW()),
-(13, 1, 16, 'A', NOW(), NOW()),
-(14, 1, 17, 'A', NOW(), NOW()),
-(15, 1, 18, 'A', NOW(), NOW())
-;
-
 -- Plan Template
 INSERT INTO plan_template (id, description, price, amount_discount, payment_frequency, qty_user_pack_training_allowed, status, created_at, updated_at) VALUES
 (1, 'Plano Mensal Básico', 100.00, 0, 'MONTHLY', 5, 'A', NOW(), NOW()),
@@ -183,9 +165,12 @@ INSERT INTO student_payments (user_pack_training_id, amount, expected_date, paym
 (1, 300, NOW() + INTERVAL '10 day', NULL, 'P', NOW(), NOW());
 
 -- Program Template
-INSERT INTO program_template (modality_exercise_id, work_group_id, goal_id, program_id, execution, execution_time, rest_time, weight, weight_unit, comments, status, created_at, updated_at) VALUES
-(1, 1, 1, 1, '3s x 10rep', null, '60s', 20, 'kg', 'Atenção na respiração', 'A', NOW(), NOW());
+INSERT INTO program_template (modality_id, exercise_id, work_group_id, goal_id, program_id, execution, execution_time, rest_time, weight, weight_unit, comments, status, created_at, updated_at) VALUES
+(1,1, 1, 1, 1, '3s x 10rep', null, '60s', 20, 'kg', 'Atenção na respiração', 'A', NOW(), NOW());
 
 -- Personal Trainer Program
-INSERT INTO personal_trainer_program (personal_user_id, modality_exercise_id, work_group_id, goal_id, program_id, exercise_id, custom_exercise, custom_program, execution, execution_time, rest_time, weight, weight_unit, comments, obs, status, created_at, updated_at) VALUES
-(6, 1, 1, 1, 1, null, NULL, NULL, '4x12', '50', '90', 15, 'kg', 'Foco na execução', 'Usar barra fixa', 'A', NOW(), NOW());
+INSERT INTO personal_trainer_program (
+    personal_user_id,  program_id, goal_id, work_group_id, modality_id, exercise_id,
+    custom_exercise, custom_program, execution, execution_time, rest_time,
+    weight, weight_unit, status) VALUES
+(1, 1, 1, 1, 1, 1,    null, null, '3x12 reps', null, '01:00',    50, 'kg', 'A');
