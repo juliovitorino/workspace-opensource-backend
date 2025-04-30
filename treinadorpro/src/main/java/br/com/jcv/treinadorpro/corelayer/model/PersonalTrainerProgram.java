@@ -1,5 +1,6 @@
 package br.com.jcv.treinadorpro.corelayer.model;
 
+import br.com.jcv.treinadorpro.corelayer.enums.ExecutionMethodEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -48,6 +49,10 @@ public class PersonalTrainerProgram {
 
     @Column(name = "custom_program", length = 100)
     private String customProgram;
+
+    @Column(name = "execution_method", length = 100)
+    @Enumerated(EnumType.STRING)
+    private ExecutionMethodEnum executionMethod;
 
     @Column(name = "execution", length = 100)
     private String execution;

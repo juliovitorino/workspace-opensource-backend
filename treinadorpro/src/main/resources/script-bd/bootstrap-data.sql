@@ -795,5 +795,6 @@ INSERT INTO program_template (version, modality_id,goal_id, program_id,  work_gr
 (1, 1, 1, 59, 7, 168, '3s x 10rep', null, '60s', 20, 'kg', null, 'A', NOW(), NOW())
 ;
 
+update program_template set execution_method = 'TRADITIONAL_SET' where modality_id = 1 and goal_id = 1;
 
 
