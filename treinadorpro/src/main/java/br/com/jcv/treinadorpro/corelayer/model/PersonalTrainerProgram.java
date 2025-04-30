@@ -24,8 +24,8 @@ public class PersonalTrainerProgram {
     private User personalUser;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "modality_exercise_id", nullable = false)
-    private ModalityExercise modalityExercise;
+    @JoinColumn(name = "modality_id", nullable = false)
+    private Modality modality;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "work_group_id", nullable = false)

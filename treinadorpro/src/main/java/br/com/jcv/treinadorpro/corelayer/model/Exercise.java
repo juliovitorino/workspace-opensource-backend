@@ -11,6 +11,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -47,5 +48,11 @@ public class Exercise {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "exercise", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ProgramTemplate> programTemplateList;
+
+    @OneToMany(mappedBy = "exercise", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<PersonalTrainerProgram> personalTrainerProgramList;
 
 }

@@ -101,13 +101,15 @@ COMMENT ON COLUMN modality.status IS 'Status of the modality (A = Active, B = Bl
 COMMENT ON COLUMN modality.created_at IS 'Timestamp when the record was created.';
 COMMENT ON COLUMN modality.updated_at IS 'Timestamp when the record was last updated.';
 
-
 -- Exercise table
 CREATE TABLE exercise (
     id SERIAL PRIMARY KEY,
     name_pt VARCHAR(100),
     name_en VARCHAR(100),
     name_es VARCHAR(100),
+    video_url_pt VARCHAR(1000),
+    video_url_en VARCHAR(1000),
+    video_url_es VARCHAR(1000),
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -123,26 +125,25 @@ COMMENT ON COLUMN exercise.status IS 'Status of the exercise (A = Active, B = Bl
 COMMENT ON COLUMN exercise.created_at IS 'Timestamp when the record was created.';
 COMMENT ON COLUMN exercise.updated_at IS 'Timestamp when the record was last updated.';
 
--- modality_exercise table
-CREATE TABLE modality_exercise (
+-- Exercise table
+CREATE TABLE work_group_exercise (
     id SERIAL PRIMARY KEY,
-    modality_id INTEGER NOT NULL REFERENCES modality(id),
-    exercise_id INTEGER NOT NULL REFERENCES exercise(id),
+    work_group_id INTEGER NOT NULL REFERENCES work_group(id) ON DELETE CASCADE,
+    exercise_id INTEGER NOT NULL REFERENCES exercise(id) ON DELETE CASCADE,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Comments for the table modality_exercise
-COMMENT ON TABLE modality_exercise IS 'Table that links exercises to modalities, allowing the organization and categorization of exercises by modality.';
+COMMENT ON TABLE work_group_exercise IS 'Table that links exercises to specific work groups.';
 
--- Comments for the columns of modality_exercise
-COMMENT ON COLUMN modality_exercise.id IS 'Unique identifier for the modality and exercise association.';
-COMMENT ON COLUMN modality_exercise.modality_id IS 'Identifier of the modality associated with the exercise. References the modality table.';
-COMMENT ON COLUMN modality_exercise.exercise_id IS 'Identifier of the exercise associated with the modality. References the exercise table.';
-COMMENT ON COLUMN modality_exercise.status IS 'Status of the association (A = Active, B = Blocked, I = Inactive, P = Pending).';
-COMMENT ON COLUMN modality_exercise.created_at IS 'Timestamp indicating when the record was created.';
-COMMENT ON COLUMN modality_exercise.updated_at IS 'Timestamp indicating when the record was last updated.';
+COMMENT ON COLUMN work_group_exercise.id IS 'Unique identifier for the work group exercise record.';
+COMMENT ON COLUMN work_group_exercise.work_group_id IS 'Foreign key referencing the associated work group.';
+COMMENT ON COLUMN work_group_exercise.exercise_id IS 'Foreign key referencing the associated exercise.';
+COMMENT ON COLUMN work_group_exercise.status IS 'Status of the record: A (Active), B (Blocked), I (Inactive), P (Pending).';
+COMMENT ON COLUMN work_group_exercise.created_at IS 'Timestamp indicating when the record was created.';
+COMMENT ON COLUMN work_group_exercise.updated_at IS 'Timestamp indicating the last time the record was updated.';
+
 
 -- plan_template table
 CREATE TABLE plan_template (
@@ -166,7 +167,7 @@ COMMENT ON COLUMN plan_template.price IS 'Price of the plan.';
 COMMENT ON COLUMN plan_template.amount_discount IS 'Discount amount applied to the plan.';
 COMMENT ON COLUMN plan_template.payment_frequency IS 'Payment frequency for the plan: MONTHLY or ANNUALLY.';
 COMMENT ON COLUMN plan_template.qty_user_pack_training_allowed IS 'Number of user training packages allowed in the plan.';
-COMMENT ON COLUMN active_personal_plan.qty_user_student_allowed IS 'Number of user student allowed.';
+COMMENT ON COLUMN plan_template.qty_user_student_allowed IS 'Number of user student allowed.';
 COMMENT ON COLUMN plan_template.status IS 'Status of the plan template: A (Active), B (Blocked), I (Inactive), P (Pending).';
 COMMENT ON COLUMN plan_template.created_at IS 'Timestamp when the plan template was created.';
 COMMENT ON COLUMN plan_template.updated_at IS 'Timestamp when the plan template was last updated.';
@@ -381,10 +382,11 @@ COMMENT ON COLUMN student_payments.updated_at IS 'Timestamp when the student pay
 -- program_template table
 CREATE TABLE program_template (
     id serial PRIMARY KEY,
-    modality_exercise_id INTEGER NOT NULL REFERENCES modality_exercise(id) ON DELETE CASCADE,
-    work_group_id INTEGER NOT NULL REFERENCES work_group(id) ON DELETE CASCADE,
+    modality_id INTEGER NOT NULL REFERENCES modality(id) ON DELETE CASCADE,
     goal_id INTEGER NOT NULL REFERENCES goal(id) ON DELETE CASCADE,
     program_id INTEGER NOT NULL REFERENCES program(id) ON DELETE CASCADE,
+    work_group_id INTEGER NOT NULL REFERENCES work_group(id) ON DELETE CASCADE,
+    exercise_id INTEGER NOT NULL REFERENCES exercise(id) ON DELETE CASCADE,
     execution VARCHAR(100),
     execution_time VARCHAR(5),
     rest_time VARCHAR(5),
@@ -399,7 +401,8 @@ CREATE TABLE program_template (
 COMMENT ON TABLE program_template IS 'Table that stores templates for exercise programs.';
 
 COMMENT ON COLUMN program_template.id IS 'Unique identifier for the program template.';
-COMMENT ON COLUMN program_template.modality_exercise_id IS 'Reference to the associated modality exercise relationship.';
+COMMENT ON COLUMN program_template.modality_id IS 'Reference to the associated modality relationship.';
+COMMENT ON COLUMN program_template.exercise_id IS 'Reference to the associated exercise relationship.';
 COMMENT ON COLUMN program_template.work_group_id IS 'Reference to the associated work group.';
 COMMENT ON COLUMN program_template.goal_id IS 'Reference to the associated goal.';
 COMMENT ON COLUMN program_template.program_id IS 'Reference to the associated program.';
@@ -417,11 +420,11 @@ COMMENT ON COLUMN program_template.updated_at IS 'Timestamp when the program tem
 CREATE TABLE personal_trainer_program (
     id serial PRIMARY KEY,
     personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    modality_exercise_id INTEGER NOT NULL REFERENCES modality_exercise(id) ON DELETE CASCADE,
-    work_group_id INTEGER NOT NULL REFERENCES work_group(id) ON DELETE CASCADE,
+    modality_id INTEGER NOT NULL REFERENCES modality(id) ON DELETE CASCADE,
     goal_id INTEGER NOT NULL REFERENCES goal(id) ON DELETE CASCADE,
-    exercise_id INTEGER REFERENCES exercise(id) ON DELETE CASCADE,
     program_id INTEGER NOT NULL REFERENCES program(id) ON DELETE CASCADE,
+    work_group_id INTEGER NOT NULL REFERENCES work_group(id) ON DELETE CASCADE,
+    exercise_id INTEGER REFERENCES exercise(id) ON DELETE CASCADE,
     custom_exercise VARCHAR(100),
     custom_program VARCHAR(100),
     execution VARCHAR(100),
@@ -440,7 +443,7 @@ COMMENT ON TABLE personal_trainer_program IS 'Table that stores customized exerc
 
 COMMENT ON COLUMN personal_trainer_program.id IS 'Unique identifier for the personal trainer program.';
 COMMENT ON COLUMN personal_trainer_program.personal_user_id IS 'Reference to the associated personal trainer user.';
-COMMENT ON COLUMN personal_trainer_program.modality_exercise_id IS 'Reference to the associated modality exercise relationship.';
+COMMENT ON COLUMN personal_trainer_program.modality_id IS 'Reference to the associated modality relationship.';
 COMMENT ON COLUMN personal_trainer_program.work_group_id IS 'Reference to the associated work group.';
 COMMENT ON COLUMN personal_trainer_program.goal_id IS 'Reference to the associated goal.';
 COMMENT ON COLUMN personal_trainer_program.exercise_id IS 'Reference to the associated exercise (nullable if a custom exercise is provided).';

@@ -49,6 +49,9 @@ public class Modality {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "modality", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ModalityExercise> modalityExerciseList;
+    private List<ProgramTemplate> programTemplateList;
+
+    @OneToMany(mappedBy = "modality", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<PersonalTrainerProgram> personalTrainerProgramList;
 
 }

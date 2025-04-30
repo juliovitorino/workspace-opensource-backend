@@ -11,7 +11,6 @@ import br.com.jcv.treinadorpro.corelayer.model.Modality;
 import br.com.jcv.treinadorpro.corelayer.model.User;
 import br.com.jcv.treinadorpro.corelayer.model.UserPackTraining;
 import br.com.jcv.treinadorpro.corelayer.model.UserWorkoutCalendar;
-import br.com.jcv.treinadorpro.corelayer.repository.ModalityExerciseRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.ModalityRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.UserPackTrainingRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
@@ -34,14 +33,14 @@ public class CreateUserPackTrainingServiceImpl implements CreateUserPackTraining
     private final ModalityMapper modalityMapper;
     private final ModalityRepository modalityRepository;
     private final UserWorkoutCalendarRepository userWorkoutCalendarRepository;
-    private final ModalityExerciseRepository modalityExerciseRepository;
 
     public CreateUserPackTrainingServiceImpl(UserPackTrainingMapper userPackTrainingMapper,
                                              UserPackTrainingRepository userPackTrainingRepository,
                                              UserRepository userRepository,
                                              UserMapper userMapper,
                                              ModalityMapper modalityMapper,
-                                             ModalityRepository modalityRepository, UserWorkoutCalendarRepository userWorkoutCalendarRepository, ModalityExerciseRepository modalityExerciseRepository) {
+                                             ModalityRepository modalityRepository,
+                                             UserWorkoutCalendarRepository userWorkoutCalendarRepository) {
         this.userPackTrainingMapper = userPackTrainingMapper;
         this.userPackTrainingRepository = userPackTrainingRepository;
         this.userRepository = userRepository;
@@ -49,7 +48,6 @@ public class CreateUserPackTrainingServiceImpl implements CreateUserPackTraining
         this.modalityMapper = modalityMapper;
         this.modalityRepository = modalityRepository;
         this.userWorkoutCalendarRepository = userWorkoutCalendarRepository;
-        this.modalityExerciseRepository = modalityExerciseRepository;
     }
 
     @Override
