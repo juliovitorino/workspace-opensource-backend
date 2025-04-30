@@ -110,6 +110,7 @@ CREATE TABLE exercise (
     video_url_pt VARCHAR(1000),
     video_url_en VARCHAR(1000),
     video_url_es VARCHAR(1000),
+    image_uuid UUID,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
