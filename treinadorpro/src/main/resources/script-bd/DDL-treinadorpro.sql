@@ -382,6 +382,7 @@ COMMENT ON COLUMN student_payments.updated_at IS 'Timestamp when the student pay
 -- program_template table
 CREATE TABLE program_template (
     id serial PRIMARY KEY,
+    version INTEGER NOT NULL,
     modality_id INTEGER NOT NULL REFERENCES modality(id) ON DELETE CASCADE,
     goal_id INTEGER NOT NULL REFERENCES goal(id) ON DELETE CASCADE,
     program_id INTEGER NOT NULL REFERENCES program(id) ON DELETE CASCADE,
@@ -401,6 +402,7 @@ CREATE TABLE program_template (
 COMMENT ON TABLE program_template IS 'Table that stores templates for exercise programs.';
 
 COMMENT ON COLUMN program_template.id IS 'Unique identifier for the program template.';
+COMMENT ON COLUMN program_template.version IS 'Version or variation for the program template';
 COMMENT ON COLUMN program_template.modality_id IS 'Reference to the associated modality relationship.';
 COMMENT ON COLUMN program_template.exercise_id IS 'Reference to the associated exercise relationship.';
 COMMENT ON COLUMN program_template.work_group_id IS 'Reference to the associated work group.';

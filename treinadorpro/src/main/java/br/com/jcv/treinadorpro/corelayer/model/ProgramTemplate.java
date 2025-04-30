@@ -18,6 +18,9 @@ public class ProgramTemplate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "version", nullable = false)
+    private Long version;
+
     @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JoinColumn(name = "modality_id", nullable = false)
     private Modality modality;
