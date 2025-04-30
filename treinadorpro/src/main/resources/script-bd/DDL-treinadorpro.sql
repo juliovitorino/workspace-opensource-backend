@@ -101,13 +101,15 @@ COMMENT ON COLUMN modality.status IS 'Status of the modality (A = Active, B = Bl
 COMMENT ON COLUMN modality.created_at IS 'Timestamp when the record was created.';
 COMMENT ON COLUMN modality.updated_at IS 'Timestamp when the record was last updated.';
 
-
 -- Exercise table
 CREATE TABLE exercise (
     id SERIAL PRIMARY KEY,
     name_pt VARCHAR(100),
     name_en VARCHAR(100),
     name_es VARCHAR(100),
+    video_url_pt VARCHAR(1000),
+    video_url_en VARCHAR(1000),
+    video_url_es VARCHAR(1000),
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -122,6 +124,26 @@ COMMENT ON COLUMN exercise.name_es IS 'Name of the exercise in Spanish.';
 COMMENT ON COLUMN exercise.status IS 'Status of the exercise (A = Active, B = Blocked, I = Inactive, P = Pending).';
 COMMENT ON COLUMN exercise.created_at IS 'Timestamp when the record was created.';
 COMMENT ON COLUMN exercise.updated_at IS 'Timestamp when the record was last updated.';
+
+-- Exercise table
+CREATE TABLE work_group_exercise (
+    id SERIAL PRIMARY KEY,
+    work_group_id INTEGER NOT NULL REFERENCES work_group(id) ON DELETE CASCADE,
+    exercise_id INTEGER NOT NULL REFERENCES exercise(id) ON DELETE CASCADE,
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+COMMENT ON TABLE work_group_exercise IS 'Table that links exercises to specific work groups.';
+
+COMMENT ON COLUMN work_group_exercise.id IS 'Unique identifier for the work group exercise record.';
+COMMENT ON COLUMN work_group_exercise.work_group_id IS 'Foreign key referencing the associated work group.';
+COMMENT ON COLUMN work_group_exercise.exercise_id IS 'Foreign key referencing the associated exercise.';
+COMMENT ON COLUMN work_group_exercise.status IS 'Status of the record: A (Active), B (Blocked), I (Inactive), P (Pending).';
+COMMENT ON COLUMN work_group_exercise.created_at IS 'Timestamp indicating when the record was created.';
+COMMENT ON COLUMN work_group_exercise.updated_at IS 'Timestamp indicating the last time the record was updated.';
+
 
 -- plan_template table
 CREATE TABLE plan_template (
