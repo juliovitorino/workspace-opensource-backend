@@ -1,6 +1,9 @@
 package br.com.jcv.treinadorpro.corelayer.model;
 
 import br.com.jcv.treinadorpro.corelayer.enums.ExecutionMethodEnum;
+import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -16,6 +19,8 @@ import java.util.List;
 @Entity
 @Table(name = "personal_trainer_program")
 @ToString
+@Builder
+@AllArgsConstructor
 public class PersonalTrainerProgram {
 
     @Id
@@ -78,7 +83,8 @@ public class PersonalTrainerProgram {
     private String obs;
 
     @Column(name = "status", length = 1)
-    private String status = "A";
+    @Enumerated(EnumType.STRING)
+    private StatusEnum status = StatusEnum.A;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
