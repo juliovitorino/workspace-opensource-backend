@@ -8,6 +8,7 @@ import br.com.jcv.restclient.guardian.request.CreateNewAccountRequest;
 import br.com.jcv.treinadorpro.corelayer.dto.ActivePersonalPlanDTO;
 import br.com.jcv.treinadorpro.corelayer.dto.PlanTemplateDTO;
 import br.com.jcv.treinadorpro.corelayer.dto.UserDTO;
+import br.com.jcv.treinadorpro.corelayer.enums.MasterLanguageEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.UserProfileEnum;
 import br.com.jcv.treinadorpro.corelayer.mapper.ActivePersonalPlanMapper;
@@ -91,6 +92,7 @@ public class RegisterNewPersonalTrainerServiceImpl extends AbstractUserService i
                 .planExpirationDate(LocalDate.now())
                 .description(planTemplateDTO.getDescription())
                 .qtyUserPackTrainingAllowed(planTemplateDTO.getQtyUserPackTrainingAllowed())
+                .qtyUserStudentAllowed(planTemplateDTO.getQtyUserStudentAllowed())
                 .amountDiscount(planTemplateDTO.getAmountDiscount())
                 .build();
         ActivePersonalPlan activePersonalPlan = activePersonalPlanMapper.toEntity(activePersonalPlanDTO);
@@ -146,10 +148,12 @@ public class RegisterNewPersonalTrainerServiceImpl extends AbstractUserService i
     }
 
     private UserDTO getInstanceUserDTO(RegisterRequest registerRequest, ControllerGenericResponse<UUID> accountGuardianResponse) {
+        MasterLanguageEnum masterLanguageEnum = MasterLanguageEnum.findByString(registerRequest.getMasterLanguage());
         UserDTO userDTO = modelMapper.map(registerRequest, UserDTO.class);
         userDTO.setUuidId(UUID.randomUUID());
         userDTO.setUserProfile(UserProfileEnum.PERSONAL_TRAINER);
         userDTO.setStatus(StatusEnum.A);
+        userDTO.setMasterLanguage(Objects.isNull(masterLanguageEnum) ? MasterLanguageEnum.EN_US : masterLanguageEnum);
         userDTO.setGuardianIntegrationUUID(accountGuardianResponse.getObjectResponse());
         return userDTO;
     }

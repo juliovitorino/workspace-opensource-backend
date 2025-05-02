@@ -44,6 +44,7 @@ public class ActivePersonalPlanDTO {
     private LocalDate planExpirationDate;
     private PaymentFrequencyEnum paymentFrequency;
     private Long qtyUserPackTrainingAllowed;
+    private Long qtyUserStudentAllowed;
     private String status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

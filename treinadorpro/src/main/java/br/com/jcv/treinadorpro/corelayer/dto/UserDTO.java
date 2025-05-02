@@ -1,6 +1,7 @@
 package br.com.jcv.treinadorpro.corelayer.dto;
 
 import br.com.jcv.treinadorpro.corelayer.enums.GenderEnum;
+import br.com.jcv.treinadorpro.corelayer.enums.MasterLanguageEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.UserProfileEnum;
 import lombok.AllArgsConstructor;
@@ -33,7 +34,7 @@ public class UserDTO {
     private GenderEnum gender;
     private String urlPhotoProfile;
     private UserProfileEnum userProfile;
-    private String masterLanguage;
+    private MasterLanguageEnum masterLanguage;
     private UUID guardianIntegrationUUID;
     private StatusEnum status;
     private LocalDateTime lastLogin;

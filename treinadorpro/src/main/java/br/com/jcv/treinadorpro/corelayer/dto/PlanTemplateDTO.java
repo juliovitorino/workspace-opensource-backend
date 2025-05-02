@@ -35,6 +35,7 @@ public class PlanTemplateDTO {
     private BigDecimal amountDiscount;
     private PaymentFrequencyEnum paymentFrequency;
     private Long qtyUserPackTrainingAllowed;
+    private Long qtyUserStudentAllowed;
     private String status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

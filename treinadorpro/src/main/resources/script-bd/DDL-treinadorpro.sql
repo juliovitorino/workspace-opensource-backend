@@ -215,7 +215,6 @@ COMMENT ON COLUMN users.updated_at IS 'Timestamp of the last update to the user 
 -- active_personal_plan table
 CREATE TABLE active_personal_plan (
     id serial PRIMARY KEY,
-    plan_template_id INTEGER NOT NULL REFERENCES plan_template(id) ON DELETE CASCADE,
     personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     description VARCHAR(500) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
@@ -232,7 +231,6 @@ CREATE TABLE active_personal_plan (
 COMMENT ON TABLE active_personal_plan IS 'Table that stores active personal plans linked to personal trainers.';
 
 COMMENT ON COLUMN active_personal_plan.id IS 'Unique identifier for the active personal plan.';
-COMMENT ON COLUMN active_personal_plan.plan_template_id IS 'Reference to the associated plan template.';
 COMMENT ON COLUMN active_personal_plan.personal_user_id IS 'Reference to the personal trainer user.';
 COMMENT ON COLUMN active_personal_plan.description IS 'Description of the active personal plan.';
 COMMENT ON COLUMN active_personal_plan.price IS 'Price of the active personal plan.';

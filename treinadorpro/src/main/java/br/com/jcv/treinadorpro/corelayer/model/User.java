@@ -2,10 +2,12 @@ package br.com.jcv.treinadorpro.corelayer.model;
 
 import br.com.jcv.treinadorpro.corelayer.enums.GenderEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.MasterLanguageEnum;
+import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.UserProfileEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import net.bytebuddy.description.type.TypeList;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -34,6 +36,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class User {
 
     @Id
@@ -79,7 +82,8 @@ public class User {
     private UUID guardianIntegrationUUID;
 
     @Column(length = 1)
-    private String status = "A"; // A = Active, B = Blocked, I = Inactive
+    @Enumerated(EnumType.STRING)
+    private StatusEnum status = StatusEnum.A; // A = Active, B = Blocked, I = Inactive
 
     @Column(name = "last_login")
     private LocalDateTime lastLogin;
