@@ -96,19 +96,19 @@ public class User {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "personalUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "personalUser", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<ActivePersonalPlan> activePersonalPlanList;
 
-    @OneToMany(mappedBy = "personalUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "personalUser", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<UserPackTraining> personalUserPackTrainingList;
 
-    @OneToMany(mappedBy = "studentUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "studentUser", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<UserPackTraining> studentUserPackTrainingList;
 
-    @OneToOne(mappedBy = "studentUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "studentUser", fetch = FetchType.LAZY)
     private StudentFeature studentFeature;
 
-    @OneToOne(mappedBy = "personalUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "personalUser", fetch = FetchType.LAZY)
     private PersonalFeature personalFeature;
 
 }

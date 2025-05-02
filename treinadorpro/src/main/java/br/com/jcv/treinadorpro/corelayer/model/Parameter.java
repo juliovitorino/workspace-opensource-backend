@@ -1,6 +1,7 @@
 package br.com.jcv.treinadorpro.corelayer.model;
 
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "parameters")
 @Data
+@ToString
 public class Parameter {
 
     @Id

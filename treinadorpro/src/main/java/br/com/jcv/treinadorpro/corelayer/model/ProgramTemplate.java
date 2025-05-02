@@ -3,6 +3,7 @@ package br.com.jcv.treinadorpro.corelayer.model;
 import br.com.jcv.treinadorpro.corelayer.enums.ExecutionMethodEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "program_template")
+@ToString
 public class ProgramTemplate {
 
     @Id

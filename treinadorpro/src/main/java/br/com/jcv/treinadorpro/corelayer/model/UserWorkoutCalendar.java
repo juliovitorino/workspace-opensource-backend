@@ -4,6 +4,7 @@ import br.com.jcv.treinadorpro.corelayer.model.PersonalTrainerProgram;
 import br.com.jcv.treinadorpro.corelayer.model.UserPackTraining;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "user_workout_calendar")
+@ToString
 public class UserWorkoutCalendar {
 
     @Id

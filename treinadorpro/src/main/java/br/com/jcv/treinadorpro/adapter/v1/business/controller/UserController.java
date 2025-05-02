@@ -4,12 +4,14 @@ import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse
 import br.com.jcv.restclient.guardian.LoginRequest;
 import br.com.jcv.treinadorpro.corebusiness.users.CreatePersonalTrainerProgramFromTemplateService;
 import br.com.jcv.treinadorpro.corebusiness.users.CreateStudentAccountService;
+import br.com.jcv.treinadorpro.corebusiness.users.EditPersonalTrainerProgramService;
 import br.com.jcv.treinadorpro.corebusiness.users.EditStudentProfileService;
 import br.com.jcv.treinadorpro.corebusiness.users.LoginService;
 import br.com.jcv.treinadorpro.corebusiness.users.RegisterNewPersonalTrainerService;
 import br.com.jcv.treinadorpro.corelayer.dto.UserDTO;
 
 import br.com.jcv.treinadorpro.corelayer.request.CreatePersonalTrainerProgramFromTemplateRequest;
+import br.com.jcv.treinadorpro.corelayer.request.EditPersonalTrainerProgramRequest;
 import br.com.jcv.treinadorpro.corelayer.request.RegisterRequest;
 import br.com.jcv.treinadorpro.corelayer.request.StudentProfileRequest;
 import org.springframework.http.ResponseEntity;
@@ -32,16 +34,18 @@ public class UserController {
     private final LoginService loginService;
     private final EditStudentProfileService editStudentProfileService;
     private final CreatePersonalTrainerProgramFromTemplateService createPersonalTrainerProgramFromTemplateService;
+    private final EditPersonalTrainerProgramService editPersonalTrainerProgramService;
 
     public UserController(RegisterNewPersonalTrainerService registerNewPersonalTrainerService,
                           CreateStudentAccountService createStudentAccountService,
                           LoginService loginService, EditStudentProfileService editStudentProfileService,
-                          CreatePersonalTrainerProgramFromTemplateService createPersonalTrainerProgramFromTemplateService) {
+                          CreatePersonalTrainerProgramFromTemplateService createPersonalTrainerProgramFromTemplateService, EditPersonalTrainerProgramService editPersonalTrainerProgramService) {
         this.registerNewPersonalTrainerService = registerNewPersonalTrainerService;
         this.createStudentAccountService = createStudentAccountService;
         this.loginService = loginService;
         this.editStudentProfileService = editStudentProfileService;
         this.createPersonalTrainerProgramFromTemplateService = createPersonalTrainerProgramFromTemplateService;
+        this.editPersonalTrainerProgramService = editPersonalTrainerProgramService;
     }
 
     @PostMapping("/register")
@@ -71,5 +75,10 @@ public class UserController {
     public ResponseEntity<ControllerGenericResponse<Boolean>> createPersonalTrainerProgramFromTemplate(
             @RequestBody CreatePersonalTrainerProgramFromTemplateRequest request) {
         return ResponseEntity.ok(createPersonalTrainerProgramFromTemplateService.execute(UUID.randomUUID(), request));
+    }
+
+    @PutMapping("personal/program")
+    public ResponseEntity<ControllerGenericResponse<Boolean>> editPersonalTrainerProgram(@RequestBody EditPersonalTrainerProgramRequest request){
+        return ResponseEntity.ok(editPersonalTrainerProgramService.execute(UUID.randomUUID(), request));
     }
 }
