@@ -1,42 +1,35 @@
 package br.com.jcv.treinadorpro.corelayer.model;
 
+import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "student_payments")
-@ToString
-public class StudentPayment {
+@Table(name = "work_group_exercise")
+public class WorkGroupExercise {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_pack_training_id", nullable = false)
-    private UserPackTraining userPackTraining;
+    @JoinColumn(name = "work_group_id", nullable = false)
+    private WorkGroup workGroup;
 
-    @Column(name = "amount", precision = 10, scale = 2, nullable = false)
-    private BigDecimal amount;
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "exercise_id", nullable = false)
+    private Exercise exercise;
 
-    @Column(name = "expected_date", nullable = false)
-    private LocalDate expectedDate;
-
-    @Column(name = "payment_date")
-    private LocalDate paymentDate;
-
-    @Column(name = "status", length = 1)
-    private String status = "A";
+    @Column(length = 1)
+    @Enumerated(EnumType.STRING)
+    private StatusEnum status = StatusEnum.A;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

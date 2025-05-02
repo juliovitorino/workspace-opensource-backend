@@ -2,6 +2,7 @@ package br.com.jcv.treinadorpro.corelayer.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "personal_feature")
+@ToString
 public class PersonalFeature {
 
     @Id

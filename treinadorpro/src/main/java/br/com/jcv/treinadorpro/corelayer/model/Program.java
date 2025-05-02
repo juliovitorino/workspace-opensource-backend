@@ -2,6 +2,7 @@ package br.com.jcv.treinadorpro.corelayer.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "program")
+@ToString
 public class Program {
 
     @Id
@@ -39,6 +41,6 @@ public class Program {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "program", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "program", fetch = FetchType.LAZY)
     private List<ProgramTemplate> programTemplateList;
 }
