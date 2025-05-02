@@ -71,7 +71,7 @@ public class CreateStudentAccountServiceImpl extends AbstractUserService impleme
         User user = modelMapper.map(registerRequest, User.class);
         user.setUuidId(UUID.randomUUID());
         user.setUserProfile(UserProfileEnum.STUDENT);
-        user.setStatus("A");
+        user.setStatus(StatusEnum.A);
         return user;
     }
 
