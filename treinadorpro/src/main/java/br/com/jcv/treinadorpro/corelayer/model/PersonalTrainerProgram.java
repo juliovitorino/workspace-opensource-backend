@@ -61,6 +61,12 @@ public class PersonalTrainerProgram {
     @Enumerated(EnumType.STRING)
     private ExecutionMethodEnum executionMethod;
 
+    @Column(name = "qty_series")
+    private Integer qtySeries;
+
+    @Column(name = "qty_reps")
+    private Integer qtyReps;
+
     @Column(name = "execution", length = 100)
     private String execution;
 

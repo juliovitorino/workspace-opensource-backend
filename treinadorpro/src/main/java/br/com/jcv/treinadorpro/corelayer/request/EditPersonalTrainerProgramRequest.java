@@ -21,6 +21,8 @@ public class EditPersonalTrainerProgramRequest {
     private String customExercise;
     private String customProgram;
     private ExecutionMethodEnum executionMethod;
+    private Integer qtySeries;
+    private Integer qtyReps;
     private String execution;
     private String executionTime;
     private String restTime;
