@@ -333,9 +333,10 @@ CREATE TABLE user_pack_training (
     student_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     description VARCHAR(255) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
+    currency VARCHAR(10),
     start_time VARCHAR(5) NOT NULL,
     end_time VARCHAR(5) NOT NULL,
-    days_of_week VARCHAR(14) NOT NULL,
+    days_of_week INTEGER[] NOT NULL,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

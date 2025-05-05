@@ -1,14 +1,9 @@
 package br.com.jcv.treinadorpro.adapter.v1.business.controller;
 
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
-import br.com.jcv.restclient.guardian.LoginRequest;
 import br.com.jcv.treinadorpro.corebusiness.userpacktraining.CreateUserPackTrainingService;
 import br.com.jcv.treinadorpro.corebusiness.userpacktraining.FindAllMyStudentsService;
-import br.com.jcv.treinadorpro.corebusiness.users.LoginService;
-import br.com.jcv.treinadorpro.corebusiness.users.RegisterNewPersonalTrainerService;
-import br.com.jcv.treinadorpro.corelayer.dto.UserDTO;
 import br.com.jcv.treinadorpro.corelayer.dto.UserPackTrainingDTO;
-import br.com.jcv.treinadorpro.corelayer.request.RegisterRequest;
 import br.com.jcv.treinadorpro.corelayer.request.UserPackTrainingRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +30,7 @@ public class UserPackTrainingController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ControllerGenericResponse<UserPackTrainingDTO>> addUserPackTrainig(@RequestBody UserPackTrainingRequest request) {
+    public ResponseEntity<ControllerGenericResponse<Boolean>> createUserPackTrainig(@RequestBody UserPackTrainingRequest request) {
         return ResponseEntity.ok(createUserPackTrainingService.execute(UUID.randomUUID(), request));
     }
 

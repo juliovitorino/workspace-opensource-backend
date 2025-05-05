@@ -4,6 +4,7 @@ import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.treinadorpro.corelayer.dto.UserPackTrainingDTO;
+import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.corelayer.mapper.ModalityMapper;
 import br.com.jcv.treinadorpro.corelayer.mapper.UserMapper;
 import br.com.jcv.treinadorpro.corelayer.mapper.UserPackTrainingMapper;
@@ -16,6 +17,8 @@ import br.com.jcv.treinadorpro.corelayer.repository.UserPackTrainingRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.UserWorkoutCalendarRepository;
 import br.com.jcv.treinadorpro.corelayer.request.UserPackTrainingRequest;
+import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +35,7 @@ public class CreateUserPackTrainingServiceImpl implements CreateUserPackTraining
     private final UserMapper userMapper;
     private final ModalityMapper modalityMapper;
     private final ModalityRepository modalityRepository;
-    private final UserWorkoutCalendarRepository userWorkoutCalendarRepository;
+    private final ModelMapper modelMapper;
 
     public CreateUserPackTrainingServiceImpl(UserPackTrainingMapper userPackTrainingMapper,
                                              UserPackTrainingRepository userPackTrainingRepository,
@@ -40,66 +43,41 @@ public class CreateUserPackTrainingServiceImpl implements CreateUserPackTraining
                                              UserMapper userMapper,
                                              ModalityMapper modalityMapper,
                                              ModalityRepository modalityRepository,
-                                             UserWorkoutCalendarRepository userWorkoutCalendarRepository) {
+                                             ModelMapper modelMapper) {
         this.userPackTrainingMapper = userPackTrainingMapper;
         this.userPackTrainingRepository = userPackTrainingRepository;
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.modalityMapper = modalityMapper;
         this.modalityRepository = modalityRepository;
-        this.userWorkoutCalendarRepository = userWorkoutCalendarRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
     @Transactional
-    public ControllerGenericResponse<UserPackTrainingDTO> execute(UUID processId, UserPackTrainingRequest request) {
+    public ControllerGenericResponse<Boolean> execute(UUID processId, UserPackTrainingRequest request) {
 
-        UserPackTrainingDTO instanceUserPackTrainingDTO = getInstanceUserPackTrainingDTO(request);
+        UserPackTraining userPackTrainingMapperEntity = getUserPackTrainingEntity(request);
+        userPackTrainingRepository.save(userPackTrainingMapperEntity);
 
-        UserPackTraining userPackTrainingMapperEntity = userPackTrainingMapper.toEntity(instanceUserPackTrainingDTO);
-        UserPackTraining userPackTrainingSaved = userPackTrainingRepository.save(userPackTrainingMapperEntity);
-
-        List<UserWorkoutCalendar> listInstanceUserWorkoutCalendar = getListInstanceUserWorkoutCalendar(request, userPackTrainingSaved);
-        userWorkoutCalendarRepository.saveAll(listInstanceUserWorkoutCalendar);
-
-        ControllerGenericResponse<UserPackTrainingDTO> response = new ControllerGenericResponse<>();
-        response.setResponse(MensagemResponse.builder()
-                        .msgcode("MSG-0001")
-                        .mensagem("Command has been executed successfully")
-                .build());
-
-        return response;
+        return ControllerGenericResponseHelper.getInstance(
+                "MSG-0001",
+                "Your User Pack Training has been saved",
+                Boolean.TRUE);
     }
 
-    private List<UserWorkoutCalendar> getListInstanceUserWorkoutCalendar(UserPackTrainingRequest request, UserPackTraining userPackTrainingSaved) {
-        return request.getUserWorkoutCalendar().stream().map( calendarItem-> {
-            UserWorkoutCalendar userWorkoutCalendar = new UserWorkoutCalendar();
-            userWorkoutCalendar.setUserPackTraining(userPackTrainingSaved);
-            return userWorkoutCalendar;
-        }).collect(Collectors.toList());
+    private UserPackTraining getUserPackTrainingEntity(UserPackTrainingRequest request) {
+        return UserPackTraining.builder()
+                .personalUser(userRepository.findById(request.getPersonalUserId()).orElseThrow(() -> new CommoditieBaseException( "Invalid Personal User", HttpStatus.BAD_REQUEST, "MSG-1103")))
+                .studentUser(userRepository.findById(request.getStudentUserId()).orElseThrow(() -> new CommoditieBaseException( "Invalid Student User", HttpStatus.BAD_REQUEST, "MSG-1105")))
+                .description(request.getDescription())
+                .price(request.getPrice())
+                .currency(request.getCurrency())
+                .daysOfWeek(request.getDaysOfWeek().toArray(new Integer[0]))
+                .startTime(request.getStartTime())
+                .endTime(request.getEndTime())
+                .status(StatusEnum.A)
+                .build();
     }
 
-    private UserPackTrainingDTO getInstanceUserPackTrainingDTO(UserPackTrainingRequest request) {
-        User personalUser = userRepository.findById(request.getPersonalUserId())
-                .orElseThrow(() -> new CommoditieBaseException("Invalid Personal User Id", HttpStatus.BAD_REQUEST));
-
-        User studentUser = userRepository.findById(request.getStudentUserId())
-                .orElseThrow(() -> new CommoditieBaseException("Invalid Student User Id", HttpStatus.BAD_REQUEST));
-
-        Modality modality = modalityRepository.findById(request.getModalityId())
-                .orElseThrow(() -> new CommoditieBaseException("Invalid Modality Id", HttpStatus.BAD_REQUEST));
-
-        UserPackTrainingDTO instance = new UserPackTrainingDTO();
-
-        instance.setPersonalUser(userMapper.toDTO(personalUser));
-        instance.setStudentUser(userMapper.toDTO(studentUser));
-        instance.setModality(modalityMapper.toDTO(modality));
-        instance.setDescription(request.getDescription());
-        instance.setPrice(request.getPrice());
-        instance.setStartTime(request.getStartTime());
-        instance.setEndTime(request.getEndTime());
-        instance.setDaysOfWeek(request.getDaysOfWeek());
-
-        return instance;
-    }
 }

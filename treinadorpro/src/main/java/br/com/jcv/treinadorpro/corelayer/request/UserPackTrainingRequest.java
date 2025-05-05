@@ -2,6 +2,7 @@ package br.com.jcv.treinadorpro.corelayer.request;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.extern.jackson.Jacksonized;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -14,9 +15,9 @@ public class UserPackTrainingRequest {
     private Long studentUserId;
     private String description;
     private BigDecimal price;
+    private String currency;
     private Long modalityId;
     private String startTime;
     private String endTime;
-    private String daysOfWeek;
-    private List<UserWorkoutCalendarRequest> userWorkoutCalendar;
+    private List<Integer> daysOfWeek;
 }
