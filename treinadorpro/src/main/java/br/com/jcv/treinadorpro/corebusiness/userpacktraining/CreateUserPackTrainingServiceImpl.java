@@ -75,9 +75,6 @@ public class CreateUserPackTrainingServiceImpl implements CreateUserPackTraining
         return request.getUserWorkoutCalendar().stream().map( calendarItem-> {
             UserWorkoutCalendar userWorkoutCalendar = new UserWorkoutCalendar();
             userWorkoutCalendar.setUserPackTraining(userPackTrainingSaved);
-            userWorkoutCalendar.setTrainingDate(calendarItem.getTrainingDate());
-            userWorkoutCalendar.setStartTime(request.getStartTime());
-            userWorkoutCalendar.setEndTime(request.getEndTime());
             return userWorkoutCalendar;
         }).collect(Collectors.toList());
     }

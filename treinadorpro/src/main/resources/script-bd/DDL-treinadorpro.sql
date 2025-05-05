@@ -472,7 +472,6 @@ COMMENT ON COLUMN personal_trainer_program.updated_at IS 'Timestamp when the per
 CREATE TABLE user_workout_calendar (
     id SERIAL PRIMARY KEY,
     user_pack_training_id INTEGER NOT NULL REFERENCES user_pack_training(id) ON DELETE CASCADE,
-    personal_trainer_program_id INTEGER REFERENCES personal_trainer_program(id) ON DELETE CASCADE,
     training_date DATE NOT NULL,
     modality_id INTEGER NOT NULL REFERENCES modality(id) ON DELETE CASCADE,
     goal_id INTEGER NOT NULL REFERENCES goal(id) ON DELETE CASCADE,

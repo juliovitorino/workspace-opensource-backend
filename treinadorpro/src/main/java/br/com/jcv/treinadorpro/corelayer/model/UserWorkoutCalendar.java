@@ -1,15 +1,24 @@
 package br.com.jcv.treinadorpro.corelayer.model;
 
-import br.com.jcv.treinadorpro.corelayer.model.PersonalTrainerProgram;
-import br.com.jcv.treinadorpro.corelayer.model.UserPackTraining;
+import br.com.jcv.treinadorpro.corelayer.enums.ExecutionMethodEnum;
+import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
-import java.time.LocalDate;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @Data
@@ -28,17 +37,65 @@ public class UserWorkoutCalendar {
     private UserPackTraining userPackTraining;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "personal_trainer_program_id", nullable = false)
-    private PersonalTrainerProgram personalTrainerProgram;
+    @JoinColumn(name = "modality_id", nullable = false)
+    private Modality modality;
 
-    @Column(name = "training_date", nullable = false)
-    private LocalDate trainingDate;
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "work_group_id", nullable = false)
+    private WorkGroup workGroup;
 
-    @Column(name = "start_time", length = 5, nullable = false)
-    private String startTime;
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "goal_id", nullable = false)
+    private Goal goal;
 
-    @Column(name = "end_time", length = 5, nullable = false)
-    private String endTime;
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "exercise_id")
+    private Exercise exercise;
+
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "program_id", nullable = false)
+    private Program program;
+
+    @Column(name = "custom_exercise", length = 100)
+    private String customExercise;
+
+    @Column(name = "custom_program", length = 100)
+    private String customProgram;
+
+    @Column(name = "execution_method", length = 100)
+    @Enumerated(EnumType.STRING)
+    private ExecutionMethodEnum executionMethod;
+
+    @Column(name = "qty_series")
+    private Integer qtySeries;
+
+    @Column(name = "qty_reps")
+    private Integer qtyReps;
+
+    @Column(name = "execution", length = 100)
+    private String execution;
+
+    @Column(name = "execution_time", length = 5)
+    private String executionTime;
+
+    @Column(name = "rest_time", length = 5)
+    private String restTime;
+
+    @Column(name = "weight")
+    private Integer weight;
+
+    @Column(name = "weight_unit", length = 10)
+    private String weightUnit;
+
+    @Column(name = "comments", length = 500)
+    private String comments;
+
+    @Column(name = "obs", length = 500)
+    private String obs;
+
+    @Column(name = "status", length = 1)
+    @Enumerated(EnumType.STRING)
+    private StatusEnum status = StatusEnum.A;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

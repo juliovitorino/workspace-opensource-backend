@@ -21,6 +21,7 @@ import java.util.List;
 @ToString
 @Builder
 @AllArgsConstructor
+@Deprecated
 public class PersonalTrainerProgram {
 
     @Id
@@ -100,6 +101,4 @@ public class PersonalTrainerProgram {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "personalTrainerProgram", fetch = FetchType.LAZY)
-    private List<UserWorkoutCalendar> userWorkoutCalendarList;
 }
