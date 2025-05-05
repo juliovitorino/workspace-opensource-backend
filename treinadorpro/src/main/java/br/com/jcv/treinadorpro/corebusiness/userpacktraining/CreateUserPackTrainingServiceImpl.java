@@ -29,28 +29,15 @@ import java.util.stream.Collectors;
 
 @Service
 public class CreateUserPackTrainingServiceImpl implements CreateUserPackTrainingService {
-    private final UserPackTrainingMapper userPackTrainingMapper;
     private final UserPackTrainingRepository userPackTrainingRepository;
     private final UserRepository userRepository;
-    private final UserMapper userMapper;
-    private final ModalityMapper modalityMapper;
-    private final ModalityRepository modalityRepository;
-    private final ModelMapper modelMapper;
 
-    public CreateUserPackTrainingServiceImpl(UserPackTrainingMapper userPackTrainingMapper,
+    public CreateUserPackTrainingServiceImpl(
                                              UserPackTrainingRepository userPackTrainingRepository,
-                                             UserRepository userRepository,
-                                             UserMapper userMapper,
-                                             ModalityMapper modalityMapper,
-                                             ModalityRepository modalityRepository,
-                                             ModelMapper modelMapper) {
-        this.userPackTrainingMapper = userPackTrainingMapper;
+                                             UserRepository userRepository
+    ) {
         this.userPackTrainingRepository = userPackTrainingRepository;
         this.userRepository = userRepository;
-        this.userMapper = userMapper;
-        this.modalityMapper = modalityMapper;
-        this.modalityRepository = modalityRepository;
-        this.modelMapper = modelMapper;
     }
 
     @Override
