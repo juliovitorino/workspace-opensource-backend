@@ -481,6 +481,7 @@ CREATE TABLE user_workout_calendar (
     program_id INTEGER NOT NULL REFERENCES program(id) ON DELETE CASCADE,
     work_group_id INTEGER NOT NULL REFERENCES work_group(id) ON DELETE CASCADE,
     exercise_id INTEGER REFERENCES exercise(id) ON DELETE CASCADE,
+    external_id UUID UNIQUE NOT NULL,
     custom_exercise VARCHAR(100),
     custom_program VARCHAR(100),
     execution_method VARCHAR(100),

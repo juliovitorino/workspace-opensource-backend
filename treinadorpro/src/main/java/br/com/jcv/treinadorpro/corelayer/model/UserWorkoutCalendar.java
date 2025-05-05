@@ -2,6 +2,8 @@ package br.com.jcv.treinadorpro.corelayer.model;
 
 import br.com.jcv.treinadorpro.corelayer.enums.ExecutionMethodEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -19,13 +21,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @Entity
 @Table(name = "user_workout_calendar")
-@ToString
+@Builder
+@AllArgsConstructor
 public class UserWorkoutCalendar {
 
     @Id
@@ -35,6 +40,12 @@ public class UserWorkoutCalendar {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_pack_training_id", nullable = false)
     private UserPackTraining userPackTraining;
+
+    @Column(name = "external_id", nullable = false, unique = true)
+    private UUID externalId;
+
+    @Column(name = "training_date")
+    private LocalDate trainingDate;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "modality_id", nullable = false)
@@ -104,4 +115,34 @@ public class UserWorkoutCalendar {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @Override
+    public String toString() {
+        return "UserWorkoutCalendar{" +
+                "id=" + id +
+                ", userPackTraining=" + userPackTraining +
+                ", externalId=" + externalId +
+                ", trainingDate=" + trainingDate +
+                ", modality=" + modality +
+                ", workGroup=" + workGroup +
+                ", goal=" + goal +
+                ", exercise=" + exercise +
+                ", program=" + program +
+                ", customExercise='" + customExercise + '\'' +
+                ", customProgram='" + customProgram + '\'' +
+                ", executionMethod=" + executionMethod +
+                ", qtySeries=" + qtySeries +
+                ", qtyReps=" + qtyReps +
+                ", execution='" + execution + '\'' +
+                ", executionTime='" + executionTime + '\'' +
+                ", restTime='" + restTime + '\'' +
+                ", weight=" + weight +
+                ", weightUnit='" + weightUnit + '\'' +
+                ", comments='" + comments + '\'' +
+                ", obs='" + obs + '\'' +
+                ", status=" + status +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }
