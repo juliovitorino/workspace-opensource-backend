@@ -58,6 +58,8 @@ public class EditPersonalTrainerProgramServiceImpl extends  AbstractUserService 
         target.setCustomProgram(source.getCustomProgram());
         target.setCustomExercise(source.getCustomExercise());
         target.setExecutionMethod(source.getExecutionMethod());
+        target.setQtySeries(source.getQtySeries());
+        target.setQtyReps(source.getQtyReps());
         target.setExecution(source.getExecution());
         target.setExecutionTime(source.getExecutionTime());
         target.setRestTime(source.getRestTime());

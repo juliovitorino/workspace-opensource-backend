@@ -87,6 +87,8 @@ public class AddNewCustomPersonalTrainerProgramItemServiceImpl extends AbstractU
                 .customExercise(request.getCustomExercise())
                 .customProgram(request.getCustomProgram())
                 .executionMethod(request.getExecutionMethod())
+                .qtySeries(request.getQtySeries())
+                .qtyReps(request.getQtyReps())
                 .execution(request.getExecution())
                 .executionTime(request.getExecutionTime())
                 .restTime(request.getRestTime())

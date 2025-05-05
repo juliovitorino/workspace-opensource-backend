@@ -90,7 +90,7 @@ public class UserController {
     }
 
     @PutMapping("personal/program")
-    public ResponseEntity<ControllerGenericResponse<Boolean>> editPersonalTrainerProgram(@RequestBody PersonalTrainerProgramRequest request){
-        return ResponseEntity.ok(addNewCustomPersonalTrainerProgramItemService.execute(UUID.randomUUID(), request));
+    public ResponseEntity<ControllerGenericResponse<Boolean>> editPersonalTrainerProgram(@RequestBody EditPersonalTrainerProgramRequest request){
+        return ResponseEntity.ok(editPersonalTrainerProgramService.execute(UUID.randomUUID(), request));
     }
 }
