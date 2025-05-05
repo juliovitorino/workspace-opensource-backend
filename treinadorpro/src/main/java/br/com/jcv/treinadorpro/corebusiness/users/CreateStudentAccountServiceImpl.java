@@ -3,6 +3,7 @@ package br.com.jcv.treinadorpro.corebusiness.users;
 import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.treinadorpro.corelayer.dto.UserDTO;
+import br.com.jcv.treinadorpro.corelayer.enums.MasterLanguageEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.UserProfileEnum;
 import br.com.jcv.treinadorpro.corelayer.mapper.UserMapper;
@@ -71,6 +72,7 @@ public class CreateStudentAccountServiceImpl extends AbstractUserService impleme
         User user = modelMapper.map(registerRequest, User.class);
         user.setUuidId(UUID.randomUUID());
         user.setUserProfile(UserProfileEnum.STUDENT);
+        user.setMasterLanguage(registerRequest.getMasterLanguage() == null ? MasterLanguageEnum.EN_US.getLanguage() : registerRequest.getMasterLanguage());
         user.setStatus(StatusEnum.A);
         return user;
     }

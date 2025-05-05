@@ -13,6 +13,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class UserPackTrainingDTO {
     private Long id;
     private UserDTO personalUser;

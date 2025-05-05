@@ -1,16 +1,21 @@
 package br.com.jcv.treinadorpro.corelayer.model;
 
+import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
+import br.com.jcv.treinadorpro.infrastructure.utils.CustomIntegerArrayType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,6 +35,8 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @ToString
+@TypeDef(name = "integer-array", typeClass = CustomIntegerArrayType.class)
+
 public class UserPackTraining {
 
     @Id
@@ -44,15 +51,14 @@ public class UserPackTraining {
     @JoinColumn(name = "student_user_id", nullable = false)
     private User studentUser;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
     private String description;
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "modality_id", nullable = false)
-    private Modality modality;
+    @Column(nullable = false, length = 10)
+    private String currency;
 
     @Column(name = "start_time", length = 5)
     private String startTime;
@@ -60,8 +66,13 @@ public class UserPackTraining {
     @Column(name = "end_time", length = 5)
     private String endTime;
 
-    @Column(name = "days_of_week", nullable = false, length = 14)
-    private String daysOfWeek;
+    @Column(name = "days_of_week", columnDefinition = "integer[]")
+    @Type(type = "integer-array")
+    private Integer[] daysOfWeek;
+
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private StatusEnum status = StatusEnum.A;
 
     @Column(name = "created_at", updatable = false)
     @CreationTimestamp
