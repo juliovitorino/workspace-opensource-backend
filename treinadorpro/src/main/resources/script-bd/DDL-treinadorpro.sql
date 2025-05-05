@@ -329,6 +329,7 @@ COMMENT ON COLUMN personal_feature.updated_at IS 'Timestamp when the personal fe
 -- User pack tranning table
 CREATE TABLE user_pack_training (
     id SERIAL PRIMARY KEY,
+    external_id UUID UNIQUE NOT NULL,
     personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     student_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     description VARCHAR(255) NOT NULL,
@@ -382,6 +383,7 @@ COMMENT ON COLUMN student_payments.updated_at IS 'Timestamp when the student pay
 -- program_template table
 CREATE TABLE program_template (
     id serial PRIMARY KEY,
+    external_id UUID UNIQUE NOT NULL,
     version INTEGER NOT NULL,
     modality_id INTEGER NOT NULL REFERENCES modality(id) ON DELETE CASCADE,
     goal_id INTEGER NOT NULL REFERENCES goal(id) ON DELETE CASCADE,

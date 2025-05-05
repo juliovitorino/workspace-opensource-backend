@@ -58,6 +58,7 @@ public class CreateUserPackTrainingServiceImpl implements CreateUserPackTraining
                 .personalUser(userRepository.findById(request.getPersonalUserId()).orElseThrow(() -> new CommoditieBaseException( "Invalid Personal User", HttpStatus.BAD_REQUEST, "MSG-1103")))
                 .studentUser(userRepository.findById(request.getStudentUserId()).orElseThrow(() -> new CommoditieBaseException( "Invalid Student User", HttpStatus.BAD_REQUEST, "MSG-1105")))
                 .description(request.getDescription())
+                .externalId(UUID.randomUUID())
                 .price(request.getPrice())
                 .currency(request.getCurrency())
                 .daysOfWeek(request.getDaysOfWeek().toArray(new Integer[0]))
