@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Objects;
 import java.util.UUID;
 
+@Deprecated
 @Service
 public class EditPersonalTrainerProgramServiceImpl extends  AbstractUserService implements EditPersonalTrainerProgramService {
 

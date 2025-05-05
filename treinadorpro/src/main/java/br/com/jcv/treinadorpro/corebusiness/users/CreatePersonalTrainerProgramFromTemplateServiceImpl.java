@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Deprecated
 @Service
 public class CreatePersonalTrainerProgramFromTemplateServiceImpl extends AbstractUserService implements CreatePersonalTrainerProgramFromTemplateService{
 

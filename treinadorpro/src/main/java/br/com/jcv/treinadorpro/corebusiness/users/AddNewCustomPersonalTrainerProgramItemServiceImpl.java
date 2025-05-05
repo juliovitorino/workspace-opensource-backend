@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Objects;
 import java.util.UUID;
 
+@Deprecated
 @Service
 public class AddNewCustomPersonalTrainerProgramItemServiceImpl extends AbstractUserService implements AddNewCustomPersonalTrainerProgramItemService {
 
@@ -54,6 +55,7 @@ public class AddNewCustomPersonalTrainerProgramItemServiceImpl extends AbstractU
 
     @Override
     @Transactional
+    @Deprecated
     public ControllerGenericResponse<Boolean> execute(UUID processId, PersonalTrainerProgramRequest request) {
 
         checkPersonalTrainerUUID(request.getPersonalUserUUID());

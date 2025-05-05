@@ -472,10 +472,26 @@ COMMENT ON COLUMN personal_trainer_program.updated_at IS 'Timestamp when the per
 CREATE TABLE user_workout_calendar (
     id SERIAL PRIMARY KEY,
     user_pack_training_id INTEGER NOT NULL REFERENCES user_pack_training(id) ON DELETE CASCADE,
-    personal_trainer_program_id INTEGER NOT NULL REFERENCES personal_trainer_program(id) ON DELETE CASCADE,
+    personal_trainer_program_id INTEGER REFERENCES personal_trainer_program(id) ON DELETE CASCADE,
     training_date DATE NOT NULL,
-    start_time VARCHAR(5) NOT NULL,
-    end_time VARCHAR(5) NOT NULL,
+    modality_id INTEGER NOT NULL REFERENCES modality(id) ON DELETE CASCADE,
+    goal_id INTEGER NOT NULL REFERENCES goal(id) ON DELETE CASCADE,
+    program_id INTEGER NOT NULL REFERENCES program(id) ON DELETE CASCADE,
+    work_group_id INTEGER NOT NULL REFERENCES work_group(id) ON DELETE CASCADE,
+    exercise_id INTEGER REFERENCES exercise(id) ON DELETE CASCADE,
+    custom_exercise VARCHAR(100),
+    custom_program VARCHAR(100),
+    execution_method VARCHAR(100),
+    qty_series INTEGER,
+    qty_reps INTEGER,
+    execution VARCHAR(100),
+    execution_time VARCHAR(5),
+    rest_time VARCHAR(5),
+    weight INTEGER,
+    weight_unit VARCHAR(10),
+    comments VARCHAR(500),
+    obs VARCHAR(500),
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -487,5 +503,3 @@ COMMENT ON TABLE user_workout_calendar IS 'Stores scheduled workouts for users, 
 COMMENT ON COLUMN user_workout_calendar.id IS 'Primary key for the user workout calendar entry.';
 COMMENT ON COLUMN user_workout_calendar.user_pack_training_id IS 'Foreign key referencing the user_pack_training table, indicating which training pack this workout is part of.';
 COMMENT ON COLUMN user_workout_calendar.training_date IS 'Date on which the workout is scheduled to occur.';
-COMMENT ON COLUMN user_workout_calendar.start_time IS 'Scheduled start time of the workout (HH:MM).';
-COMMENT ON COLUMN user_workout_calendar.end_time IS 'Scheduled end time of the workout (HH:MM).';
