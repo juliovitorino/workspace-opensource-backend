@@ -5,6 +5,8 @@ import br.com.jcv.commons.library.commodities.service.BusinessService;
 import br.com.jcv.treinadorpro.corelayer.dto.UserPackTrainingDTO;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface FindAllMyStudentsService extends BusinessService<Long, ControllerGenericResponse<List<UserPackTrainingDTO>>> {
+public interface ViewStudentsPackAndWorkoutCalendarService
+        extends BusinessService<UUID, ControllerGenericResponse<List<UserPackTrainingDTO>>> {
 }

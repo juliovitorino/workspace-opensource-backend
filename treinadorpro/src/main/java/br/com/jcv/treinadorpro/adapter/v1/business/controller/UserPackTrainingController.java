@@ -6,7 +6,7 @@ import br.com.jcv.treinadorpro.corebusiness.userpacktraining.CreateUserPackTrain
 import br.com.jcv.treinadorpro.corebusiness.userpacktraining.CreateWorkoutCalendarFromProgramTemplateService;
 import br.com.jcv.treinadorpro.corebusiness.userpacktraining.DeleteWorkoutCalendarService;
 import br.com.jcv.treinadorpro.corebusiness.userpacktraining.EditUserPackTrainingItemService;
-import br.com.jcv.treinadorpro.corebusiness.userpacktraining.FindAllMyStudentsService;
+import br.com.jcv.treinadorpro.corebusiness.userpacktraining.ViewStudentsPackAndWorkoutCalendarService;
 import br.com.jcv.treinadorpro.corelayer.dto.UserPackTrainingDTO;
 import br.com.jcv.treinadorpro.corelayer.request.AddCustomUserWorkoutCalendarItemRequest;
 import br.com.jcv.treinadorpro.corelayer.request.CreateWorkoutCalendarFromTemplateRequest;
@@ -30,20 +30,20 @@ import java.util.UUID;
 public class UserPackTrainingController {
 
     private final CreateUserPackTrainingService createUserPackTrainingService;
-    private final FindAllMyStudentsService findAllMyStudentsService;
+    private final ViewStudentsPackAndWorkoutCalendarService viewStudentsPackAndWorkoutCalendarService;
     private final CreateWorkoutCalendarFromProgramTemplateService createWorkoutCalendarFromProgramTemplateService;
     private final DeleteWorkoutCalendarService deleteWorkoutCalendarService;
     private final EditUserPackTrainingItemService editUserPackTrainingItemService;
     private final AddCustomUserWorkoutCalendarItemService addCustomUserWorkoutCalendarItemService;
 
     public UserPackTrainingController(CreateUserPackTrainingService createUserPackTrainingService,
-                                      FindAllMyStudentsService findAllMyStudentsService,
+                                      ViewStudentsPackAndWorkoutCalendarService viewStudentsPackAndWorkoutCalendarService,
                                       CreateWorkoutCalendarFromProgramTemplateService createWorkoutCalendarFromProgramTemplateService,
                                       DeleteWorkoutCalendarService deleteWorkoutCalendarService,
                                       EditUserPackTrainingItemService editUserPackTrainingItemService,
                                       AddCustomUserWorkoutCalendarItemService addCustomUserWorkoutCalendarItemService) {
         this.createUserPackTrainingService = createUserPackTrainingService;
-        this.findAllMyStudentsService = findAllMyStudentsService;
+        this.viewStudentsPackAndWorkoutCalendarService = viewStudentsPackAndWorkoutCalendarService;
         this.createWorkoutCalendarFromProgramTemplateService = createWorkoutCalendarFromProgramTemplateService;
         this.deleteWorkoutCalendarService = deleteWorkoutCalendarService;
         this.editUserPackTrainingItemService = editUserPackTrainingItemService;
@@ -77,9 +77,8 @@ public class UserPackTrainingController {
         return ResponseEntity.ok(addCustomUserWorkoutCalendarItemService.execute(UUID.randomUUID(), request));
     }
 
-    @GetMapping("/list/{personalUserId}")
-    public ResponseEntity<ControllerGenericResponse<List<UserPackTrainingDTO>>> findAllMyStudents(@PathVariable("personalUserId") Long personalUserId) {
-        return ResponseEntity.ok(findAllMyStudentsService.execute(UUID.randomUUID(),personalUserId));
+    @GetMapping("/list/{externalId}")
+    public ResponseEntity<ControllerGenericResponse<List<UserPackTrainingDTO>>> viewStudentsPackAndWorkoutCalendar(@PathVariable("externalId") UUID personalUserId) {
+        return ResponseEntity.ok(viewStudentsPackAndWorkoutCalendarService.execute(UUID.randomUUID(),personalUserId));
     }
-
 }
