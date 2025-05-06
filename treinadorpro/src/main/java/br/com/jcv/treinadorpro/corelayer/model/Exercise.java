@@ -27,6 +27,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class Exercise {
 
     @Id
@@ -50,19 +51,8 @@ public class Exercise {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "exercise", fetch = FetchType.LAZY)
     private List<ProgramTemplate> programTemplateList;
 
-    @Override
-    public String toString() {
-        return "Exercise{" +
-                "id=" + id +
-                ", namePt='" + namePt + '\'' +
-                ", nameEn='" + nameEn + '\'' +
-                ", nameEs='" + nameEs + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", programTemplateList=" + programTemplateList +
-                '}';
-    }
 }

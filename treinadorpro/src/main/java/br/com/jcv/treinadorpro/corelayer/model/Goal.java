@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "goal")
+@ToString
 public class Goal {
 
     @Id
@@ -40,20 +41,8 @@ public class Goal {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "goal", fetch = FetchType.LAZY)
     private List<ProgramTemplate> programTemplateList;
 
-    @Override
-    public String toString() {
-        return "Goal{" +
-                "id=" + id +
-                ", namePt='" + namePt + '\'' +
-                ", nameEn='" + nameEn + '\'' +
-                ", nameEs='" + nameEs + '\'' +
-                ", status='" + status + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", programTemplateList=" + programTemplateList +
-                '}';
-    }
 }

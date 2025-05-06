@@ -36,6 +36,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class User {
 
     @Id
@@ -95,46 +96,24 @@ public class User {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "personalUser", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<ActivePersonalPlan> activePersonalPlanList;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "personalUser", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<UserPackTraining> personalUserPackTrainingList;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "studentUser", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<UserPackTraining> studentUserPackTrainingList;
 
+    @ToString.Exclude
     @OneToOne(mappedBy = "studentUser", fetch = FetchType.LAZY)
     private StudentFeature studentFeature;
 
+    @ToString.Exclude
     @OneToOne(mappedBy = "personalUser", fetch = FetchType.LAZY)
     private PersonalFeature personalFeature;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", uuidId=" + uuidId +
-                ", firstName='" + firstName + '\'' +
-                ", middleName='" + middleName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", cellphone='" + cellphone + '\'' +
-                ", birthday=" + birthday +
-                ", gender=" + gender +
-                ", urlPhotoProfile='" + urlPhotoProfile + '\'' +
-                ", userProfile=" + userProfile +
-                ", masterLanguage='" + masterLanguage + '\'' +
-                ", guardianIntegrationUUID=" + guardianIntegrationUUID +
-                ", status=" + status +
-                ", lastLogin=" + lastLogin +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", activePersonalPlanList=" + activePersonalPlanList +
-                ", personalUserPackTrainingList=" + personalUserPackTrainingList +
-                ", studentUserPackTrainingList=" + studentUserPackTrainingList +
-                ", studentFeature=" + studentFeature +
-                ", personalFeature=" + personalFeature +
-                '}';
-    }
 }

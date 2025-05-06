@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "personal_feature")
+@ToString
 public class PersonalFeature {
 
     @Id
@@ -55,21 +56,4 @@ public class PersonalFeature {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Override
-    public String toString() {
-        return "PersonalFeature{" +
-                "id=" + id +
-                ", personalUser=" + personalUser +
-                ", monPeriod='" + monPeriod + '\'' +
-                ", tuePeriod='" + tuePeriod + '\'' +
-                ", wedPeriod='" + wedPeriod + '\'' +
-                ", thuPeriod='" + thuPeriod + '\'' +
-                ", friPeriod='" + friPeriod + '\'' +
-                ", satPeriod='" + satPeriod + '\'' +
-                ", sunPeriod='" + sunPeriod + '\'' +
-                ", status='" + status + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
-    }
 }

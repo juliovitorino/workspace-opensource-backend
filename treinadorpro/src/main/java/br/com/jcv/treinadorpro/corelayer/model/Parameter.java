@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "parameters")
 @Data
+@ToString
 public class Parameter {
 
     @Id
@@ -35,15 +36,4 @@ public class Parameter {
     @Column(name = "updated_at", insertable = false)
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
-    @Override
-    public String toString() {
-        return "Parameter{" +
-                "id=" + id +
-                ", keytag='" + keytag + '\'' +
-                ", valuetag='" + valuetag + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
-    }
 }

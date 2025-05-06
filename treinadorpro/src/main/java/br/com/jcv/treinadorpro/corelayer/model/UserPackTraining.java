@@ -37,6 +37,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @TypeDef(name = "integer-array", typeClass = CustomIntegerArrayType.class)
+@ToString
 public class UserPackTraining {
 
     @Id
@@ -85,30 +86,12 @@ public class UserPackTraining {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "userPackTraining", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<UserWorkoutCalendar> userWorkoutCalendarList;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "userPackTraining", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<StudentPayment> studentPaymentList;
 
-    @Override
-    public String toString() {
-        return "UserPackTraining{" +
-                "id=" + id +
-                ", externalId=" + externalId +
-                ", personalUser=" + personalUser +
-                ", studentUser=" + studentUser +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", currency='" + currency + '\'' +
-                ", startTime='" + startTime + '\'' +
-                ", endTime='" + endTime + '\'' +
-                ", daysOfWeek=" + Arrays.toString(daysOfWeek) +
-                ", status=" + status +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", userWorkoutCalendarList=" + userWorkoutCalendarList +
-                ", studentPaymentList=" + studentPaymentList +
-                '}';
-    }
 }
