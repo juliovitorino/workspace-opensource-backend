@@ -2,10 +2,7 @@ package br.com.jcv.treinadorpro.adapter.v1.business.controller;
 
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.restclient.guardian.LoginRequest;
-import br.com.jcv.treinadorpro.corebusiness.users.AddNewCustomPersonalTrainerProgramItemService;
-import br.com.jcv.treinadorpro.corebusiness.users.CreatePersonalTrainerProgramFromTemplateService;
 import br.com.jcv.treinadorpro.corebusiness.users.CreateStudentAccountService;
-import br.com.jcv.treinadorpro.corebusiness.users.EditPersonalTrainerProgramService;
 import br.com.jcv.treinadorpro.corebusiness.users.EditStudentProfileService;
 import br.com.jcv.treinadorpro.corebusiness.users.LoginService;
 import br.com.jcv.treinadorpro.corebusiness.users.RegisterNewPersonalTrainerService;
@@ -35,23 +32,14 @@ public class UserController {
     private final CreateStudentAccountService createStudentAccountService;
     private final LoginService loginService;
     private final EditStudentProfileService editStudentProfileService;
-    private final CreatePersonalTrainerProgramFromTemplateService createPersonalTrainerProgramFromTemplateService;
-    private final EditPersonalTrainerProgramService editPersonalTrainerProgramService;
-    private final AddNewCustomPersonalTrainerProgramItemService addNewCustomPersonalTrainerProgramItemService;
 
     public UserController(RegisterNewPersonalTrainerService registerNewPersonalTrainerService,
                           CreateStudentAccountService createStudentAccountService,
-                          LoginService loginService, EditStudentProfileService editStudentProfileService,
-                          CreatePersonalTrainerProgramFromTemplateService createPersonalTrainerProgramFromTemplateService,
-                          EditPersonalTrainerProgramService editPersonalTrainerProgramService,
-                          AddNewCustomPersonalTrainerProgramItemService addNewCustomPersonalTrainerProgramItemService) {
+                          LoginService loginService, EditStudentProfileService editStudentProfileService) {
         this.registerNewPersonalTrainerService = registerNewPersonalTrainerService;
         this.createStudentAccountService = createStudentAccountService;
         this.loginService = loginService;
         this.editStudentProfileService = editStudentProfileService;
-        this.createPersonalTrainerProgramFromTemplateService = createPersonalTrainerProgramFromTemplateService;
-        this.editPersonalTrainerProgramService = editPersonalTrainerProgramService;
-        this.addNewCustomPersonalTrainerProgramItemService = addNewCustomPersonalTrainerProgramItemService;
     }
 
     @PostMapping("/register")
@@ -77,20 +65,5 @@ public class UserController {
         return ResponseEntity.ok(editStudentProfileService.execute(UUID.randomUUID(),request));
     }
 
-    @PostMapping("personal/program/item")
-    public ResponseEntity<ControllerGenericResponse<Boolean>> addNewCustomPersonalTrainerProgramItemService(
-            @RequestBody PersonalTrainerProgramRequest request) {
-        return ResponseEntity.ok(addNewCustomPersonalTrainerProgramItemService.execute(UUID.randomUUID(), request));
-    }
 
-    @PostMapping("personal/program")
-    public ResponseEntity<ControllerGenericResponse<Boolean>> createPersonalTrainerProgramFromTemplate(
-            @RequestBody CreatePersonalTrainerProgramFromTemplateRequest request) {
-        return ResponseEntity.ok(createPersonalTrainerProgramFromTemplateService.execute(UUID.randomUUID(), request));
-    }
-
-    @PutMapping("personal/program")
-    public ResponseEntity<ControllerGenericResponse<Boolean>> editPersonalTrainerProgram(@RequestBody EditPersonalTrainerProgramRequest request){
-        return ResponseEntity.ok(editPersonalTrainerProgramService.execute(UUID.randomUUID(), request));
-    }
 }

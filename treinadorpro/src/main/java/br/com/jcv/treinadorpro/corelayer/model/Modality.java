@@ -52,9 +52,6 @@ public class Modality {
     @OneToMany(mappedBy = "modality", fetch = FetchType.LAZY)
     private List<ProgramTemplate> programTemplateList;
 
-    @OneToMany(mappedBy = "modality", fetch = FetchType.LAZY)
-    private List<PersonalTrainerProgram> personalTrainerProgramList;
-
     @Override
     public String toString() {
         return "Modality{" +
@@ -65,7 +62,6 @@ public class Modality {
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 ", programTemplateList=" + programTemplateList +
-                ", personalTrainerProgramList=" + personalTrainerProgramList +
                 '}';
     }
 }
