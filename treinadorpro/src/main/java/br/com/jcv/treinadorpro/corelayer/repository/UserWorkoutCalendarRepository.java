@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -16,4 +17,6 @@ public interface UserWorkoutCalendarRepository extends JpaRepository<UserWorkout
     @Modifying
     @Query("DELETE FROM UserWorkoutCalendar uw WHERE uw.externalId IN :uuids")
     void deleteByExternalId(List<UUID> uuids);
+
+    Optional<UserWorkoutCalendar> findByExternalId(UUID externalId);
 }
