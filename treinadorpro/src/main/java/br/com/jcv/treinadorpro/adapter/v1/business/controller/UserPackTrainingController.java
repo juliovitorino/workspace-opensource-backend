@@ -4,15 +4,18 @@ import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse
 import br.com.jcv.treinadorpro.corebusiness.userpacktraining.CreateUserPackTrainingService;
 import br.com.jcv.treinadorpro.corebusiness.userpacktraining.CreateWorkoutCalendarFromProgramTemplateService;
 import br.com.jcv.treinadorpro.corebusiness.userpacktraining.DeleteWorkoutCalendarService;
+import br.com.jcv.treinadorpro.corebusiness.userpacktraining.EditUserPackTrainingItemService;
 import br.com.jcv.treinadorpro.corebusiness.userpacktraining.FindAllMyStudentsService;
 import br.com.jcv.treinadorpro.corelayer.dto.UserPackTrainingDTO;
 import br.com.jcv.treinadorpro.corelayer.request.CreateWorkoutCalendarServiceRequest;
+import br.com.jcv.treinadorpro.corelayer.request.EditUserWorkoutCalendarItemRequest;
 import br.com.jcv.treinadorpro.corelayer.request.UserPackTrainingRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,15 +31,18 @@ public class UserPackTrainingController {
     private final FindAllMyStudentsService findAllMyStudentsService;
     private final CreateWorkoutCalendarFromProgramTemplateService createWorkoutCalendarFromProgramTemplateService;
     private final DeleteWorkoutCalendarService deleteWorkoutCalendarService;
+    private final EditUserPackTrainingItemService editUserPackTrainingItemService;
 
     public UserPackTrainingController(CreateUserPackTrainingService createUserPackTrainingService,
                                       FindAllMyStudentsService findAllMyStudentsService,
                                       CreateWorkoutCalendarFromProgramTemplateService createWorkoutCalendarFromProgramTemplateService,
-                                      DeleteWorkoutCalendarService deleteWorkoutCalendarService) {
+                                      DeleteWorkoutCalendarService deleteWorkoutCalendarService,
+                                      EditUserPackTrainingItemService editUserPackTrainingItemService) {
         this.createUserPackTrainingService = createUserPackTrainingService;
         this.findAllMyStudentsService = findAllMyStudentsService;
         this.createWorkoutCalendarFromProgramTemplateService = createWorkoutCalendarFromProgramTemplateService;
         this.deleteWorkoutCalendarService = deleteWorkoutCalendarService;
+        this.editUserPackTrainingItemService = editUserPackTrainingItemService;
     }
 
     @PostMapping("/add")
@@ -52,6 +58,13 @@ public class UserPackTrainingController {
     @DeleteMapping("/workout-calendar")
     public ResponseEntity<ControllerGenericResponse<Boolean>> deleteWorkoutCalendar(@RequestBody List<UUID> request){
         return ResponseEntity.ok(deleteWorkoutCalendarService.execute(UUID.randomUUID(), request));
+    }
+
+    @PutMapping("/workout-calendar/{externalId}")
+    public ResponseEntity<ControllerGenericResponse<Boolean>> EditUserPackTrainingItemService(@PathVariable("externalId") UUID externalId,
+                                                                                              @RequestBody EditUserWorkoutCalendarItemRequest request) {
+        request.setExternalId(externalId);
+        return ResponseEntity.ok(editUserPackTrainingItemService.execute(UUID.randomUUID(), request));
     }
 
     @GetMapping("/list/{personalUserId}")

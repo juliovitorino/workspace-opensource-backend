@@ -494,6 +494,7 @@ CREATE TABLE user_workout_calendar (
     weight_unit VARCHAR(10),
     comments VARCHAR(500),
     obs VARCHAR(500),
+    external_id UUID,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
