@@ -28,6 +28,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class PlanTemplate {
 
     @Id
@@ -65,19 +66,4 @@ public class PlanTemplate {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @Override
-    public String toString() {
-        return "PlanTemplate{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", amountDiscount=" + amountDiscount +
-                ", paymentFrequency=" + paymentFrequency +
-                ", qtyUserPackTrainingAllowed=" + qtyUserPackTrainingAllowed +
-                ", qtyUserStudentAllowed=" + qtyUserStudentAllowed +
-                ", status='" + status + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
-    }
 }

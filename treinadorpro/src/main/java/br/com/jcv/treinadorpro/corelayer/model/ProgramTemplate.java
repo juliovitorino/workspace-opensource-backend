@@ -15,6 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "program_template")
+@ToString
 public class ProgramTemplate {
 
     @Id
@@ -86,29 +87,4 @@ public class ProgramTemplate {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Override
-    public String toString() {
-        return "ProgramTemplate{" +
-                "id=" + id +
-                ", externalId=" + externalId +
-                ", version=" + version +
-                ", modality=" + modality +
-                ", exercise=" + exercise +
-                ", workGroup=" + workGroup +
-                ", goal=" + goal +
-                ", program=" + program +
-                ", executionMethod=" + executionMethod +
-                ", qtySeries=" + qtySeries +
-                ", qtyReps=" + qtyReps +
-                ", execution='" + execution + '\'' +
-                ", executionTime='" + executionTime + '\'' +
-                ", restTime='" + restTime + '\'' +
-                ", weight=" + weight +
-                ", weightUnit='" + weightUnit + '\'' +
-                ", comments='" + comments + '\'' +
-                ", status='" + status + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
-    }
 }

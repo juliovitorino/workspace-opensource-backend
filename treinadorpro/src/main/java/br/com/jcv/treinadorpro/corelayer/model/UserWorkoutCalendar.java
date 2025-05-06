@@ -31,6 +31,7 @@ import java.util.UUID;
 @Table(name = "user_workout_calendar")
 @Builder
 @AllArgsConstructor
+@ToString
 public class UserWorkoutCalendar {
 
     @Id
@@ -116,33 +117,4 @@ public class UserWorkoutCalendar {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Override
-    public String toString() {
-        return "UserWorkoutCalendar{" +
-                "id=" + id +
-                ", userPackTraining=" + userPackTraining +
-                ", externalId=" + externalId +
-                ", trainingDate=" + trainingDate +
-                ", modality=" + modality +
-                ", workGroup=" + workGroup +
-                ", goal=" + goal +
-                ", exercise=" + exercise +
-                ", program=" + program +
-                ", customExercise='" + customExercise + '\'' +
-                ", customProgram='" + customProgram + '\'' +
-                ", executionMethod=" + executionMethod +
-                ", qtySeries=" + qtySeries +
-                ", qtyReps=" + qtyReps +
-                ", execution='" + execution + '\'' +
-                ", executionTime='" + executionTime + '\'' +
-                ", restTime='" + restTime + '\'' +
-                ", weight=" + weight +
-                ", weightUnit='" + weightUnit + '\'' +
-                ", comments='" + comments + '\'' +
-                ", obs='" + obs + '\'' +
-                ", status=" + status +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
-    }
 }

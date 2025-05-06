@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "personal_trainer_payments")
+@ToString
 public class PersonalTrainerPayment {
 
     @Id
@@ -52,19 +53,4 @@ public class PersonalTrainerPayment {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Override
-    public String toString() {
-        return "PersonalTrainerPayment{" +
-                "id=" + id +
-                ", activePersonalPlan=" + activePersonalPlan +
-                ", expectedAmount=" + expectedAmount +
-                ", expectedDate=" + expectedDate +
-                ", amountDiscount=" + amountDiscount +
-                ", amountPaid=" + amountPaid +
-                ", paidDate=" + paidDate +
-                ", status=" + status +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
-    }
 }

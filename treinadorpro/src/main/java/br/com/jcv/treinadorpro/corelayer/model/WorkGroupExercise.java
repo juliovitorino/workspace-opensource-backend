@@ -3,6 +3,7 @@ package br.com.jcv.treinadorpro.corelayer.model;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "work_group_exercise")
+@ToString
 public class WorkGroupExercise {
 
     @Id
@@ -39,15 +41,4 @@ public class WorkGroupExercise {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Override
-    public String toString() {
-        return "WorkGroupExercise{" +
-                "id=" + id +
-                ", workGroup=" + workGroup +
-                ", exercise=" + exercise +
-                ", status=" + status +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
-    }
 }
