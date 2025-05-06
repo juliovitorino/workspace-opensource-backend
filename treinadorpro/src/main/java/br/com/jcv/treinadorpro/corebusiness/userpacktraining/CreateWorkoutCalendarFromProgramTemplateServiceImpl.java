@@ -8,7 +8,7 @@ import br.com.jcv.treinadorpro.corelayer.model.UserWorkoutCalendar;
 import br.com.jcv.treinadorpro.corelayer.repository.ProgramTemplateRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.UserPackTrainingRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.UserWorkoutCalendarRepository;
-import br.com.jcv.treinadorpro.corelayer.request.CreateWorkoutCalendarServiceRequest;
+import br.com.jcv.treinadorpro.corelayer.request.CreateWorkoutCalendarFromTemplateRequest;
 import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -41,7 +41,7 @@ public class CreateWorkoutCalendarFromProgramTemplateServiceImpl implements Crea
     }
 
     @Override
-    public ControllerGenericResponse<Boolean> execute(UUID processId, CreateWorkoutCalendarServiceRequest request) {
+    public ControllerGenericResponse<Boolean> execute(UUID processId, CreateWorkoutCalendarFromTemplateRequest request) {
 
         UserPackTraining userPackTrainingEntity = userPackTrainingRepository.findById(request.getUserPackTrainingId())
                 .orElseThrow(() -> new CommoditieBaseException("Invalid User Pack Training", HttpStatus.BAD_REQUEST, "MSG-1511"));

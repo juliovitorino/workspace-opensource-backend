@@ -1,13 +1,15 @@
 package br.com.jcv.treinadorpro.adapter.v1.business.controller;
 
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
+import br.com.jcv.treinadorpro.corebusiness.userpacktraining.AddCustomUserWorkoutCalendarItemService;
 import br.com.jcv.treinadorpro.corebusiness.userpacktraining.CreateUserPackTrainingService;
 import br.com.jcv.treinadorpro.corebusiness.userpacktraining.CreateWorkoutCalendarFromProgramTemplateService;
 import br.com.jcv.treinadorpro.corebusiness.userpacktraining.DeleteWorkoutCalendarService;
 import br.com.jcv.treinadorpro.corebusiness.userpacktraining.EditUserPackTrainingItemService;
 import br.com.jcv.treinadorpro.corebusiness.userpacktraining.FindAllMyStudentsService;
 import br.com.jcv.treinadorpro.corelayer.dto.UserPackTrainingDTO;
-import br.com.jcv.treinadorpro.corelayer.request.CreateWorkoutCalendarServiceRequest;
+import br.com.jcv.treinadorpro.corelayer.request.AddCustomUserWorkoutCalendarItemRequest;
+import br.com.jcv.treinadorpro.corelayer.request.CreateWorkoutCalendarFromTemplateRequest;
 import br.com.jcv.treinadorpro.corelayer.request.EditUserWorkoutCalendarItemRequest;
 import br.com.jcv.treinadorpro.corelayer.request.UserPackTrainingRequest;
 import org.springframework.http.ResponseEntity;
@@ -32,17 +34,20 @@ public class UserPackTrainingController {
     private final CreateWorkoutCalendarFromProgramTemplateService createWorkoutCalendarFromProgramTemplateService;
     private final DeleteWorkoutCalendarService deleteWorkoutCalendarService;
     private final EditUserPackTrainingItemService editUserPackTrainingItemService;
+    private final AddCustomUserWorkoutCalendarItemService addCustomUserWorkoutCalendarItemService;
 
     public UserPackTrainingController(CreateUserPackTrainingService createUserPackTrainingService,
                                       FindAllMyStudentsService findAllMyStudentsService,
                                       CreateWorkoutCalendarFromProgramTemplateService createWorkoutCalendarFromProgramTemplateService,
                                       DeleteWorkoutCalendarService deleteWorkoutCalendarService,
-                                      EditUserPackTrainingItemService editUserPackTrainingItemService) {
+                                      EditUserPackTrainingItemService editUserPackTrainingItemService,
+                                      AddCustomUserWorkoutCalendarItemService addCustomUserWorkoutCalendarItemService) {
         this.createUserPackTrainingService = createUserPackTrainingService;
         this.findAllMyStudentsService = findAllMyStudentsService;
         this.createWorkoutCalendarFromProgramTemplateService = createWorkoutCalendarFromProgramTemplateService;
         this.deleteWorkoutCalendarService = deleteWorkoutCalendarService;
         this.editUserPackTrainingItemService = editUserPackTrainingItemService;
+        this.addCustomUserWorkoutCalendarItemService = addCustomUserWorkoutCalendarItemService;
     }
 
     @PostMapping("/add")
@@ -51,7 +56,7 @@ public class UserPackTrainingController {
     }
 
     @PostMapping("/workout-calendar/add")
-    public ResponseEntity<ControllerGenericResponse<Boolean>> createWorkoutCalendar(@RequestBody CreateWorkoutCalendarServiceRequest request){
+    public ResponseEntity<ControllerGenericResponse<Boolean>> createWorkoutCalendar(@RequestBody CreateWorkoutCalendarFromTemplateRequest request){
         return ResponseEntity.ok(createWorkoutCalendarFromProgramTemplateService.execute(UUID.randomUUID(), request));
     }
 
@@ -65,6 +70,11 @@ public class UserPackTrainingController {
                                                                                               @RequestBody EditUserWorkoutCalendarItemRequest request) {
         request.setExternalId(externalId);
         return ResponseEntity.ok(editUserPackTrainingItemService.execute(UUID.randomUUID(), request));
+    }
+
+    @PostMapping("/workout-calendar/custom")
+    public ResponseEntity<ControllerGenericResponse<Boolean>> EditUserPackTrainingItemService(@RequestBody AddCustomUserWorkoutCalendarItemRequest request) {
+        return ResponseEntity.ok(addCustomUserWorkoutCalendarItemService.execute(UUID.randomUUID(), request));
     }
 
     @GetMapping("/list/{personalUserId}")

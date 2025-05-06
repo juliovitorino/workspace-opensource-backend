@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-public class CreateWorkoutCalendarServiceRequest implements Serializable {
+public class CreateWorkoutCalendarFromTemplateRequest implements Serializable {
     private Long userPackTrainingId;
     private List<UUID> programTemplateExternalIdList;
     private List<LocalDate> trainingDateList;
