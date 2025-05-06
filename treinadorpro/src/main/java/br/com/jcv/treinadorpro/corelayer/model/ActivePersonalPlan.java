@@ -34,7 +34,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
 public class ActivePersonalPlan {
 
     @Id
@@ -81,4 +80,22 @@ public class ActivePersonalPlan {
     @OneToMany(mappedBy = "activePersonalPlan")
     private List<PersonalTrainerPayment> personalTrainerPaymentList;
 
+    @Override
+    public String toString() {
+        return "ActivePersonalPlan{" +
+                "id=" + id +
+                ", personalUser=" + personalUser +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", amountDiscount=" + amountDiscount +
+                ", planExpirationDate=" + planExpirationDate +
+                ", paymentFrequency=" + paymentFrequency +
+                ", qtyUserStudentAllowed=" + qtyUserStudentAllowed +
+                ", qtyUserPackTrainingAllowed=" + qtyUserPackTrainingAllowed +
+                ", status='" + status + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", personalTrainerPaymentList=" + personalTrainerPaymentList +
+                '}';
+    }
 }

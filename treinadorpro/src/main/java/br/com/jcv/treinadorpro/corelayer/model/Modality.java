@@ -26,7 +26,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
 public class Modality {
 
     @Id
@@ -56,4 +55,17 @@ public class Modality {
     @OneToMany(mappedBy = "modality", fetch = FetchType.LAZY)
     private List<PersonalTrainerProgram> personalTrainerProgramList;
 
+    @Override
+    public String toString() {
+        return "Modality{" +
+                "id=" + id +
+                ", namePt='" + namePt + '\'' +
+                ", nameEn='" + nameEn + '\'' +
+                ", nameEs='" + nameEs + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", programTemplateList=" + programTemplateList +
+                ", personalTrainerProgramList=" + personalTrainerProgramList +
+                '}';
+    }
 }

@@ -26,6 +26,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,9 +36,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
 @TypeDef(name = "integer-array", typeClass = CustomIntegerArrayType.class)
-
 public class UserPackTraining {
 
     @Id
@@ -92,4 +91,24 @@ public class UserPackTraining {
     @OneToMany(mappedBy = "userPackTraining", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<StudentPayment> studentPaymentList;
 
+    @Override
+    public String toString() {
+        return "UserPackTraining{" +
+                "id=" + id +
+                ", externalId=" + externalId +
+                ", personalUser=" + personalUser +
+                ", studentUser=" + studentUser +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", currency='" + currency + '\'' +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", daysOfWeek=" + Arrays.toString(daysOfWeek) +
+                ", status=" + status +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", userWorkoutCalendarList=" + userWorkoutCalendarList +
+                ", studentPaymentList=" + studentPaymentList +
+                '}';
+    }
 }

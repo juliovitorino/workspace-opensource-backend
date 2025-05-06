@@ -38,4 +38,16 @@ public class WorkGroupExercise {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @Override
+    public String toString() {
+        return "WorkGroupExercise{" +
+                "id=" + id +
+                ", workGroup=" + workGroup +
+                ", exercise=" + exercise +
+                ", status=" + status +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }

@@ -31,7 +31,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
 public class StudentFeature {
 
     @Id
@@ -66,4 +65,18 @@ public class StudentFeature {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Override
+    public String toString() {
+        return "StudentFeature{" +
+                "id=" + id +
+                ", studentUser=" + studentUser +
+                ", password='" + password + '\'' +
+                ", height=" + height +
+                ", weight=" + weight +
+                ", weightUnit='" + weightUnit + '\'' +
+                ", status=" + status +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }

@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "student_payments")
-@ToString
 public class StudentPayment {
 
     @Id
@@ -45,4 +44,18 @@ public class StudentPayment {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @Override
+    public String toString() {
+        return "StudentPayment{" +
+                "id=" + id +
+                ", userPackTraining=" + userPackTraining +
+                ", amount=" + amount +
+                ", expectedDate=" + expectedDate +
+                ", paymentDate=" + paymentDate +
+                ", status='" + status + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }

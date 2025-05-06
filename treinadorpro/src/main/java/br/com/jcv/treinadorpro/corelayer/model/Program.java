@@ -14,7 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "program")
-@ToString
 public class Program {
 
     @Id
@@ -43,4 +42,18 @@ public class Program {
 
     @OneToMany(mappedBy = "program", fetch = FetchType.LAZY)
     private List<ProgramTemplate> programTemplateList;
+
+    @Override
+    public String toString() {
+        return "Program{" +
+                "id=" + id +
+                ", namePt='" + namePt + '\'' +
+                ", nameEn='" + nameEn + '\'' +
+                ", nameEs='" + nameEs + '\'' +
+                ", status='" + status + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", programTemplateList=" + programTemplateList +
+                '}';
+    }
 }
