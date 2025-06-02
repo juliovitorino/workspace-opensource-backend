@@ -327,14 +327,24 @@ COMMENT ON COLUMN personal_feature.created_at IS 'Timestamp when the personal fe
 COMMENT ON COLUMN personal_feature.updated_at IS 'Timestamp when the personal feature record was last updated.';
 
 -- User pack tranning table
-CREATE TABLE user_pack_training (
+CREATE TABLE pack_training (
     id SERIAL PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    student_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     description VARCHAR(255) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     currency VARCHAR(10),
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- User pack tranning table
+CREATE TABLE user_pack_training (
+    id SERIAL PRIMARY KEY,
+    external_id UUID UNIQUE NOT NULL,
+    pack_training_id INTEGER NOT NULL REFERENCES pack_training(id) ON DELETE CASCADE,
+    student_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     start_time VARCHAR(5) NOT NULL,
     end_time VARCHAR(5) NOT NULL,
     days_of_week INTEGER[] NOT NULL,
