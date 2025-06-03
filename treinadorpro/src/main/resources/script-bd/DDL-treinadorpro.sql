@@ -212,6 +212,17 @@ COMMENT ON COLUMN users.last_login IS 'Timestamp of the user''s last login';
 COMMENT ON COLUMN users.created_at IS 'Timestamp of when the user was created';
 COMMENT ON COLUMN users.updated_at IS 'Timestamp of the last update to the user record';
 
+CREATE TABLE available_time (
+    id serial PRIMARY KEY,
+    personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    days_of_week VARCHAR(30) NOT NULL,
+    day_time VARCHAR(5) NOT NULL,
+    available boolean,
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- active_personal_plan table
 CREATE TABLE active_personal_plan (
     id serial PRIMARY KEY,
