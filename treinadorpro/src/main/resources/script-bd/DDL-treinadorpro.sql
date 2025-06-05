@@ -178,9 +178,7 @@ COMMENT ON COLUMN plan_template.updated_at IS 'Timestamp when the plan template 
 CREATE TABLE users (
     id bigserial PRIMARY KEY,
     uuid_id UUID UNIQUE NOT NULL,
-    first_name VARCHAR(100) NOT NULL,
-    middle_name VARCHAR(100),
-    last_name VARCHAR(100),
+    name VARCHAR(200) NOT NULL,
     email VARCHAR(150) UNIQUE NOT NULL,
     cellphone VARCHAR(20),
     birthday DATE,
@@ -190,6 +188,15 @@ CREATE TABLE users (
     master_language VARCHAR(10) NOT NULL DEFAULT 'pt-BR' CHECK (master_language IN ('pt-BR', 'en-US', 'es-ES')),
     guardian_integration UUID,
     last_login TIMESTAMP,
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE trainer_users (
+    id bigserial PRIMARY KEY,
+    personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    student_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -362,9 +369,8 @@ CREATE TABLE user_pack_training (
     goal_description VARCHAR(200) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     currency VARCHAR(10),
-    start_date DATE NOT NULL,
     start_time VARCHAR(5) NOT NULL,
-    end_time VARCHAR(5) NOT NULL,
+    duration VARCHAR(5) NOT NULL,
     days_of_week INTEGER[] NOT NULL,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
