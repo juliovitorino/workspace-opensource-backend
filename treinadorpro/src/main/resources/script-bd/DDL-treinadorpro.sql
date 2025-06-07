@@ -320,7 +320,7 @@ CREATE TABLE personal_feature (
     register VARCHAR(50),
     place VARCHAR(200),
     experience VARCHAR(50),
-    specialty TEXT[],
+    specialty VARCHAR(255),
     mon_period VARCHAR(11),
     tue_period VARCHAR(11),
     wed_period VARCHAR(11),
