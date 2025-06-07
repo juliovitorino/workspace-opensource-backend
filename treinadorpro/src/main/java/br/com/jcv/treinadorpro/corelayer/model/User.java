@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import net.bytebuddy.description.type.TypeList;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -21,8 +20,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -46,14 +43,8 @@ public class User {
     @Column(name = "uuid_id", nullable = false)
     private UUID uuidId;
 
-    @Column(name = "first_name", nullable = false, length = 100)
-    private String firstName;
-
-    @Column(name = "middle_name", length = 100)
-    private String middleName;
-
-    @Column(name = "last_name", length = 100)
-    private String lastName;
+    @Column(name = "name", nullable = false, length = 100)
+    private String name;
 
     @Column(nullable = false, unique = true, length = 150)
     private String email;
@@ -113,7 +104,7 @@ public class User {
     private StudentFeature studentFeature;
 
     @ToString.Exclude
-    @OneToOne(mappedBy = "personalUser", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "personalUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private PersonalFeature personalFeature;
 
 }

@@ -46,9 +46,7 @@ public class EditStudentProfileServiceImpl implements EditStudentProfileService 
     }
 
     public void getData(User userEntity, StudentProfileRequest request) {
-        userEntity.setFirstName(request.getFirstName());
-        userEntity.setMiddleName(request.getMiddleName());
-        userEntity.setLastName(request.getLastName());
+        userEntity.setName(request.getName());
         userEntity.setCellphone(request.getCellphone());
         userEntity.setBirthday(request.getBirthday());
         userEntity.setGender(request.getGender());
