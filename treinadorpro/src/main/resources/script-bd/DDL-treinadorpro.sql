@@ -317,6 +317,10 @@ COMMENT ON COLUMN student_feature.updated_at IS 'Timestamp when the student feat
 CREATE TABLE personal_feature (
     id bigserial PRIMARY KEY,
     personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    register VARCHAR(50),
+    place VARCHAR(200),
+    experience VARCHAR(50),
+    specialty VARCHAR(255),
     mon_period VARCHAR(11),
     tue_period VARCHAR(11),
     wed_period VARCHAR(11),
