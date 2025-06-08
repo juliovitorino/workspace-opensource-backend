@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+import static br.com.jcv.treinadorpro.corelayer.service.MapperServiceHelper.toResponse;
+
 @Service
 public class FindPersonalTrainerServiceImpl implements FindPersonalTrainerService {
 
@@ -36,45 +38,5 @@ public class FindPersonalTrainerServiceImpl implements FindPersonalTrainerServic
                 toResponse(user)
         );
 
-    }
-
-    private PersonalTrainerResponse toResponse(User user) {
-        return PersonalTrainerResponse.builder()
-                .id(user.getId())
-                .uuidId(user.getUuidId())
-                .name(user.getName())
-                .email(user.getEmail())
-                .cellphone(user.getCellphone())
-                .birthday(user.getBirthday())
-                .gender(user.getGender())
-                .userProfile(user.getUserProfile())
-                .urlPhotoProfile(user.getUrlPhotoProfile())
-                .masterLanguage(user.getMasterLanguage())
-                .lastLogin(user.getLastLogin())
-                .status(user.getStatus())
-                .createdAt(user.getCreatedAt())
-                .updatedAt(user.getUpdatedAt())
-                .personalFeature(toResponse(user.getPersonalFeature()))
-                .build();
-    }
-
-    private PersonalFeatureResponse toResponse(PersonalFeature personalFeature) {
-        return PersonalFeatureResponse.builder()
-                .id(personalFeature.getId())
-                .register(personalFeature.getRegister())
-                .place(personalFeature.getPlace())
-                .experience(personalFeature.getExperience())
-                .specialty(personalFeature.getSpecialty())
-                .monPeriod(personalFeature.getMonPeriod())
-                .tuePeriod(personalFeature.getTuePeriod())
-                .wedPeriod(personalFeature.getWedPeriod())
-                .thuPeriod(personalFeature.getThuPeriod())
-                .friPeriod(personalFeature.getFriPeriod())
-                .satPeriod(personalFeature.getSatPeriod())
-                .sunPeriod(personalFeature.getSunPeriod())
-                .status(personalFeature.getStatus())
-                .createdAt(personalFeature.getCreatedAt())
-                .updatedAt(personalFeature.getUpdatedAt())
-                .build();
     }
 }

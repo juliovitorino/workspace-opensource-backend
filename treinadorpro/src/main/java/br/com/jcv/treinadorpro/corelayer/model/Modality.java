@@ -42,6 +42,9 @@ public class Modality {
     @Column(name = "name_es", length = 100)
     private String nameEs;
 
+    @Column(name = "status", length = 1)
+    private String status;
+
     @Column(name = "created_at", updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -52,6 +55,6 @@ public class Modality {
 
     @ToString.Exclude
     @OneToMany(mappedBy = "modality", fetch = FetchType.LAZY)
-    private List<ProgramTemplate> programTemplateList;
+    private List<TrainingPack> trainingPackList;
 
 }
