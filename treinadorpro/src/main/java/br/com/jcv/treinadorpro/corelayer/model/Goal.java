@@ -41,8 +41,4 @@ public class Goal {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @ToString.Exclude
-    @OneToMany(mappedBy = "goal", fetch = FetchType.LAZY)
-    private List<ProgramTemplate> programTemplateList;
-
 }

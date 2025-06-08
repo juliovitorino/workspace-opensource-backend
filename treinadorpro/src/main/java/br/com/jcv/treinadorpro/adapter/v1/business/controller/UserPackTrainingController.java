@@ -3,7 +3,6 @@ package br.com.jcv.treinadorpro.adapter.v1.business.controller;
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.treinadorpro.corebusiness.userpacktraining.AddCustomUserWorkoutCalendarItemService;
 import br.com.jcv.treinadorpro.corebusiness.userpacktraining.CreateUserPackTrainingService;
-import br.com.jcv.treinadorpro.corebusiness.userpacktraining.CreateWorkoutCalendarFromProgramTemplateService;
 import br.com.jcv.treinadorpro.corebusiness.userpacktraining.DeleteWorkoutCalendarService;
 import br.com.jcv.treinadorpro.corebusiness.userpacktraining.EditUserPackTrainingItemService;
 import br.com.jcv.treinadorpro.corebusiness.userpacktraining.ViewStudentsPackAndWorkoutCalendarService;
@@ -31,20 +30,17 @@ public class UserPackTrainingController {
 
     private final CreateUserPackTrainingService createUserPackTrainingService;
     private final ViewStudentsPackAndWorkoutCalendarService viewStudentsPackAndWorkoutCalendarService;
-    private final CreateWorkoutCalendarFromProgramTemplateService createWorkoutCalendarFromProgramTemplateService;
     private final DeleteWorkoutCalendarService deleteWorkoutCalendarService;
     private final EditUserPackTrainingItemService editUserPackTrainingItemService;
     private final AddCustomUserWorkoutCalendarItemService addCustomUserWorkoutCalendarItemService;
 
     public UserPackTrainingController(CreateUserPackTrainingService createUserPackTrainingService,
                                       ViewStudentsPackAndWorkoutCalendarService viewStudentsPackAndWorkoutCalendarService,
-                                      CreateWorkoutCalendarFromProgramTemplateService createWorkoutCalendarFromProgramTemplateService,
                                       DeleteWorkoutCalendarService deleteWorkoutCalendarService,
                                       EditUserPackTrainingItemService editUserPackTrainingItemService,
                                       AddCustomUserWorkoutCalendarItemService addCustomUserWorkoutCalendarItemService) {
         this.createUserPackTrainingService = createUserPackTrainingService;
         this.viewStudentsPackAndWorkoutCalendarService = viewStudentsPackAndWorkoutCalendarService;
-        this.createWorkoutCalendarFromProgramTemplateService = createWorkoutCalendarFromProgramTemplateService;
         this.deleteWorkoutCalendarService = deleteWorkoutCalendarService;
         this.editUserPackTrainingItemService = editUserPackTrainingItemService;
         this.addCustomUserWorkoutCalendarItemService = addCustomUserWorkoutCalendarItemService;
@@ -53,11 +49,6 @@ public class UserPackTrainingController {
     @PostMapping("/add")
     public ResponseEntity<ControllerGenericResponse<Boolean>> createUserPackTrainig(@RequestBody UserPackTrainingRequest request) {
         return ResponseEntity.ok(createUserPackTrainingService.execute(UUID.randomUUID(), request));
-    }
-
-    @PostMapping("/workout-calendar/add")
-    public ResponseEntity<ControllerGenericResponse<Boolean>> createWorkoutCalendar(@RequestBody CreateWorkoutCalendarFromTemplateRequest request){
-        return ResponseEntity.ok(createWorkoutCalendarFromProgramTemplateService.execute(UUID.randomUUID(), request));
     }
 
     @DeleteMapping("/workout-calendar")

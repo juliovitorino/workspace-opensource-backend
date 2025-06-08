@@ -89,6 +89,10 @@ public class User {
 
     @ToString.Exclude
     @OneToMany(mappedBy = "personalUser", fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<TrainingPack> trainingPackList;
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "personalUser", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<ActivePersonalPlan> activePersonalPlanList;
 
     @ToString.Exclude

@@ -51,8 +51,4 @@ public class Exercise {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @ToString.Exclude
-    @OneToMany(mappedBy = "exercise", fetch = FetchType.LAZY)
-    private List<ProgramTemplate> programTemplateList;
-
 }

@@ -349,7 +349,7 @@ COMMENT ON COLUMN personal_feature.created_at IS 'Timestamp when the personal fe
 COMMENT ON COLUMN personal_feature.updated_at IS 'Timestamp when the personal feature record was last updated.';
 
 -- User pack tranning table
-CREATE TABLE pack_training (
+CREATE TABLE training_pack (
     id SERIAL PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,

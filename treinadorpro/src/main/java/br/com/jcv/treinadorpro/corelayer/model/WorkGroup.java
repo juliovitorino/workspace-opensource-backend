@@ -41,8 +41,4 @@ public class WorkGroup {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @ToString.Exclude
-    @OneToMany(mappedBy = "workGroup", fetch = FetchType.LAZY)
-    private List<ProgramTemplate> programTemplates;
-
 }
