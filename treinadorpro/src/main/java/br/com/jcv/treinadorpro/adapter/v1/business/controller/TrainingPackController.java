@@ -5,12 +5,15 @@ import br.com.jcv.treinadorpro.corebusiness.trainingpack.CreateTrainingPackServi
 import br.com.jcv.treinadorpro.corebusiness.trainingpack.FindAllTrainingPackService;
 import br.com.jcv.treinadorpro.corelayer.request.CreateTrainingPackRequest;
 import br.com.jcv.treinadorpro.corelayer.response.TrainingPackResponse;
+import br.com.jcv.treinadorpro.infrastructure.utils.PageResultRequest;
+import br.com.jcv.treinadorpro.infrastructure.utils.PageResultResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -35,8 +38,20 @@ public class TrainingPackController {
         return ResponseEntity.ok(createTrainingPackService.execute(UUID.randomUUID(), request));
     }
 
-    @GetMapping("{uuid}")
-    private ResponseEntity<ControllerGenericResponse<List<TrainingPackResponse>>> findAllTrainingPack(@PathVariable("uuid") UUID personalExternalUUID) {
-        return ResponseEntity.ok(findAllTrainingPackService.execute(UUID.randomUUID(), personalExternalUUID));
+    @GetMapping()
+    private ResponseEntity<ControllerGenericResponse<PageResultResponse<TrainingPackResponse>>> findAllTrainingPack(
+            @RequestParam("externalId") UUID personalTrainerExternalId,
+            @RequestParam("page") Integer page,
+            @RequestParam("size") Integer size) {
+        return ResponseEntity.ok(
+                findAllTrainingPackService.execute(
+                        UUID.randomUUID(),
+                        PageResultRequest.<UUID>builder()
+                                .page(page)
+                                .size(size)
+                                .request(personalTrainerExternalId)
+                                .build()
+                )
+        );
     }
 }
