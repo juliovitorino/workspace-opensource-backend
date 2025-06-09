@@ -57,7 +57,7 @@ public class AddCustomUserWorkoutCalendarItemServiceImpl implements AddCustomUse
         workoutCalendarItem.setModality(modalityRepository.findById(request.getModality()).orElseThrow(() -> new CommoditieBaseException("Invalid Modality", HttpStatus.BAD_REQUEST, "MSG-0859")));
         workoutCalendarItem.setGoal(goalRepository.findById(request.getGoal()).orElseThrow(() -> new CommoditieBaseException("Invalid Goal", HttpStatus.BAD_REQUEST, "MSG-0900")));
         workoutCalendarItem.setProgram(programRepository.findById(request.getProgram()).orElseThrow(() -> new CommoditieBaseException("Invalid Program", HttpStatus.BAD_REQUEST, "MSG-0901")));
-        workoutCalendarItem.setWorkGroup(workGroupRepository.findById(request.getWorkGroup()).orElseThrow(() -> new CommoditieBaseException("Invalid WorkGroup", HttpStatus.BAD_REQUEST, "MSG-0902")));
+//        workoutCalendarItem.setWorkGroup(workGroupRepository.findById(request.getWorkGroup()).orElseThrow(() -> new CommoditieBaseException("Invalid WorkGroup", HttpStatus.BAD_REQUEST, "MSG-0902")));
         workoutCalendarItem.setExercise(exerciseRepository.findById(request.getExercise()).orElseThrow(() -> new CommoditieBaseException("Invalid Exercise", HttpStatus.BAD_REQUEST, "MSG-0903")));
 
         userWorkoutCalendarRepository.save(workoutCalendarItem);

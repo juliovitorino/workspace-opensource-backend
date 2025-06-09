@@ -1,19 +1,21 @@
 package br.com.jcv.treinadorpro.corelayer.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ModalityResponse {
+public class GoalResponse implements Serializable {
 
-    @JsonProperty("id")
     private Long id;
 
     @JsonProperty("externalId")

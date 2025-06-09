@@ -20,6 +20,7 @@ COMMENT ON COLUMN parameters.updated_at IS 'Timestamp when the parameter was las
 -- program table
 CREATE TABLE program (
     id SERIAL PRIMARY KEY,
+    external_id UUID NOT NULL,
     name_pt VARCHAR(100),
     name_en VARCHAR(100),
     name_es VARCHAR(100),
@@ -41,6 +42,7 @@ COMMENT ON COLUMN program.updated_at IS 'Timestamp when the program was last upd
 -- goal table
 CREATE TABLE goal (
     id SERIAL PRIMARY KEY,
+    external_id UUID NOT NULL,
     name_pt VARCHAR(100),
     name_en VARCHAR(100),
     name_es VARCHAR(100),
@@ -62,6 +64,7 @@ COMMENT ON COLUMN goal.updated_at IS 'Timestamp when the goal was last updated.'
 -- work_group table
 CREATE TABLE work_group (
     id SERIAL PRIMARY KEY,
+    external_id UUID NOT NULL,
     name_pt VARCHAR(100),
     name_en VARCHAR(100),
     name_es VARCHAR(100),
@@ -83,6 +86,7 @@ COMMENT ON COLUMN work_group.updated_at IS 'Timestamp when the work group was la
 -- Modality table
 CREATE TABLE modality (
     id SERIAL PRIMARY KEY,
+    external_id UUID NOT NULL,
     name_pt VARCHAR(100),
     name_en VARCHAR(100),
     name_es VARCHAR(100),

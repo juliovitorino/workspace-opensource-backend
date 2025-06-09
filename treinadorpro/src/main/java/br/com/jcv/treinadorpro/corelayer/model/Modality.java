@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "modality")
@@ -32,6 +33,9 @@ public class Modality {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "external_id", length = 100)
+    private UUID externalId;
 
     @Column(name = "name_pt", length = 100)
     private String namePt;

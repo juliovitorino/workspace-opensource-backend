@@ -1,14 +1,20 @@
 package br.com.jcv.treinadorpro.corelayer.service;
 
+import br.com.jcv.treinadorpro.corelayer.model.Goal;
 import br.com.jcv.treinadorpro.corelayer.model.Modality;
 import br.com.jcv.treinadorpro.corelayer.model.PersonalFeature;
+import br.com.jcv.treinadorpro.corelayer.model.Program;
 import br.com.jcv.treinadorpro.corelayer.model.TrainingPack;
 import br.com.jcv.treinadorpro.corelayer.model.User;
+import br.com.jcv.treinadorpro.corelayer.model.WorkGroup;
 import br.com.jcv.treinadorpro.corelayer.request.CreateTrainingPackRequest;
+import br.com.jcv.treinadorpro.corelayer.response.GoalResponse;
 import br.com.jcv.treinadorpro.corelayer.response.ModalityResponse;
 import br.com.jcv.treinadorpro.corelayer.response.PersonalFeatureResponse;
 import br.com.jcv.treinadorpro.corelayer.response.PersonalTrainerResponse;
+import br.com.jcv.treinadorpro.corelayer.response.ProgramResponse;
 import br.com.jcv.treinadorpro.corelayer.response.TrainingPackResponse;
+import br.com.jcv.treinadorpro.corelayer.response.WorkGroupResponse;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -78,6 +84,7 @@ public class MapperServiceHelper {
     public static ModalityResponse toResponse(Modality modality) {
         return ModalityResponse.builder()
                 .id(modality.getId())
+                .externalId(modality.getExternalId())
                 .nameEn(modality.getNameEn())
                 .nameEs(modality.getNameEs())
                 .namePt(modality.getNamePt())
@@ -102,6 +109,45 @@ public class MapperServiceHelper {
                 .status(trainingPack.getStatus())
                 .createdAt(trainingPack.getCreatedAt())
                 .updatedAt(trainingPack.getUpdatedAt())
+                .build();
+    }
+
+    public static ProgramResponse toResponse(Program program) {
+        return ProgramResponse.builder()
+                .id(program.getId())
+                .externalId(program.getExternalId())
+                .namePt(program.getNamePt())
+                .nameEn(program.getNameEn())
+                .nameEs(program.getNameEs())
+                .status(program.getStatus())
+                .createdAt(program.getCreatedAt())
+                .updatedAt(program.getUpdatedAt())
+                .build();
+    }
+
+    public static GoalResponse toResponse(Goal goal) {
+        return GoalResponse.builder()
+                .id(goal.getId())
+                .externalId(goal.getExternalId())
+                .namePt(goal.getNamePt())
+                .nameEn(goal.getNameEn())
+                .nameEs(goal.getNameEs())
+                .status(goal.getStatus())
+                .createdAt(goal.getCreatedAt())
+                .updatedAt(goal.getUpdatedAt())
+                .build();
+    }
+
+    public static WorkGroupResponse toResponse(WorkGroup workGroup) {
+        return WorkGroupResponse.builder()
+                .id(workGroup.getId())
+                .externalId(workGroup.getExternalId())
+                .namePt(workGroup.getNamePt())
+                .nameEn(workGroup.getNameEn())
+                .nameEs(workGroup.getNameEs())
+                .status(workGroup.getStatus())
+                .createdAt(workGroup.getCreatedAt())
+                .updatedAt(workGroup.getUpdatedAt())
                 .build();
     }
 }
