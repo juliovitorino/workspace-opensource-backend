@@ -1,6 +1,8 @@
 package br.com.jcv.treinadorpro.corelayer.repository;
 
 import br.com.jcv.treinadorpro.corelayer.model.TrainingPack;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,5 +14,5 @@ import java.util.List;
 public interface TrainingPackRepository extends JpaRepository<TrainingPack, Long> {
 
     @Query(value = "Select TP from TrainingPack TP where personalUser.id = :id")
-    List<TrainingPack> findAllByPersonalUserId(@Param("id") Long Id);
+    Page<TrainingPack> findAllByPersonalUserId(@Param("id") Long Id, Pageable page);
 }
