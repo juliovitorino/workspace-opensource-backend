@@ -1,5 +1,6 @@
 package br.com.jcv.treinadorpro.adapter.v1.business.controller;
 
+import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.treinadorpro.corebusiness.goal.FindAllGoalService;
 import br.com.jcv.treinadorpro.corebusiness.modality.FindAllModalityService;
 import br.com.jcv.treinadorpro.corelayer.response.GoalResponse;
@@ -23,7 +24,7 @@ public class ModalityController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ModalityResponse>> findAllModality() {
+    public ResponseEntity<ControllerGenericResponse<List<ModalityResponse>>> findAllModality() {
         return ResponseEntity.ok(findAllModalityService.execute(UUID.randomUUID(), Boolean.TRUE));
     }
 }

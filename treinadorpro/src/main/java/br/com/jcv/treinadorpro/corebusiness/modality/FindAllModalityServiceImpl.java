@@ -1,8 +1,10 @@
 package br.com.jcv.treinadorpro.corebusiness.modality;
 
+import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.treinadorpro.corelayer.repository.ModalityRepository;
 import br.com.jcv.treinadorpro.corelayer.response.ModalityResponse;
 import br.com.jcv.treinadorpro.corelayer.service.MapperServiceHelper;
+import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,9 +21,14 @@ public class FindAllModalityServiceImpl implements FindAllModalityService{
     }
 
     @Override
-    public List<ModalityResponse> execute(UUID processId, Boolean aBoolean) {
-        return modalityRepository.findAll()
-                .stream()
-                .map(MapperServiceHelper::toResponse)
-                .collect(Collectors.toList());    }
+    public ControllerGenericResponse<List<ModalityResponse>> execute(UUID processId, Boolean aBoolean) {
+        return ControllerGenericResponseHelper.getInstance(
+                "MSG-1115",
+                "All Modalities were retrived successfully",
+                modalityRepository.findAll()
+                        .stream()
+                        .map(MapperServiceHelper::toResponse)
+                        .collect(Collectors.toList())
+        );
+    }
 }
