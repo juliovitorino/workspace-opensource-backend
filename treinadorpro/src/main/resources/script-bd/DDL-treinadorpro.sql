@@ -108,6 +108,7 @@ COMMENT ON COLUMN modality.updated_at IS 'Timestamp when the record was last upd
 -- Exercise table
 CREATE TABLE exercise (
     id SERIAL PRIMARY KEY,
+    external_id UUID NOT NULL,
     name_pt VARCHAR(100),
     name_en VARCHAR(100),
     name_es VARCHAR(100),
