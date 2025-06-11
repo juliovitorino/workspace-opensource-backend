@@ -1,5 +1,6 @@
 package br.com.jcv.treinadorpro.adapter.v1.business.controller;
 
+import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.treinadorpro.corebusiness.goal.FindAllGoalService;
 import br.com.jcv.treinadorpro.corelayer.response.GoalResponse;
 import org.springframework.http.ResponseEntity;
@@ -14,14 +15,14 @@ import java.util.UUID;
 @RequestMapping("/v1/api/business/goal")
 public class GoalController {
 
-    private final FindAllGoalService findAllWorkGroupService;
+    private final FindAllGoalService findAllGoalService;
 
-    public GoalController(FindAllGoalService findAllWorkGroupService) {
-        this.findAllWorkGroupService = findAllWorkGroupService;
+    public GoalController(FindAllGoalService findAllGoalService) {
+        this.findAllGoalService = findAllGoalService;
     }
 
     @GetMapping
-    public ResponseEntity<List<GoalResponse>> findAllProgram() {
-        return ResponseEntity.ok(findAllWorkGroupService.execute(UUID.randomUUID(), Boolean.TRUE));
+    public ResponseEntity<ControllerGenericResponse<List<GoalResponse>>> findAllGoal() {
+        return ResponseEntity.ok(findAllGoalService.execute(UUID.randomUUID(), Boolean.TRUE));
     }
 }

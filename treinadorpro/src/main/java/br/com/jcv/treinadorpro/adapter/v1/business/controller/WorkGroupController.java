@@ -1,5 +1,6 @@
 package br.com.jcv.treinadorpro.adapter.v1.business.controller;
 
+import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.treinadorpro.corebusiness.goal.FindAllGoalService;
 import br.com.jcv.treinadorpro.corebusiness.workgroup.FindAllWorkGroupService;
 import br.com.jcv.treinadorpro.corelayer.response.WorkGroupResponse;
@@ -22,7 +23,7 @@ public class WorkGroupController {
     }
 
     @GetMapping
-    public ResponseEntity<List<WorkGroupResponse>> findAllProgram() {
+    public ResponseEntity<ControllerGenericResponse<List<WorkGroupResponse>>> findAllProgram() {
         return ResponseEntity.ok(findAllWorkGroupService.execute(UUID.randomUUID(), Boolean.TRUE));
     }
 }

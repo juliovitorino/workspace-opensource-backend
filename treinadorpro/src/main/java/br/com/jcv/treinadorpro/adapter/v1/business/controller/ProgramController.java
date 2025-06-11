@@ -1,5 +1,6 @@
 package br.com.jcv.treinadorpro.adapter.v1.business.controller;
 
+import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.treinadorpro.corebusiness.program.FindAllProgramService;
 import br.com.jcv.treinadorpro.corelayer.response.ProgramResponse;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class ProgramController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProgramResponse>> findAllProgram() {
+    public ResponseEntity<ControllerGenericResponse<List<ProgramResponse>>> findAllProgram() {
         return ResponseEntity.ok(findAllProgramService.execute(UUID.randomUUID(), Boolean.TRUE));
     }
 }

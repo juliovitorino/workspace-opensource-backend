@@ -1,5 +1,6 @@
 package br.com.jcv.treinadorpro.corelayer.service;
 
+import br.com.jcv.treinadorpro.corelayer.model.Exercise;
 import br.com.jcv.treinadorpro.corelayer.model.Goal;
 import br.com.jcv.treinadorpro.corelayer.model.Modality;
 import br.com.jcv.treinadorpro.corelayer.model.PersonalFeature;
@@ -8,6 +9,7 @@ import br.com.jcv.treinadorpro.corelayer.model.TrainingPack;
 import br.com.jcv.treinadorpro.corelayer.model.User;
 import br.com.jcv.treinadorpro.corelayer.model.WorkGroup;
 import br.com.jcv.treinadorpro.corelayer.request.CreateTrainingPackRequest;
+import br.com.jcv.treinadorpro.corelayer.response.ExerciseResponse;
 import br.com.jcv.treinadorpro.corelayer.response.GoalResponse;
 import br.com.jcv.treinadorpro.corelayer.response.ModalityResponse;
 import br.com.jcv.treinadorpro.corelayer.response.PersonalFeatureResponse;
@@ -148,6 +150,23 @@ public class MapperServiceHelper {
                 .status(workGroup.getStatus())
                 .createdAt(workGroup.getCreatedAt())
                 .updatedAt(workGroup.getUpdatedAt())
+                .build();
+    }
+    
+    public static ExerciseResponse toResponse(Exercise exercise) {
+        return ExerciseResponse.builder()
+                .id(exercise.getId())
+                .externalId(exercise.getExternalId())
+                .namePt(exercise.getNamePt())
+                .nameEn(exercise.getNameEn())
+                .nameEs(exercise.getNameEs())
+                .videoUrlEs(exercise.getVideoUrlEs())
+                .videoUrlPt(exercise.getVideoUrlPt())
+                .videoUrlEn(exercise.getVideoUrlEn())
+                .imageUUID(exercise.getImageUUID())
+                .status(exercise.getStatus())
+                .createdAt(exercise.getCreatedAt())
+                .updatedAt(exercise.getUpdatedAt())
                 .build();
     }
 }
