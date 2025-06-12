@@ -1,7 +1,7 @@
 package br.com.jcv.treinadorpro.corelayer.model;
 
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
-import br.com.jcv.treinadorpro.infrastructure.utils.CustomIntegerArrayType;
+import br.com.jcv.treinadorpro.infrastructure.utils.StringArrayListUserType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +12,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -26,7 +27,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,7 +36,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@TypeDef(name = "integer-array", typeClass = CustomIntegerArrayType.class)
+@TypeDef(name = "string-array", typeClass = StringArrayListUserType.class)
 @ToString
 public class UserPackTraining {
 
@@ -48,14 +48,14 @@ public class UserPackTraining {
     private UUID externalId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "personal_user_id", nullable = false)
-    private User personalUser;
+    @JoinColumn(name = "pack_training_id", nullable = false)
+    private TrainingPack trainingPack;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "student_user_id", nullable = false)
     private User studentUser;
 
-    @Column(nullable = false)
+    @Column(name = "description", nullable = false)
     private String description;
 
     @Column(nullable = false, precision = 10, scale = 2)
@@ -67,12 +67,12 @@ public class UserPackTraining {
     @Column(name = "start_time", length = 5)
     private String startTime;
 
-    @Column(name = "end_time", length = 5)
-    private String endTime;
+    @Column(name = "duration",  length = 5)
+    private String duration;
 
-    @Column(name = "days_of_week", columnDefinition = "integer[]")
-    @Type(type = "integer-array")
-    private Integer[] daysOfWeek;
+    @Column(name = "days_of_week", columnDefinition = "text[]")
+    @Type(type = "string-array")
+    private List<String> daysOfWeek;
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -91,7 +91,7 @@ public class UserPackTraining {
     private List<UserWorkoutCalendar> userWorkoutCalendarList;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "userPackTraining", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "userPackTraining", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<StudentPayment> studentPaymentList;
 
 }

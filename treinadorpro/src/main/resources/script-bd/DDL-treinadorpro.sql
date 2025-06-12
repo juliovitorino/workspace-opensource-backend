@@ -374,9 +374,9 @@ CREATE TABLE training_pack (
 CREATE TABLE user_pack_training (
     id SERIAL PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
-    pack_training_id INTEGER NOT NULL REFERENCES pack_training(id) ON DELETE CASCADE,
+    pack_training_id INTEGER NOT NULL REFERENCES training_pack(id) ON DELETE CASCADE,
     student_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    goal_description VARCHAR(200) NOT NULL,
+    description VARCHAR(200) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     currency VARCHAR(10),
     start_time VARCHAR(5) NOT NULL,
@@ -386,6 +386,8 @@ CREATE TABLE user_pack_training (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+create UNIQUE index uix_upt_pack_training_id_student_user_id on user_pack_training(pack_training_id,student_user_id);
 
 -- Comments for user_pack_training
 COMMENT ON TABLE user_pack_training IS 'Table that represents training packages between personal trainers and students.';

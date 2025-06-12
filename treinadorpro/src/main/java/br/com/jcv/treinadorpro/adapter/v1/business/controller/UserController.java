@@ -2,16 +2,12 @@ package br.com.jcv.treinadorpro.adapter.v1.business.controller;
 
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.restclient.guardian.LoginRequest;
-import br.com.jcv.treinadorpro.corebusiness.users.CreateStudentAccountService;
 import br.com.jcv.treinadorpro.corebusiness.users.EditStudentProfileService;
 import br.com.jcv.treinadorpro.corebusiness.users.FindPersonalTrainerService;
 import br.com.jcv.treinadorpro.corebusiness.users.LoginService;
 import br.com.jcv.treinadorpro.corebusiness.users.RegisterNewPersonalTrainerService;
 import br.com.jcv.treinadorpro.corelayer.dto.UserDTO;
 
-import br.com.jcv.treinadorpro.corelayer.request.CreatePersonalTrainerProgramFromTemplateRequest;
-import br.com.jcv.treinadorpro.corelayer.request.EditPersonalTrainerProgramRequest;
-import br.com.jcv.treinadorpro.corelayer.request.PersonalTrainerProgramRequest;
 import br.com.jcv.treinadorpro.corelayer.request.RegisterRequest;
 import br.com.jcv.treinadorpro.corelayer.request.StudentProfileRequest;
 import br.com.jcv.treinadorpro.corelayer.response.PersonalTrainerResponse;
@@ -32,18 +28,15 @@ import java.util.UUID;
 public class UserController {
 
     private final RegisterNewPersonalTrainerService registerNewPersonalTrainerService;
-    private final CreateStudentAccountService createStudentAccountService;
     private final LoginService loginService;
     private final EditStudentProfileService editStudentProfileService;
     private final FindPersonalTrainerService findPersonalTrainerService;
 
     public UserController(RegisterNewPersonalTrainerService registerNewPersonalTrainerService,
-                          CreateStudentAccountService createStudentAccountService,
                           LoginService loginService,
                           EditStudentProfileService editStudentProfileService,
                           FindPersonalTrainerService findPersonalTrainerService) {
         this.registerNewPersonalTrainerService = registerNewPersonalTrainerService;
-        this.createStudentAccountService = createStudentAccountService;
         this.loginService = loginService;
         this.editStudentProfileService = editStudentProfileService;
         this.findPersonalTrainerService = findPersonalTrainerService;
@@ -52,12 +45,6 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<ControllerGenericResponse<UserDTO>> registerPersonalTrainer(@RequestBody @Valid RegisterRequest userdto) {
         return ResponseEntity.ok(registerNewPersonalTrainerService.execute(UUID.randomUUID(), userdto));
-    }
-
-    @PostMapping("/register/student")
-    public ResponseEntity<ControllerGenericResponse<String>> createStudentAccount(@RequestBody @Valid RegisterRequest request) {
-        return ResponseEntity.ok(createStudentAccountService.execute(UUID.randomUUID(), request));
-
     }
 
     @PostMapping("/login")

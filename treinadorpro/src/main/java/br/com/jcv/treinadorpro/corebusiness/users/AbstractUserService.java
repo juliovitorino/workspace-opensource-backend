@@ -13,14 +13,17 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
+@Deprecated
 public abstract class AbstractUserService {
 
     private final UserRepository userRepository;
 
+    @Deprecated
     protected AbstractUserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
+    @Deprecated
     protected void checkExistingEmail(RegisterRequest registerRequest){
         Optional<User> userByEmail = userRepository.findByEmail(registerRequest.getEmail());
         if (userByEmail.isPresent()) {
@@ -29,10 +32,12 @@ public abstract class AbstractUserService {
 
     }
 
+    @Deprecated
     protected void checkUserUUID(UUID userUUID){
         getUserByUUID(userUUID);
     }
 
+    @Deprecated
     protected void checkPersonalTrainerUUID(UUID userUUID){
         User personalUser = userRepository.findByUuidId(userUUID)
                 .orElseThrow(() -> new CommoditieBaseException("Invalid User UUID", HttpStatus.BAD_REQUEST, "MSG-1203"));
@@ -46,6 +51,7 @@ public abstract class AbstractUserService {
         }
     }
 
+    @Deprecated
     protected User getUserByUUID(UUID userUUID) {
         return userRepository.findByUuidId(userUUID)
                 .orElseThrow(() -> new CommoditieBaseException("Invalid User UUID", HttpStatus.BAD_REQUEST, "MSG-1203"));

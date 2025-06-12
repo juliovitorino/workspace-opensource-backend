@@ -11,6 +11,5 @@ import java.util.UUID;
 
 @Repository
 public interface UserPackTrainingRepository extends JpaRepository<UserPackTraining, Long> {
-    List<UserPackTraining> findByPersonalUser(User personalTrainer);
     Optional<UserPackTraining> findByExternalId(UUID externalId);
 }
