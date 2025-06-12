@@ -5,6 +5,7 @@ import br.com.jcv.treinadorpro.corelayer.enums.MasterLanguageEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.UserProfileEnum;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -34,6 +35,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Builder
 public class User {
 
     @Id
@@ -91,17 +93,12 @@ public class User {
     @OneToMany(mappedBy = "personalUser", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<TrainingPack> trainingPackList;
 
+    @OneToMany(mappedBy = "studentUser", fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<UserPackTraining> userPackTrainingList;
+
     @ToString.Exclude
     @OneToMany(mappedBy = "personalUser", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<ActivePersonalPlan> activePersonalPlanList;
-
-    @ToString.Exclude
-    @OneToMany(mappedBy = "personalUser", fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<UserPackTraining> personalUserPackTrainingList;
-
-    @ToString.Exclude
-    @OneToMany(mappedBy = "studentUser", fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<UserPackTraining> studentUserPackTrainingList;
 
     @ToString.Exclude
     @OneToOne(mappedBy = "studentUser", fetch = FetchType.LAZY)
