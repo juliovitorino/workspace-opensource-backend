@@ -54,6 +54,7 @@ public class CreateNewContractServiceImpl extends AbstractTreinadorProService im
         try {
             userPackTrainingRepository.save(userPackTraining);
         } catch (DataIntegrityViolationException e) {
+            System.out.println(e.getMessage());
             throw new CommoditieBaseException(
                     dataIntegrityViolationMapper.getFriendlyMessage(e.getMessage()),
                     HttpStatus.UNPROCESSABLE_ENTITY,
