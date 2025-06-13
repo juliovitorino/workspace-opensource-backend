@@ -20,4 +20,10 @@ public class StudentsFromTrainerResponse implements Serializable {
 
     @JsonProperty("name")
     private String name;
+
+    @JsonProperty("email")
+    private String email;
+
+    @JsonProperty("phone")
+    private String phone;
 }
