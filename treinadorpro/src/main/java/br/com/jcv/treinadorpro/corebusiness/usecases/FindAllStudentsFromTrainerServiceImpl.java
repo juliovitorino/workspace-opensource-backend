@@ -7,6 +7,7 @@ import br.com.jcv.treinadorpro.corelayer.repository.TrainingPackRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.UserPackTrainingRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
 import br.com.jcv.treinadorpro.corelayer.response.StudentsFromTrainerResponse;
+import br.com.jcv.treinadorpro.corelayer.service.MapperServiceHelper;
 import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
 import org.springframework.stereotype.Service;
 
@@ -41,15 +42,10 @@ public class FindAllStudentsFromTrainerServiceImpl extends AbstractTreinadorProS
                 "MSG-1116",
                 "All Students were retireved successfully",
                 distinctStudentsByPersonalTrainerTrainingPacks.stream()
-                        .map(this::toResponse)
+                        .map(MapperServiceHelper::toResponseStudents)
                         .collect(Collectors.toList())
         );
     }
 
-    private StudentsFromTrainerResponse toResponse(User user) {
-        return StudentsFromTrainerResponse.builder()
-                .externalId(user.getUuidId())
-                .name(user.getName())
-                .build();
-    }
+
 }

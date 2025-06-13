@@ -15,6 +15,7 @@ import br.com.jcv.treinadorpro.corelayer.response.ModalityResponse;
 import br.com.jcv.treinadorpro.corelayer.response.PersonalFeatureResponse;
 import br.com.jcv.treinadorpro.corelayer.response.PersonalTrainerResponse;
 import br.com.jcv.treinadorpro.corelayer.response.ProgramResponse;
+import br.com.jcv.treinadorpro.corelayer.response.StudentsFromTrainerResponse;
 import br.com.jcv.treinadorpro.corelayer.response.TrainingPackResponse;
 import br.com.jcv.treinadorpro.corelayer.response.WorkGroupResponse;
 import org.springframework.stereotype.Component;
@@ -167,6 +168,15 @@ public class MapperServiceHelper {
                 .status(exercise.getStatus())
                 .createdAt(exercise.getCreatedAt())
                 .updatedAt(exercise.getUpdatedAt())
+                .build();
+    }
+
+    public static StudentsFromTrainerResponse toResponseStudents(User user) {
+        return StudentsFromTrainerResponse.builder()
+                .externalId(user.getUuidId())
+                .name(user.getName())
+                .email(user.getEmail())
+                .phone(user.getCellphone())
                 .build();
     }
 }
