@@ -30,7 +30,7 @@ public class StudentPayment {
     @Column(name = "external_id", nullable = false)
     private UUID externalId;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_pack_training_id", nullable = false)
     private UserPackTraining userPackTraining;
 

@@ -51,7 +51,7 @@ public class UserPackTraining {
     @JoinColumn(name = "pack_training_id", nullable = false)
     private TrainingPack trainingPack;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "student_user_id", nullable = false)
     private User studentUser;
 
