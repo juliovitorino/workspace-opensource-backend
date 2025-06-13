@@ -90,10 +90,10 @@ public class User {
     private LocalDateTime updatedAt;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "personalUser", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "personalUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TrainingPack> trainingPackList;
 
-    @OneToMany(mappedBy = "studentUser", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "studentUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserPackTraining> userPackTrainingList;
 
     @ToString.Exclude

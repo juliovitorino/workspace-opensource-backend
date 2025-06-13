@@ -185,7 +185,7 @@ CREATE TABLE users (
     uuid_id UUID UNIQUE NOT NULL,
     name VARCHAR(200) NOT NULL,
     email VARCHAR(150) UNIQUE NOT NULL,
-    cellphone VARCHAR(20),
+    cellphone VARCHAR(20) NOT NULL,
     birthday DATE,
     gender VARCHAR(1) CHECK (gender IN ('M', 'F')),
     url_photo_profile TEXT,

@@ -3,7 +3,9 @@ package br.com.jcv.treinadorpro.corebusiness.usecases;
 import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.treinadorpro.corebusiness.AbstractTreinadorProService;
+import br.com.jcv.treinadorpro.corelayer.enums.MasterLanguageEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
+import br.com.jcv.treinadorpro.corelayer.enums.UserProfileEnum;
 import br.com.jcv.treinadorpro.corelayer.model.StudentPayment;
 import br.com.jcv.treinadorpro.corelayer.model.TrainingPack;
 import br.com.jcv.treinadorpro.corelayer.model.User;
@@ -52,11 +54,11 @@ public class CreateNewContractServiceImpl extends AbstractTreinadorProService im
         try {
             userPackTrainingRepository.save(userPackTraining);
         } catch (DataIntegrityViolationException e) {
+            System.out.println(e.getMessage());
             throw new CommoditieBaseException(
                     dataIntegrityViolationMapper.getFriendlyMessage(e.getMessage()),
                     HttpStatus.UNPROCESSABLE_ENTITY,
                     "MSG-1938");
-
         }
 
         return ControllerGenericResponseHelper.getInstance(
@@ -107,11 +109,15 @@ public class CreateNewContractServiceImpl extends AbstractTreinadorProService im
         return request.getNewStudent() == null
                 ? null
                 : User.builder()
+                .uuidId(UUID.randomUUID())
                 .name(request.getNewStudent().getName())
                 .birthday(request.getNewStudent().getBirthday())
                 .cellphone(request.getNewStudent().getPhone())
                 .email(request.getNewStudent().getEmail())
                 .gender(request.getNewStudent().getGender())
+                .userProfile(UserProfileEnum.STUDENT)
+                .masterLanguage(MasterLanguageEnum.EN_US.getLanguage())
+                .status(StatusEnum.A)
                 .build();
     }
 
