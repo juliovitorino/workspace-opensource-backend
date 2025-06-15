@@ -4,7 +4,7 @@ import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse
 import br.com.jcv.treinadorpro.corebusiness.AbstractTreinadorProService;
 import br.com.jcv.treinadorpro.corelayer.model.User;
 import br.com.jcv.treinadorpro.corelayer.repository.TrainingPackRepository;
-import br.com.jcv.treinadorpro.corelayer.repository.UserPackTrainingRepository;
+import br.com.jcv.treinadorpro.corelayer.repository.ContractRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
 import br.com.jcv.treinadorpro.corelayer.response.StudentsFromTrainerResponse;
 import br.com.jcv.treinadorpro.corelayer.service.MapperServiceHelper;
@@ -20,13 +20,13 @@ import java.util.stream.Collectors;
 public class FindAllStudentsFromTrainerServiceImpl extends AbstractTreinadorProService implements FindAllStudentsFromTrainerService {
 
     private final TrainingPackRepository trainingPackRepository;
-    private final UserPackTrainingRepository userPackTrainingRepository;
+    private final ContractRepository contractRepository;
 
     public FindAllStudentsFromTrainerServiceImpl(TrainingPackRepository trainingPackRepository,
-                                                 UserRepository userRepository, UserPackTrainingRepository userPackTrainingRepository) {
+                                                 UserRepository userRepository, ContractRepository contractRepository) {
         super(userRepository, trainingPackRepository);
         this.trainingPackRepository = trainingPackRepository;
-        this.userPackTrainingRepository = userPackTrainingRepository;
+        this.contractRepository = contractRepository;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class FindAllStudentsFromTrainerServiceImpl extends AbstractTreinadorProS
         User trainerUser = checkActivePersonalTrainerUUID(personalTrainerExternalId);
 
         List<User> distinctStudentsByPersonalTrainerTrainingPacks =
-                userPackTrainingRepository.findDistinctStudentsByPersonalTrainerTrainingPacks(trainerUser.getId());
+                contractRepository.findDistinctStudentsByPersonalTrainerTrainingPacks(trainerUser.getId());
 
         return ControllerGenericResponseHelper.getInstance(
                 "MSG-1116",

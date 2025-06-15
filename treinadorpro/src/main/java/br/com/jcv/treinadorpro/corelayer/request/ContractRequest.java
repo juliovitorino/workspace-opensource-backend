@@ -2,14 +2,13 @@ package br.com.jcv.treinadorpro.corelayer.request;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.extern.jackson.Jacksonized;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
 @Builder
-public class UserPackTrainingRequest {
+public class ContractRequest {
     private Long id;
     private Long personalUserId;
     private Long studentUserId;

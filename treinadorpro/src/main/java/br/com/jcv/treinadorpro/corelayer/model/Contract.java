@@ -31,14 +31,14 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user_pack_training")
+@Table(name = "contract")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @TypeDef(name = "string-array", typeClass = StringArrayListUserType.class)
 @ToString
-public class UserPackTraining {
+public class Contract {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -87,11 +87,11 @@ public class UserPackTraining {
     private LocalDateTime updatedAt;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "userPackTraining", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "contract", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<UserWorkoutCalendar> userWorkoutCalendarList;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "userPackTraining", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "contract", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<StudentPayment> studentPaymentList;
 
 }

@@ -22,7 +22,7 @@ public class WorkGroup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "external_id", length = 100)
+    @Column(name = "external_id", unique = true, nullable = false)
     private UUID externalId;
 
     @Column(name = "name_pt", length = 100)

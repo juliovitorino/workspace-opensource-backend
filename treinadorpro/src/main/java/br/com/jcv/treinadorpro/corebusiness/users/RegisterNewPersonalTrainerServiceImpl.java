@@ -15,8 +15,6 @@ import br.com.jcv.treinadorpro.corelayer.mapper.ActivePersonalPlanMapper;
 import br.com.jcv.treinadorpro.corelayer.mapper.PlanTemplateMapper;
 import br.com.jcv.treinadorpro.corelayer.mapper.UserMapper;
 import br.com.jcv.treinadorpro.corelayer.model.ActivePersonalPlan;
-import br.com.jcv.treinadorpro.corelayer.model.Parameter;
-import br.com.jcv.treinadorpro.corelayer.model.PlanTemplate;
 import br.com.jcv.treinadorpro.corelayer.model.User;
 import br.com.jcv.treinadorpro.corelayer.repository.ActivePersonalPlanRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.ParameterRepository;
@@ -31,7 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -87,11 +84,11 @@ public class RegisterNewPersonalTrainerServiceImpl extends AbstractUserService i
         ActivePersonalPlanDTO activePersonalPlanDTO = ActivePersonalPlanDTO.builder()
                 .price(planTemplateDTO.getPrice())
                 .amountDiscount(planTemplateDTO.getAmountDiscount())
-                .qtyUserPackTrainingAllowed(planTemplateDTO.getQtyUserPackTrainingAllowed())
+                .qtyContractAllowed(planTemplateDTO.getQtyContractAllowed())
                 .paymentFrequency(planTemplateDTO.getPaymentFrequency())
                 .planExpirationDate(LocalDate.now())
                 .description(planTemplateDTO.getDescription())
-                .qtyUserPackTrainingAllowed(planTemplateDTO.getQtyUserPackTrainingAllowed())
+                .qtyContractAllowed(planTemplateDTO.getQtyContractAllowed())
                 .qtyUserStudentAllowed(planTemplateDTO.getQtyUserStudentAllowed())
                 .amountDiscount(planTemplateDTO.getAmountDiscount())
                 .build();

@@ -23,6 +23,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "student_feature")
@@ -37,6 +38,9 @@ public class StudentFeature {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "external_id", unique = true, nullable = false)
+    private UUID externalId;
 
     // Relacionamento com a tabela users
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

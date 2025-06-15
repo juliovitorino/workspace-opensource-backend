@@ -38,12 +38,12 @@ public class UserWorkoutCalendar {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_pack_training_id", nullable = false)
-    private UserPackTraining userPackTraining;
-
-    @Column(name = "external_id", nullable = false, unique = true)
+    @Column(name = "external_id", unique = true, nullable = false)
     private UUID externalId;
+
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "contract_id", nullable = false)
+    private Contract contract;
 
     @Column(name = "training_date")
     private LocalDate trainingDate;
