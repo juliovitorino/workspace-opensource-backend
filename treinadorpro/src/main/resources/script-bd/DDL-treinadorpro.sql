@@ -1,6 +1,7 @@
 -- parameters table
 CREATE TABLE parameters (
     id SERIAL PRIMARY KEY,
+    external_id UUID UNIQUE NOT NULL,
     keytag VARCHAR(500) UNIQUE NOT NULL,
     valuetag VARCHAR(2000) NOT NULL,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
@@ -20,7 +21,7 @@ COMMENT ON COLUMN parameters.updated_at IS 'Timestamp when the parameter was las
 -- program table
 CREATE TABLE program (
     id SERIAL PRIMARY KEY,
-    external_id UUID NOT NULL,
+    external_id UUID UNIQUE NOT NULL,
     name_pt VARCHAR(100),
     name_en VARCHAR(100),
     name_es VARCHAR(100),
@@ -42,7 +43,7 @@ COMMENT ON COLUMN program.updated_at IS 'Timestamp when the program was last upd
 -- goal table
 CREATE TABLE goal (
     id SERIAL PRIMARY KEY,
-    external_id UUID NOT NULL,
+    external_id UUID UNIQUE NOT NULL,
     name_pt VARCHAR(100),
     name_en VARCHAR(100),
     name_es VARCHAR(100),
@@ -64,7 +65,7 @@ COMMENT ON COLUMN goal.updated_at IS 'Timestamp when the goal was last updated.'
 -- work_group table
 CREATE TABLE work_group (
     id SERIAL PRIMARY KEY,
-    external_id UUID NOT NULL,
+    external_id UUID UNIQUE NOT NULL,
     name_pt VARCHAR(100),
     name_en VARCHAR(100),
     name_es VARCHAR(100),
@@ -86,7 +87,7 @@ COMMENT ON COLUMN work_group.updated_at IS 'Timestamp when the work group was la
 -- Modality table
 CREATE TABLE modality (
     id SERIAL PRIMARY KEY,
-    external_id UUID NOT NULL,
+    external_id UUID UNIQUE NOT NULL,
     name_pt VARCHAR(100),
     name_en VARCHAR(100),
     name_es VARCHAR(100),
@@ -108,7 +109,7 @@ COMMENT ON COLUMN modality.updated_at IS 'Timestamp when the record was last upd
 -- Exercise table
 CREATE TABLE exercise (
     id SERIAL PRIMARY KEY,
-    external_id UUID NOT NULL,
+    external_id UUID UNIQUE NOT NULL,
     name_pt VARCHAR(100),
     name_en VARCHAR(100),
     name_es VARCHAR(100),
@@ -134,6 +135,7 @@ COMMENT ON COLUMN exercise.updated_at IS 'Timestamp when the record was last upd
 -- Exercise table
 CREATE TABLE work_group_exercise (
     id SERIAL PRIMARY KEY,
+    external_id UUID UNIQUE NOT NULL,
     work_group_id INTEGER NOT NULL REFERENCES work_group(id) ON DELETE CASCADE,
     exercise_id INTEGER NOT NULL REFERENCES exercise(id) ON DELETE CASCADE,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
@@ -154,11 +156,12 @@ COMMENT ON COLUMN work_group_exercise.updated_at IS 'Timestamp indicating the la
 -- plan_template table
 CREATE TABLE plan_template (
     id serial PRIMARY KEY,
+    external_id UUID UNIQUE NOT NULL,
     description VARCHAR(500) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     amount_discount DECIMAL(10,2) DEFAULT 0,
     payment_frequency VARCHAR(10) DEFAULT 'MONTHLY' CHECK (payment_frequency IN ('MONTHLY', 'ANNUALLY')),
-    qty_user_pack_training_allowed INTEGER DEFAULT 0 NOT NULL,
+    qty_contract_allowed INTEGER DEFAULT 0 NOT NULL,
     qty_user_student_allowed INTEGER DEFAULT 0 NOT NULL,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -172,7 +175,7 @@ COMMENT ON COLUMN plan_template.description IS 'Description of the plan template
 COMMENT ON COLUMN plan_template.price IS 'Price of the plan.';
 COMMENT ON COLUMN plan_template.amount_discount IS 'Discount amount applied to the plan.';
 COMMENT ON COLUMN plan_template.payment_frequency IS 'Payment frequency for the plan: MONTHLY or ANNUALLY.';
-COMMENT ON COLUMN plan_template.qty_user_pack_training_allowed IS 'Number of user training packages allowed in the plan.';
+COMMENT ON COLUMN plan_template.qty_contract_allowed IS 'Number of user training packages allowed in the plan.';
 COMMENT ON COLUMN plan_template.qty_user_student_allowed IS 'Number of user student allowed.';
 COMMENT ON COLUMN plan_template.status IS 'Status of the plan template: A (Active), B (Blocked), I (Inactive), P (Pending).';
 COMMENT ON COLUMN plan_template.created_at IS 'Timestamp when the plan template was created.';
@@ -198,14 +201,14 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE trainer_users (
-    id bigserial PRIMARY KEY,
-    personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    student_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+--CREATE TABLE trainer_users (
+--    id bigserial PRIMARY KEY,
+--    personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+--    student_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+--    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+--    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+--);
 
 COMMENT ON COLUMN users.id IS 'Unique identifier for the user (primary key)';
 COMMENT ON COLUMN users.first_name IS 'First name of the user';
@@ -226,6 +229,7 @@ COMMENT ON COLUMN users.updated_at IS 'Timestamp of the last update to the user 
 
 CREATE TABLE available_time (
     id serial PRIMARY KEY,
+    external_id UUID UNIQUE NOT NULL,
     personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     days_of_week VARCHAR(30) NOT NULL,
     day_time VARCHAR(5) NOT NULL,
@@ -238,13 +242,14 @@ CREATE TABLE available_time (
 -- active_personal_plan table
 CREATE TABLE active_personal_plan (
     id serial PRIMARY KEY,
+    external_id UUID UNIQUE NOT NULL,
     personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     description VARCHAR(500) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     amount_discount DECIMAL(10,2) DEFAULT 0 NOT NULL,
     plan_expiration_date DATE NOT NULL,
     payment_frequency VARCHAR(10) DEFAULT 'MONTHLY' CHECK (payment_frequency IN ('MONTHLY', 'ANNUALLY')),
-    qty_user_pack_training_allowed INTEGER DEFAULT 0 NOT NULL,
+    qty_contract_allowed INTEGER DEFAULT 0 NOT NULL,
     qty_user_student_allowed INTEGER DEFAULT 0 NOT NULL,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -260,7 +265,7 @@ COMMENT ON COLUMN active_personal_plan.price IS 'Price of the active personal pl
 COMMENT ON COLUMN active_personal_plan.amount_discount IS 'Discount amount applied to the plan.';
 COMMENT ON COLUMN active_personal_plan.plan_expiration_date IS 'Expiration date of the active personal plan.';
 COMMENT ON COLUMN active_personal_plan.payment_frequency IS 'Payment frequency of the plan: MONTHLY or ANNUALLY.';
-COMMENT ON COLUMN active_personal_plan.qty_user_pack_training_allowed IS 'Number of user training packages allowed.';
+COMMENT ON COLUMN active_personal_plan.qty_contract_allowed IS 'Number of user training packages allowed.';
 COMMENT ON COLUMN active_personal_plan.qty_user_student_allowed IS 'Number of user student allowed.';
 COMMENT ON COLUMN active_personal_plan.status IS 'Status of the active personal plan: A (Active), B (Blocked), I (Inactive), P (Pending).';
 COMMENT ON COLUMN active_personal_plan.created_at IS 'Timestamp when the active personal plan was created.';
@@ -269,6 +274,7 @@ COMMENT ON COLUMN active_personal_plan.updated_at IS 'Timestamp when the active 
 -- personal_trainer_payments table
 CREATE TABLE personal_trainer_payments (
     id serial PRIMARY KEY,
+    external_id UUID UNIQUE NOT NULL,
     active_personal_plan_id INTEGER NOT NULL REFERENCES active_personal_plan(id) ON DELETE CASCADE,
     expected_amount DECIMAL(10,2) NOT NULL,
     expected_date DATE NOT NULL,
@@ -296,6 +302,7 @@ COMMENT ON COLUMN personal_trainer_payments.updated_at IS 'Timestamp when the pa
 -- student_feature table
 CREATE TABLE student_feature (
     id bigserial PRIMARY KEY,
+    external_id UUID UNIQUE NOT NULL,
     student_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     password VARCHAR(100) NOT NULL,
     height INTEGER,
@@ -321,6 +328,7 @@ COMMENT ON COLUMN student_feature.updated_at IS 'Timestamp when the student feat
 -- personal_feature table
 CREATE TABLE personal_feature (
     id bigserial PRIMARY KEY,
+    external_id UUID UNIQUE NOT NULL,
     personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     register VARCHAR(50),
     place VARCHAR(200),
@@ -370,8 +378,8 @@ CREATE TABLE training_pack (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- User pack tranning table
-CREATE TABLE user_pack_training (
+-- contract table
+CREATE TABLE contract (
     id SERIAL PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     pack_training_id INTEGER NOT NULL REFERENCES training_pack(id) ON DELETE CASCADE,
@@ -381,32 +389,32 @@ CREATE TABLE user_pack_training (
     currency VARCHAR(10),
     start_time VARCHAR(5) NOT NULL,
     duration VARCHAR(5) NOT NULL,
-    days_of_week INTEGER[] NOT NULL,
+    days_of_week TEXT[] NOT NULL,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-create UNIQUE index uix_upt_pack_training_id_student_user_id on user_pack_training(pack_training_id,student_user_id);
+create UNIQUE index uix_upt_pack_training_id_student_user_id on contract(pack_training_id,student_user_id);
 
--- Comments for user_pack_training
-COMMENT ON TABLE user_pack_training IS 'Table that represents training packages between personal trainers and students.';
+-- Comments for contract
+COMMENT ON TABLE contract IS 'Table that represents training packages between personal trainers and students.';
 
-COMMENT ON COLUMN user_pack_training.id IS 'Unique identifier of the training package.';
-COMMENT ON COLUMN user_pack_training.personal_user_id IS 'ID of the user acting as the personal trainer. References the users table.';
-COMMENT ON COLUMN user_pack_training.student_user_id IS 'ID of the user acting as the student. References the users table.';
-COMMENT ON COLUMN user_pack_training.description IS 'Description of the training package.';
-COMMENT ON COLUMN user_pack_training.price IS 'Price of the package in decimal currency';
-COMMENT ON COLUMN user_pack_training.start_time IS 'Start time of the training session (format HH:MM).';
-COMMENT ON COLUMN user_pack_training.end_time IS 'End time of the training session (format HH:MM).';
-COMMENT ON COLUMN user_pack_training.days_of_week IS 'Days of the week when the training will take place. E.g.: 0=Sunday, 1=Monday, ...';
-COMMENT ON COLUMN user_pack_training.created_at IS 'Date and time when the record was created.';
-COMMENT ON COLUMN user_pack_training.updated_at IS 'Date and time of the last update to the record.';
+COMMENT ON COLUMN contract.id IS 'Unique identifier of the training package.';
+COMMENT ON COLUMN contract.student_user_id IS 'ID of the user acting as the student. References the users table.';
+COMMENT ON COLUMN contract.description IS 'Description of the training package.';
+COMMENT ON COLUMN contract.price IS 'Price of the package in decimal currency';
+COMMENT ON COLUMN contract.start_time IS 'Start time of the training session (format HH:MM).';
+COMMENT ON COLUMN contract.duration IS 'End time of the training session (format HH:MM).';
+COMMENT ON COLUMN contract.days_of_week IS 'Days of the week when the training will take place. E.g.: 0=Sunday, 1=Monday, ...';
+COMMENT ON COLUMN contract.created_at IS 'Date and time when the record was created.';
+COMMENT ON COLUMN contract.updated_at IS 'Date and time of the last update to the record.';
 
 -- student payments
 CREATE TABLE student_payments (
     id serial PRIMARY KEY,
-    user_pack_training_id INTEGER NOT NULL REFERENCES user_pack_training(id) ON DELETE CASCADE,
+    external_id UUID UNIQUE NOT NULL,
+    contract_id INTEGER NOT NULL REFERENCES contract(id) ON DELETE CASCADE,
     amount DECIMAL(10,2) NOT NULL,
     expected_date DATE NOT NULL,
     payment_date DATE,
@@ -418,7 +426,7 @@ CREATE TABLE student_payments (
 COMMENT ON TABLE student_payments IS 'Table that stores student payment records for training packages.';
 
 COMMENT ON COLUMN student_payments.id IS 'Unique identifier for the student payment record.';
-COMMENT ON COLUMN student_payments.user_pack_training_id IS 'Reference to the associated user training package.';
+COMMENT ON COLUMN student_payments.contract_id IS 'Reference to the associated user training package.';
 COMMENT ON COLUMN student_payments.amount IS 'Payment amount expected from the student.';
 COMMENT ON COLUMN student_payments.expected_date IS 'Expected date of payment.';
 COMMENT ON COLUMN student_payments.payment_date IS 'Actual date when the payment was made.';
@@ -520,13 +528,13 @@ COMMENT ON COLUMN student_payments.updated_at IS 'Timestamp when the student pay
 -- User Workout Calendar
 CREATE TABLE user_workout_plan (
     id SERIAL PRIMARY KEY,
-    user_pack_training_id INTEGER NOT NULL REFERENCES user_pack_training(id) ON DELETE CASCADE,
+    external_id UUID UNIQUE NOT NULL,
+    contract_id INTEGER NOT NULL REFERENCES contract(id) ON DELETE CASCADE,
     modality_id INTEGER NOT NULL REFERENCES modality(id) ON DELETE CASCADE,
     goal_id INTEGER NOT NULL REFERENCES goal(id) ON DELETE CASCADE,
     program_id INTEGER NOT NULL REFERENCES program(id) ON DELETE CASCADE,
     work_group_id INTEGER NOT NULL REFERENCES work_group(id) ON DELETE CASCADE,
     exercise_id INTEGER REFERENCES exercise(id) ON DELETE CASCADE,
-    external_id UUID UNIQUE NOT NULL,
     custom_exercise VARCHAR(100),
     custom_program VARCHAR(100),
     execution_method VARCHAR(100),
@@ -539,7 +547,6 @@ CREATE TABLE user_workout_plan (
     weight_unit VARCHAR(10),
     comments VARCHAR(500),
     obs VARCHAR(500),
-    external_id UUID,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -550,5 +557,4 @@ COMMENT ON TABLE user_workout_plan IS 'Stores scheduled workouts for users, incl
 
 -- Column comments
 COMMENT ON COLUMN user_workout_plan.id IS 'Primary key for the user workout calendar entry.';
-COMMENT ON COLUMN user_workout_plan.user_pack_training_id IS 'Foreign key referencing the user_pack_training table, indicating which training pack this workout is part of.';
-COMMENT ON COLUMN user_workout_plan.training_date IS 'Date on which the workout is scheduled to occur.';
+COMMENT ON COLUMN user_workout_plan.contract_id IS 'Foreign key referencing the contract table, indicating which training pack this workout is part of.';

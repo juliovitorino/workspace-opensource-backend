@@ -10,7 +10,6 @@ import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -27,6 +26,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "active_personal_plan")
@@ -40,6 +40,9 @@ public class ActivePersonalPlan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "external_id", unique = true, nullable = false)
+    private UUID externalId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "personal_user_id")
@@ -64,8 +67,8 @@ public class ActivePersonalPlan {
     @Column(name = "qty_user_student_allowed", nullable = false)
     private Long qtyUserStudentAllowed;
 
-    @Column(name = "qty_user_pack_training_allowed", nullable = false)
-    private Long qtyUserPackTrainingAllowed;
+    @Column(name = "qty_contract_allowed", nullable = false)
+    private Long qtyContractAllowed;
 
     @Column(name = "status", length = 1)
     private String status;

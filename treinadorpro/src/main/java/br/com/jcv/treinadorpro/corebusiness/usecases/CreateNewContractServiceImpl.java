@@ -9,9 +9,9 @@ import br.com.jcv.treinadorpro.corelayer.enums.UserProfileEnum;
 import br.com.jcv.treinadorpro.corelayer.model.StudentPayment;
 import br.com.jcv.treinadorpro.corelayer.model.TrainingPack;
 import br.com.jcv.treinadorpro.corelayer.model.User;
-import br.com.jcv.treinadorpro.corelayer.model.UserPackTraining;
+import br.com.jcv.treinadorpro.corelayer.model.Contract;
 import br.com.jcv.treinadorpro.corelayer.repository.TrainingPackRepository;
-import br.com.jcv.treinadorpro.corelayer.repository.UserPackTrainingRepository;
+import br.com.jcv.treinadorpro.corelayer.repository.ContractRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
 import br.com.jcv.treinadorpro.corelayer.request.CreateNewStudentContractRequest;
 import br.com.jcv.treinadorpro.corelayer.request.Instalment;
@@ -29,13 +29,13 @@ import java.util.stream.Collectors;
 @Service
 public class CreateNewContractServiceImpl extends AbstractTreinadorProService implements CreateNewContractService{
 
-    private final UserPackTrainingRepository userPackTrainingRepository;
+    private final ContractRepository contractRepository;
     private final DataIntegrityViolationMapper dataIntegrityViolationMapper;
 
     public CreateNewContractServiceImpl(TrainingPackRepository trainingPackRepository,
-                                        UserRepository userRepository, UserPackTrainingRepository userPackTrainingRepository, DataIntegrityViolationMapper dataIntegrityViolationMapper) {
+                                        UserRepository userRepository, ContractRepository contractRepository, DataIntegrityViolationMapper dataIntegrityViolationMapper) {
         super(userRepository, trainingPackRepository);
-        this.userPackTrainingRepository = userPackTrainingRepository;
+        this.contractRepository = contractRepository;
         this.dataIntegrityViolationMapper = dataIntegrityViolationMapper;
     }
 
@@ -47,12 +47,12 @@ public class CreateNewContractServiceImpl extends AbstractTreinadorProService im
         TrainingPack trainingPack = checkTrainingPackByExternalIdAndPersonalUserId(request.getTrainingPackExternalId(), personalUser.getId());
         User existingStudent = getExistingStudent(request);
         User newStudent = getInstanceNewStudent(request);
-        UserPackTraining userPackTraining = getInstanceTrainingPack(request, trainingPack, existingStudent, newStudent);
-        List<StudentPayment> instalments = getInstalments(request, userPackTraining);
-        userPackTraining.setStudentPaymentList(instalments);
+        Contract contract = getInstanceTrainingPack(request, trainingPack, existingStudent, newStudent);
+        List<StudentPayment> instalments = getInstalments(request, contract);
+        contract.setStudentPaymentList(instalments);
 
         try {
-            userPackTrainingRepository.save(userPackTraining);
+            contractRepository.save(contract);
         } catch (DataIntegrityViolationException e) {
             System.out.println(e.getMessage());
             throw new CommoditieBaseException(
@@ -65,21 +65,21 @@ public class CreateNewContractServiceImpl extends AbstractTreinadorProService im
                 "MSG-1610",
                 "New provision contract service was created successfully",
                 CreateNewStudentContractResponse.builder()
-                        .userTrainingPackExternalId(userPackTraining.getExternalId())
+                        .userTrainingPackExternalId(contract.getExternalId())
                         .build()
         );
     }
 
-    private List<StudentPayment> getInstalments(CreateNewStudentContractRequest request, UserPackTraining userPackTraining){
+    private List<StudentPayment> getInstalments(CreateNewStudentContractRequest request, Contract contract){
         return request.getInstalmentList()
                 .stream()
-                .map(item -> getInstalments(item, userPackTraining))
+                .map(item -> getInstalments(item, contract))
                 .collect(Collectors.toList());
     }
 
-    private StudentPayment getInstalments(Instalment instalment, UserPackTraining userPackTraining){
+    private StudentPayment getInstalments(Instalment instalment, Contract contract){
         return StudentPayment.builder()
-                .userPackTraining(userPackTraining)
+                .contract(contract)
                 .externalId(UUID.randomUUID())
                 .duedate(instalment.getDuedate())
                 .amount(instalment.getAmount())
@@ -87,11 +87,11 @@ public class CreateNewContractServiceImpl extends AbstractTreinadorProService im
                 .build();
     }
 
-    private UserPackTraining getInstanceTrainingPack(CreateNewStudentContractRequest request,
-                                                     TrainingPack trainingPack,
-                                                     User existingStudent,
-                                                     User newStudent) {
-        return UserPackTraining.builder()
+    private Contract getInstanceTrainingPack(CreateNewStudentContractRequest request,
+                                             TrainingPack trainingPack,
+                                             User existingStudent,
+                                             User newStudent) {
+        return Contract.builder()
                 .externalId(UUID.randomUUID())
                 .price(trainingPack.getPrice())
                 .currency(trainingPack.getCurrency())

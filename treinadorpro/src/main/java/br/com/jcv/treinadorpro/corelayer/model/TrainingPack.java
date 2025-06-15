@@ -3,9 +3,7 @@ package br.com.jcv.treinadorpro.corelayer.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -80,5 +78,5 @@ public class TrainingPack {
 
     @ToString.Exclude
     @OneToMany(mappedBy = "trainingPack", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<UserPackTraining> userPackTrainingList;
+    private List<Contract> contractList;
 }

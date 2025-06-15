@@ -19,8 +19,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "plan_template")
@@ -35,6 +35,9 @@ public class PlanTemplate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "external_id", unique = true, nullable = false)
+    private UUID externalId;
+
     @Column(name = "description", length = 500, nullable = false)
     private String description;
 
@@ -48,8 +51,8 @@ public class PlanTemplate {
     @Column(name = "payment_frequency", nullable = false)
     private PaymentFrequencyEnum paymentFrequency;
 
-    @Column(name = "qty_user_pack_training_allowed", nullable = false)
-    private Long qtyUserPackTrainingAllowed;
+    @Column(name = "qty_contract_allowed", nullable = false)
+    private Long qtyContractAllowed;
 
     @Column(name = "qty_user_student_allowed", nullable = false)
     private Long qtyUserStudentAllowed;

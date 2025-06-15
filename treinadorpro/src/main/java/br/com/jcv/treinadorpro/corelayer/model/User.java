@@ -94,7 +94,7 @@ public class User {
     private List<TrainingPack> trainingPackList;
 
     @OneToMany(mappedBy = "studentUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserPackTraining> userPackTrainingList;
+    private List<Contract> contractList;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "personalUser", fetch = FetchType.LAZY, orphanRemoval = true)

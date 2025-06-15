@@ -16,7 +16,7 @@ import java.util.UUID;
 @Builder
 public class AddCustomUserWorkoutCalendarItemRequest implements Serializable {
 
-    private UUID userPackTrainingId;
+    private UUID contractId;
     private LocalDate trainingDate;
     private Long modality;
     private Long workGroup;

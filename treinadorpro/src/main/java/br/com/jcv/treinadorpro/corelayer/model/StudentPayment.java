@@ -27,12 +27,12 @@ public class StudentPayment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "external_id", nullable = false)
+    @Column(name = "external_id", unique = true, nullable = false)
     private UUID externalId;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_pack_training_id", nullable = false)
-    private UserPackTraining userPackTraining;
+    @JoinColumn(name = "contract_id", nullable = false)
+    private Contract contract;
 
     @Column(name = "amount", precision = 10, scale = 2, nullable = false)
     private BigDecimal amount;
