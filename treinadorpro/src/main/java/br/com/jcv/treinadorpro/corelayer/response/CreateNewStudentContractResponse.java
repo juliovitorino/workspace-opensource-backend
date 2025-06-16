@@ -12,6 +12,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class CreateNewStudentContractResponse implements Serializable {
-    @JsonProperty("userTrainingPackExternalId")
-    private UUID userTrainingPackExternalId;
+    @JsonProperty("externalId")
+    private UUID contractExternalId;
 }

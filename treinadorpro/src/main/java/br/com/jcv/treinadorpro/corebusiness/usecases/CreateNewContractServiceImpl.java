@@ -65,7 +65,7 @@ public class CreateNewContractServiceImpl extends AbstractTreinadorProService im
                 "MSG-1610",
                 "New provision contract service was created successfully",
                 CreateNewStudentContractResponse.builder()
-                        .userTrainingPackExternalId(contract.getExternalId())
+                        .contractExternalId(contract.getExternalId())
                         .build()
         );
     }
