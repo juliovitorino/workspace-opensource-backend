@@ -11,6 +11,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +21,7 @@ import java.time.LocalDateTime;
 public class ActivePersonalPlanDTO {
 
     private Long id;
+    private UUID externalId;
     private UserDTO personalUserDTO;
     private String description;
     private BigDecimal price;

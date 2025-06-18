@@ -23,9 +23,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class RegisterRequest implements Serializable {
     @NotNull
-    private String firstName;
-    private String middleName;
-    private String lastName;
+    private String name;
     private String email;
     private String cellphone;
 
