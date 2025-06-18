@@ -20,8 +20,14 @@ import java.util.stream.Collectors;
 public class FindAllTrainingPackFromTrainerServiceImpl
         extends AbstractTreinadorProService implements FindAllTrainingPackFromTrainerService{
 
-    protected FindAllTrainingPackFromTrainerServiceImpl(UserRepository userRepository, TrainingPackRepository trainingPackRepository) {
+    private final UserRepository userRepository;
+    private final TrainingPackRepository trainingPackRepository;
+
+    public FindAllTrainingPackFromTrainerServiceImpl(UserRepository userRepository,
+                                                     TrainingPackRepository trainingPackRepository) {
         super(userRepository, trainingPackRepository);
+        this.userRepository = userRepository;
+        this.trainingPackRepository = trainingPackRepository;
     }
 
     @Override

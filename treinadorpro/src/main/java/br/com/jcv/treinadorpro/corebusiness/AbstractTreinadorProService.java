@@ -18,7 +18,7 @@ import java.util.UUID;
 public abstract class AbstractTreinadorProService {
 
     private final UserRepository userRepository;
-    protected final TrainingPackRepository trainingPackRepository;
+    private final TrainingPackRepository trainingPackRepository;
 
     protected AbstractTreinadorProService(UserRepository userRepository, TrainingPackRepository trainingPackRepository) {
         this.userRepository = userRepository;

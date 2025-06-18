@@ -1,6 +1,7 @@
 package br.com.jcv.treinadorpro.corebusiness.users;
 
 import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
+import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.restclient.dto.SessionStateDTO;
 import br.com.jcv.restclient.guardian.GuardianRestClientConsumer;
@@ -9,6 +10,7 @@ import br.com.jcv.treinadorpro.corelayer.model.User;
 import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +38,8 @@ public class LoginServiceImpl implements LoginService {
         ControllerGenericResponse<SessionStateDTO> sessionState = guardianRestClientConsumer.findSessionState(token);
         SessionStateDTO objectResponse = sessionState.getObjectResponse();
 
-        User userRepositoryByGuardianIntegration = userRepository.findByGuardianIntegrationUUID(objectResponse.getIdUserUUID());
+        User userRepositoryByGuardianIntegration = userRepository.findByGuardianIntegrationUUID(objectResponse.getIdUserUUID())
+                .orElseThrow(() -> new CommoditieBaseException("Invalid User External Id", HttpStatus.UNPROCESSABLE_ENTITY, "MSG-1006"));
         userRepositoryByGuardianIntegration.setLastLogin(objectResponse.getDateCreated());
         userRepository.save(userRepositoryByGuardianIntegration);
 

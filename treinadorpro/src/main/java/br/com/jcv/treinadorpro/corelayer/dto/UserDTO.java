@@ -25,9 +25,7 @@ public class UserDTO {
 
     private Long id;
     private UUID uuidId;
-    private String firstName;
-    private String middleName;
-    private String lastName;
+    private String name;
     private String email;
     private String cellphone;
     private LocalDate birthday;

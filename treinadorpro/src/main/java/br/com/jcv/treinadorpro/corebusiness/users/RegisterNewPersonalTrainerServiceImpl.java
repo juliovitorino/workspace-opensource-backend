@@ -5,6 +5,7 @@ import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.restclient.guardian.GuardianRestClientConsumer;
 import br.com.jcv.restclient.guardian.request.CreateNewAccountRequest;
+import br.com.jcv.treinadorpro.corebusiness.AbstractTreinadorProService;
 import br.com.jcv.treinadorpro.corelayer.dto.ActivePersonalPlanDTO;
 import br.com.jcv.treinadorpro.corelayer.dto.PlanTemplateDTO;
 import br.com.jcv.treinadorpro.corelayer.dto.UserDTO;
@@ -19,6 +20,7 @@ import br.com.jcv.treinadorpro.corelayer.model.User;
 import br.com.jcv.treinadorpro.corelayer.repository.ActivePersonalPlanRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.ParameterRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.PlanTemplateRepository;
+import br.com.jcv.treinadorpro.corelayer.repository.TrainingPackRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
 import br.com.jcv.treinadorpro.corelayer.request.RegisterRequest;
 import br.com.jcv.treinadorpro.infrastructure.config.TreinadorProConfig;
@@ -32,9 +34,10 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Service
-public class RegisterNewPersonalTrainerServiceImpl extends AbstractUserService implements RegisterNewPersonalTrainerService {
+public class RegisterNewPersonalTrainerServiceImpl extends AbstractTreinadorProService implements RegisterNewPersonalTrainerService {
 
     private final UserRepository userRepository;
+    private final TrainingPackRepository trainingPackRepository;
     private final UserMapper userMapper;
     private final ActivePersonalPlanMapper activePersonalPlanMapper;
     private final PlanTemplateMapper planTemplateMapper;
@@ -46,15 +49,19 @@ public class RegisterNewPersonalTrainerServiceImpl extends AbstractUserService i
     private final ParameterRepository parameterRepository;
 
     public RegisterNewPersonalTrainerServiceImpl(UserRepository userRepository,
-                                                 UserMapper userMapper, ActivePersonalPlanMapper activePersonalPlanMapper,
+                                                 TrainingPackRepository trainingPackRepository,
+                                                 UserMapper userMapper,
+                                                 ActivePersonalPlanMapper activePersonalPlanMapper,
                                                  PlanTemplateMapper planTemplateMapper,
                                                  TreinadorProConfig config,
                                                  ModelMapper modelMapper,
                                                  GuardianRestClientConsumer guardianRestClientConsumer,
                                                  PlanTemplateRepository planTemplateRepository,
-                                                 ActivePersonalPlanRepository activePersonalPlanRepository, ParameterRepository parameterRepository) {
-        super(userRepository);
+                                                 ActivePersonalPlanRepository activePersonalPlanRepository,
+                                                 ParameterRepository parameterRepository) {
+        super(userRepository, trainingPackRepository);
         this.userRepository = userRepository;
+        this.trainingPackRepository = trainingPackRepository;
         this.userMapper = userMapper;
         this.activePersonalPlanMapper = activePersonalPlanMapper;
         this.planTemplateMapper = planTemplateMapper;
@@ -82,6 +89,7 @@ public class RegisterNewPersonalTrainerServiceImpl extends AbstractUserService i
         User userSaved = userRepository.save(userEntity);
 
         ActivePersonalPlanDTO activePersonalPlanDTO = ActivePersonalPlanDTO.builder()
+                .externalId(UUID.randomUUID())
                 .price(planTemplateDTO.getPrice())
                 .amountDiscount(planTemplateDTO.getAmountDiscount())
                 .qtyContractAllowed(planTemplateDTO.getQtyContractAllowed())
@@ -161,13 +169,7 @@ public class RegisterNewPersonalTrainerServiceImpl extends AbstractUserService i
         createNewAccountRequest.setPasswd(registerRequest.getPasswd());
         createNewAccountRequest.setPasswdCheck(registerRequest.getPasswdCheck());
         createNewAccountRequest.setExternalApplicationUUID(config.getApiKeyUUID());
-        createNewAccountRequest.setName(
-                String.join(" ",
-                        registerRequest.getFirstName(),
-                        registerRequest.getMiddleName(),
-                        registerRequest.getLastName()
-                ).trim()
-        );
+        createNewAccountRequest.setName(registerRequest.getName().trim());
         return createNewAccountRequest;
     }
 }
