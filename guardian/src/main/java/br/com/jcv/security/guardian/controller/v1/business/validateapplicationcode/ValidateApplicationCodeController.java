@@ -13,12 +13,14 @@ import br.com.jcv.security.guardian.exception.GApplicationNotFoundException;
 
 @RestController
 @RequestMapping("/v1/api/business/application")
+@Deprecated
 public class ValidateApplicationCodeController {
 
     @Autowired
     private ValidateApplicationCodeBusinessService validateApplicationCodeBusinessService;
 
     @GetMapping("{uuidExternalApp}")
+    @Deprecated
     public ResponseEntity<Boolean> validateApplicationCode(@PathVariable("uuidExternalApp") UUID uuidExternalApp) {
         Boolean executed;
         try {

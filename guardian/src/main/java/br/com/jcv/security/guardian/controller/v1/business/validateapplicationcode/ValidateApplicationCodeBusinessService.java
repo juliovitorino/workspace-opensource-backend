@@ -4,5 +4,6 @@ import java.util.UUID;
 
 import br.com.jcv.commons.library.commodities.service.BusinessService;
 
+@Deprecated
 public interface ValidateApplicationCodeBusinessService extends BusinessService<UUID, Boolean> {
 }
