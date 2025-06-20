@@ -23,12 +23,28 @@ public class TrainingInfo implements Serializable {
     @JsonProperty("startDate")
     private LocalDate startDate;
 
-    @JsonProperty("startTime")
-    private String startTime;
+    @JsonProperty("monday")
+    private String monday;
+
+    @JsonProperty("tuesday")
+    private String tuesday;
+
+    @JsonProperty("wednesday")
+    private String wednesday;
+
+    @JsonProperty("thursday")
+    private String thursday;
+
+    @JsonProperty("friday")
+    private String friday;
+
+    @JsonProperty("saturday")
+    private String saturday;
+
+    @JsonProperty("sunday")
+    private String sunday;
 
     @JsonProperty("duration")
     private String duration;
 
-    @JsonProperty("weekdays")
-    private List<WeekdaysEnum> weekdays;
 }
