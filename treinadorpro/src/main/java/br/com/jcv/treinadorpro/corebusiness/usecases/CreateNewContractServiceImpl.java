@@ -99,9 +99,14 @@ public class CreateNewContractServiceImpl extends AbstractTreinadorProService im
                 .trainingPack(trainingPack)
                 .studentUser(existingStudent != null? existingStudent : newStudent)
                 .description(request.getTrainingInfo().getGoal())
-                .startTime(request.getTrainingInfo().getStartTime())
+                .monday(request.getTrainingInfo().getMonday())
+                .tuesday(request.getTrainingInfo().getTuesday())
+                .wednesday(request.getTrainingInfo().getWednesday())
+                .thursday(request.getTrainingInfo().getThursday())
+                .friday(request.getTrainingInfo().getFriday())
+                .saturday(request.getTrainingInfo().getSaturday())
+                .sunday(request.getTrainingInfo().getSunday())
                 .duration(request.getTrainingInfo().getDuration())
-                .daysOfWeek(request.getTrainingInfo().getWeekdays().stream().map(String::valueOf).collect(Collectors.toList()))
                 .build();
     }
 

@@ -36,7 +36,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@TypeDef(name = "string-array", typeClass = StringArrayListUserType.class)
 @ToString
 public class Contract {
 
@@ -64,15 +63,29 @@ public class Contract {
     @Column(nullable = false, length = 10)
     private String currency;
 
-    @Column(name = "start_time", length = 5)
-    private String startTime;
+    @Column(name = "monday", length = 5)
+    private String monday;
+
+    @Column(name = "tuesday", length = 5)
+    private String tuesday;
+
+    @Column(name = "wednesday", length = 5)
+    private String wednesday;
+
+    @Column(name = "thursday", length = 5)
+    private String thursday;
+
+    @Column(name = "friday", length = 5)
+    private String friday;
+
+    @Column(name = "saturday", length = 5)
+    private String saturday;
+
+    @Column(name = "sunday", length = 5)
+    private String sunday;
 
     @Column(name = "duration",  length = 5)
     private String duration;
-
-    @Column(name = "days_of_week", columnDefinition = "text[]")
-    @Type(type = "string-array")
-    private List<String> daysOfWeek;
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
