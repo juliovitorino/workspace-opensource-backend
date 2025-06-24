@@ -1,9 +1,11 @@
 package br.com.jcv.treinadorpro.corelayer.service;
 
+import br.com.jcv.treinadorpro.corebusiness.plantemplate.PlanTemplateResponse;
 import br.com.jcv.treinadorpro.corelayer.model.Exercise;
 import br.com.jcv.treinadorpro.corelayer.model.Goal;
 import br.com.jcv.treinadorpro.corelayer.model.Modality;
 import br.com.jcv.treinadorpro.corelayer.model.PersonalFeature;
+import br.com.jcv.treinadorpro.corelayer.model.PlanTemplate;
 import br.com.jcv.treinadorpro.corelayer.model.Program;
 import br.com.jcv.treinadorpro.corelayer.model.TrainingPack;
 import br.com.jcv.treinadorpro.corelayer.model.User;
@@ -168,6 +170,22 @@ public class MapperServiceHelper {
                 .status(exercise.getStatus())
                 .createdAt(exercise.getCreatedAt())
                 .updatedAt(exercise.getUpdatedAt())
+                .build();
+    }
+
+    public static PlanTemplateResponse toResponse(PlanTemplate planTemplate){
+        return PlanTemplateResponse.builder()
+                .id(planTemplate.getId())
+                .externalId(planTemplate.getExternalId())
+                .amountDiscount(planTemplate.getAmountDiscount())
+                .description(planTemplate.getDescription())
+                .paymentFrequency(planTemplate.getPaymentFrequency())
+                .price(planTemplate.getPrice())
+                .qtyUserStudentAllowed(planTemplate.getQtyUserStudentAllowed())
+                .qtyContractAllowed(planTemplate.getQtyContractAllowed())
+                .status(planTemplate.getStatus())
+                .createdAt(planTemplate.getCreatedAt())
+                .updatedAt(planTemplate.getUpdatedAt())
                 .build();
     }
 
