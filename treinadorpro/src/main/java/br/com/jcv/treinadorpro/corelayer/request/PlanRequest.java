@@ -11,11 +11,16 @@ import lombok.ToString;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+/**
+ * @deprecated Esta classe {@code PlanRequest} está obsoleta e não deve mais ser utilizada.
+ *
+ */
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Deprecated
 public class PlanRequest implements Serializable {
     private String description;
     private PaymentFrequencyEnum frequency;

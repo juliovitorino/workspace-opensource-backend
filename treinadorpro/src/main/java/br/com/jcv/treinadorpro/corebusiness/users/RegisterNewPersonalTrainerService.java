@@ -5,5 +5,7 @@ import br.com.jcv.commons.library.commodities.service.BusinessService;
 import br.com.jcv.treinadorpro.corelayer.dto.UserDTO;
 import br.com.jcv.treinadorpro.corelayer.request.RegisterRequest;
 
-public interface RegisterNewPersonalTrainerService extends BusinessService<RegisterRequest, ControllerGenericResponse<UserDTO>> {
+import java.util.UUID;
+
+public interface RegisterNewPersonalTrainerService extends BusinessService<RegisterRequest, ControllerGenericResponse<UUID>> {
 }

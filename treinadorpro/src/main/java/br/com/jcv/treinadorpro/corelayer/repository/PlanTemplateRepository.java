@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface PlanTemplateRepository extends JpaRepository<PlanTemplate, Long> {
@@ -17,5 +18,7 @@ public interface PlanTemplateRepository extends JpaRepository<PlanTemplate, Long
 
     @Query(value = "select PT from PlanTemplate PT where PT.status = :status")
     List<PlanTemplate> findAllByStatus(@Param("status") String status);
+
+    Optional<PlanTemplate> findByExternalId(@Param("externalId") UUID externalId);
 
 }
