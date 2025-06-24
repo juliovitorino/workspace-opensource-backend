@@ -15,6 +15,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -23,19 +24,33 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class RegisterRequest implements Serializable {
     @NotNull
+    @JsonProperty(value = "name")
     private String name;
+
+    @JsonProperty(value = "email")
     private String email;
+
+    @JsonProperty(value = "phone")
     private String cellphone;
 
     @NotNull(message = "Birthday date is required")
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Past(message = "Birthday must be a date in the past")
+    @JsonProperty(value = "birthday")
     private LocalDate birthday;
 
+    @JsonProperty(value = "gender")
     private GenderEnum gender;
+
+    @JsonProperty(value = "masterLanguage")
     private String masterLanguage;
+
+    @JsonProperty(value = "passwd")
     private String passwd;
+
+    @JsonProperty(value = "passwdCheck")
     private String passwdCheck;
+
     @JsonProperty(value = "plan")
-    private PlanRequest planRequest;
+    private UUID planExternalId;
 }

@@ -93,12 +93,17 @@ public class User {
     @OneToMany(mappedBy = "personalUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TrainingPack> trainingPackList;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "studentUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Contract> contractList;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "personalUser", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<ActivePersonalPlan> activePersonalPlanList;
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "personalUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AvailableTime> availableTimeList;
 
     @ToString.Exclude
     @OneToOne(mappedBy = "studentUser", fetch = FetchType.LAZY)
