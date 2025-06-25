@@ -2,6 +2,7 @@ package br.com.jcv.treinadorpro.adapter.v1.business.controller;
 
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.restclient.guardian.LoginRequest;
+import br.com.jcv.restclient.guardian.request.RegisterResponse;
 import br.com.jcv.restclient.guardian.request.ValidateSixCodeRequest;
 import br.com.jcv.treinadorpro.corebusiness.users.EditStudentProfileService;
 import br.com.jcv.treinadorpro.corebusiness.users.FindPersonalTrainerService;
@@ -47,7 +48,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ControllerGenericResponse<UUID>> registerPersonalTrainer(@RequestBody @Valid RegisterRequest userdto) {
+    public ResponseEntity<ControllerGenericResponse<RegisterResponse>> registerPersonalTrainer(@RequestBody @Valid RegisterRequest userdto) {
         return ResponseEntity.ok(registerNewPersonalTrainerService.execute(UUID.randomUUID(), userdto));
     }
 
