@@ -3,25 +3,36 @@ package br.com.jcv.treinadorpro.corebusiness.users;
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.restclient.guardian.GuardianRestClientConsumer;
 import br.com.jcv.restclient.guardian.request.ValidateSixCodeRequest;
+import br.com.jcv.treinadorpro.corebusiness.AbstractTreinadorProService;
+import br.com.jcv.treinadorpro.corelayer.model.User;
+import br.com.jcv.treinadorpro.corelayer.repository.TrainingPackRepository;
+import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
 import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
-public class ValidateSixCodeServiceImpl implements ValidateSixCodeService{
+public class ValidateSixCodeServiceImpl extends AbstractTreinadorProService implements ValidateSixCodeService{
 
     private final GuardianRestClientConsumer guardianRestClientConsumer;
+    private final UserRepository userRepository;
+    private final TrainingPackRepository trainingPackRepository;
 
-    public ValidateSixCodeServiceImpl(GuardianRestClientConsumer guardianRestClientConsumer) {
+
+    public ValidateSixCodeServiceImpl(GuardianRestClientConsumer guardianRestClientConsumer, UserRepository userRepository, TrainingPackRepository trainingPackRepository) {
+        super(userRepository, trainingPackRepository);
         this.guardianRestClientConsumer = guardianRestClientConsumer;
+        this.userRepository = userRepository;
+        this.trainingPackRepository = trainingPackRepository;
     }
 
     @Override
     public ControllerGenericResponse<Boolean> execute(UUID processId, ValidateSixCodeRequest request) {
+        User trainer = checkActivePersonalTrainerUUID(request.getExternalUserUUID());
         ControllerGenericResponse<?> controllerGenericResponse = guardianRestClientConsumer.validateSixDigitCode(
                 request.getExternalAppUUID(),
-                request.getExternalUserUUID(),
+                trainer.getGuardianIntegrationUUID(),
                 request);
         return ControllerGenericResponseHelper.getInstance(
                 "MSG-1242",
