@@ -18,7 +18,7 @@ public class CreateNewAccountController {
 
     @Autowired private CreateNewAccount createNewAccount;
     @PostMapping
-    public ResponseEntity<ControllerGenericResponse<UUID>> createAccount(@RequestBody @Valid CreateNewAccountRequest request) {
+    public ResponseEntity<ControllerGenericResponse<CreateNewAccountResponse>> createAccount(@RequestBody @Valid CreateNewAccountRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(createNewAccount.execute(UUID.randomUUID(), request));
 
     }

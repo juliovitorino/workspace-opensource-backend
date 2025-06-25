@@ -2,8 +2,10 @@ package br.com.jcv.treinadorpro.corebusiness.users;
 
 import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
+import br.com.jcv.commons.library.template.ReaderTemplate;
 import br.com.jcv.restclient.guardian.GuardianRestClientConsumer;
 import br.com.jcv.restclient.guardian.request.CreateNewAccountRequest;
+import br.com.jcv.restclient.guardian.request.RegisterResponse;
 import br.com.jcv.treinadorpro.corebusiness.AbstractTreinadorProService;
 import br.com.jcv.treinadorpro.corelayer.dto.ActivePersonalPlanDTO;
 import br.com.jcv.treinadorpro.corelayer.dto.PlanTemplateDTO;
@@ -26,15 +28,18 @@ import br.com.jcv.treinadorpro.corelayer.repository.TrainingPackRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
 import br.com.jcv.treinadorpro.corelayer.request.RegisterRequest;
 import br.com.jcv.treinadorpro.infrastructure.config.TreinadorProConfig;
+import br.com.jcv.treinadorpro.infrastructure.email.EmailService;
 import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -54,6 +59,7 @@ public class RegisterNewPersonalTrainerServiceImpl extends AbstractTreinadorProS
     private final PlanTemplateRepository planTemplateRepository;
     private final ActivePersonalPlanRepository activePersonalPlanRepository;
     private final ParameterRepository parameterRepository;
+    private final EmailService emailService;
 
     public RegisterNewPersonalTrainerServiceImpl(UserRepository userRepository,
                                                  TrainingPackRepository trainingPackRepository,
@@ -65,7 +71,8 @@ public class RegisterNewPersonalTrainerServiceImpl extends AbstractTreinadorProS
                                                  GuardianRestClientConsumer guardianRestClientConsumer,
                                                  PlanTemplateRepository planTemplateRepository,
                                                  ActivePersonalPlanRepository activePersonalPlanRepository,
-                                                 ParameterRepository parameterRepository) {
+                                                 ParameterRepository parameterRepository,
+                                                 EmailService emailService) {
         super(userRepository, trainingPackRepository);
         this.userRepository = userRepository;
         this.trainingPackRepository = trainingPackRepository;
@@ -78,11 +85,12 @@ public class RegisterNewPersonalTrainerServiceImpl extends AbstractTreinadorProS
         this.planTemplateRepository = planTemplateRepository;
         this.activePersonalPlanRepository = activePersonalPlanRepository;
         this.parameterRepository = parameterRepository;
+        this.emailService = emailService;
     }
 
     @Override
     @Transactional
-    public ControllerGenericResponse<UUID> execute(UUID processId, RegisterRequest registerRequest) {
+    public ControllerGenericResponse<RegisterResponse> execute(UUID processId, RegisterRequest registerRequest) {
 
         checkExistingEmail(registerRequest);
 
@@ -90,7 +98,7 @@ public class RegisterNewPersonalTrainerServiceImpl extends AbstractTreinadorProS
                 .orElseThrow(() -> new CommoditieBaseException("Invalid Plan", HttpStatus.BAD_REQUEST, "MSG-1634"));
 
         CreateNewAccountRequest createNewAccountRequest = getInstanceCreateNewAccountRequest(registerRequest);
-        ControllerGenericResponse<UUID> accountGuardianResponse = guardianRestClientConsumer.createNewAccount(createNewAccountRequest);
+        ControllerGenericResponse<RegisterResponse> accountGuardianResponse = guardianRestClientConsumer.createNewAccount(createNewAccountRequest);
 
         UserDTO userDTO = getInstanceUserDTO(registerRequest, accountGuardianResponse);
         User userEntity = userMapper.toEntity(userDTO);
@@ -113,10 +121,26 @@ public class RegisterNewPersonalTrainerServiceImpl extends AbstractTreinadorProS
         activePersonalPlan.setPersonalUser(userSaved);
         activePersonalPlanRepository.save(activePersonalPlan);
 
+
+        try {
+            emailService.sendHtmlEmail(
+                    userSaved.getEmail(),
+                    "Validate your account",
+                    ReaderTemplate.read("templates/account-validation.html"),
+                    Map.of("CODE", accountGuardianResponse.getObjectResponse().getCode())
+            );
+        }  catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
         return ControllerGenericResponseHelper.getInstance(
                 "MSG-1643",
                 accountGuardianResponse.getResponse().getMensagem(),
-                userSaved.getUuidId()
+                RegisterResponse.builder()
+                        .externalUserId(userSaved.getUuidId())
+                        .code(accountGuardianResponse.getObjectResponse().getCode())
+                        .build()
+
         );
     }
 
@@ -127,8 +151,8 @@ public class RegisterNewPersonalTrainerServiceImpl extends AbstractTreinadorProS
                 .mapToObj(hour -> String.format("%02d:00", hour))
                 .collect(Collectors.toList());
 
-        for(WeekdaysEnum day : WeekdaysEnum.values()){
-            for(String availableTime : availableTimes) {
+        for (WeekdaysEnum day : WeekdaysEnum.values()) {
+            for (String availableTime : availableTimes) {
                 availableTimeList.add(
                         AvailableTime.builder()
                                 .externalId(UUID.randomUUID())
@@ -136,7 +160,7 @@ public class RegisterNewPersonalTrainerServiceImpl extends AbstractTreinadorProS
                                 .daysOfWeek(day)
                                 .dayTime(availableTime)
                                 .personalUser(userEntity)
-                        .build()
+                                .build()
                 );
             }
 
@@ -169,14 +193,14 @@ public class RegisterNewPersonalTrainerServiceImpl extends AbstractTreinadorProS
         return new CommoditieBaseException("Invalid Plan", HttpStatus.BAD_REQUEST, "MSG-0914");
     }
 
-    private UserDTO getInstanceUserDTO(RegisterRequest registerRequest, ControllerGenericResponse<UUID> accountGuardianResponse) {
+    private UserDTO getInstanceUserDTO(RegisterRequest registerRequest, ControllerGenericResponse<RegisterResponse> accountGuardianResponse) {
         MasterLanguageEnum masterLanguageEnum = MasterLanguageEnum.findByString(registerRequest.getMasterLanguage());
         UserDTO userDTO = toDTO(registerRequest);
         userDTO.setUuidId(UUID.randomUUID());
         userDTO.setUserProfile(UserProfileEnum.PERSONAL_TRAINER);
         userDTO.setStatus(StatusEnum.A);
         userDTO.setMasterLanguage(Objects.isNull(masterLanguageEnum) ? MasterLanguageEnum.EN_US : masterLanguageEnum);
-        userDTO.setGuardianIntegrationUUID(accountGuardianResponse.getObjectResponse());
+        userDTO.setGuardianIntegrationUUID(accountGuardianResponse.getObjectResponse().getExternalUserId());
         return userDTO;
     }
 

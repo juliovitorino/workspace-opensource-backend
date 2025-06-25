@@ -1,4 +1,4 @@
-package br.com.jcv.security.guardian.controller.v1.business.createaccount;
+package br.com.jcv.restclient.guardian.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -9,10 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -23,7 +20,7 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CreateNewAccountResponse implements Serializable {
+public class RegisterResponse implements Serializable {
     private UUID externalUserId;
     private String code;
 }
