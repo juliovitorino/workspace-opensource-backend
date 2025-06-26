@@ -5,16 +5,17 @@ spring:
   apikey:
     uuid: 2409aeab-9179-4ad7-b400-891ce338b57a
   mail:
-    host: smtp-relay.brevo.com
+    host: smtp.mailersend.net
     port: 587
-    username: 907cc9001@smtp-brevo.com
-    password: Xb84yZwdAQTI6hDq
+    username: ${MS_USERNAME}
+    password: ${MS_PASSWORD}
     properties:
       mail:
         smtp:
           auth: true
           starttls:
             enable: true
+
   # solve problem in swagger 'documentationPluginsBootstrapper'
   mvc:
     pathmatch:

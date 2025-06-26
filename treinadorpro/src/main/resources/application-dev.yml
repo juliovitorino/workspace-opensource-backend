@@ -7,8 +7,8 @@ spring:
   mail:
     host: smtp.mailersend.net
     port: 587
-    username: MS_yf1Y5Z@test-z0vklo67qoel7qrx.mlsender.net
-    password: mssp.vcxqof4.neqvygm7qwzg0p7w.GOVAs0z
+    username: ${MS_USERNAME}
+    password: ${MS_PASSWORD}
     properties:
       mail:
         smtp:
