@@ -96,7 +96,7 @@ public class RegisterNewPersonalTrainerServiceImpl extends AbstractTreinadorProS
         checkExistingEmail(registerRequest);
 
         PlanTemplate planTemplate = planTemplateRepository.findByExternalId(registerRequest.getPlanExternalId())
-                .orElseThrow(() -> new CommoditieBaseException("Invalid Plan", HttpStatus.BAD_REQUEST, "MSG-1634"));
+                .orElseThrow(this::invalidPlan);
 
         CreateNewAccountRequest createNewAccountRequest = getInstanceCreateNewAccountRequest(registerRequest);
         ControllerGenericResponse<RegisterResponse> accountGuardianResponse = guardianRestClientConsumer.createNewAccount(createNewAccountRequest);
@@ -204,7 +204,7 @@ public class RegisterNewPersonalTrainerServiceImpl extends AbstractTreinadorProS
         UserDTO userDTO = toDTO(registerRequest);
         userDTO.setUuidId(UUID.randomUUID());
         userDTO.setUserProfile(UserProfileEnum.PERSONAL_TRAINER);
-        userDTO.setStatus(StatusEnum.A);
+        userDTO.setStatus(StatusEnum.P);
         userDTO.setMasterLanguage(Objects.isNull(masterLanguageEnum) ? MasterLanguageEnum.EN_US : masterLanguageEnum);
         userDTO.setGuardianIntegrationUUID(accountGuardianResponse.getObjectResponse().getExternalUserId());
         return userDTO;
