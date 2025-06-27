@@ -16,6 +16,7 @@ import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
 import br.com.jcv.treinadorpro.corelayer.request.CreateNewStudentContractRequest;
 import br.com.jcv.treinadorpro.corelayer.request.Instalment;
 import br.com.jcv.treinadorpro.corelayer.response.CreateNewStudentContractResponse;
+import br.com.jcv.treinadorpro.infrastructure.config.TreinadorProConfig;
 import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
 import br.com.jcv.treinadorpro.shared.DataIntegrityViolationMapper;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -31,12 +32,17 @@ public class CreateNewContractServiceImpl extends AbstractTreinadorProService im
 
     private final ContractRepository contractRepository;
     private final DataIntegrityViolationMapper dataIntegrityViolationMapper;
+    private final TreinadorProConfig config;
 
     public CreateNewContractServiceImpl(TrainingPackRepository trainingPackRepository,
-                                        UserRepository userRepository, ContractRepository contractRepository, DataIntegrityViolationMapper dataIntegrityViolationMapper) {
-        super(userRepository, trainingPackRepository);
+                                        UserRepository userRepository,
+                                        ContractRepository contractRepository,
+                                        DataIntegrityViolationMapper dataIntegrityViolationMapper,
+                                        TreinadorProConfig config) {
+        super(userRepository, trainingPackRepository, config);
         this.contractRepository = contractRepository;
         this.dataIntegrityViolationMapper = dataIntegrityViolationMapper;
+        this.config = config;
     }
 
     @Override

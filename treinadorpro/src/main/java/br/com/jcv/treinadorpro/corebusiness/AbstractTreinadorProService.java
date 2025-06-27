@@ -8,9 +8,11 @@ import br.com.jcv.treinadorpro.corelayer.model.User;
 import br.com.jcv.treinadorpro.corelayer.repository.TrainingPackRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
 import br.com.jcv.treinadorpro.corelayer.request.RegisterRequest;
+import br.com.jcv.treinadorpro.infrastructure.config.TreinadorProConfig;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -19,10 +21,15 @@ public abstract class AbstractTreinadorProService {
 
     private final UserRepository userRepository;
     private final TrainingPackRepository trainingPackRepository;
+    private final TreinadorProConfig config;
 
-    protected AbstractTreinadorProService(UserRepository userRepository, TrainingPackRepository trainingPackRepository) {
+
+    protected AbstractTreinadorProService(UserRepository userRepository,
+                                          TrainingPackRepository trainingPackRepository,
+                                          TreinadorProConfig config) {
         this.userRepository = userRepository;
         this.trainingPackRepository = trainingPackRepository;
+        this.config = config;
     }
 
     protected void checkExistingEmail(RegisterRequest registerRequest){
@@ -30,6 +37,11 @@ public abstract class AbstractTreinadorProService {
         if (userByEmail.isPresent()) {
             throw new CommoditieBaseException("Email has already exist!", HttpStatus.BAD_REQUEST,"MSG-1922");
         }
+    }
+
+    protected void checkApiKey(UUID apiKey) {
+        if(Objects.equals(apiKey, config.getApiKeyUUID())) return;
+        throw new CommoditieBaseException("Invalid API Key", HttpStatus.UNAUTHORIZED, "MSG-1234");
     }
 
     protected void checkUserUUID(UUID userUUID){

@@ -7,6 +7,7 @@ import br.com.jcv.treinadorpro.corebusiness.AbstractTreinadorProService;
 import br.com.jcv.treinadorpro.corelayer.model.User;
 import br.com.jcv.treinadorpro.corelayer.repository.TrainingPackRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
+import br.com.jcv.treinadorpro.infrastructure.config.TreinadorProConfig;
 import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +19,18 @@ public class ValidateSixCodeServiceImpl extends AbstractTreinadorProService impl
     private final GuardianRestClientConsumer guardianRestClientConsumer;
     private final UserRepository userRepository;
     private final TrainingPackRepository trainingPackRepository;
+    private final TreinadorProConfig config;
 
 
-    public ValidateSixCodeServiceImpl(GuardianRestClientConsumer guardianRestClientConsumer, UserRepository userRepository, TrainingPackRepository trainingPackRepository) {
-        super(userRepository, trainingPackRepository);
+    public ValidateSixCodeServiceImpl(GuardianRestClientConsumer guardianRestClientConsumer,
+                                      UserRepository userRepository,
+                                      TrainingPackRepository trainingPackRepository,
+                                      TreinadorProConfig config) {
+        super(userRepository, trainingPackRepository, config);
         this.guardianRestClientConsumer = guardianRestClientConsumer;
         this.userRepository = userRepository;
         this.trainingPackRepository = trainingPackRepository;
+        this.config = config;
     }
 
     @Override

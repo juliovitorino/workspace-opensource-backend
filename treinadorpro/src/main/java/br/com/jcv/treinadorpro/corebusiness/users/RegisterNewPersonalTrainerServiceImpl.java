@@ -73,7 +73,7 @@ public class RegisterNewPersonalTrainerServiceImpl extends AbstractTreinadorProS
                                                  ActivePersonalPlanRepository activePersonalPlanRepository,
                                                  ParameterRepository parameterRepository,
                                                  EmailService emailService) {
-        super(userRepository, trainingPackRepository);
+        super(userRepository, trainingPackRepository, config);
         this.userRepository = userRepository;
         this.trainingPackRepository = trainingPackRepository;
         this.userMapper = userMapper;
@@ -92,6 +92,7 @@ public class RegisterNewPersonalTrainerServiceImpl extends AbstractTreinadorProS
     @Transactional
     public ControllerGenericResponse<RegisterResponse> execute(UUID processId, RegisterRequest registerRequest) {
 
+        checkApiKey(registerRequest.getApiKey());
         checkExistingEmail(registerRequest);
 
         PlanTemplate planTemplate = planTemplateRepository.findByExternalId(registerRequest.getPlanExternalId())
