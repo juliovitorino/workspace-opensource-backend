@@ -138,10 +138,15 @@ public class RegisterNewPersonalTrainerServiceImpl extends AbstractTreinadorProS
                 accountGuardianResponse.getResponse().getMensagem(),
                 RegisterResponse.builder()
                         .externalUserId(userSaved.getUuidId())
-                        .code(accountGuardianResponse.getObjectResponse().getCode())
+                        .code(hideCode(accountGuardianResponse.getObjectResponse().getCode()))
                         .build()
 
         );
+    }
+
+    private String hideCode(String code){
+        char[] charArray = code.toCharArray();
+        return String.valueOf(charArray[0]).concat("****").concat(String.valueOf(charArray[5]));
     }
 
     private List<AvailableTime> createAvailableTimeList(User userEntity) {
