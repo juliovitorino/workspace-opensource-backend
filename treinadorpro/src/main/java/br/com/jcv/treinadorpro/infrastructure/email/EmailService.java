@@ -1,5 +1,6 @@
 package br.com.jcv.treinadorpro.infrastructure.email;
 
+import br.com.jcv.treinadorpro.infrastructure.config.EmailConfig;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -10,10 +11,11 @@ import java.util.Map;
 
 @Service
 public class EmailService {
-
+    private final EmailConfig emailConfig;
     private final JavaMailSender mailSender;
 
-    public EmailService(JavaMailSender mailSender) {
+    public EmailService(EmailConfig emailConfig, JavaMailSender mailSender) {
+        this.emailConfig = emailConfig;
         this.mailSender = mailSender;
     }
 
@@ -24,7 +26,7 @@ public class EmailService {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-        helper.setFrom("MS_yf1Y5Z@test-z0vklo67qoel7qrx.mlsender.net");
+        helper.setFrom(emailConfig.getFromMail());
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(htmlBody, true);

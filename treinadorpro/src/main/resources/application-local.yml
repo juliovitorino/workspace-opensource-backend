@@ -5,10 +5,10 @@ spring:
   apikey:
     uuid: 2409aeab-9179-4ad7-b400-891ce338b57a
   mail:
-    host: smtp.mailersend.net
-    port: 587
-    username: ${MS_USERNAME}
-    password: ${MS_PASSWORD}
+    host: ${SMTP_EMAIL_PROVIDER}
+    port: ${SMTP_EMAIL_PROVIDER_PORT}
+    username: ${SMTP_EMAIL_USERNAME}
+    password: ${SMTP_EMAIL_PASSWORD}
     properties:
       mail:
         smtp:
@@ -59,3 +59,6 @@ guardian:
     magicSeed: B7CdeU3QtR1FQctrSV0JatNEcGeAaFUfSBW2XdDIgpF2eMmUIM
   api:
     url: http://localhost:9090
+
+email:
+  from-mail: ${MAIL_SEND_FROM}
