@@ -56,6 +56,14 @@ public abstract class AbstractTreinadorProService {
         return personalUser;
     }
 
+    protected User checkPendingPersonalTrainerUUID(UUID userUUID){
+        User personalUser = getUser(userUUID);
+        checkUserProfile(personalUser, UserProfileEnum.PERSONAL_TRAINER,"User is not a Personal Trainer");
+        checkUserStatus(personalUser, StatusEnum.P, "Invalid user status");
+
+        return personalUser;
+    }
+
     protected User checkActiveStudentUUID(UUID userUUID){
         User user = getUser(userUUID);
         checkUserProfile(user, UserProfileEnum.STUDENT,"User is not a Student" );
@@ -66,7 +74,7 @@ public abstract class AbstractTreinadorProService {
 
     private void checkUserProfile(User user, UserProfileEnum profile, String errorMessage){
         if (user.getUserProfile() != profile) {
-            throw new CommoditieBaseException(errorMessage, HttpStatus.UNPROCESSABLE_ENTITY, "MSG-1656");
+            throw new CommoditieBaseException(errorMessage, HttpStatus.UNPROCESSABLE_ENTITY, "MSG-1658");
         }
     }
 
