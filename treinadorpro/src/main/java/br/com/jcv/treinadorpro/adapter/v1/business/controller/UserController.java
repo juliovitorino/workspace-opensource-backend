@@ -72,7 +72,7 @@ public class UserController {
         return ResponseEntity.ok(findPersonalTrainerService.execute(UUID.randomUUID(), uuidId));
     }
 
-    @GetMapping("/trainer/validate/{apikey}/{externalid}/{requiredCode}")
+    @PutMapping("/trainer/validate/{apikey}/{externalid}/{requiredCode}")
     public ResponseEntity<ControllerGenericResponse<Boolean>> validateSixDigitCode(
             @PathVariable("apikey") UUID apiKey,
             @PathVariable("externalid") UUID externalId,
