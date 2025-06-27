@@ -8,6 +8,7 @@ import br.com.jcv.treinadorpro.corelayer.repository.ContractRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
 import br.com.jcv.treinadorpro.corelayer.response.StudentsFromTrainerResponse;
 import br.com.jcv.treinadorpro.corelayer.service.MapperServiceHelper;
+import br.com.jcv.treinadorpro.infrastructure.config.TreinadorProConfig;
 import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +22,16 @@ public class FindAllStudentsFromTrainerServiceImpl extends AbstractTreinadorProS
 
     private final TrainingPackRepository trainingPackRepository;
     private final ContractRepository contractRepository;
+    private final TreinadorProConfig config;
 
     public FindAllStudentsFromTrainerServiceImpl(TrainingPackRepository trainingPackRepository,
-                                                 UserRepository userRepository, ContractRepository contractRepository) {
-        super(userRepository, trainingPackRepository);
+                                                 UserRepository userRepository,
+                                                 ContractRepository contractRepository,
+                                                 TreinadorProConfig config) {
+        super(userRepository, trainingPackRepository, config);
         this.trainingPackRepository = trainingPackRepository;
         this.contractRepository = contractRepository;
+        this.config = config;
     }
 
     @Override

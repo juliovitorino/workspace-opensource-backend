@@ -53,4 +53,6 @@ public class RegisterRequest implements Serializable {
 
     @JsonProperty(value = "plan")
     private UUID planExternalId;
+
+    private UUID apiKey;
 }
