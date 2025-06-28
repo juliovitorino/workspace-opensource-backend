@@ -90,7 +90,7 @@ public class RegisterNewPersonalTrainerServiceImpl implements RegisterNewPersona
     @Transactional
     public ControllerGenericResponse<RegisterResponse> execute(UUID processId, RegisterRequest registerRequest) {
 
-        treinadorProHelper.checkApiKey(registerRequest.getApiKey());
+//        treinadorProHelper.checkApiKey(registerRequest.getApiKey());
         treinadorProHelper.checkExistingEmail(registerRequest);
 
         PlanTemplate planTemplate = planTemplateRepository.findByExternalId(registerRequest.getPlanExternalId())

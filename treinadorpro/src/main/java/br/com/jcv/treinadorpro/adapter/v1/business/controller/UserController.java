@@ -30,36 +30,15 @@ import java.util.UUID;
 @RequestMapping("/v1/api/business/user")
 public class UserController {
 
-    private final RegisterNewPersonalTrainerService registerNewPersonalTrainerService;
-    private final LoginService loginService;
     private final EditStudentProfileService editStudentProfileService;
     private final FindPersonalTrainerService findPersonalTrainerService;
-    private final ValidateSixCodeService validateSixCodeService;
 
     public UserController(RegisterNewPersonalTrainerService registerNewPersonalTrainerService,
-                          LoginService loginService,
                           EditStudentProfileService editStudentProfileService,
                           FindPersonalTrainerService findPersonalTrainerService,
                           ValidateSixCodeService validateSixCodeService) {
-        this.registerNewPersonalTrainerService = registerNewPersonalTrainerService;
-        this.loginService = loginService;
         this.editStudentProfileService = editStudentProfileService;
         this.findPersonalTrainerService = findPersonalTrainerService;
-        this.validateSixCodeService = validateSixCodeService;
-    }
-
-    @PostMapping("/register")
-    public ResponseEntity<ControllerGenericResponse<RegisterResponse>> registerPersonalTrainer(
-            @RequestBody @Valid RegisterRequest request, @RequestHeader("X-API-KEY") UUID apiKey) {
-        request.setApiKey(apiKey);
-        return ResponseEntity.ok(registerNewPersonalTrainerService.execute(UUID.randomUUID(), request));
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<ControllerGenericResponse<String>> login(@RequestBody LoginRequest loginRequest,
-                                                                   @RequestHeader("X-API-KEY") UUID apiKey) {
-        loginRequest.setApplicationExternalUUID(apiKey);
-        return ResponseEntity.ok(loginService.execute(UUID.randomUUID(), loginRequest));
     }
 
     @PutMapping("/student/{uuid}")
@@ -73,23 +52,5 @@ public class UserController {
     public ResponseEntity<ControllerGenericResponse<PersonalTrainerResponse>> findPersonalTrainer(@PathVariable("uuid") UUID uuidId) {
         return ResponseEntity.ok(findPersonalTrainerService.execute(UUID.randomUUID(), uuidId));
     }
-
-    @GetMapping("/trainer/validate/{externalid}/{requiredCode}")
-    public ResponseEntity<ControllerGenericResponse<Boolean>> validateSixDigitCode(
-            @RequestHeader("X-API-KEY") UUID apiKey,
-            @PathVariable("externalid") UUID externalId,
-            @PathVariable("requiredCode") String code
-    ) {
-        return ResponseEntity.ok(validateSixCodeService.execute(
-                        UUID.randomUUID(),
-                        ValidateSixCodeRequest.builder()
-                                .externalAppUUID(apiKey)
-                                .externalUserUUID(externalId)
-                                .requiredCode(code)
-                                .build()
-                )
-        );
-    }
-
 
 }
