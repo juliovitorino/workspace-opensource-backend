@@ -6,7 +6,6 @@ import br.com.jcv.commons.library.template.ReaderTemplate;
 import br.com.jcv.restclient.guardian.GuardianRestClientConsumer;
 import br.com.jcv.restclient.guardian.request.CreateNewAccountRequest;
 import br.com.jcv.restclient.guardian.request.RegisterResponse;
-import br.com.jcv.treinadorpro.corebusiness.AbstractTreinadorProService;
 import br.com.jcv.treinadorpro.corelayer.dto.ActivePersonalPlanDTO;
 import br.com.jcv.treinadorpro.corelayer.dto.PlanTemplateDTO;
 import br.com.jcv.treinadorpro.corelayer.dto.UserDTO;
@@ -29,6 +28,7 @@ import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
 import br.com.jcv.treinadorpro.corelayer.request.RegisterRequest;
 import br.com.jcv.treinadorpro.infrastructure.config.TreinadorProConfig;
 import br.com.jcv.treinadorpro.infrastructure.email.EmailService;
+import br.com.jcv.treinadorpro.infrastructure.helper.TreinadorProHelper;
 import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -46,20 +46,19 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
-public class RegisterNewPersonalTrainerServiceImpl extends AbstractTreinadorProService implements RegisterNewPersonalTrainerService {
+public class RegisterNewPersonalTrainerServiceImpl implements RegisterNewPersonalTrainerService {
 
     private final UserRepository userRepository;
-    private final TrainingPackRepository trainingPackRepository;
     private final UserMapper userMapper;
     private final ActivePersonalPlanMapper activePersonalPlanMapper;
     private final PlanTemplateMapper planTemplateMapper;
     private final TreinadorProConfig config;
-    private final ModelMapper modelMapper;
     private final GuardianRestClientConsumer guardianRestClientConsumer;
     private final PlanTemplateRepository planTemplateRepository;
     private final ActivePersonalPlanRepository activePersonalPlanRepository;
     private final ParameterRepository parameterRepository;
     private final EmailService emailService;
+    private final TreinadorProHelper treinadorProHelper;
 
     public RegisterNewPersonalTrainerServiceImpl(UserRepository userRepository,
                                                  TrainingPackRepository trainingPackRepository,
@@ -72,28 +71,27 @@ public class RegisterNewPersonalTrainerServiceImpl extends AbstractTreinadorProS
                                                  PlanTemplateRepository planTemplateRepository,
                                                  ActivePersonalPlanRepository activePersonalPlanRepository,
                                                  ParameterRepository parameterRepository,
-                                                 EmailService emailService) {
-        super(userRepository, trainingPackRepository, config);
+                                                 EmailService emailService,
+                                                 TreinadorProHelper treinadorProHelper) {
         this.userRepository = userRepository;
-        this.trainingPackRepository = trainingPackRepository;
         this.userMapper = userMapper;
         this.activePersonalPlanMapper = activePersonalPlanMapper;
         this.planTemplateMapper = planTemplateMapper;
         this.config = config;
-        this.modelMapper = modelMapper;
         this.guardianRestClientConsumer = guardianRestClientConsumer;
         this.planTemplateRepository = planTemplateRepository;
         this.activePersonalPlanRepository = activePersonalPlanRepository;
         this.parameterRepository = parameterRepository;
         this.emailService = emailService;
+        this.treinadorProHelper = treinadorProHelper;
     }
 
     @Override
     @Transactional
     public ControllerGenericResponse<RegisterResponse> execute(UUID processId, RegisterRequest registerRequest) {
 
-        checkApiKey(registerRequest.getApiKey());
-        checkExistingEmail(registerRequest);
+        treinadorProHelper.checkApiKey(registerRequest.getApiKey());
+        treinadorProHelper.checkExistingEmail(registerRequest);
 
         PlanTemplate planTemplate = planTemplateRepository.findByExternalId(registerRequest.getPlanExternalId())
                 .orElseThrow(this::invalidPlan);
