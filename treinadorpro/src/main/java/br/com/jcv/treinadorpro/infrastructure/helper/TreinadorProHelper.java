@@ -1,4 +1,4 @@
-package br.com.jcv.treinadorpro.corebusiness;
+package br.com.jcv.treinadorpro.infrastructure.helper;
 
 import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
@@ -17,38 +17,38 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public abstract class AbstractTreinadorProService {
+public class TreinadorProHelper {
 
     private final UserRepository userRepository;
     private final TrainingPackRepository trainingPackRepository;
     private final TreinadorProConfig config;
 
 
-    protected AbstractTreinadorProService(UserRepository userRepository,
-                                          TrainingPackRepository trainingPackRepository,
-                                          TreinadorProConfig config) {
+    public TreinadorProHelper(UserRepository userRepository,
+                                 TrainingPackRepository trainingPackRepository,
+                                 TreinadorProConfig config) {
         this.userRepository = userRepository;
         this.trainingPackRepository = trainingPackRepository;
         this.config = config;
     }
 
-    protected void checkExistingEmail(RegisterRequest registerRequest){
+    public void checkExistingEmail(RegisterRequest registerRequest){
         Optional<User> userByEmail = userRepository.findByEmail(registerRequest.getEmail());
         if (userByEmail.isPresent()) {
             throw new CommoditieBaseException("Email has already exist!", HttpStatus.BAD_REQUEST,"MSG-1922");
         }
     }
 
-    protected void checkApiKey(UUID apiKey) {
+    public void checkApiKey(UUID apiKey) {
         if(Objects.equals(apiKey, config.getApiKeyUUID())) return;
         throw new CommoditieBaseException("Invalid API Key", HttpStatus.UNAUTHORIZED, "MSG-1234");
     }
 
-    protected void checkUserUUID(UUID userUUID){
+    public void checkUserUUID(UUID userUUID){
         getUserByUUID(userUUID);
     }
 
-    protected User checkActivePersonalTrainerUUID(UUID userUUID){
+    public User checkActivePersonalTrainerUUID(UUID userUUID){
         User personalUser = getUser(userUUID);
         checkUserProfile(personalUser, UserProfileEnum.PERSONAL_TRAINER,"User is not a Personal Trainer");
         checkUserStatus(personalUser, StatusEnum.A, "Invalid user status");
@@ -56,7 +56,7 @@ public abstract class AbstractTreinadorProService {
         return personalUser;
     }
 
-    protected User checkPendingPersonalTrainerUUID(UUID userUUID){
+    public User checkPendingPersonalTrainerUUID(UUID userUUID){
         User personalUser = getUser(userUUID);
         checkUserProfile(personalUser, UserProfileEnum.PERSONAL_TRAINER,"User is not a Personal Trainer");
         checkUserStatus(personalUser, StatusEnum.P, "Invalid user status");
@@ -64,7 +64,7 @@ public abstract class AbstractTreinadorProService {
         return personalUser;
     }
 
-    protected User checkActiveStudentUUID(UUID userUUID){
+    public User checkActiveStudentUUID(UUID userUUID){
         User user = getUser(userUUID);
         checkUserProfile(user, UserProfileEnum.STUDENT,"User is not a Student" );
         checkUserStatus(user, StatusEnum.A, "Invalid User Status");
@@ -92,12 +92,12 @@ public abstract class AbstractTreinadorProService {
         return user;
     }
 
-    protected User getUserByUUID(UUID userUUID) {
+    public User getUserByUUID(UUID userUUID) {
         return userRepository.findByUuidId(userUUID)
                 .orElseThrow(() -> new CommoditieBaseException("Invalid User UUID", HttpStatus.BAD_REQUEST, "MSG-1203"));
     }
 
-    protected TrainingPack checkTrainingPackByExternalIdAndPersonalUserId(UUID externalId, Long personalUserId) {
+    public TrainingPack checkTrainingPackByExternalIdAndPersonalUserId(UUID externalId, Long personalUserId) {
         TrainingPack trainingPack = trainingPackRepository.findByExternalIdAndPersonalUserId(externalId, personalUserId)
                 .orElseThrow(() -> new CommoditieBaseException(
                         "Invalid personal ID or Training pack ID",
@@ -110,7 +110,7 @@ public abstract class AbstractTreinadorProService {
         }
         return trainingPack;
     }
-    protected TrainingPack findTrainingPackByExternalIdAndPersonalUserId(UUID externalId, Long personalUserId) {
+    public TrainingPack findTrainingPackByExternalIdAndPersonalUserId(UUID externalId, Long personalUserId) {
         return trainingPackRepository.findByExternalIdAndPersonalUserId(externalId, personalUserId)
                 .orElseThrow(() -> new CommoditieBaseException(
                         "Invalid personal ID or Training pack ID",

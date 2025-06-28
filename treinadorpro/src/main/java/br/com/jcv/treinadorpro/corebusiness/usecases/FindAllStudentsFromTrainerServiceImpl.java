@@ -1,14 +1,11 @@
 package br.com.jcv.treinadorpro.corebusiness.usecases;
 
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
-import br.com.jcv.treinadorpro.corebusiness.AbstractTreinadorProService;
 import br.com.jcv.treinadorpro.corelayer.model.User;
-import br.com.jcv.treinadorpro.corelayer.repository.TrainingPackRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.ContractRepository;
-import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
 import br.com.jcv.treinadorpro.corelayer.response.StudentsFromTrainerResponse;
 import br.com.jcv.treinadorpro.corelayer.service.MapperServiceHelper;
-import br.com.jcv.treinadorpro.infrastructure.config.TreinadorProConfig;
+import br.com.jcv.treinadorpro.infrastructure.helper.TreinadorProHelper;
 import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
 import org.springframework.stereotype.Service;
 
@@ -18,27 +15,22 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class FindAllStudentsFromTrainerServiceImpl extends AbstractTreinadorProService implements FindAllStudentsFromTrainerService {
+public class FindAllStudentsFromTrainerServiceImpl implements FindAllStudentsFromTrainerService {
 
-    private final TrainingPackRepository trainingPackRepository;
     private final ContractRepository contractRepository;
-    private final TreinadorProConfig config;
+    private final TreinadorProHelper treinadorProHelper;
 
-    public FindAllStudentsFromTrainerServiceImpl(TrainingPackRepository trainingPackRepository,
-                                                 UserRepository userRepository,
-                                                 ContractRepository contractRepository,
-                                                 TreinadorProConfig config) {
-        super(userRepository, trainingPackRepository, config);
-        this.trainingPackRepository = trainingPackRepository;
+    public FindAllStudentsFromTrainerServiceImpl(ContractRepository contractRepository,
+                                                 TreinadorProHelper treinadorProHelper) {
         this.contractRepository = contractRepository;
-        this.config = config;
+        this.treinadorProHelper = treinadorProHelper;
     }
 
     @Override
     @Transactional
     public ControllerGenericResponse<List<StudentsFromTrainerResponse>> execute(UUID processId, UUID personalTrainerExternalId) {
 
-        User trainerUser = checkActivePersonalTrainerUUID(personalTrainerExternalId);
+        User trainerUser = treinadorProHelper.checkActivePersonalTrainerUUID(personalTrainerExternalId);
 
         List<User> distinctStudentsByPersonalTrainerTrainingPacks =
                 contractRepository.findDistinctStudentsByPersonalTrainerTrainingPacks(trainerUser.getId());

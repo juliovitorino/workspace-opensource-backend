@@ -2,21 +2,20 @@ package br.com.jcv.treinadorpro.corebusiness.usecases;
 
 import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
-import br.com.jcv.treinadorpro.corebusiness.AbstractTreinadorProService;
 import br.com.jcv.treinadorpro.corelayer.enums.MasterLanguageEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.UserProfileEnum;
+import br.com.jcv.treinadorpro.corelayer.model.Contract;
 import br.com.jcv.treinadorpro.corelayer.model.StudentPayment;
 import br.com.jcv.treinadorpro.corelayer.model.TrainingPack;
 import br.com.jcv.treinadorpro.corelayer.model.User;
-import br.com.jcv.treinadorpro.corelayer.model.Contract;
-import br.com.jcv.treinadorpro.corelayer.repository.TrainingPackRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.ContractRepository;
+import br.com.jcv.treinadorpro.corelayer.repository.TrainingPackRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
 import br.com.jcv.treinadorpro.corelayer.request.CreateNewStudentContractRequest;
 import br.com.jcv.treinadorpro.corelayer.request.Instalment;
 import br.com.jcv.treinadorpro.corelayer.response.CreateNewStudentContractResponse;
-import br.com.jcv.treinadorpro.infrastructure.config.TreinadorProConfig;
+import br.com.jcv.treinadorpro.infrastructure.helper.TreinadorProHelper;
 import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
 import br.com.jcv.treinadorpro.shared.DataIntegrityViolationMapper;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -28,29 +27,28 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class CreateNewContractServiceImpl extends AbstractTreinadorProService implements CreateNewContractService{
+public class CreateNewContractServiceImpl implements CreateNewContractService{
 
     private final ContractRepository contractRepository;
     private final DataIntegrityViolationMapper dataIntegrityViolationMapper;
-    private final TreinadorProConfig config;
+    private final TreinadorProHelper treinadorProHelper;
 
     public CreateNewContractServiceImpl(TrainingPackRepository trainingPackRepository,
                                         UserRepository userRepository,
                                         ContractRepository contractRepository,
                                         DataIntegrityViolationMapper dataIntegrityViolationMapper,
-                                        TreinadorProConfig config) {
-        super(userRepository, trainingPackRepository, config);
+                                        TreinadorProHelper treinadorProHelper) {
         this.contractRepository = contractRepository;
         this.dataIntegrityViolationMapper = dataIntegrityViolationMapper;
-        this.config = config;
+        this.treinadorProHelper = treinadorProHelper;
     }
 
     @Override
     public ControllerGenericResponse<CreateNewStudentContractResponse> execute(UUID processId, CreateNewStudentContractRequest request) {
         checkNullableRequestParameters(request);
 
-        User personalUser = checkActivePersonalTrainerUUID(request.getPersonalTrainerExternalId());
-        TrainingPack trainingPack = checkTrainingPackByExternalIdAndPersonalUserId(request.getTrainingPackExternalId(), personalUser.getId());
+        User personalUser = treinadorProHelper.checkActivePersonalTrainerUUID(request.getPersonalTrainerExternalId());
+        TrainingPack trainingPack = treinadorProHelper.checkTrainingPackByExternalIdAndPersonalUserId(request.getTrainingPackExternalId(), personalUser.getId());
         User existingStudent = getExistingStudent(request);
         User newStudent = getInstanceNewStudent(request);
         Contract contract = getInstanceTrainingPack(request, trainingPack, existingStudent, newStudent);
@@ -134,7 +132,7 @@ public class CreateNewContractServiceImpl extends AbstractTreinadorProService im
 
     private User getExistingStudent(CreateNewStudentContractRequest request){
         return request.getExistingStudentExternalId() != null
-                ? checkActiveStudentUUID(request.getExistingStudentExternalId())
+                ? treinadorProHelper.checkActiveStudentUUID(request.getExistingStudentExternalId())
                 : null;
     }
 
