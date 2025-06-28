@@ -56,7 +56,9 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ControllerGenericResponse<String>> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<ControllerGenericResponse<String>> login(@RequestBody LoginRequest loginRequest,
+                                                                   @RequestHeader("X-API-KEY") UUID apiKey) {
+        loginRequest.setApplicationExternalUUID(apiKey);
         return ResponseEntity.ok(loginService.execute(UUID.randomUUID(), loginRequest));
     }
 
