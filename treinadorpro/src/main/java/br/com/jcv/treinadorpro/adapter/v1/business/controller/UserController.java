@@ -6,6 +6,7 @@ import br.com.jcv.restclient.guardian.request.RegisterResponse;
 import br.com.jcv.restclient.guardian.request.ValidateSixCodeRequest;
 import br.com.jcv.treinadorpro.corebusiness.users.EditStudentProfileService;
 import br.com.jcv.treinadorpro.corebusiness.users.FindPersonalTrainerService;
+import br.com.jcv.treinadorpro.corebusiness.users.GetLoggedUserService;
 import br.com.jcv.treinadorpro.corebusiness.users.LoginService;
 import br.com.jcv.treinadorpro.corebusiness.users.RegisterNewPersonalTrainerService;
 import br.com.jcv.treinadorpro.corebusiness.users.ValidateSixCodeService;
@@ -32,13 +33,16 @@ public class UserController {
 
     private final EditStudentProfileService editStudentProfileService;
     private final FindPersonalTrainerService findPersonalTrainerService;
+    private final GetLoggedUserService getLoggedUserService;
 
     public UserController(RegisterNewPersonalTrainerService registerNewPersonalTrainerService,
                           EditStudentProfileService editStudentProfileService,
                           FindPersonalTrainerService findPersonalTrainerService,
-                          ValidateSixCodeService validateSixCodeService) {
+                          ValidateSixCodeService validateSixCodeService,
+                          GetLoggedUserService getLoggedUserService) {
         this.editStudentProfileService = editStudentProfileService;
         this.findPersonalTrainerService = findPersonalTrainerService;
+        this.getLoggedUserService = getLoggedUserService;
     }
 
     @PutMapping("/student/{uuid}")
@@ -51,6 +55,11 @@ public class UserController {
     @GetMapping("/trainer/{uuid}")
     public ResponseEntity<ControllerGenericResponse<PersonalTrainerResponse>> findPersonalTrainer(@PathVariable("uuid") UUID uuidId) {
         return ResponseEntity.ok(findPersonalTrainerService.execute(UUID.randomUUID(), uuidId));
+    }
+
+    @GetMapping("/trainer/logged")
+    public ResponseEntity<ControllerGenericResponse<PersonalTrainerResponse>> getLoggedUser() {
+        return ResponseEntity.ok(getLoggedUserService.execute(UUID.randomUUID()));
     }
 
 }
