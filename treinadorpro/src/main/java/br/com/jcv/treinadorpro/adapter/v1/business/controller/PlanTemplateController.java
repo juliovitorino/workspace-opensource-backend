@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/v1/api/business/plan")
+@RequestMapping("/v1/api/business/public/plan")
 public class PlanTemplateController {
 
     private final FindAllPlanTemplateByStatus findAllPlanTemplateByStatus;
