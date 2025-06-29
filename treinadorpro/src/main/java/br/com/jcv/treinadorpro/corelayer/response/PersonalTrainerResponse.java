@@ -8,7 +8,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -16,7 +18,8 @@ import java.util.UUID;
 @Data
 @Builder
 @AllArgsConstructor
-public class PersonalTrainerResponse {
+@NoArgsConstructor
+public class PersonalTrainerResponse implements Serializable {
 
     @JsonProperty("id")
     private Long id;
