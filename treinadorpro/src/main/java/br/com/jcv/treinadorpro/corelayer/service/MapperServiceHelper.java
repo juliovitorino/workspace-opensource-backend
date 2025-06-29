@@ -67,6 +67,7 @@ public class MapperServiceHelper {
     }
 
     public static PersonalFeatureResponse toResponse(PersonalFeature personalFeature) {
+        if(personalFeature == null) return null;
         return PersonalFeatureResponse.builder()
                 .id(personalFeature.getId())
                 .register(personalFeature.getRegister())

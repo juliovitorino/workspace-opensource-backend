@@ -3,6 +3,7 @@ package br.com.jcv.treinadorpro.corelayer.response;
 import br.com.jcv.treinadorpro.corelayer.enums.GenderEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.UserProfileEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,6 +34,7 @@ public class PersonalTrainerResponse {
     private String cellphone;
 
     @JsonProperty("birthday")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
 
     @JsonProperty("gender")
