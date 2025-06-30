@@ -1,6 +1,7 @@
 package br.com.jcv.restclient.guardian;
 
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
+import br.com.jcv.restclient.config.FeignConfig;
 import br.com.jcv.restclient.dto.SessionStateDTO;
 import br.com.jcv.restclient.guardian.request.CreateNewAccountRequest;
 import br.com.jcv.restclient.guardian.request.RegisterResponse;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.UUID;
 
-@FeignClient(name = "guardianClient", url = "${guardian.api.url}")
+@FeignClient(name = "guardianClient", url = "${guardian.api.url}", configuration = FeignConfig.class)
 public interface GuardianRestClientConsumer {
 
     @PostMapping("/v1/api/business/create-account")
