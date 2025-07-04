@@ -79,13 +79,13 @@ public class CreateNewContractServiceImpl implements CreateNewContractService{
         }
 
         log.info("({}) disable free time on weekdays for trainer {}", processId, personalId);
-        updateSundayAvailableTime(personalId, request.getTrainingInfo().getSunday());
-        updateSaturdayAvailableTime(personalId, request.getTrainingInfo().getSaturday());
-        updateFridayAvailableTime(personalId, request.getTrainingInfo().getFriday());
-        updateThursdayAvailableTime(personalId, request.getTrainingInfo().getThursday());
-        updateWednesdayAvailableTime(personalId, request.getTrainingInfo().getWednesday());
-        updateTuesdayAvailableTime(personalId, request.getTrainingInfo().getTuesday());
-        updateMondayAvailableTime(personalId, request.getTrainingInfo().getMonday());
+        updateAvailableTime(personalId, WeekdaysEnum.SUN, request.getTrainingInfo().getSunday());
+        updateAvailableTime(personalId, WeekdaysEnum.SAT, request.getTrainingInfo().getSaturday());
+        updateAvailableTime(personalId, WeekdaysEnum.FRI, request.getTrainingInfo().getFriday());
+        updateAvailableTime(personalId, WeekdaysEnum.THU, request.getTrainingInfo().getThursday());
+        updateAvailableTime(personalId, WeekdaysEnum.WED, request.getTrainingInfo().getWednesday());
+        updateAvailableTime(personalId, WeekdaysEnum.TUE, request.getTrainingInfo().getTuesday());
+        updateAvailableTime(personalId, WeekdaysEnum.MON, request.getTrainingInfo().getMonday());
 
         return ControllerGenericResponseHelper.getInstance(
                 "MSG-1610",
@@ -99,41 +99,6 @@ public class CreateNewContractServiceImpl implements CreateNewContractService{
     private void updateAvailableTime(Long id, WeekdaysEnum weekday, String time) {
         if(Objects.nonNull(time))
             availableTimeRepository.updateAvailableTime(Boolean.FALSE, id, weekday, time);
-    }
-
-    private void updateSundayAvailableTime(Long id, String time) {
-        if(Objects.nonNull(time))
-            availableTimeRepository.updateAvailableTime(Boolean.FALSE, id, WeekdaysEnum.SUN, time);
-    }
-
-    private void updateSaturdayAvailableTime(Long id, String time) {
-        if(Objects.nonNull(time))
-            availableTimeRepository.updateAvailableTime(Boolean.FALSE, id, WeekdaysEnum.SAT, time);
-    }
-
-    private void updateFridayAvailableTime(Long id, String time) {
-        if(Objects.nonNull(time))
-            availableTimeRepository.updateAvailableTime(Boolean.FALSE, id, WeekdaysEnum.FRI, time);
-    }
-
-    private void updateThursdayAvailableTime(Long id, String time) {
-        if(Objects.nonNull(time))
-            availableTimeRepository.updateAvailableTime(Boolean.FALSE, id, WeekdaysEnum.THU, time);
-    }
-
-    private void updateWednesdayAvailableTime(Long id, String time) {
-        if(Objects.nonNull(time))
-            availableTimeRepository.updateAvailableTime(Boolean.FALSE, id, WeekdaysEnum.WED, time);
-    }
-
-    private void updateTuesdayAvailableTime(Long id, String time) {
-        if(Objects.nonNull(time))
-            availableTimeRepository.updateAvailableTime(Boolean.FALSE, id, WeekdaysEnum.TUE, time);
-    }
-
-    private void updateMondayAvailableTime(Long id, String time) {
-        if(Objects.nonNull(time))
-            availableTimeRepository.updateAvailableTime(Boolean.FALSE, id, WeekdaysEnum.MON, time);
     }
 
     private List<StudentPayment> getInstalments(CreateNewStudentContractRequest request, Contract contract){
