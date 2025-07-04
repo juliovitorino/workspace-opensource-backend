@@ -5,10 +5,12 @@ import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse
 import br.com.jcv.treinadorpro.corelayer.enums.MasterLanguageEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.UserProfileEnum;
+import br.com.jcv.treinadorpro.corelayer.enums.WeekdaysEnum;
 import br.com.jcv.treinadorpro.corelayer.model.Contract;
 import br.com.jcv.treinadorpro.corelayer.model.StudentPayment;
 import br.com.jcv.treinadorpro.corelayer.model.TrainingPack;
 import br.com.jcv.treinadorpro.corelayer.model.User;
+import br.com.jcv.treinadorpro.corelayer.repository.AvailableTimeRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.ContractRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.TrainingPackRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
@@ -18,37 +20,47 @@ import br.com.jcv.treinadorpro.corelayer.response.CreateNewStudentContractRespon
 import br.com.jcv.treinadorpro.infrastructure.helper.TreinadorProHelper;
 import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
 import br.com.jcv.treinadorpro.shared.DataIntegrityViolationMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class CreateNewContractServiceImpl implements CreateNewContractService{
 
     private final ContractRepository contractRepository;
     private final DataIntegrityViolationMapper dataIntegrityViolationMapper;
     private final TreinadorProHelper treinadorProHelper;
+    private final AvailableTimeRepository availableTimeRepository;
 
     public CreateNewContractServiceImpl(TrainingPackRepository trainingPackRepository,
                                         UserRepository userRepository,
                                         ContractRepository contractRepository,
                                         DataIntegrityViolationMapper dataIntegrityViolationMapper,
-                                        TreinadorProHelper treinadorProHelper) {
+                                        TreinadorProHelper treinadorProHelper, AvailableTimeRepository availableTimeRepository) {
         this.contractRepository = contractRepository;
         this.dataIntegrityViolationMapper = dataIntegrityViolationMapper;
         this.treinadorProHelper = treinadorProHelper;
+        this.availableTimeRepository = availableTimeRepository;
     }
 
     @Override
+    @Transactional
     public ControllerGenericResponse<CreateNewStudentContractResponse> execute(UUID processId, CreateNewStudentContractRequest request) {
         checkNullableRequestParameters(request);
 
         User personalUser = treinadorProHelper.checkActivePersonalTrainerUUID(request.getPersonalTrainerExternalId());
-        TrainingPack trainingPack = treinadorProHelper.checkTrainingPackByExternalIdAndPersonalUserId(request.getTrainingPackExternalId(), personalUser.getId());
+        Long personalId = personalUser.getId();
+        TrainingPack trainingPack = treinadorProHelper.checkTrainingPackByExternalIdAndPersonalUserId(request.getTrainingPackExternalId(), personalId);
         User existingStudent = getExistingStudent(request);
         User newStudent = getInstanceNewStudent(request);
         Contract contract = getInstanceTrainingPack(request, trainingPack, existingStudent, newStudent);
@@ -56,6 +68,7 @@ public class CreateNewContractServiceImpl implements CreateNewContractService{
         contract.setStudentPaymentList(instalments);
 
         try {
+            log.info("({}) saving contract", processId);
             contractRepository.save(contract);
         } catch (DataIntegrityViolationException e) {
             System.out.println(e.getMessage());
@@ -65,6 +78,9 @@ public class CreateNewContractServiceImpl implements CreateNewContractService{
                     "MSG-1938");
         }
 
+        log.info("({}) disable free time on weekdays for trainer {}", processId, personalId);
+        updateAvailableTime(personalId, request);
+
         return ControllerGenericResponseHelper.getInstance(
                 "MSG-1610",
                 "New provision contract service was created successfully",
@@ -72,6 +88,21 @@ public class CreateNewContractServiceImpl implements CreateNewContractService{
                         .contractExternalId(contract.getExternalId())
                         .build()
         );
+    }
+
+    private void updateAvailableTime(Long personalId, CreateNewStudentContractRequest request) {
+        updateAvailableTime(personalId, WeekdaysEnum.SUN, request.getTrainingInfo().getSunday());
+        updateAvailableTime(personalId, WeekdaysEnum.SAT, request.getTrainingInfo().getSaturday());
+        updateAvailableTime(personalId, WeekdaysEnum.FRI, request.getTrainingInfo().getFriday());
+        updateAvailableTime(personalId, WeekdaysEnum.THU, request.getTrainingInfo().getThursday());
+        updateAvailableTime(personalId, WeekdaysEnum.WED, request.getTrainingInfo().getWednesday());
+        updateAvailableTime(personalId, WeekdaysEnum.TUE, request.getTrainingInfo().getTuesday());
+        updateAvailableTime(personalId, WeekdaysEnum.MON, request.getTrainingInfo().getMonday());
+    }
+
+    private void updateAvailableTime(Long id, WeekdaysEnum weekday, String time) {
+        if(Objects.nonNull(time))
+            availableTimeRepository.updateAvailableTime(Boolean.FALSE, id, weekday, time);
     }
 
     private List<StudentPayment> getInstalments(CreateNewStudentContractRequest request, Contract contract){
