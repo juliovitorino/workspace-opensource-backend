@@ -79,13 +79,7 @@ public class CreateNewContractServiceImpl implements CreateNewContractService{
         }
 
         log.info("({}) disable free time on weekdays for trainer {}", processId, personalId);
-        updateAvailableTime(personalId, WeekdaysEnum.SUN, request.getTrainingInfo().getSunday());
-        updateAvailableTime(personalId, WeekdaysEnum.SAT, request.getTrainingInfo().getSaturday());
-        updateAvailableTime(personalId, WeekdaysEnum.FRI, request.getTrainingInfo().getFriday());
-        updateAvailableTime(personalId, WeekdaysEnum.THU, request.getTrainingInfo().getThursday());
-        updateAvailableTime(personalId, WeekdaysEnum.WED, request.getTrainingInfo().getWednesday());
-        updateAvailableTime(personalId, WeekdaysEnum.TUE, request.getTrainingInfo().getTuesday());
-        updateAvailableTime(personalId, WeekdaysEnum.MON, request.getTrainingInfo().getMonday());
+        updateAvailableTime(personalId, request);
 
         return ControllerGenericResponseHelper.getInstance(
                 "MSG-1610",
@@ -94,6 +88,16 @@ public class CreateNewContractServiceImpl implements CreateNewContractService{
                         .contractExternalId(contract.getExternalId())
                         .build()
         );
+    }
+
+    private void updateAvailableTime(Long personalId, CreateNewStudentContractRequest request) {
+        updateAvailableTime(personalId, WeekdaysEnum.SUN, request.getTrainingInfo().getSunday());
+        updateAvailableTime(personalId, WeekdaysEnum.SAT, request.getTrainingInfo().getSaturday());
+        updateAvailableTime(personalId, WeekdaysEnum.FRI, request.getTrainingInfo().getFriday());
+        updateAvailableTime(personalId, WeekdaysEnum.THU, request.getTrainingInfo().getThursday());
+        updateAvailableTime(personalId, WeekdaysEnum.WED, request.getTrainingInfo().getWednesday());
+        updateAvailableTime(personalId, WeekdaysEnum.TUE, request.getTrainingInfo().getTuesday());
+        updateAvailableTime(personalId, WeekdaysEnum.MON, request.getTrainingInfo().getMonday());
     }
 
     private void updateAvailableTime(Long id, WeekdaysEnum weekday, String time) {
