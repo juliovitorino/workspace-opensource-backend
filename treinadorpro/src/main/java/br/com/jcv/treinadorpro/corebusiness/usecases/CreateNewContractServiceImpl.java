@@ -6,6 +6,7 @@ import br.com.jcv.treinadorpro.corelayer.enums.MasterLanguageEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.UserProfileEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.WeekdaysEnum;
+import br.com.jcv.treinadorpro.corelayer.model.AvailableTime;
 import br.com.jcv.treinadorpro.corelayer.model.Contract;
 import br.com.jcv.treinadorpro.corelayer.model.StudentPayment;
 import br.com.jcv.treinadorpro.corelayer.model.TrainingPack;
@@ -16,6 +17,7 @@ import br.com.jcv.treinadorpro.corelayer.repository.TrainingPackRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
 import br.com.jcv.treinadorpro.corelayer.request.CreateNewStudentContractRequest;
 import br.com.jcv.treinadorpro.corelayer.request.Instalment;
+import br.com.jcv.treinadorpro.corelayer.request.TrainingInfo;
 import br.com.jcv.treinadorpro.corelayer.response.CreateNewStudentContractResponse;
 import br.com.jcv.treinadorpro.infrastructure.helper.TreinadorProHelper;
 import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
@@ -25,12 +27,14 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Consumer;
-import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,10 +60,12 @@ public class CreateNewContractServiceImpl implements CreateNewContractService{
     @Override
     @Transactional
     public ControllerGenericResponse<CreateNewStudentContractResponse> execute(UUID processId, CreateNewStudentContractRequest request) {
-        checkNullableRequestParameters(request);
 
         User personalUser = treinadorProHelper.checkActivePersonalTrainerUUID(request.getPersonalTrainerExternalId());
+        validate(request, personalUser);
+
         Long personalId = personalUser.getId();
+
         TrainingPack trainingPack = treinadorProHelper.checkTrainingPackByExternalIdAndPersonalUserId(request.getTrainingPackExternalId(), personalId);
         User existingStudent = getExistingStudent(request);
         User newStudent = getInstanceNewStudent(request);
@@ -88,6 +94,73 @@ public class CreateNewContractServiceImpl implements CreateNewContractService{
                         .contractExternalId(contract.getExternalId())
                         .build()
         );
+    }
+
+    private void validate(CreateNewStudentContractRequest request, User personalUser) {
+        checkAvailableTime(request, personalUser);
+        checkNullableRequestParameters(request);
+    }
+
+    private void checkAvailableTime(CreateNewStudentContractRequest request, User personalUser) {
+        Map<WeekdaysEnum, Supplier<Optional<AvailableTime>>> strategyMap = Map.of(
+                WeekdaysEnum.MON, () -> availableTimeRepository.findByPersonalIdAndDayofweekAndDaytimeAndAvailable(personalUser.getId(), WeekdaysEnum.MON, request.getTrainingInfo().getMonday(), Boolean.TRUE),
+                WeekdaysEnum.TUE, () -> availableTimeRepository.findByPersonalIdAndDayofweekAndDaytimeAndAvailable(personalUser.getId(), WeekdaysEnum.TUE, request.getTrainingInfo().getTuesday(), Boolean.TRUE),
+                WeekdaysEnum.WED, () -> availableTimeRepository.findByPersonalIdAndDayofweekAndDaytimeAndAvailable(personalUser.getId(), WeekdaysEnum.WED, request.getTrainingInfo().getWednesday(), Boolean.TRUE),
+                WeekdaysEnum.THU, () -> availableTimeRepository.findByPersonalIdAndDayofweekAndDaytimeAndAvailable(personalUser.getId(), WeekdaysEnum.THU, request.getTrainingInfo().getThursday(), Boolean.TRUE),
+                WeekdaysEnum.FRI, () -> availableTimeRepository.findByPersonalIdAndDayofweekAndDaytimeAndAvailable(personalUser.getId(), WeekdaysEnum.FRI, request.getTrainingInfo().getFriday(), Boolean.TRUE),
+                WeekdaysEnum.SAT, () -> availableTimeRepository.findByPersonalIdAndDayofweekAndDaytimeAndAvailable(personalUser.getId(), WeekdaysEnum.SAT, request.getTrainingInfo().getSaturday(), Boolean.TRUE),
+                WeekdaysEnum.SUN, () -> availableTimeRepository.findByPersonalIdAndDayofweekAndDaytimeAndAvailable(personalUser.getId(), WeekdaysEnum.SUN, request.getTrainingInfo().getSunday(), Boolean.TRUE)
+        );
+        TrainingInfo trainingInfo = request.getTrainingInfo();
+
+        if(trainingInfo.getMonday() != null){
+            Optional<AvailableTime> availableTime = strategyMap.get(WeekdaysEnum.MON).get();
+            if(availableTime.isEmpty()){
+                throw new CommoditieBaseException("Schedule on Monday is busy", HttpStatus.UNPROCESSABLE_ENTITY, "MSG-1025");
+            }
+        }
+
+        if(trainingInfo.getTuesday() != null){
+            Optional<AvailableTime> availableTime = strategyMap.get(WeekdaysEnum.TUE).get();
+            if(availableTime.isEmpty()){
+                throw new CommoditieBaseException("Schedule on Tuesday is busy", HttpStatus.UNPROCESSABLE_ENTITY, "MSG-1026");
+            }
+        }
+
+        if(trainingInfo.getWednesday() != null){
+            Optional<AvailableTime> availableTime = strategyMap.get(WeekdaysEnum.WED).get();
+            if(availableTime.isEmpty()){
+                throw new CommoditieBaseException("Schedule on Wednesday is busy", HttpStatus.UNPROCESSABLE_ENTITY, "MSG-1027");
+            }
+        }
+
+        if(trainingInfo.getThursday() != null){
+            Optional<AvailableTime> availableTime = strategyMap.get(WeekdaysEnum.THU).get();
+            if(availableTime.isEmpty()){
+                throw new CommoditieBaseException("Schedule on Thursday is busy", HttpStatus.UNPROCESSABLE_ENTITY, "MSG-1028");
+            }
+        }
+
+        if(trainingInfo.getFriday() != null){
+            Optional<AvailableTime> availableTime = strategyMap.get(WeekdaysEnum.FRI).get();
+            if(availableTime.isEmpty()){
+                throw new CommoditieBaseException("Schedule on Friday is busy", HttpStatus.UNPROCESSABLE_ENTITY, "MSG-1029");
+            }
+        }
+
+        if(trainingInfo.getSaturday() != null){
+            Optional<AvailableTime> availableTime = strategyMap.get(WeekdaysEnum.SAT).get();
+            if(availableTime.isEmpty()){
+                throw new CommoditieBaseException("Schedule on Saturday is busy", HttpStatus.UNPROCESSABLE_ENTITY, "MSG-1030");
+            }
+        }
+
+        if(trainingInfo.getSunday() != null){
+            Optional<AvailableTime> availableTime = strategyMap.get(WeekdaysEnum.SUN).get();
+            if(availableTime.isEmpty()){
+                throw new CommoditieBaseException("Schedule on Sunday is busy", HttpStatus.UNPROCESSABLE_ENTITY, "MSG-1031");
+            }
+        }
     }
 
     private void updateAvailableTime(Long personalId, CreateNewStudentContractRequest request) {
