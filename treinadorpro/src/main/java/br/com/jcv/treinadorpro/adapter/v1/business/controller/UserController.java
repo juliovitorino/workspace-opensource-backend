@@ -4,6 +4,7 @@ import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse
 import br.com.jcv.restclient.guardian.LoginRequest;
 import br.com.jcv.restclient.guardian.request.RegisterResponse;
 import br.com.jcv.restclient.guardian.request.ValidateSixCodeRequest;
+import br.com.jcv.treinadorpro.corebusiness.usecases.FindTrainerAvailableTimeService;
 import br.com.jcv.treinadorpro.corebusiness.users.EditStudentProfileService;
 import br.com.jcv.treinadorpro.corebusiness.users.FindPersonalTrainerService;
 import br.com.jcv.treinadorpro.corebusiness.users.GetLoggedUserService;
@@ -14,6 +15,7 @@ import br.com.jcv.treinadorpro.corelayer.dto.UserDTO;
 import br.com.jcv.treinadorpro.corelayer.request.RegisterRequest;
 import br.com.jcv.treinadorpro.corelayer.request.StudentProfileRequest;
 import br.com.jcv.treinadorpro.corelayer.response.PersonalTrainerResponse;
+import br.com.jcv.treinadorpro.corelayer.response.TrainerAvailableTimeResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,15 +36,18 @@ public class UserController {
     private final EditStudentProfileService editStudentProfileService;
     private final FindPersonalTrainerService findPersonalTrainerService;
     private final GetLoggedUserService getLoggedUserService;
+    private final FindTrainerAvailableTimeService findTrainerAvailableTimeService;
 
     public UserController(RegisterNewPersonalTrainerService registerNewPersonalTrainerService,
                           EditStudentProfileService editStudentProfileService,
                           FindPersonalTrainerService findPersonalTrainerService,
                           ValidateSixCodeService validateSixCodeService,
-                          GetLoggedUserService getLoggedUserService) {
+                          GetLoggedUserService getLoggedUserService,
+                          FindTrainerAvailableTimeService findTrainerAvailableTimeService) {
         this.editStudentProfileService = editStudentProfileService;
         this.findPersonalTrainerService = findPersonalTrainerService;
         this.getLoggedUserService = getLoggedUserService;
+        this.findTrainerAvailableTimeService = findTrainerAvailableTimeService;
     }
 
     @PutMapping("/student/{uuid}")
@@ -60,6 +65,11 @@ public class UserController {
     @GetMapping("/trainer/logged")
     public ResponseEntity<ControllerGenericResponse<PersonalTrainerResponse>> getLoggedUser() {
         return ResponseEntity.ok(getLoggedUserService.execute(UUID.randomUUID()));
+    }
+
+    @GetMapping("/trainer/availabletimes")
+    public ResponseEntity<ControllerGenericResponse<TrainerAvailableTimeResponse>> findTrainerAvailableTime() {
+        return ResponseEntity.ok(findTrainerAvailableTimeService.execute(UUID.randomUUID()));
     }
 
 }

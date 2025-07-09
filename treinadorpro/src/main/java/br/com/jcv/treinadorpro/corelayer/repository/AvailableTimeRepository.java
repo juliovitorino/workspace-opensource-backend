@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -28,11 +29,22 @@ public interface AvailableTimeRepository extends JpaRepository<AvailableTime, Lo
             + "where AT.personalUser.id = :personalTrainerId "
             + "and  AT.daysOfWeek = :weekday "
             + "and AT.dayTime = :dayTime "
-    + "and AT.available = :available")
+            + "and AT.available = :available")
     Optional<AvailableTime> findByPersonalIdAndDayofweekAndDaytimeAndAvailable(
             @Param("personalTrainerId") Long personalTrainerId,
             @Param("weekday") WeekdaysEnum weekday,
             @Param("dayTime") String dayTime,
             @Param("available") Boolean available
     );
+
+    @Query("select AT.dayTime from AvailableTime AT "
+            + "where AT.personalUser.id = :personalTrainerId "
+            + "and  AT.daysOfWeek = :weekday "
+            + "and AT.available = true ")
+    List<String> findAvailableTimeByTrainerId(
+            @Param("personalTrainerId") Long personalTrainerId,
+            @Param("weekday") WeekdaysEnum weekday
+    );
+
+
 }
