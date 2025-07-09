@@ -4,6 +4,7 @@ import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse
 import br.com.jcv.restclient.dto.SessionStateDTO;
 import br.com.jcv.restclient.guardian.GuardianRestClientConsumer;
 import br.com.jcv.treinadorpro.corebusiness.users.FindPersonalTrainerByGuardianIdService;
+import br.com.jcv.treinadorpro.corebusiness.users.GetLoggedUserService;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.corelayer.model.Contract;
 import br.com.jcv.treinadorpro.corelayer.model.User;
@@ -27,21 +28,18 @@ import java.util.stream.Collectors;
 public class FindAllActiveContractsServiceImpl implements FindAllActiveContractsService {
 
     private final ContractRepository contractRepository;
-    private final GuardianRestClientConsumer guardianRestClientConsumer;
-    private final FindPersonalTrainerByGuardianIdService findPersonalTrainerByGuardianIdService;
+    private final GetLoggedUserService getLoggedUserService;
 
     public FindAllActiveContractsServiceImpl(ContractRepository contractRepository,
-                                             GuardianRestClientConsumer guardianRestClientConsumer,
-                                             FindPersonalTrainerByGuardianIdService findPersonalTrainerByGuardianIdService) {
+                                             GetLoggedUserService getLoggedUserService) {
         this.contractRepository = contractRepository;
-        this.guardianRestClientConsumer = guardianRestClientConsumer;
-        this.findPersonalTrainerByGuardianIdService = findPersonalTrainerByGuardianIdService;
+        this.getLoggedUserService = getLoggedUserService;
     }
 
     @Override
     @Transactional
     public ControllerGenericResponse<List<ContractResponse>> execute(UUID processId) {
-        PersonalTrainerResponse trainer = getTrainerFromToken(RequestTokenHolder.getToken());
+        PersonalTrainerResponse trainer = getLoggedUserService.execute(processId).getObjectResponse();
 
         List<Contract> allContracts = contractRepository.findAllContracts(trainer.getId(), StatusEnum.A);
         return ControllerGenericResponseHelper.getInstance(
@@ -52,15 +50,4 @@ public class FindAllActiveContractsServiceImpl implements FindAllActiveContracts
                         .collect(Collectors.toList())
         );
     }
-
-
-    private PersonalTrainerResponse getTrainerFromToken(String token) {
-
-        ControllerGenericResponse<SessionStateDTO> sessionState = guardianRestClientConsumer.findSessionState(token);
-
-        ControllerGenericResponse<PersonalTrainerResponse> personalTrainer = findPersonalTrainerByGuardianIdService
-                .execute(UUID.randomUUID(), sessionState.getObjectResponse().getIdUserUUID());
-        return personalTrainer.getObjectResponse();
-    }
-
 }

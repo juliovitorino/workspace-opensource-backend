@@ -1,14 +1,11 @@
 package br.com.jcv.treinadorpro.corebusiness.users;
 
-import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.restclient.dto.SessionStateDTO;
 import br.com.jcv.restclient.guardian.GuardianRestClientConsumer;
 import br.com.jcv.treinadorpro.corelayer.response.PersonalTrainerResponse;
 import br.com.jcv.treinadorpro.infrastructure.interceptor.RequestTokenHolder;
 import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
