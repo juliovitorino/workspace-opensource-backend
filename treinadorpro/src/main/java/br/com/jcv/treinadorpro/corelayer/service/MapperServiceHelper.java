@@ -1,6 +1,7 @@
 package br.com.jcv.treinadorpro.corelayer.service;
 
 import br.com.jcv.treinadorpro.corebusiness.plantemplate.PlanTemplateResponse;
+import br.com.jcv.treinadorpro.corelayer.model.Contract;
 import br.com.jcv.treinadorpro.corelayer.model.Exercise;
 import br.com.jcv.treinadorpro.corelayer.model.Goal;
 import br.com.jcv.treinadorpro.corelayer.model.Modality;
@@ -11,14 +12,17 @@ import br.com.jcv.treinadorpro.corelayer.model.TrainingPack;
 import br.com.jcv.treinadorpro.corelayer.model.User;
 import br.com.jcv.treinadorpro.corelayer.model.WorkGroup;
 import br.com.jcv.treinadorpro.corelayer.request.CreateTrainingPackRequest;
+import br.com.jcv.treinadorpro.corelayer.response.ContractResponse;
 import br.com.jcv.treinadorpro.corelayer.response.ExerciseResponse;
 import br.com.jcv.treinadorpro.corelayer.response.GoalResponse;
 import br.com.jcv.treinadorpro.corelayer.response.ModalityResponse;
 import br.com.jcv.treinadorpro.corelayer.response.PersonalFeatureResponse;
 import br.com.jcv.treinadorpro.corelayer.response.PersonalTrainerResponse;
 import br.com.jcv.treinadorpro.corelayer.response.ProgramResponse;
+import br.com.jcv.treinadorpro.corelayer.response.StudentResponse;
 import br.com.jcv.treinadorpro.corelayer.response.StudentsFromTrainerResponse;
 import br.com.jcv.treinadorpro.corelayer.response.TrainingPackResponse;
+import br.com.jcv.treinadorpro.corelayer.response.UserResponse;
 import br.com.jcv.treinadorpro.corelayer.response.WorkGroupResponse;
 import org.springframework.stereotype.Component;
 
@@ -45,26 +49,46 @@ public class MapperServiceHelper {
                 .build();
     }
 
+    public static StudentResponse toStudentResponse(User user) {
+        return new StudentResponse(
+                user.getId(),
+                user.getUuidId(),
+                user.getName(),
+                user.getEmail(),
+                user.getCellphone(),
+                user.getBirthday(),
+                user.getGender(),
+                user.getUrlPhotoProfile(),
+                user.getUserProfile(),
+                user.getMasterLanguage(),
+                user.getStatus(),
+                user.getLastLogin(),
+                user.getCreatedAt(),
+                user.getUpdatedAt()
+        );
+    }
+
 
     public static PersonalTrainerResponse toResponse(User user) {
-        return PersonalTrainerResponse.builder()
-                .id(user.getId())
-                .uuidId(user.getUuidId())
-                .name(user.getName())
-                .email(user.getEmail())
-                .cellphone(user.getCellphone())
-                .birthday(user.getBirthday())
-                .gender(user.getGender())
-                .userProfile(user.getUserProfile())
-                .urlPhotoProfile(user.getUrlPhotoProfile())
-                .masterLanguage(user.getMasterLanguage())
-                .lastLogin(user.getLastLogin())
-                .status(user.getStatus())
-                .createdAt(user.getCreatedAt())
-                .updatedAt(user.getUpdatedAt())
-                .personalFeature(toResponse(user.getPersonalFeature()))
-                .build();
+        return new PersonalTrainerResponse(
+                user.getId(),
+                user.getUuidId(),
+                user.getName(),
+                user.getEmail(),
+                user.getCellphone(),
+                user.getBirthday(),
+                user.getGender(),
+                user.getUrlPhotoProfile(),
+                user.getUserProfile(),
+                user.getMasterLanguage(),
+                user.getStatus(),
+                user.getLastLogin(),
+                user.getCreatedAt(),
+                user.getUpdatedAt(),
+                toResponse(user.getPersonalFeature())
+        );
     }
+
 
     public static PersonalFeatureResponse toResponse(PersonalFeature personalFeature) {
         if(personalFeature == null) return null;
@@ -198,4 +222,27 @@ public class MapperServiceHelper {
                 .phone(user.getCellphone())
                 .build();
     }
+
+    public static ContractResponse toResponse(Contract contract) {
+        return ContractResponse.builder()
+                .externalId(contract.getExternalId())
+                .trainingPack(toResponse(contract.getTrainingPack()))
+                .studentUser(toStudentResponse(contract.getStudentUser()))
+                .description(contract.getDescription())
+                .price(contract.getPrice())
+                .currency(contract.getCurrency())
+                .monday(contract.getMonday())
+                .tuesday(contract.getTuesday())
+                .wednesday(contract.getWednesday())
+                .thursday(contract.getThursday())
+                .friday(contract.getFriday())
+                .saturday(contract.getSaturday())
+                .sunday(contract.getSunday())
+                .duration(contract.getDuration())
+                .status(contract.getStatus())
+                .createdAt(contract.getCreatedAt())
+                .updatedAt(contract.getUpdatedAt())
+                .build();
+    }
+
 }

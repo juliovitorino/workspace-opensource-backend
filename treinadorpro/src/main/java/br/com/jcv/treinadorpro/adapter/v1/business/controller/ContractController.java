@@ -2,10 +2,13 @@ package br.com.jcv.treinadorpro.adapter.v1.business.controller;
 
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.treinadorpro.corebusiness.usecases.CreateNewContractService;
+import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllActiveContractsService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllStudentsFromTrainerService;
 import br.com.jcv.treinadorpro.corelayer.request.CreateNewStudentContractRequest;
+import br.com.jcv.treinadorpro.corelayer.response.ContractResponse;
 import br.com.jcv.treinadorpro.corelayer.response.CreateNewStudentContractResponse;
 import br.com.jcv.treinadorpro.corelayer.response.StudentsFromTrainerResponse;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,12 +26,15 @@ public class ContractController {
 
     private final CreateNewContractService createNewContractService;
     private final FindAllStudentsFromTrainerService findAllStudentsFromTrainerService;
+    private final FindAllActiveContractsService findAllActiveContractsService;
 
 
     public ContractController(CreateNewContractService createNewContractService,
-                              FindAllStudentsFromTrainerService findAllStudentsFromTrainerService) {
+                              FindAllStudentsFromTrainerService findAllStudentsFromTrainerService,
+                              FindAllActiveContractsService findAllActiveContractsService) {
         this.createNewContractService = createNewContractService;
         this.findAllStudentsFromTrainerService = findAllStudentsFromTrainerService;
+        this.findAllActiveContractsService = findAllActiveContractsService;
     }
 
     @PostMapping
@@ -40,8 +46,14 @@ public class ContractController {
 
 
     @GetMapping("{externalId}")
-    public ResponseEntity<ControllerGenericResponse<List<StudentsFromTrainerResponse>>> findAllStudentsFromTrainerService(@PathVariable("externalId")UUID externalId){
+    public ResponseEntity<ControllerGenericResponse<List<StudentsFromTrainerResponse>>> findAllStudentsFromTrainerService(
+            @PathVariable("externalId")UUID externalId){
         return ResponseEntity.ok(findAllStudentsFromTrainerService.execute(UUID.randomUUID(), externalId));
+    }
+
+    @GetMapping("/trainer/active")
+    public ResponseEntity<ControllerGenericResponse<List<ContractResponse>>> findAllActiveContracts(){
+        return ResponseEntity.ok(findAllActiveContractsService.execute(UUID.randomUUID()));
     }
 
 }
