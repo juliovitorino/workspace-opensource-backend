@@ -3,7 +3,6 @@ package br.com.jcv.treinadorpro.corelayer.response;
 import br.com.jcv.treinadorpro.corelayer.enums.GenderEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.UserProfileEnum;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,12 +17,11 @@ import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class PersonalTrainerResponse extends UserResponse implements Serializable {
+public class StudentResponse extends UserResponse implements Serializable {
 
-    @JsonProperty("personalFeature")
-    private PersonalFeatureResponse personalFeature;
+    public StudentResponse() {}
 
-    public PersonalTrainerResponse(
+    public StudentResponse(
             Long id,
             UUID uuidId,
             String name,
@@ -37,11 +35,10 @@ public class PersonalTrainerResponse extends UserResponse implements Serializabl
             StatusEnum status,
             LocalDateTime lastLogin,
             LocalDateTime createdAt,
-            LocalDateTime updatedAt,
-            PersonalFeatureResponse personalFeature
+            LocalDateTime updatedAt
     ) {
         super(id,uuidId,name,email,cellphone,birthday,gender,urlPhotoProfile,userProfile,masterLanguage,status,lastLogin,createdAt,updatedAt);
-        this.personalFeature = personalFeature;
     }
+
 
 }

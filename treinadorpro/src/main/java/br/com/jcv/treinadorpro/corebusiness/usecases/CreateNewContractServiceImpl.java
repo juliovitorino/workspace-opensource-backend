@@ -50,7 +50,8 @@ public class CreateNewContractServiceImpl implements CreateNewContractService{
                                         UserRepository userRepository,
                                         ContractRepository contractRepository,
                                         DataIntegrityViolationMapper dataIntegrityViolationMapper,
-                                        TreinadorProHelper treinadorProHelper, AvailableTimeRepository availableTimeRepository) {
+                                        TreinadorProHelper treinadorProHelper,
+                                        AvailableTimeRepository availableTimeRepository) {
         this.contractRepository = contractRepository;
         this.dataIntegrityViolationMapper = dataIntegrityViolationMapper;
         this.treinadorProHelper = treinadorProHelper;

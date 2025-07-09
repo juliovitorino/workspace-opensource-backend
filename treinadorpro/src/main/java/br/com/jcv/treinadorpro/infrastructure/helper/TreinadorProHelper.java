@@ -1,6 +1,10 @@
 package br.com.jcv.treinadorpro.infrastructure.helper;
 
 import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
+import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
+import br.com.jcv.restclient.dto.SessionStateDTO;
+import br.com.jcv.restclient.guardian.GuardianRestClientConsumer;
+import br.com.jcv.treinadorpro.corebusiness.users.FindPersonalTrainerByGuardianIdService;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.UserProfileEnum;
 import br.com.jcv.treinadorpro.corelayer.model.TrainingPack;
@@ -8,7 +12,9 @@ import br.com.jcv.treinadorpro.corelayer.model.User;
 import br.com.jcv.treinadorpro.corelayer.repository.TrainingPackRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
 import br.com.jcv.treinadorpro.corelayer.request.RegisterRequest;
+import br.com.jcv.treinadorpro.corelayer.response.PersonalTrainerResponse;
 import br.com.jcv.treinadorpro.infrastructure.config.TreinadorProConfig;
+import br.com.jcv.treinadorpro.infrastructure.interceptor.RequestTokenHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -25,8 +31,8 @@ public class TreinadorProHelper {
 
 
     public TreinadorProHelper(UserRepository userRepository,
-                                 TrainingPackRepository trainingPackRepository,
-                                 TreinadorProConfig config) {
+                              TrainingPackRepository trainingPackRepository,
+                              TreinadorProConfig config) {
         this.userRepository = userRepository;
         this.trainingPackRepository = trainingPackRepository;
         this.config = config;
