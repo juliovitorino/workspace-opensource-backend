@@ -30,7 +30,7 @@ public class FindTrainerAvailableTimeServiceImpl implements FindTrainerAvailable
     @Override
     public ControllerGenericResponse<TrainerAvailableTimeResponse> execute(UUID processId) {
 
-        PersonalTrainerResponse trainer = getLoggedUserService.execute(processId).getObjectResponse();
+        PersonalTrainerResponse trainer = getLoggedUserService.execute(processId);
         List<String> mondayAvailable = availableTimeRepository.findAvailableTimeByTrainerId(trainer.getId(), WeekdaysEnum.MON);
         List<String> tuesdayAvailable = availableTimeRepository.findAvailableTimeByTrainerId(trainer.getId(), WeekdaysEnum.TUE);
         List<String> wednesdayAvailable = availableTimeRepository.findAvailableTimeByTrainerId(trainer.getId(), WeekdaysEnum.WED);

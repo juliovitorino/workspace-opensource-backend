@@ -35,18 +35,15 @@ public class UserController {
 
     private final EditStudentProfileService editStudentProfileService;
     private final FindPersonalTrainerService findPersonalTrainerService;
-    private final GetLoggedUserService getLoggedUserService;
     private final FindTrainerAvailableTimeService findTrainerAvailableTimeService;
 
     public UserController(RegisterNewPersonalTrainerService registerNewPersonalTrainerService,
                           EditStudentProfileService editStudentProfileService,
                           FindPersonalTrainerService findPersonalTrainerService,
                           ValidateSixCodeService validateSixCodeService,
-                          GetLoggedUserService getLoggedUserService,
                           FindTrainerAvailableTimeService findTrainerAvailableTimeService) {
         this.editStudentProfileService = editStudentProfileService;
         this.findPersonalTrainerService = findPersonalTrainerService;
-        this.getLoggedUserService = getLoggedUserService;
         this.findTrainerAvailableTimeService = findTrainerAvailableTimeService;
     }
 
@@ -60,11 +57,6 @@ public class UserController {
     @GetMapping("/trainer/{uuid}")
     public ResponseEntity<ControllerGenericResponse<PersonalTrainerResponse>> findPersonalTrainer(@PathVariable("uuid") UUID uuidId) {
         return ResponseEntity.ok(findPersonalTrainerService.execute(UUID.randomUUID(), uuidId));
-    }
-
-    @GetMapping("/trainer/logged")
-    public ResponseEntity<ControllerGenericResponse<PersonalTrainerResponse>> getLoggedUser() {
-        return ResponseEntity.ok(getLoggedUserService.execute(UUID.randomUUID()));
     }
 
     @GetMapping("/trainer/availabletimes")
