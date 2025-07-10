@@ -16,6 +16,7 @@ import br.com.jcv.treinadorpro.corelayer.request.RegisterRequest;
 import br.com.jcv.treinadorpro.corelayer.request.StudentProfileRequest;
 import br.com.jcv.treinadorpro.corelayer.response.PersonalTrainerResponse;
 import br.com.jcv.treinadorpro.corelayer.response.TrainerAvailableTimeResponse;
+import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,15 +37,27 @@ public class UserController {
     private final EditStudentProfileService editStudentProfileService;
     private final FindPersonalTrainerService findPersonalTrainerService;
     private final FindTrainerAvailableTimeService findTrainerAvailableTimeService;
+    private final GetLoggedUserService getLoggedUserService;
 
     public UserController(RegisterNewPersonalTrainerService registerNewPersonalTrainerService,
                           EditStudentProfileService editStudentProfileService,
                           FindPersonalTrainerService findPersonalTrainerService,
                           ValidateSixCodeService validateSixCodeService,
-                          FindTrainerAvailableTimeService findTrainerAvailableTimeService) {
+                          FindTrainerAvailableTimeService findTrainerAvailableTimeService, GetLoggedUserService getLoggedUserService) {
         this.editStudentProfileService = editStudentProfileService;
         this.findPersonalTrainerService = findPersonalTrainerService;
         this.findTrainerAvailableTimeService = findTrainerAvailableTimeService;
+        this.getLoggedUserService = getLoggedUserService;
+    }
+
+    @GetMapping("/trainer/logged")
+    public ResponseEntity<ControllerGenericResponse<PersonalTrainerResponse>> getLoggedUser() {
+        return ResponseEntity.ok(ControllerGenericResponseHelper.getInstance(
+                "MSG-1801",
+                "Your request has been done",
+                getLoggedUserService.execute(UUID.randomUUID())
+                )
+        );
     }
 
     @PutMapping("/student/{uuid}")
