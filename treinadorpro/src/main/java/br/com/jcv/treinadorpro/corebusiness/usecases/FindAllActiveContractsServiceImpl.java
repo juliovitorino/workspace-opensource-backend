@@ -39,7 +39,7 @@ public class FindAllActiveContractsServiceImpl implements FindAllActiveContracts
     @Override
     @Transactional
     public ControllerGenericResponse<List<ContractResponse>> execute(UUID processId) {
-        PersonalTrainerResponse trainer = getLoggedUserService.execute(processId).getObjectResponse();
+        PersonalTrainerResponse trainer = getLoggedUserService.execute(processId);
 
         List<Contract> allContracts = contractRepository.findAllContracts(trainer.getId(), StatusEnum.A);
         return ControllerGenericResponseHelper.getInstance(

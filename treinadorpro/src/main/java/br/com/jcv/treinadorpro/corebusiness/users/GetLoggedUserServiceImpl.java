@@ -23,24 +23,12 @@ public class GetLoggedUserServiceImpl implements GetLoggedUserService {
     }
 
     @Override
-    public ControllerGenericResponse<PersonalTrainerResponse> execute(UUID processId) {
-        PersonalTrainerResponse personalTrainer = getTrainerFromToken(RequestTokenHolder.getToken());
-        return ControllerGenericResponseHelper.getInstance(
-                "MSG-1328",
-                "User logged has been retrieved successfully",
-                personalTrainer
-        );
-
-    }
-
-    private PersonalTrainerResponse getTrainerFromToken(String token) {
-
-        ControllerGenericResponse<SessionStateDTO> sessionState = guardianRestClientConsumer.findSessionState(token);
+    public PersonalTrainerResponse execute(UUID processId) {
+        ControllerGenericResponse<SessionStateDTO> sessionState = guardianRestClientConsumer.findSessionState(RequestTokenHolder.getToken());
 
         ControllerGenericResponse<PersonalTrainerResponse> personalTrainer = findPersonalTrainerByGuardianIdService
                 .execute(UUID.randomUUID(), sessionState.getObjectResponse().getIdUserUUID());
         return personalTrainer.getObjectResponse();
     }
-
 
 }
