@@ -43,6 +43,13 @@ public class FindTrainerAvailableTimeServiceImpl implements FindTrainerAvailable
                 "Your available time have been retrieved successfully",
                 TrainerAvailableTimeResponse.builder()
                         .trainer(trainer)
+                        .monTotal(mondayAvailable.size())
+                        .tueTotal(tuesdayAvailable.size())
+                        .wedTotal(wednesdayAvailable.size())
+                        .thuTotal(thursdayAvailable.size())
+                        .friTotal(fridayAvailable.size())
+                        .satTotal(saturdayAvailable.size())
+                        .sunTotal(sundayAvailable.size())
                         .mondayAvailableTimes(mondayAvailable)
                         .tuesdayAvailableTimes(tuesdayAvailable)
                         .wednesdayAvailableTimes(wednesdayAvailable)
