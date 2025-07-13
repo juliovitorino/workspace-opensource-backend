@@ -5,6 +5,8 @@ import br.com.jcv.treinadorpro.corebusiness.users.GetLoggedUserService;
 import br.com.jcv.treinadorpro.corelayer.enums.SituationEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.corelayer.repository.ContractRepository;
+import br.com.jcv.treinadorpro.corelayer.repository.StudentPaymentRepository;
+import br.com.jcv.treinadorpro.corelayer.repository.TrainingPackRepository;
 import br.com.jcv.treinadorpro.corelayer.response.BuilderDashboardResponse;
 import br.com.jcv.treinadorpro.corelayer.response.PersonalTrainerResponse;
 import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
@@ -18,22 +20,19 @@ import java.util.UUID;
 @Slf4j
 public class BuilderDashboardServiceImpl implements BuilderDashboardService{
 
-    private final CounterStudentContractsService counterStudentContractsService;
-    private final OverdueAmountContractService overdueAmountContractService;
-    private final CounterTrainingPackService counterTrainingPackService;
     private final ContractRepository contractRepository;
     private final GetLoggedUserService getLoggedUserService;
+    private final StudentPaymentRepository studentPaymentRepository;
+    private final TrainingPackRepository trainingPackRepository;
 
-    public BuilderDashboardServiceImpl(CounterStudentContractsService counterStudentContractsService,
-                                       OverdueAmountContractService overdueAmountContractService,
-                                       CounterTrainingPackService counterTrainingPackService,
-                                       ContractRepository contractRepository,
-                                       GetLoggedUserService getLoggedUserService) {
-        this.counterStudentContractsService = counterStudentContractsService;
-        this.overdueAmountContractService = overdueAmountContractService;
-        this.counterTrainingPackService = counterTrainingPackService;
+    public BuilderDashboardServiceImpl(ContractRepository contractRepository,
+                                       GetLoggedUserService getLoggedUserService,
+                                       StudentPaymentRepository studentPaymentRepository,
+                                       TrainingPackRepository trainingPackRepository) {
         this.contractRepository = contractRepository;
         this.getLoggedUserService = getLoggedUserService;
+        this.studentPaymentRepository = studentPaymentRepository;
+        this.trainingPackRepository = trainingPackRepository;
     }
 
     @Override
@@ -44,10 +43,11 @@ public class BuilderDashboardServiceImpl implements BuilderDashboardService{
                 "MSG-1449",
                 "Dashboard Response has been executed successfully",
                 BuilderDashboardResponse.builder()
-                        .activeStudentContract(counterStudentContractsService.execute(processId, SituationEnum.OPEN))
-                        .overdueAmountContracts(overdueAmountContractService.execute(processId))
-                        .totalTrainingPack(counterTrainingPackService.execute(processId))
+                        .activeStudentContract(contractRepository.countOpenAndActiveContracts(SituationEnum.OPEN, StatusEnum.A, trainer.getId()))
+                        .overdueAmountContracts(studentPaymentRepository.sumOverduePayments(trainer.getId()))
+                        .totalTrainingPack(trainingPackRepository.countTrainingPack(getLoggedUserService.execute(processId).getId()))
                         .totalTodayWorkout(contractRepository.countTodayWorkout(SituationEnum.OPEN.name(), StatusEnum.A.name(), trainer.getId()))
+                        .totalAmountReceivedMonth(studentPaymentRepository.sumReceivedPaymentsCurrentMonth(trainer.getId()))
                         .build()
         );
     }
