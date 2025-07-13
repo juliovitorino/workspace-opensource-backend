@@ -20,4 +20,10 @@ public class BuilderDashboardResponse implements Serializable {
 
     @JsonProperty("overdueAmountContracts")
     private BigDecimal overdueAmountContracts;
+
+    @JsonProperty("totalTrainingPack")
+    private Long totalTrainingPack;
+
+    @JsonProperty("totalTodayWorkout")
+    private Long totalTodayWorkout;
 }

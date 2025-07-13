@@ -33,5 +33,25 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
     long countOpenAndActiveContracts(@Param("situation") SituationEnum situation,
                                      @Param("status") StatusEnum status,
                                      @Param("personalId") Long personalId);
+    
+    @Query(value = "select count(*) " +
+            "from contract c  " +
+            "inner join training_pack tp on tp.id = c.pack_training_id  " +
+            "where ( " +
+            "    (EXTRACT(DOW FROM CURRENT_DATE) = 0 AND sunday IS NOT NULL) OR " +
+            "    (EXTRACT(DOW FROM CURRENT_DATE) = 1 AND monday IS NOT NULL) OR " +
+            "    (EXTRACT(DOW FROM CURRENT_DATE) = 2 AND tuesday IS NOT NULL) OR " +
+            "    (EXTRACT(DOW FROM CURRENT_DATE) = 3 AND wednesday IS NOT NULL) OR " +
+            "    (EXTRACT(DOW FROM CURRENT_DATE) = 4 AND thursday IS NOT NULL) OR " +
+            "    (EXTRACT(DOW FROM CURRENT_DATE) = 5 AND friday IS NOT NULL) OR " +
+            "    (EXTRACT(DOW FROM CURRENT_DATE) = 6 AND saturday IS NOT NULL) " +
+            ") " +
+            "and c.situation = :situation  " +
+            "and c.status = :status  " +
+            "and tp.personal_user_id = :personalId"
+            , nativeQuery = true)
+    long countTodayWorkout(@Param("situation") String situation,
+                                     @Param("status") String status,
+                                     @Param("personalId") Long personalId);
 
 }

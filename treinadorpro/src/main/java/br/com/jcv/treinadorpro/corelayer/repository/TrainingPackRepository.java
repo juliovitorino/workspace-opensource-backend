@@ -23,4 +23,7 @@ public interface TrainingPackRepository extends JpaRepository<TrainingPack, Long
 
     @Query(value = "Select TP from TrainingPack TP where externalId = :externalId and personalUser.id = :personalUserId")
     Optional<TrainingPack> findByExternalIdAndPersonalUserId(@Param("externalId") UUID externalId, @Param("personalUserId") Long personalUserId);
+
+    @Query("select count(TP) from TrainingPack TP where personalUser.id = :personalUserId")
+    Long countTrainingPack(@Param("personalUserId") Long personalUserId);
 }
