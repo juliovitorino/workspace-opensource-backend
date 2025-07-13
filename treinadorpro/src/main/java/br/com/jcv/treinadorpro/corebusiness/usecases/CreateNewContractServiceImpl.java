@@ -3,6 +3,7 @@ package br.com.jcv.treinadorpro.corebusiness.usecases;
 import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.treinadorpro.corelayer.enums.MasterLanguageEnum;
+import br.com.jcv.treinadorpro.corelayer.enums.SituationEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.UserProfileEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.WeekdaysEnum;
@@ -216,6 +217,7 @@ public class CreateNewContractServiceImpl implements CreateNewContractService{
                 .saturday(request.getTrainingInfo().getSaturday())
                 .sunday(request.getTrainingInfo().getSunday())
                 .duration(request.getTrainingInfo().getDuration())
+                .situation(SituationEnum.OPEN)
                 .build();
     }
 

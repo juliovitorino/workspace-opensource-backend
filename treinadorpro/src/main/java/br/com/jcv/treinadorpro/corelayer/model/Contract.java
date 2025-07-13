@@ -1,5 +1,6 @@
 package br.com.jcv.treinadorpro.corelayer.model;
 
+import br.com.jcv.treinadorpro.corelayer.enums.SituationEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.infrastructure.utils.StringArrayListUserType;
 import lombok.AllArgsConstructor;
@@ -86,6 +87,10 @@ public class Contract {
 
     @Column(name = "duration",  length = 5)
     private String duration;
+
+    @Column(name = "situation", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private SituationEnum situation = SituationEnum.OPEN;
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
