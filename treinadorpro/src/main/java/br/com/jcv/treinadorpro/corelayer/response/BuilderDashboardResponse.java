@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
@@ -16,4 +17,7 @@ public class BuilderDashboardResponse implements Serializable {
 
     @JsonProperty("activeStudentContract")
     private Long activeStudentContract;
+
+    @JsonProperty("overdueAmountContracts")
+    private BigDecimal overdueAmountContracts;
 }

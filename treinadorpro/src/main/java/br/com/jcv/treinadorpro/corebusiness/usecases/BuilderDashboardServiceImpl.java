@@ -15,9 +15,11 @@ import java.util.UUID;
 public class BuilderDashboardServiceImpl implements BuilderDashboardService{
 
     private final CounterStudentContractsService counterStudentContractsService;
+    private final OverdueAmountContractService overdueAmountContractService;
 
-    public BuilderDashboardServiceImpl(CounterStudentContractsService counterStudentContractsService) {
+    public BuilderDashboardServiceImpl(CounterStudentContractsService counterStudentContractsService, OverdueAmountContractService overdueAmountContractService) {
         this.counterStudentContractsService = counterStudentContractsService;
+        this.overdueAmountContractService = overdueAmountContractService;
     }
 
     @Override
@@ -28,6 +30,7 @@ public class BuilderDashboardServiceImpl implements BuilderDashboardService{
                 "Dashboard Response has been executed successfully",
                 BuilderDashboardResponse.builder()
                         .activeStudentContract(counterStudentContractsService.execute(processId, SituationEnum.OPEN))
+                        .overdueAmountContracts(overdueAmountContractService.execute(processId))
                         .build()
         );
     }
