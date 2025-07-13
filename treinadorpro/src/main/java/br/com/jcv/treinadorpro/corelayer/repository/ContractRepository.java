@@ -1,5 +1,6 @@
 package br.com.jcv.treinadorpro.corelayer.repository;
 
+import br.com.jcv.treinadorpro.corelayer.enums.SituationEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.corelayer.model.User;
 import br.com.jcv.treinadorpro.corelayer.model.Contract;
@@ -23,4 +24,14 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
     @Query("SELECT C from Contract C WHERE C.trainingPack.personalUser.id = :personalUserId and C.status = :status")
     List<Contract> findAllContracts(@Param("personalUserId") Long personalUserId,
                                     @Param("status") StatusEnum status);
+
+
+    @Query("SELECT COUNT(c) FROM Contract c " +
+            "WHERE c.situation = :situation " +
+            "and c.status = :status " +
+            "and c.trainingPack.personalUser.id = :personalId")
+    long countOpenAndActiveContracts(@Param("situation") SituationEnum situation,
+                                     @Param("status") StatusEnum status,
+                                     @Param("personalId") Long personalId);
+
 }

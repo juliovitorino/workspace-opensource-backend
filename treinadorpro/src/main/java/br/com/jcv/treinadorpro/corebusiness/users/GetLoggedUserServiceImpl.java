@@ -5,7 +5,6 @@ import br.com.jcv.restclient.dto.SessionStateDTO;
 import br.com.jcv.restclient.guardian.GuardianRestClientConsumer;
 import br.com.jcv.treinadorpro.corelayer.response.PersonalTrainerResponse;
 import br.com.jcv.treinadorpro.infrastructure.interceptor.RequestTokenHolder;
-import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;

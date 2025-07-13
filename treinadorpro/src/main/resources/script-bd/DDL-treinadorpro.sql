@@ -395,6 +395,7 @@ CREATE TABLE contract (
     friday VARCHAR(5),
     saturday VARCHAR(5),
     sunday VARCHAR(5),
+    situation VARCHAR(50),
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
