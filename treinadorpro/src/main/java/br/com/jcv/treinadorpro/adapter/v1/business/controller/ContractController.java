@@ -4,10 +4,12 @@ import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse
 import br.com.jcv.treinadorpro.corebusiness.usecases.CreateNewContractService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllActiveContractsService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllContractTodayWorkoutService;
+import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllOverduePaymentService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllStudentsFromTrainerService;
 import br.com.jcv.treinadorpro.corelayer.request.CreateNewStudentContractRequest;
 import br.com.jcv.treinadorpro.corelayer.response.ContractResponse;
 import br.com.jcv.treinadorpro.corelayer.response.CreateNewStudentContractResponse;
+import br.com.jcv.treinadorpro.corelayer.response.StudentPaymentResponse;
 import br.com.jcv.treinadorpro.corelayer.response.StudentsFromTrainerResponse;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
@@ -29,15 +31,18 @@ public class ContractController {
     private final FindAllStudentsFromTrainerService findAllStudentsFromTrainerService;
     private final FindAllActiveContractsService findAllActiveContractsService;
     private final FindAllContractTodayWorkoutService findAllContractTodayWorkoutService;
+    private final FindAllOverduePaymentService findAllOverduePaymentService;
 
     public ContractController(CreateNewContractService createNewContractService,
                               FindAllStudentsFromTrainerService findAllStudentsFromTrainerService,
                               FindAllActiveContractsService findAllActiveContractsService,
-                              FindAllContractTodayWorkoutService findAllContractTodayWorkoutService) {
+                              FindAllContractTodayWorkoutService findAllContractTodayWorkoutService,
+                              FindAllOverduePaymentService findAllOverduePaymentService) {
         this.createNewContractService = createNewContractService;
         this.findAllStudentsFromTrainerService = findAllStudentsFromTrainerService;
         this.findAllActiveContractsService = findAllActiveContractsService;
         this.findAllContractTodayWorkoutService = findAllContractTodayWorkoutService;
+        this.findAllOverduePaymentService = findAllOverduePaymentService;
     }
 
     @PostMapping
@@ -62,7 +67,11 @@ public class ContractController {
     @GetMapping("/trainer/today")
     public ResponseEntity<ControllerGenericResponse<List<ContractResponse>>> findAllContractTodayWorkoutService() {
         return ResponseEntity.ok(findAllContractTodayWorkoutService.execute(UUID.randomUUID()));
+    }
 
+    @GetMapping("/trainer/student/overdue-payments")
+    public ResponseEntity<ControllerGenericResponse<List<StudentPaymentResponse>>> findAllOverduePaymentService() {
+        return ResponseEntity.ok(findAllOverduePaymentService.execute(UUID.randomUUID()));
     }
 
 }
