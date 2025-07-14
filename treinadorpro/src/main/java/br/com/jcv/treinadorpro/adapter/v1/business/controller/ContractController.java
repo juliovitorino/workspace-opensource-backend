@@ -3,6 +3,7 @@ package br.com.jcv.treinadorpro.adapter.v1.business.controller;
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.treinadorpro.corebusiness.usecases.CreateNewContractService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllActiveContractsService;
+import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllContractTodayWorkoutService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllStudentsFromTrainerService;
 import br.com.jcv.treinadorpro.corelayer.request.CreateNewStudentContractRequest;
 import br.com.jcv.treinadorpro.corelayer.response.ContractResponse;
@@ -27,14 +28,16 @@ public class ContractController {
     private final CreateNewContractService createNewContractService;
     private final FindAllStudentsFromTrainerService findAllStudentsFromTrainerService;
     private final FindAllActiveContractsService findAllActiveContractsService;
-
+    private final FindAllContractTodayWorkoutService findAllContractTodayWorkoutService;
 
     public ContractController(CreateNewContractService createNewContractService,
                               FindAllStudentsFromTrainerService findAllStudentsFromTrainerService,
-                              FindAllActiveContractsService findAllActiveContractsService) {
+                              FindAllActiveContractsService findAllActiveContractsService,
+                              FindAllContractTodayWorkoutService findAllContractTodayWorkoutService) {
         this.createNewContractService = createNewContractService;
         this.findAllStudentsFromTrainerService = findAllStudentsFromTrainerService;
         this.findAllActiveContractsService = findAllActiveContractsService;
+        this.findAllContractTodayWorkoutService = findAllContractTodayWorkoutService;
     }
 
     @PostMapping
@@ -54,6 +57,12 @@ public class ContractController {
     @GetMapping("/trainer/active")
     public ResponseEntity<ControllerGenericResponse<List<ContractResponse>>> findAllActiveContracts(){
         return ResponseEntity.ok(findAllActiveContractsService.execute(UUID.randomUUID()));
+    }
+
+    @GetMapping("/trainer/today")
+    public ResponseEntity<ControllerGenericResponse<List<ContractResponse>>> findAllContractTodayWorkoutService() {
+        return ResponseEntity.ok(findAllContractTodayWorkoutService.execute(UUID.randomUUID()));
+
     }
 
 }
