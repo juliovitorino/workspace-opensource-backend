@@ -8,6 +8,7 @@ import br.com.jcv.treinadorpro.corelayer.model.Modality;
 import br.com.jcv.treinadorpro.corelayer.model.PersonalFeature;
 import br.com.jcv.treinadorpro.corelayer.model.PlanTemplate;
 import br.com.jcv.treinadorpro.corelayer.model.Program;
+import br.com.jcv.treinadorpro.corelayer.model.StudentPayment;
 import br.com.jcv.treinadorpro.corelayer.model.TrainingPack;
 import br.com.jcv.treinadorpro.corelayer.model.User;
 import br.com.jcv.treinadorpro.corelayer.model.WorkGroup;
@@ -19,6 +20,7 @@ import br.com.jcv.treinadorpro.corelayer.response.ModalityResponse;
 import br.com.jcv.treinadorpro.corelayer.response.PersonalFeatureResponse;
 import br.com.jcv.treinadorpro.corelayer.response.PersonalTrainerResponse;
 import br.com.jcv.treinadorpro.corelayer.response.ProgramResponse;
+import br.com.jcv.treinadorpro.corelayer.response.StudentPaymentResponse;
 import br.com.jcv.treinadorpro.corelayer.response.StudentResponse;
 import br.com.jcv.treinadorpro.corelayer.response.StudentsFromTrainerResponse;
 import br.com.jcv.treinadorpro.corelayer.response.TrainingPackResponse;
@@ -127,8 +129,8 @@ public class MapperServiceHelper {
     public static TrainingPackResponse toResponse(TrainingPack trainingPack) {
         return TrainingPackResponse.builder()
                 .externalId(trainingPack.getExternalId())
-                .personalUser(MapperServiceHelper.toResponse(trainingPack.getPersonalUser()))
-                .modality(MapperServiceHelper.toResponse(trainingPack.getModality()))
+                .personalUser(toResponse(trainingPack.getPersonalUser()))
+                .modality(toResponse(trainingPack.getModality()))
                 .description(trainingPack.getDescription())
                 .durationDays(trainingPack.getDurationDays())
                 .weeklyFrequency(trainingPack.getWeeklyFrequency())
@@ -220,6 +222,19 @@ public class MapperServiceHelper {
                 .name(user.getName())
                 .email(user.getEmail())
                 .phone(user.getCellphone())
+                .build();
+    }
+
+    public static StudentPaymentResponse toResponse(StudentPayment studentPayment){
+        return StudentPaymentResponse.builder()
+                .externalId(studentPayment.getExternalId())
+                .contract(toResponse(studentPayment.getContract()))
+                .amount(studentPayment.getAmount())
+                .dueDate(studentPayment.getDuedate())
+                .paymentDate(studentPayment.getPaymentDate())
+                .status(studentPayment.getStatus())
+                .createdAt(studentPayment.getCreatedAt())
+                .updatedAt(studentPayment.getUpdatedAt())
                 .build();
     }
 
