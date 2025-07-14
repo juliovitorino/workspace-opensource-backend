@@ -69,8 +69,16 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
             ") " +
             "and c.situation = :situation  " +
             "and c.status = :status  " +
-            "and tp.personal_user_id = :personalId"
-            , nativeQuery = true)
+            "and tp.personal_user_id = :personalId " +
+            "order by case extract(dow from current_date) " +
+            "    when 0 then sunday " +
+            "    when 1 then monday " +
+            "    when 2 then tuesday " +
+            "    when 3 then wednesday " +
+            "    when 4 then thursday " +
+            "    when 5 then friday " +
+            "    when 6 then saturday " +
+            "end", nativeQuery = true)
     List<Contract> findAllContractTodayWorkout(@Param("situation") String situation,
                                                @Param("status") String status,
                                                @Param("personalId") Long personalId);
