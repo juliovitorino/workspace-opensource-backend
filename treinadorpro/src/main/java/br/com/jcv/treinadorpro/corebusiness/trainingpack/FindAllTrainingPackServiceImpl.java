@@ -2,10 +2,12 @@ package br.com.jcv.treinadorpro.corebusiness.trainingpack;
 
 import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
+import br.com.jcv.treinadorpro.corebusiness.users.GetLoggedUserService;
 import br.com.jcv.treinadorpro.corelayer.model.TrainingPack;
 import br.com.jcv.treinadorpro.corelayer.model.User;
 import br.com.jcv.treinadorpro.corelayer.repository.TrainingPackRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
+import br.com.jcv.treinadorpro.corelayer.response.PersonalTrainerResponse;
 import br.com.jcv.treinadorpro.corelayer.response.TrainingPackResponse;
 import br.com.jcv.treinadorpro.corelayer.service.MapperServiceHelper;
 import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
@@ -26,16 +28,20 @@ public class FindAllTrainingPackServiceImpl implements FindAllTrainingPackServic
 
     private final TrainingPackRepository trainingPackRepository;
     private final UserRepository userRepository;
+    private final GetLoggedUserService getLoggedUserService;
 
     public FindAllTrainingPackServiceImpl(TrainingPackRepository trainingPackRepository,
-                                          UserRepository userRepository) {
+                                          UserRepository userRepository,
+                                          GetLoggedUserService getLoggedUserService) {
         this.trainingPackRepository = trainingPackRepository;
         this.userRepository = userRepository;
+        this.getLoggedUserService = getLoggedUserService;
     }
 
     @Override
     public ControllerGenericResponse<PageResultResponse<TrainingPackResponse>> execute(UUID processId, PageResultRequest<UUID> request) {
-        User user = userRepository.findByUuidId(request.getRequest())
+        PersonalTrainerResponse trainer = getLoggedUserService.execute(processId);
+        User user = userRepository.findByUuidId(trainer.getUuidId())
                 .orElseThrow(() -> new CommoditieBaseException("Invalid Personal ID", HttpStatus.BAD_REQUEST, "MSG-1737"));
 
         PageResultResponse<TrainingPackResponse> response = getTrainingPackPageResultResponse(request, user);
