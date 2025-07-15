@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Service
@@ -39,15 +40,17 @@ public class BuilderDashboardServiceImpl implements BuilderDashboardService{
     @Transactional
     public ControllerGenericResponse<BuilderDashboardResponse> execute(UUID processId) {
         PersonalTrainerResponse trainer = getLoggedUserService.execute(processId);
+        BigDecimal overdueAmountContracts = studentPaymentRepository.sumOverduePayments(trainer.getId());
+        BigDecimal totalAmountReceivedMonth = studentPaymentRepository.sumReceivedPaymentsCurrentMonth(trainer.getId());
         return ControllerGenericResponseHelper.getInstance(
                 "MSG-1449",
                 "Dashboard Response has been executed successfully",
                 BuilderDashboardResponse.builder()
                         .activeStudentContract(contractRepository.countOpenAndActiveContracts(SituationEnum.OPEN, StatusEnum.A, trainer.getId()))
-                        .overdueAmountContracts(studentPaymentRepository.sumOverduePayments(trainer.getId()))
+                        .overdueAmountContracts(overdueAmountContracts == null ? BigDecimal.ZERO : overdueAmountContracts)
                         .totalTrainingPack(trainingPackRepository.countTrainingPack(getLoggedUserService.execute(processId).getId()))
                         .totalTodayWorkout(contractRepository.countTodayWorkout(SituationEnum.OPEN.name(), StatusEnum.A.name(), trainer.getId()))
-                        .totalAmountReceivedMonth(studentPaymentRepository.sumReceivedPaymentsCurrentMonth(trainer.getId()))
+                        .totalAmountReceivedMonth(totalAmountReceivedMonth == null ? BigDecimal.ZERO : totalAmountReceivedMonth)
                         .build()
         );
     }
