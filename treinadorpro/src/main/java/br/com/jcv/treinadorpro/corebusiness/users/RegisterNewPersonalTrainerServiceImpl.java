@@ -26,6 +26,7 @@ import br.com.jcv.treinadorpro.corelayer.repository.PlanTemplateRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.TrainingPackRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
 import br.com.jcv.treinadorpro.corelayer.request.RegisterRequest;
+import br.com.jcv.treinadorpro.infrastructure.config.EmailConfig;
 import br.com.jcv.treinadorpro.infrastructure.config.TreinadorProConfig;
 import br.com.jcv.treinadorpro.infrastructure.email.EmailService;
 import br.com.jcv.treinadorpro.infrastructure.helper.TreinadorProHelper;
@@ -59,6 +60,7 @@ public class RegisterNewPersonalTrainerServiceImpl implements RegisterNewPersona
     private final ParameterRepository parameterRepository;
     private final EmailService emailService;
     private final TreinadorProHelper treinadorProHelper;
+    private final EmailConfig emailConfig;
 
     public RegisterNewPersonalTrainerServiceImpl(UserRepository userRepository,
                                                  TrainingPackRepository trainingPackRepository,
@@ -72,7 +74,7 @@ public class RegisterNewPersonalTrainerServiceImpl implements RegisterNewPersona
                                                  ActivePersonalPlanRepository activePersonalPlanRepository,
                                                  ParameterRepository parameterRepository,
                                                  EmailService emailService,
-                                                 TreinadorProHelper treinadorProHelper) {
+                                                 TreinadorProHelper treinadorProHelper, EmailConfig emailConfig) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.activePersonalPlanMapper = activePersonalPlanMapper;
@@ -84,6 +86,7 @@ public class RegisterNewPersonalTrainerServiceImpl implements RegisterNewPersona
         this.parameterRepository = parameterRepository;
         this.emailService = emailService;
         this.treinadorProHelper = treinadorProHelper;
+        this.emailConfig = emailConfig;
     }
 
     @Override
@@ -123,7 +126,7 @@ public class RegisterNewPersonalTrainerServiceImpl implements RegisterNewPersona
 
         try {
             emailService.sendHtmlEmail(
-                    userSaved.getEmail(),
+                    emailConfig.getIsSendToAdmin() ? emailConfig.getAdminEmailAcoount() : userSaved.getEmail() ,
                     "Validate your account",
                     ReaderTemplate.read("templates/account-validation.html"),
                     Map.of("CODE", accountGuardianResponse.getObjectResponse().getCode())

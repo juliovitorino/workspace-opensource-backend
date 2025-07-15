@@ -60,4 +60,6 @@ guardian:
     url: http://localhost:8081 # ou a URL do serviço real
 
 email:
+  send-to-admin: false
+  admin-email-account: ${MAIL_ADMIN}
   from-mail: ${MAIL_SEND_FROM}

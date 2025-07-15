@@ -9,4 +9,10 @@ import org.springframework.context.annotation.Configuration;
 public class EmailConfig {
     @Value("${email.from-mail}")
     private String fromMail;
+
+    @Value("${email.send-to-admin}")
+    private Boolean isSendToAdmin;
+
+    @Value("${email.admin-email-account}")
+    private String adminEmailAcoount;
 }
