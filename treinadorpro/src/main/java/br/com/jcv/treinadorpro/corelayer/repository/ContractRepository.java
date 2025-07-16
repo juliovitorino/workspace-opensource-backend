@@ -34,6 +34,12 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
                                      @Param("status") StatusEnum status,
                                      @Param("personalId") Long personalId);
 
+    @Query("SELECT c FROM Contract c " +
+            "WHERE c.externalId  = :externalId " +
+            "and c.trainingPack.personalUser.id = :personalId")
+    Optional<Contract> findByExternalIdAndPersonalId(@Param("externalId") UUID externalId,
+                                                     @Param("personalId") Long personalId);
+
     @Query(value = "select count(*) " +
             "from contract c  " +
             "inner join training_pack tp on tp.id = c.pack_training_id  " +
