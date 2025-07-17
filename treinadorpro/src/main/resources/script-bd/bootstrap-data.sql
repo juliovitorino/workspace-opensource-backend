@@ -48,7 +48,9 @@ VALUES
 (14, 'Adutores', 'Adductors', 'Aductores', 'A'),
 (15, 'Abdutores', 'Abductors', 'Abductores', 'A'),
 (16, 'Corpo inteiro', 'Full Body', 'Cuerpo entero', 'A'),
-(17, 'Lombar', 'Lower Back', 'Zona Lumbar', 'A');
+(17, 'Lombar', 'Lower Back', 'Zona Lumbar', 'A'),
+(18, 'Pernas', 'Legs', 'Pernas', 'A'),
+(19, 'Mente', 'Mindfullness', 'Mente', 'A');
 
 INSERT INTO program (id, name_pt, name_en, name_es, status)
 VALUES
