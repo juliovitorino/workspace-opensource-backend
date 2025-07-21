@@ -387,6 +387,8 @@ CREATE TABLE contract (
     description VARCHAR(200) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     currency VARCHAR(10),
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
     duration VARCHAR(5) NOT NULL,
     monday VARCHAR(5),
     tuesday VARCHAR(5),
