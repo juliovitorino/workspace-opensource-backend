@@ -28,7 +28,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
@@ -217,6 +216,8 @@ public class CreateNewContractServiceImpl implements CreateNewContractService{
                 .saturday(request.getTrainingInfo().getSaturday())
                 .sunday(request.getTrainingInfo().getSunday())
                 .duration(request.getTrainingInfo().getDuration())
+                .startDate(request.getTrainingInfo().getStartDate())
+                .endDate(request.getTrainingInfo().getEndDate())
                 .situation(SituationEnum.OPEN)
                 .build();
     }

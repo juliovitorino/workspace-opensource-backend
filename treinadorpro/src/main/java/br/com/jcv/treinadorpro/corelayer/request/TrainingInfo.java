@@ -23,6 +23,9 @@ public class TrainingInfo implements Serializable {
     @JsonProperty("startDate")
     private LocalDate startDate;
 
+    @JsonProperty("endDate")
+    private LocalDate endDate;
+
     @JsonProperty("monday")
     private String monday;
 

@@ -50,7 +50,11 @@ VALUES
 (16, 'Corpo inteiro', 'Full Body', 'Cuerpo entero', 'A'),
 (17, 'Lombar', 'Lower Back', 'Zona Lumbar', 'A'),
 (18, 'Pernas', 'Legs', 'Pernas', 'A'),
-(19, 'Mente', 'Mindfullness', 'Mente', 'A');
+(19, 'Mente', 'Mindfullness', 'Mente', 'A'),
+(20, 'Braço', 'Arms', 'Braços', 'A'),
+(21, 'Aquecimento', 'Warm Up', 'Aquecimiento', 'A'),
+(22, 'Cardio', 'Cardio', 'Cardio', 'A'),
+(23, 'Mobilidade', 'Mobility', 'Mobilidad', 'A');
 
 INSERT INTO program (id, name_pt, name_en, name_es, status)
 VALUES
