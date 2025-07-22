@@ -56,6 +56,9 @@ public class Contract {
     @Column(name = "description", nullable = false)
     private String description;
 
+    @Column(name = "workout_site")
+    private String workoutSite;
+
     @Column(name = "start_date")
     private LocalDate startDate;
 

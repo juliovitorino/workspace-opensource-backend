@@ -207,6 +207,7 @@ public class CreateNewContractServiceImpl implements CreateNewContractService{
                 .status(StatusEnum.A)
                 .trainingPack(trainingPack)
                 .studentUser(existingStudent != null? existingStudent : newStudent)
+                .workoutSite(request.getTrainingInfo().getWorkoutSite())
                 .description(request.getTrainingInfo().getGoal())
                 .monday(request.getTrainingInfo().getMonday())
                 .tuesday(request.getTrainingInfo().getTuesday())

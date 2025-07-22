@@ -34,6 +34,9 @@ public class ContractResponse implements Serializable {
     @JsonProperty("description")
     private String description;
 
+    @JsonProperty("workoutSite")
+    private String workoutSite;
+
     @JsonProperty("price")
     private BigDecimal price;
 
