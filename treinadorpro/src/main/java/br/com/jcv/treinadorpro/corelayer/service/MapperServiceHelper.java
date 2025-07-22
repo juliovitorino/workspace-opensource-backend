@@ -24,7 +24,6 @@ import br.com.jcv.treinadorpro.corelayer.response.StudentPaymentResponse;
 import br.com.jcv.treinadorpro.corelayer.response.StudentResponse;
 import br.com.jcv.treinadorpro.corelayer.response.StudentsFromTrainerResponse;
 import br.com.jcv.treinadorpro.corelayer.response.TrainingPackResponse;
-import br.com.jcv.treinadorpro.corelayer.response.UserResponse;
 import br.com.jcv.treinadorpro.corelayer.response.WorkGroupResponse;
 import org.springframework.stereotype.Component;
 
@@ -244,6 +243,7 @@ public class MapperServiceHelper {
                 .trainingPack(toResponse(contract.getTrainingPack()))
                 .studentUser(toStudentResponse(contract.getStudentUser()))
                 .description(contract.getDescription())
+                .workoutSite(contract.getWorkoutSite())
                 .price(contract.getPrice())
                 .currency(contract.getCurrency())
                 .monday(contract.getMonday())

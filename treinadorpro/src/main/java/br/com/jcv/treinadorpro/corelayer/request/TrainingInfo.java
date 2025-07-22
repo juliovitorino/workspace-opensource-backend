@@ -20,6 +20,9 @@ public class TrainingInfo implements Serializable {
     @JsonProperty("goal")
     private String goal;
 
+    @JsonProperty("workoutSite")
+    private String workoutSite;
+
     @JsonProperty("startDate")
     private LocalDate startDate;
 
