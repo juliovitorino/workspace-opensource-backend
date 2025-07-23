@@ -64,11 +64,11 @@ public class UserWorkoutPlanRequest implements Serializable {
     @JsonProperty("restTime")
     private String restTime;
 
-    @JsonProperty("weight")
-    private Integer weight;
-
-    @JsonProperty("weightUnit")
-    private String weightUnit;
+//    @JsonProperty("weight")
+//    private Integer weight;
+//
+//    @JsonProperty("weightUnit")
+//    private String weightUnit;
 
     @JsonProperty("comments")
     private String comments;

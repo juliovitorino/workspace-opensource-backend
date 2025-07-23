@@ -113,7 +113,7 @@ public class Contract {
 
     @ToString.Exclude
     @OneToMany(mappedBy = "contract", fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<UserWorkoutCalendar> userWorkoutCalendarList;
+    private List<UserWorkoutPlan> userWorkoutPlanList;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "contract", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

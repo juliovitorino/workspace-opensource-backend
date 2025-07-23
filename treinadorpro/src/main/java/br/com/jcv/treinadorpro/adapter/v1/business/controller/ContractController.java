@@ -8,6 +8,7 @@ import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllOverduePaymentServic
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllReceivedPaymentsCurrentMonthService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllStudentsFromTrainerService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindContractService;
+import br.com.jcv.treinadorpro.corebusiness.usecases.SaveUserWorkoutDataSheetPlanService;
 import br.com.jcv.treinadorpro.corelayer.request.CreateNewStudentContractRequest;
 import br.com.jcv.treinadorpro.corelayer.request.UserDataSheetPlanRequest;
 import br.com.jcv.treinadorpro.corelayer.response.ContractResponse;
@@ -38,6 +39,7 @@ public class ContractController {
     private final FindAllOverduePaymentService findAllOverduePaymentService;
     private final FindAllReceivedPaymentsCurrentMonthService findAllReceivedPaymentsCurrentMonthService;
     private final FindContractService findContractService;
+    private final SaveUserWorkoutDataSheetPlanService saveUserWorkoutDataSheetPlanService;
 
     public ContractController(CreateNewContractService createNewContractService,
                               FindAllStudentsFromTrainerService findAllStudentsFromTrainerService,
@@ -45,7 +47,8 @@ public class ContractController {
                               FindAllContractTodayWorkoutService findAllContractTodayWorkoutService,
                               FindAllOverduePaymentService findAllOverduePaymentService,
                               FindAllReceivedPaymentsCurrentMonthService findAllReceivedPaymentsCurrentMonthService,
-                              FindContractService findContractService) {
+                              FindContractService findContractService,
+                              SaveUserWorkoutDataSheetPlanService saveUserWorkoutDataSheetPlanService) {
         this.createNewContractService = createNewContractService;
         this.findAllStudentsFromTrainerService = findAllStudentsFromTrainerService;
         this.findAllActiveContractsService = findAllActiveContractsService;
@@ -53,6 +56,7 @@ public class ContractController {
         this.findAllOverduePaymentService = findAllOverduePaymentService;
         this.findAllReceivedPaymentsCurrentMonthService = findAllReceivedPaymentsCurrentMonthService;
         this.findContractService = findContractService;
+        this.saveUserWorkoutDataSheetPlanService = saveUserWorkoutDataSheetPlanService;
     }
 
     @PostMapping
@@ -96,11 +100,7 @@ public class ContractController {
 
     @PostMapping("student/data-sheet-plan/save")
     public ResponseEntity<ControllerGenericResponse<Boolean>> saveUserDataSheetPlan(@RequestBody UserDataSheetPlanRequest request){
-        return ResponseEntity.ok(ControllerGenericResponseHelper.getInstance(
-                "MSG-1528",
-                "Request Accepted",
-                Boolean.TRUE
-        ));
+        return ResponseEntity.ok(saveUserWorkoutDataSheetPlanService.execute(UUID.randomUUID(), request));
     }
 
 }
