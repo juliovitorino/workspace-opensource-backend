@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @ToString
+@Deprecated
 public class UserWorkoutCalendarRequest implements Serializable {
 
     private Long modalityExerciseId;

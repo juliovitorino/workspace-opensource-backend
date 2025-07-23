@@ -28,11 +28,11 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "user_workout_calendar")
+@Table(name = "user_workout_plan")
 @Builder
 @AllArgsConstructor
 @ToString
-public class UserWorkoutCalendar {
+public class UserWorkoutPlan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,9 +44,6 @@ public class UserWorkoutCalendar {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "contract_id", nullable = false)
     private Contract contract;
-
-    @Column(name = "training_date")
-    private LocalDate trainingDate;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "modality_id", nullable = false)
@@ -60,11 +57,11 @@ public class UserWorkoutCalendar {
     @JoinColumn(name = "goal_id", nullable = false)
     private Goal goal;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exercise_id")
     private Exercise exercise;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "program_id", nullable = false)
     private Program program;
 
@@ -82,7 +79,7 @@ public class UserWorkoutCalendar {
     private Integer qtySeries;
 
     @Column(name = "qty_reps")
-    private Integer qtyReps;
+    private String qtyReps;
 
     @Column(name = "execution", length = 100)
     private String execution;
@@ -92,12 +89,6 @@ public class UserWorkoutCalendar {
 
     @Column(name = "rest_time", length = 5)
     private String restTime;
-
-    @Column(name = "weight")
-    private Integer weight;
-
-    @Column(name = "weight_unit", length = 10)
-    private String weightUnit;
 
     @Column(name = "comments", length = 500)
     private String comments;
