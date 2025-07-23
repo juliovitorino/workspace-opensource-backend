@@ -2,6 +2,7 @@ package br.com.jcv.treinadorpro.corebusiness.usecases;
 
 import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
+import br.com.jcv.treinadorpro.corebusiness.users.GetLoggedUserService;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.corelayer.model.Contract;
 import br.com.jcv.treinadorpro.corelayer.model.Exercise;
@@ -19,6 +20,7 @@ import br.com.jcv.treinadorpro.corelayer.repository.UserWorkoutPlanRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.WorkGroupRepository;
 import br.com.jcv.treinadorpro.corelayer.request.UserDataSheetPlanRequest;
 import br.com.jcv.treinadorpro.corelayer.request.UserWorkoutPlanRequest;
+import br.com.jcv.treinadorpro.corelayer.response.PersonalTrainerResponse;
 import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -41,6 +44,7 @@ public class SaveUserWorkoutDataSheetPlanServiceImpl implements SaveUserWorkoutD
     private final WorkGroupRepository workGroupRepository;
     private final ExerciseRepository exerciseRepository;
     private final UserWorkoutPlanRepository userWorkoutPlanRepository;
+    private final GetLoggedUserService getLoggedUserService;
 
     public SaveUserWorkoutDataSheetPlanServiceImpl(ContractRepository contractRepository,
                                                    ModalityRepository modalityRepository,
@@ -48,7 +52,8 @@ public class SaveUserWorkoutDataSheetPlanServiceImpl implements SaveUserWorkoutD
                                                    ProgramRepository programRepository,
                                                    WorkGroupRepository workGroupRepository,
                                                    ExerciseRepository exerciseRepository,
-                                                   UserWorkoutPlanRepository userWorkoutPlanRepository) {
+                                                   UserWorkoutPlanRepository userWorkoutPlanRepository,
+                                                   GetLoggedUserService getLoggedUserService) {
         this.contractRepository = contractRepository;
         this.modalityRepository = modalityRepository;
         this.goalRepository = goalRepository;
@@ -56,12 +61,19 @@ public class SaveUserWorkoutDataSheetPlanServiceImpl implements SaveUserWorkoutD
         this.workGroupRepository = workGroupRepository;
         this.exerciseRepository = exerciseRepository;
         this.userWorkoutPlanRepository = userWorkoutPlanRepository;
+        this.getLoggedUserService = getLoggedUserService;
     }
 
     @Override
     public ControllerGenericResponse<Boolean> execute(UUID processId, UserDataSheetPlanRequest userDataSheetPlanRequest) {
+        PersonalTrainerResponse trainer = getLoggedUserService.execute(processId);
+
         Contract contract = contractRepository.findByExternalId(userDataSheetPlanRequest.getContract().getExternalId())
                 .orElseThrow(() -> new CommoditieBaseException("Invalid contract", HttpStatus.BAD_REQUEST, "MSG-1632"));
+
+        if(!Objects.equals(contract.getTrainingPack().getPersonalUser().getId(), trainer.getId())){
+            throw new CommoditieBaseException("Invalid contract", HttpStatus.UNPROCESSABLE_ENTITY, "MSG-1840");
+        }
 
         Modality modality = modalityRepository.findById(userDataSheetPlanRequest.getModality().getId())
                 .orElseThrow(() -> new CommoditieBaseException("Invalid Modality", HttpStatus.BAD_REQUEST, "MSG-1636"));
@@ -90,6 +102,7 @@ public class SaveUserWorkoutDataSheetPlanServiceImpl implements SaveUserWorkoutD
 
         });
 
+        userWorkoutPlanRepository.disableExercises(contract.getId());
         userWorkoutPlanRepository.saveAll(toSave);
 
         return ControllerGenericResponseHelper.getInstance(
