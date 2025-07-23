@@ -11,8 +11,10 @@ import br.com.jcv.treinadorpro.corelayer.model.Program;
 import br.com.jcv.treinadorpro.corelayer.model.StudentPayment;
 import br.com.jcv.treinadorpro.corelayer.model.TrainingPack;
 import br.com.jcv.treinadorpro.corelayer.model.User;
+import br.com.jcv.treinadorpro.corelayer.model.UserWorkoutPlan;
 import br.com.jcv.treinadorpro.corelayer.model.WorkGroup;
 import br.com.jcv.treinadorpro.corelayer.request.CreateTrainingPackRequest;
+import br.com.jcv.treinadorpro.corelayer.request.UserWorkoutPlanRequest;
 import br.com.jcv.treinadorpro.corelayer.response.ContractResponse;
 import br.com.jcv.treinadorpro.corelayer.response.ExerciseResponse;
 import br.com.jcv.treinadorpro.corelayer.response.GoalResponse;
@@ -28,6 +30,7 @@ import br.com.jcv.treinadorpro.corelayer.response.WorkGroupResponse;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class MapperServiceHelper {
@@ -183,6 +186,7 @@ public class MapperServiceHelper {
     }
     
     public static ExerciseResponse toResponse(Exercise exercise) {
+        if(exercise == null) return null;
         return ExerciseResponse.builder()
                 .id(exercise.getId())
                 .externalId(exercise.getExternalId())
@@ -257,6 +261,30 @@ public class MapperServiceHelper {
                 .status(contract.getStatus())
                 .createdAt(contract.getCreatedAt())
                 .updatedAt(contract.getUpdatedAt())
+                .build();
+    }
+
+    public static UserWorkoutPlanRequest toResponse(UserWorkoutPlan item) {
+        return UserWorkoutPlanRequest.builder()
+                .contract(MapperServiceHelper.toResponse(item.getContract()))
+                .modality(MapperServiceHelper.toResponse(item.getModality()))
+                .goal(MapperServiceHelper.toResponse(item.getGoal()))
+                .program(MapperServiceHelper.toResponse(item.getProgram()))
+                .workGroup(MapperServiceHelper.toResponse(item.getWorkGroup()))
+                .exercise(MapperServiceHelper.toResponse(item.getExercise()))
+                .customExercise(item.getCustomExercise())
+                .customProgram(item.getCustomProgram())
+                .executionMethod(item.getExecutionMethod())
+                .qtySeries(item.getQtySeries())
+                .qtyReps(item.getQtyReps())
+                .execution(item.getExecution())
+                .executionTime(item.getExecutionTime())
+                .restTime(item.getRestTime())
+                .comments(item.getComments())
+                .obs(item.getObs())
+                .status(item.getStatus())
+                .createdAt(item.getCreatedAt())
+                .updatedAt(item.getUpdatedAt())
                 .build();
     }
 

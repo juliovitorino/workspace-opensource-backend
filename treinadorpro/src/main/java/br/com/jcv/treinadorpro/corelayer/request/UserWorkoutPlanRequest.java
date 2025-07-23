@@ -1,6 +1,7 @@
 package br.com.jcv.treinadorpro.corelayer.request;
 
 import br.com.jcv.treinadorpro.corelayer.enums.ExecutionMethodEnum;
+import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.corelayer.response.ContractResponse;
 import br.com.jcv.treinadorpro.corelayer.response.ExerciseResponse;
 import br.com.jcv.treinadorpro.corelayer.response.GoalResponse;
@@ -77,7 +78,7 @@ public class UserWorkoutPlanRequest implements Serializable {
     private String obs;
 
     @JsonProperty("status")
-    private String status;
+    private StatusEnum status;
 
     @JsonProperty("createdAt")
     private LocalDateTime createdAt;
