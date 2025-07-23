@@ -23,6 +23,8 @@ public class PersonalTrainerResponse extends UserResponse implements Serializabl
     @JsonProperty("personalFeature")
     private PersonalFeatureResponse personalFeature;
 
+    public PersonalTrainerResponse() {}
+
     public PersonalTrainerResponse(
             Long id,
             UUID uuidId,

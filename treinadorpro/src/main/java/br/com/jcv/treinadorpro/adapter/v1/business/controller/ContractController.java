@@ -9,10 +9,12 @@ import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllReceivedPaymentsCurr
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllStudentsFromTrainerService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindContractService;
 import br.com.jcv.treinadorpro.corelayer.request.CreateNewStudentContractRequest;
+import br.com.jcv.treinadorpro.corelayer.request.UserDataSheetPlanRequest;
 import br.com.jcv.treinadorpro.corelayer.response.ContractResponse;
 import br.com.jcv.treinadorpro.corelayer.response.CreateNewStudentContractResponse;
 import br.com.jcv.treinadorpro.corelayer.response.StudentPaymentResponse;
 import br.com.jcv.treinadorpro.corelayer.response.StudentsFromTrainerResponse;
+import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -90,6 +92,15 @@ public class ContractController {
     @GetMapping("/number/{externalId}")
     public ResponseEntity<ControllerGenericResponse<ContractResponse>> findContract(@PathVariable("externalId") UUID externalId) {
         return ResponseEntity.ok(findContractService.execute(UUID.randomUUID(), externalId));
+    }
+
+    @PostMapping("student/data-sheet-plan/save")
+    public ResponseEntity<ControllerGenericResponse<Boolean>> saveUserDataSheetPlan(@RequestBody UserDataSheetPlanRequest request){
+        return ResponseEntity.ok(ControllerGenericResponseHelper.getInstance(
+                "MSG-1528",
+                "Request Accepted",
+                Boolean.TRUE
+        ));
     }
 
 }
