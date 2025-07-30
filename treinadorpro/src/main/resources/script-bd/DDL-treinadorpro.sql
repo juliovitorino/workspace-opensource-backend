@@ -568,11 +568,22 @@ COMMENT ON TABLE user_workout_plan IS 'Stores scheduled workouts for users, incl
 COMMENT ON COLUMN user_workout_plan.id IS 'Primary key for the user workout calendar entry.';
 COMMENT ON COLUMN user_workout_plan.contract_id IS 'Foreign key referencing the contract table, indicating which training pack this workout is part of.';
 
+CREATE TABLE user_training_session(
+    id SERIAL PRIMARY KEY,
+    external_id UUID UNIQUE NOT NULL,
+    execution_timestamp TIMESTAMP NOT NULL,
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE user_execution_set (
     id SERIAL PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
+    user_training_session_id INTEGER NOT NULL REFERENCES user_training_session(id) ON DELETE CASCADE,
     user_workout_plan_id INTEGER NOT NULL REFERENCES user_workout_plan(id) ON DELETE CASCADE,
-    execution_timestamp TIMESTAMP NOT NULL,
+    started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    finished_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     set_number INTEGER NOT NULL,
     reps INTEGER,
     weight NUMERIC(5,2),

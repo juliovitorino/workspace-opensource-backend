@@ -16,12 +16,16 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserWorkoutPlanRequest implements Serializable {
+
+    @JsonProperty("externalId")
+    private UUID externalId;
 
     @JsonProperty("contract")
     private ContractResponse contract;
@@ -64,12 +68,6 @@ public class UserWorkoutPlanRequest implements Serializable {
 
     @JsonProperty("restTime")
     private String restTime;
-
-//    @JsonProperty("weight")
-//    private Integer weight;
-//
-//    @JsonProperty("weightUnit")
-//    private String weightUnit;
 
     @JsonProperty("comments")
     private String comments;

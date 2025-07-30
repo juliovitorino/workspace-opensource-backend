@@ -266,6 +266,7 @@ public class MapperServiceHelper {
 
     public static UserWorkoutPlanRequest toResponse(UserWorkoutPlan item) {
         return UserWorkoutPlanRequest.builder()
+                .externalId(item.getExternalId())
                 .contract(MapperServiceHelper.toResponse(item.getContract()))
                 .modality(MapperServiceHelper.toResponse(item.getModality()))
                 .goal(MapperServiceHelper.toResponse(item.getGoal()))
