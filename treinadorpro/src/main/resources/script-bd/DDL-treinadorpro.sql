@@ -571,6 +571,7 @@ COMMENT ON COLUMN user_workout_plan.contract_id IS 'Foreign key referencing the 
 CREATE TABLE user_training_session(
     id SERIAL PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
+    contract_id INTEGER NOT NULL REFERENCES contract(id) ON DELETE CASCADE,
     execution_timestamp TIMESTAMP NOT NULL,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
