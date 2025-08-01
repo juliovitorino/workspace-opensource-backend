@@ -572,17 +572,32 @@ CREATE TABLE user_training_session(
     id SERIAL PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     contract_id INTEGER NOT NULL REFERENCES contract(id) ON DELETE CASCADE,
-    execution_timestamp TIMESTAMP NOT NULL,
+    start_at TIMESTAMP NOT NULL,
+    finished_at TIMESTAMP NOT NULL,
+    elapsed_time INTEGER,
+    progress_status VARCHAR(50) NOT NULL,
+    sync_status VARCHAR(50) NOT NULL,
+    comments TEXT,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE user_execution_set (
+CREATE TABLE user_training_session_exercises(
     id SERIAL PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     user_training_session_id INTEGER NOT NULL REFERENCES user_training_session(id) ON DELETE CASCADE,
     user_workout_plan_id INTEGER NOT NULL REFERENCES user_workout_plan(id) ON DELETE CASCADE,
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+);
+
+CREATE TABLE user_training_execution_set (
+    id SERIAL PRIMARY KEY,
+    external_id UUID UNIQUE NOT NULL,
+    user_training_session_exercises_id INTEGER NOT NULL REFERENCES user_training_session_exercises(id) ON DELETE CASCADE,
     started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     finished_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     set_number INTEGER NOT NULL,
