@@ -7,6 +7,7 @@ import br.com.jcv.treinadorpro.corelayer.response.ExerciseResponse;
 import br.com.jcv.treinadorpro.corelayer.response.GoalResponse;
 import br.com.jcv.treinadorpro.corelayer.response.ModalityResponse;
 import br.com.jcv.treinadorpro.corelayer.response.ProgramResponse;
+import br.com.jcv.treinadorpro.corelayer.response.UserTrainingExecutionSetResponse;
 import br.com.jcv.treinadorpro.corelayer.response.WorkGroupResponse;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -83,5 +85,8 @@ public class UserWorkoutPlanRequest implements Serializable {
 
     @JsonProperty("updatedAt")
     private LocalDateTime updatedAt;
+
+    @JsonProperty("userExecutionSetList")
+    private List<UserTrainingExecutionSetResponse> userExecutionSetList;
 
 }

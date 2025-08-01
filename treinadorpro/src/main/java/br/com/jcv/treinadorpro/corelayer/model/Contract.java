@@ -119,4 +119,8 @@ public class Contract {
     @OneToMany(mappedBy = "contract", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<StudentPayment> studentPaymentList;
 
+    @ToString.Exclude
+    @OneToMany(mappedBy = "contract", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserTrainingSession> userTrainingSessionList;
+
 }
