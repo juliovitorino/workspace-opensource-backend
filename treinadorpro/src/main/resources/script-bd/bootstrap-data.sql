@@ -54,7 +54,10 @@ VALUES
 (20, 'Braço', 'Arms', 'Braços', 'A'),
 (21, 'Aquecimento', 'Warm Up', 'Aquecimiento', 'A'),
 (22, 'Cardio', 'Cardio', 'Cardio', 'A'),
-(23, 'Mobilidade', 'Mobility', 'Mobilidad', 'A');
+(23, 'Mobilidade', 'Mobility', 'Mobilidad', 'A'),
+(24, 'Core', 'Core', 'Core', 'A'),
+(25, 'Pernas & Gluteos', 'Legs & Glutes', 'Pernas & Gluteos', 'A');
+
 
 INSERT INTO program (id, name_pt, name_en, name_es, status)
 VALUES
