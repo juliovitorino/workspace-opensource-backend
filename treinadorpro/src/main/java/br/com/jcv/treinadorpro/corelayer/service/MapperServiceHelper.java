@@ -282,6 +282,7 @@ public class MapperServiceHelper {
                 .executionTime(item.getExecutionTime())
                 .restTime(item.getRestTime())
                 .comments(item.getComments())
+                .control(UUID.randomUUID())
                 .obs(item.getObs())
                 .status(item.getStatus())
                 .createdAt(item.getCreatedAt())
