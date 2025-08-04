@@ -78,7 +78,7 @@ public class UserWorkoutPlanRequest implements Serializable {
     private String obs;
 
     @JsonProperty("control")
-    private UUID control;
+    private String control;
 
     @JsonProperty("status")
     private StatusEnum status;
