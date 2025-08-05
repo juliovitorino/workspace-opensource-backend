@@ -13,9 +13,17 @@ import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHel
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @Slf4j
@@ -33,11 +41,29 @@ public class FindAllContractTodayWorkoutServiceImpl implements FindAllContractTo
     public ControllerGenericResponse<List<ContractResponse>> execute(UUID processId) {
         PersonalTrainerResponse trainer = getLoggedUserService.execute(processId);
 
+        Map<String, Function<Contract, String>> dayOfWeekStrategy = new HashMap<>();
+        dayOfWeekStrategy.put("MONDAY", Contract::getMonday);
+        dayOfWeekStrategy.put("TUESDAY", Contract::getTuesday);
+        dayOfWeekStrategy.put("WEDNESDAY", Contract::getWednesday);
+        dayOfWeekStrategy.put("THURSDAY", Contract::getThursday);
+        dayOfWeekStrategy.put("FRIDAY", Contract::getFriday);
+        dayOfWeekStrategy.put("SATURDAY", Contract::getSaturday);
+        dayOfWeekStrategy.put("SUNDAY", Contract::getSunday);
+
+        DayOfWeek dayOfWeek = LocalDateTime.now().getDayOfWeek();
+        List<String> expiredTime = getExpiredTime();
+
         List<Contract> allContractTodayWorkout = contractRepository.findAllContractTodayWorkout(
                 SituationEnum.OPEN.name(),
                 StatusEnum.A.name(),
                 trainer.getId()
         );
+
+        List<Contract> contractsToRemove = allContractTodayWorkout.stream()
+                .filter(contract -> expiredTime.contains(dayOfWeekStrategy.get(dayOfWeek.toString()).apply(contract)))
+                .collect(Collectors.toList());
+
+        allContractTodayWorkout.removeAll(contractsToRemove);
 
         return ControllerGenericResponseHelper.getInstance(
                 "MSG-1503",
@@ -47,4 +73,15 @@ public class FindAllContractTodayWorkoutServiceImpl implements FindAllContractTo
                         .collect(Collectors.toList())
         );
     }
+
+    private List<String> getExpiredTime() {
+        LocalTime now = LocalTime.now();
+        int nowHH = now.getHour();
+
+        return IntStream.range(1, nowHH)
+                .mapToObj(i -> String.format("%02d:00", i))
+                .collect(Collectors.toList());
+    }
+
+
 }
