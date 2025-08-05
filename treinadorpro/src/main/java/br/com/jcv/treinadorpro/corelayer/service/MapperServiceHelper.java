@@ -11,9 +11,13 @@ import br.com.jcv.treinadorpro.corelayer.model.Program;
 import br.com.jcv.treinadorpro.corelayer.model.StudentPayment;
 import br.com.jcv.treinadorpro.corelayer.model.TrainingPack;
 import br.com.jcv.treinadorpro.corelayer.model.User;
+import br.com.jcv.treinadorpro.corelayer.model.UserTrainingExecutionSet;
+import br.com.jcv.treinadorpro.corelayer.model.UserTrainingSession;
+import br.com.jcv.treinadorpro.corelayer.model.UserTrainingSessionExercise;
 import br.com.jcv.treinadorpro.corelayer.model.UserWorkoutPlan;
 import br.com.jcv.treinadorpro.corelayer.model.WorkGroup;
 import br.com.jcv.treinadorpro.corelayer.request.CreateTrainingPackRequest;
+import br.com.jcv.treinadorpro.corelayer.request.TrainingSessionRequest;
 import br.com.jcv.treinadorpro.corelayer.request.UserWorkoutPlanRequest;
 import br.com.jcv.treinadorpro.corelayer.response.ContractResponse;
 import br.com.jcv.treinadorpro.corelayer.response.ExerciseResponse;
@@ -26,9 +30,11 @@ import br.com.jcv.treinadorpro.corelayer.response.StudentPaymentResponse;
 import br.com.jcv.treinadorpro.corelayer.response.StudentResponse;
 import br.com.jcv.treinadorpro.corelayer.response.StudentsFromTrainerResponse;
 import br.com.jcv.treinadorpro.corelayer.response.TrainingPackResponse;
+import br.com.jcv.treinadorpro.corelayer.response.UserTrainingExecutionSetResponse;
 import br.com.jcv.treinadorpro.corelayer.response.WorkGroupResponse;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -288,6 +294,69 @@ public class MapperServiceHelper {
                 .createdAt(item.getCreatedAt())
                 .updatedAt(item.getUpdatedAt())
                 .build();
+    }
+
+    public static TrainingSessionRequest toResponse(UserTrainingSession userTrainingSession){
+        if(userTrainingSession == null) return null;
+        return TrainingSessionRequest.builder()
+                .externalId(userTrainingSession.getExternalId())
+                .contract(MapperServiceHelper.toResponse(userTrainingSession.getContract()))
+                .startAt(userTrainingSession.getStartAt())
+                .finishedAt(userTrainingSession.getFinishedAt())
+                .elapsedTime(userTrainingSession.getElapsedTime())
+                .progressStatus(userTrainingSession.getProgressStatus())
+                .syncStatus(userTrainingSession.getSyncStatus())
+                .comments((userTrainingSession.getComments()))
+                .status(userTrainingSession.getStatus())
+                .userWorkoutPlanList(MapperServiceHelper.toResponseExercise(userTrainingSession.getExercises()))
+                .build();
+    }
+
+    private static List<UserWorkoutPlanRequest> toResponseExercise(List<UserTrainingSessionExercise> exercises){
+        return exercises.stream()
+                .map((e) -> UserWorkoutPlanRequest.builder()
+                        .externalId(e.getUserWorkoutPlan().getExternalId())
+                        .contract(MapperServiceHelper.toResponse(e.getUserWorkoutPlan().getContract()))
+                        .modality(MapperServiceHelper.toResponse(e.getUserWorkoutPlan().getModality()))
+                        .goal(MapperServiceHelper.toResponse(e.getUserWorkoutPlan().getGoal()))
+                        .program(MapperServiceHelper.toResponse(e.getUserWorkoutPlan().getProgram()))
+                        .workGroup(MapperServiceHelper.toResponse(e.getUserWorkoutPlan().getWorkGroup()))
+                        .exercise(MapperServiceHelper.toResponse(e.getUserWorkoutPlan().getExercise()))
+                        .customExercise(e.getUserWorkoutPlan().getCustomExercise())
+                        .customProgram(e.getUserWorkoutPlan().getCustomProgram())
+                        .executionMethod(e.getUserWorkoutPlan().getExecutionMethod())
+                        .qtySeries(e.getUserWorkoutPlan().getQtySeries())
+                        .qtyReps(e.getUserWorkoutPlan().getQtyReps())
+                        .execution(e.getUserWorkoutPlan().getExecution())
+                        .executionTime(e.getUserWorkoutPlan().getExecutionTime())
+                        .restTime(e.getUserWorkoutPlan().getRestTime())
+                        .comments(e.getUserWorkoutPlan().getComments())
+                        .obs(e.getUserWorkoutPlan().getObs())
+                        .control(UUID.randomUUID().toString())
+                        .status(e.getUserWorkoutPlan().getStatus())
+                        .createdAt(e.getUserWorkoutPlan().getCreatedAt())
+                        .updatedAt(e.getUserWorkoutPlan().getUpdatedAt())
+                        .userExecutionSetList(MapperServiceHelper.toResponse(e.getExecutionSets()))
+                        .build()).collect(Collectors.toList());
+    }
+
+    private static List<UserTrainingExecutionSetResponse> toResponse(List<UserTrainingExecutionSet> trainingExecutionSets) {
+        return trainingExecutionSets.stream()
+                .map( set -> UserTrainingExecutionSetResponse.builder()
+                        .externalId(set.getExternalId())
+                        .userWorkPlan(MapperServiceHelper.toResponse(set.getUserTrainingSessionExercise().getUserWorkoutPlan()))
+                        .startedAt(set.getStartedAt())
+                        .finishedAt(set.getFinishedAt())
+                        .setNumber(set.getSetNumber())
+                        .reps(set.getReps())
+                        .weight(set.getWeight())
+                        .weightUnit(set.getWeightUnit())
+                        .elapsedTime(set.getElapsedTime())
+                        .status(set.getStatus())
+                        .createdAt(set.getCreatedAt())
+                        .updatedAt(set.getUpdatedAt())
+                        .build())
+                .collect(Collectors.toList());
     }
 
 }
