@@ -6,6 +6,7 @@ import br.com.jcv.treinadorpro.corelayer.response.ContractResponse;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -22,6 +23,9 @@ public class TrainingSessionRequest {
 
     @JsonProperty("contract")
     private ContractResponse contract;
+
+    @JsonProperty("booking")
+    private LocalDate booking;
 
     @JsonProperty("startedAt")
     private LocalDateTime startAt;

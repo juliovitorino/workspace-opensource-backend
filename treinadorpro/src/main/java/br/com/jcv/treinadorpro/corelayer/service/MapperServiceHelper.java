@@ -301,6 +301,7 @@ public class MapperServiceHelper {
         return TrainingSessionRequest.builder()
                 .externalId(userTrainingSession.getExternalId())
                 .contract(MapperServiceHelper.toResponse(userTrainingSession.getContract()))
+                .booking(userTrainingSession.getBooking())
                 .startAt(userTrainingSession.getStartAt())
                 .finishedAt(userTrainingSession.getFinishedAt())
                 .elapsedTime(userTrainingSession.getElapsedTime())

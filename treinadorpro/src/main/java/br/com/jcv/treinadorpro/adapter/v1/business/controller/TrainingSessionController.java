@@ -1,8 +1,10 @@
 package br.com.jcv.treinadorpro.adapter.v1.business.controller;
 
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
+import br.com.jcv.treinadorpro.corebusiness.usecases.BookingTrainingService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindMostRecentTrainingSessionService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.SaveTrainingSessionService;
+import br.com.jcv.treinadorpro.corelayer.request.BookingDTO;
 import br.com.jcv.treinadorpro.corelayer.request.TrainingSessionRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,16 +22,25 @@ public class TrainingSessionController {
 
     private final SaveTrainingSessionService saveTrainingSessionService;
     private final FindMostRecentTrainingSessionService findMostRecentTrainingSessionService;
+    private final BookingTrainingService bookingTrainingService;
 
     public TrainingSessionController(SaveTrainingSessionService saveTrainingSessionService,
-                                     FindMostRecentTrainingSessionService findMostRecentTrainingSessionService) {
+                                     FindMostRecentTrainingSessionService findMostRecentTrainingSessionService,
+                                     BookingTrainingService bookingTrainingService) {
         this.saveTrainingSessionService = saveTrainingSessionService;
         this.findMostRecentTrainingSessionService = findMostRecentTrainingSessionService;
+        this.bookingTrainingService = bookingTrainingService;
     }
 
     @PostMapping
     public ResponseEntity<ControllerGenericResponse<Boolean>> saveTrainingSession(@RequestBody TrainingSessionRequest trainingSessionRequest){
         return ResponseEntity.ok(saveTrainingSessionService.execute(UUID.randomUUID(), trainingSessionRequest));
+
+    }
+
+    @PostMapping("/booking")
+    public ResponseEntity<ControllerGenericResponse<Boolean>> bookingTrainingSession(@RequestBody BookingDTO bookingDTO){
+        return ResponseEntity.ok(bookingTrainingService.execute(UUID.randomUUID(), bookingDTO));
 
     }
 
