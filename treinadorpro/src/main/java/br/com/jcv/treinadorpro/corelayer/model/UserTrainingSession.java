@@ -51,7 +51,7 @@ public class UserTrainingSession {
     @JoinColumn(name = "contract_id", nullable = false)
     private Contract contract;
 
-    @Column(name = "booking")
+    @Column(name = "booking_date")
     private LocalDate booking;
 
     @Column(name = "start_at", nullable = false)

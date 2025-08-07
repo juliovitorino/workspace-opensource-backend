@@ -572,7 +572,7 @@ CREATE TABLE user_training_session(
     id SERIAL PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     contract_id INTEGER NOT NULL REFERENCES contract(id) ON DELETE CASCADE,
-    booking DATE,
+    booking_date DATE,
     start_at TIMESTAMP NOT NULL,
     finished_at TIMESTAMP NOT NULL,
     elapsed_time INTEGER,
