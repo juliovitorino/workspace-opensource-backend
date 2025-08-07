@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -56,6 +57,9 @@ public class SaveTrainingSessionServiceImpl implements SaveTrainingSessionServic
         List<UserWorkoutPlanRequest> executedExercises = trainingSessionRequest.getUserWorkoutPlanList().stream()
                 .filter(e -> e.getUserExecutionSetList() != null && !e.getUserExecutionSetList().isEmpty())
                 .collect(Collectors.toList());
+        if(trainingSessionRequest.getProgressStatus().equalsIgnoreCase("BOOKING")) {
+            executedExercises = trainingSessionRequest.getUserWorkoutPlanList();
+        }
 
         UserTrainingSession userTrainingSessionInstance = getUserTrainingSessionInstance(trainingSessionRequest, contract, executedExercises);
 
@@ -76,7 +80,7 @@ public class SaveTrainingSessionServiceImpl implements SaveTrainingSessionServic
         userTrainingSession.setContract(contract);
         userTrainingSession.setBooking(trainingSessionRequest.getBooking());
         userTrainingSession.setStartAt(trainingSessionRequest.getStartAt());
-        userTrainingSession.setFinishedAt(trainingSessionRequest.getFinishedAt());
+        userTrainingSession.setFinishedAt(trainingSessionRequest.getFinishedAt() == null ? trainingSessionRequest.getStartAt() : trainingSessionRequest.getFinishedAt());
         userTrainingSession.setElapsedTime(calculateElapsedTime(trainingSessionRequest.getStartAt(), trainingSessionRequest.getFinishedAt()));
         userTrainingSession.setProgressStatus(trainingSessionRequest.getProgressStatus());
         userTrainingSession.setSyncStatus(trainingSessionRequest.getSyncStatus());
@@ -109,6 +113,7 @@ public class SaveTrainingSessionServiceImpl implements SaveTrainingSessionServic
 
     private List<UserTrainingExecutionSet> getExecutionSetList(List<UserTrainingExecutionSetResponse> userExecutionSetList,
                                                                UserTrainingSessionExercise userTrainingSessionExercise) {
+        if(userExecutionSetList == null) return Collections.emptyList();
         return userExecutionSetList.stream()
                 .map(e-> getExecutionSetInstance(e,userTrainingSessionExercise))
                 .collect(Collectors.toList());
@@ -121,7 +126,7 @@ public class SaveTrainingSessionServiceImpl implements SaveTrainingSessionServic
                 .userTrainingSessionExercise(userTrainingSessionExercise)
                 .reps(executionSet.getReps())
                 .startedAt(executionSet.getStartedAt())
-                .finishedAt(executionSet.getFinishedAt())
+                .finishedAt(executionSet.getFinishedAt() == null ? executionSet.getStartedAt() : executionSet.getFinishedAt())
                 .setNumber(executionSet.getSetNumber())
                 .weight(executionSet.getWeight())
                 .weightUnit("kg")
@@ -131,6 +136,7 @@ public class SaveTrainingSessionServiceImpl implements SaveTrainingSessionServic
     }
 
     private Integer calculateElapsedTime(LocalDateTime startedAt, LocalDateTime finishedAt){
+        if(finishedAt == null) return 0;
         long seconds = Duration.between(startedAt, finishedAt).getSeconds();
         return (int) seconds;
     }
