@@ -39,7 +39,7 @@ public class FindMostRecentTrainingSessionServiceImpl implements FindMostRecentT
         Contract contract = contractRepository.findByExternalIdAndPersonalId(contractExternalId, trainer.getId())
                 .orElseThrow(() -> new CommoditieBaseException("Invalid contract", HttpStatus.BAD_REQUEST, "MSG-1227"));
 
-        UserTrainingSession userTrainingSession = userTrainingSessionRepository.findTopByContractExternalIdOrderByIdDesc(contract.getExternalId())
+        UserTrainingSession userTrainingSession = userTrainingSessionRepository.findTopByContractExternalIdAndProgressStatusOrderByIdDesc(contract.getExternalId(), "FINISHED")
                 .orElse(null);
         return ControllerGenericResponseHelper.getInstance(
                 "MSG-1150",

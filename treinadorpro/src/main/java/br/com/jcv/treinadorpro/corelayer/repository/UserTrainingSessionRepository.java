@@ -10,6 +10,6 @@ import java.util.UUID;
 @Repository
 public interface UserTrainingSessionRepository extends JpaRepository<UserTrainingSession, Long> {
 
-    Optional<UserTrainingSession> findTopByContractExternalIdOrderByIdDesc(UUID contractExternalId);
+    Optional<UserTrainingSession> findTopByContractExternalIdAndProgressStatusOrderByIdDesc(UUID contractExternalId, String progressStatus);
 
 }
