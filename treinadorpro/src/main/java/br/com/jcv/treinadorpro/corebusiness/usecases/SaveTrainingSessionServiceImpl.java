@@ -74,6 +74,7 @@ public class SaveTrainingSessionServiceImpl implements SaveTrainingSessionServic
         UserTrainingSession userTrainingSession = new UserTrainingSession();
         userTrainingSession.setExternalId(UUID.randomUUID());
         userTrainingSession.setContract(contract);
+        userTrainingSession.setBooking(trainingSessionRequest.getBooking());
         userTrainingSession.setStartAt(trainingSessionRequest.getStartAt());
         userTrainingSession.setFinishedAt(trainingSessionRequest.getFinishedAt());
         userTrainingSession.setElapsedTime(calculateElapsedTime(trainingSessionRequest.getStartAt(), trainingSessionRequest.getFinishedAt()));
