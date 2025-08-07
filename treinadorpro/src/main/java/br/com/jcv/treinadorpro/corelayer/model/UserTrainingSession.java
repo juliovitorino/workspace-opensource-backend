@@ -52,7 +52,7 @@ public class UserTrainingSession {
     private Contract contract;
 
     @Column(name = "booking_date")
-    private LocalDate booking;
+    private LocalDateTime booking;
 
     @Column(name = "start_at", nullable = false)
     private LocalDateTime startAt;

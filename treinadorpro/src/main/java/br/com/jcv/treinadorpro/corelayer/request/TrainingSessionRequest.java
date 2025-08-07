@@ -25,7 +25,7 @@ public class TrainingSessionRequest {
     private ContractResponse contract;
 
     @JsonProperty("booking")
-    private LocalDate booking;
+    private LocalDateTime booking;
 
     @JsonProperty("startedAt")
     private LocalDateTime startAt;

@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,7 +21,7 @@ public class BookingDTO implements Serializable {
     private UUID contractExternalId;
 
     @JsonProperty("bookingList")
-    private List<LocalDate> bookingList;
+    private List<LocalDateTime> bookingList;
 
     @JsonProperty("trainingSession")
     private TrainingSessionRequest trainingSession;
