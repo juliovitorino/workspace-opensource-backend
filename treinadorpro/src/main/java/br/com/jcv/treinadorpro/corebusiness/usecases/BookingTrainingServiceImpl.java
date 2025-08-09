@@ -42,6 +42,8 @@ public class BookingTrainingServiceImpl implements BookingTrainingService {
             booking.getTrainingSession().setBooking(bookingItem);
             booking.getTrainingSession().setProgressStatus("BOOKING");
             booking.getTrainingSession().setSyncStatus("NOT_STARTED");
+            booking.getTrainingSession().setStartAt(bookingItem);
+            booking.getTrainingSession().setFinishedAt(bookingItem);
             saveTrainingSessionService.execute(processId, booking.getTrainingSession());
         });
         return ControllerGenericResponseHelper.getInstance(
