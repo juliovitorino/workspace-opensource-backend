@@ -21,6 +21,9 @@ public class TrainingSessionRequest {
     @JsonProperty("externalId")
     private UUID externalId;
 
+    @JsonProperty("bookingExternalId")
+    private UUID bookingExternalId;
+
     @JsonProperty("contract")
     private ContractResponse contract;
 

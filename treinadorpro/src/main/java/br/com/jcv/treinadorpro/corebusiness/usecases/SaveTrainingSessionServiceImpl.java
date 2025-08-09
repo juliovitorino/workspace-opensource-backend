@@ -64,6 +64,9 @@ public class SaveTrainingSessionServiceImpl implements SaveTrainingSessionServic
         UserTrainingSession userTrainingSessionInstance = getUserTrainingSessionInstance(trainingSessionRequest, contract, executedExercises);
 
         userTrainingSessionRepository.save(userTrainingSessionInstance);
+        if(trainingSessionRequest.getBookingExternalId() != null){
+            userTrainingSessionRepository.deleteUserTrainingSessionByExternalId(trainingSessionRequest.getBookingExternalId());
+        }
 
         return ControllerGenericResponseHelper.getInstance(
                 "MSG-1739",
