@@ -2,8 +2,12 @@ package br.com.jcv.treinadorpro.corelayer.repository;
 
 import br.com.jcv.treinadorpro.corelayer.model.UserTrainingSession;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -12,4 +16,17 @@ public interface UserTrainingSessionRepository extends JpaRepository<UserTrainin
 
     Optional<UserTrainingSession> findTopByContractExternalIdAndProgressStatusOrderByIdDesc(UUID contractExternalId, String progressStatus);
 
+    @Query(
+            value = "select uts from UserTrainingSession uts " +
+                    "where uts.contract.externalId = :contractExternalId " +
+                    "and (" +
+                    "      (  uts.progressStatus = 'BOOKING' and uts.booking between :startDate and :endDate) " +
+                    "      OR " +
+                    "      ( uts.progressStatus = 'FINISHED' and  uts.startAt between :startDate and :endDate) " +
+                    ")"
+    )
+    List<UserTrainingSession> findTrainingSessionByContractExternalIdAndStartDateAndEndDate(
+            @Param("contractExternalId") UUID externalId,
+            @Param("startDate") LocalDateTime startDate,
+            @Param("endDate") LocalDateTime endDate);
 }
