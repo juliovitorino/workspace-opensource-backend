@@ -2,9 +2,11 @@ package br.com.jcv.treinadorpro.adapter.v1.business.controller;
 
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.treinadorpro.corebusiness.usecases.BookingTrainingService;
+import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllTrainingSessionCalendarService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindMostRecentTrainingSessionService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.SaveTrainingSessionService;
 import br.com.jcv.treinadorpro.corelayer.request.BookingDTO;
+import br.com.jcv.treinadorpro.corelayer.request.FindAllTrainingSessionCalendarRequest;
 import br.com.jcv.treinadorpro.corelayer.request.TrainingSessionRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -23,13 +26,16 @@ public class TrainingSessionController {
     private final SaveTrainingSessionService saveTrainingSessionService;
     private final FindMostRecentTrainingSessionService findMostRecentTrainingSessionService;
     private final BookingTrainingService bookingTrainingService;
+    private final FindAllTrainingSessionCalendarService findAllTrainingSessionCalendarService;
 
     public TrainingSessionController(SaveTrainingSessionService saveTrainingSessionService,
                                      FindMostRecentTrainingSessionService findMostRecentTrainingSessionService,
-                                     BookingTrainingService bookingTrainingService) {
+                                     BookingTrainingService bookingTrainingService,
+                                     FindAllTrainingSessionCalendarService findAllTrainingSessionCalendarService) {
         this.saveTrainingSessionService = saveTrainingSessionService;
         this.findMostRecentTrainingSessionService = findMostRecentTrainingSessionService;
         this.bookingTrainingService = bookingTrainingService;
+        this.findAllTrainingSessionCalendarService = findAllTrainingSessionCalendarService;
     }
 
     @PostMapping
@@ -47,5 +53,10 @@ public class TrainingSessionController {
     @GetMapping("/{externalId}")
     public ResponseEntity<ControllerGenericResponse<TrainingSessionRequest>> findMostRecentTrainingSessionService(@PathVariable("externalId") UUID contractExternalId){
         return ResponseEntity.ok(findMostRecentTrainingSessionService.execute(UUID.randomUUID(), contractExternalId));
+    }
+
+    @GetMapping("/calendar")
+    public ResponseEntity<ControllerGenericResponse<List<TrainingSessionRequest>>> findTrainingSessionCalendar(@RequestBody FindAllTrainingSessionCalendarRequest request){
+        return ResponseEntity.ok(findAllTrainingSessionCalendarService.execute(UUID.randomUUID(), request));
     }
 }
