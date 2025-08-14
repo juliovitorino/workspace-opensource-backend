@@ -427,6 +427,9 @@ CREATE TABLE student_payments (
     amount DECIMAL(10,2) NOT NULL,
     expected_date DATE NOT NULL,
     payment_date DATE,
+    received_amount DECIMAL(10,2),
+    payment_method VARCHAR(100),
+    comment TEXT,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

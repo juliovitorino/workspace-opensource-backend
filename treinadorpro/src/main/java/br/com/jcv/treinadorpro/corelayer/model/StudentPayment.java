@@ -1,5 +1,6 @@
 package br.com.jcv.treinadorpro.corelayer.model;
 
+import br.com.jcv.treinadorpro.corelayer.enums.PaymentMethodEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -42,6 +43,16 @@ public class StudentPayment {
 
     @Column(name = "payment_date")
     private LocalDate paymentDate;
+
+    @Column(name = "received_amount", precision = 10, scale = 2)
+    private BigDecimal receivedAmount;
+
+    @Column(name = "payment_method", length = 100)
+    @Enumerated(value = EnumType.STRING)
+    private PaymentMethodEnum paymentMethod;
+
+    @Column(name = "comment")
+    private String comment;
 
     @Column(name = "status", length = 1)
     private String status = "A";
