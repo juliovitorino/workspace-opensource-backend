@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.apache.maven.lifecycle.internal.LifecycleStarter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -13,6 +14,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -41,19 +43,6 @@ public class StudentPayment {
     @Column(name = "expected_date", nullable = false)
     private LocalDate duedate;
 
-    @Column(name = "payment_date")
-    private LocalDate paymentDate;
-
-    @Column(name = "received_amount", precision = 10, scale = 2)
-    private BigDecimal receivedAmount;
-
-    @Column(name = "payment_method", length = 100)
-    @Enumerated(value = EnumType.STRING)
-    private PaymentMethodEnum paymentMethod;
-
-    @Column(name = "comment")
-    private String comment;
-
     @Column(name = "status", length = 1)
     private String status = "A";
 
@@ -64,5 +53,9 @@ public class StudentPayment {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "studentPayment", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<StudentPaymentsTransaction> studentPaymentsTransactions;
 
 }

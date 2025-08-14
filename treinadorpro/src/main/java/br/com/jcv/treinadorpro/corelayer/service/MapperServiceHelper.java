@@ -9,6 +9,7 @@ import br.com.jcv.treinadorpro.corelayer.model.PersonalFeature;
 import br.com.jcv.treinadorpro.corelayer.model.PlanTemplate;
 import br.com.jcv.treinadorpro.corelayer.model.Program;
 import br.com.jcv.treinadorpro.corelayer.model.StudentPayment;
+import br.com.jcv.treinadorpro.corelayer.model.StudentPaymentsTransaction;
 import br.com.jcv.treinadorpro.corelayer.model.TrainingPack;
 import br.com.jcv.treinadorpro.corelayer.model.User;
 import br.com.jcv.treinadorpro.corelayer.model.UserTrainingExecutionSet;
@@ -27,6 +28,7 @@ import br.com.jcv.treinadorpro.corelayer.response.PersonalFeatureResponse;
 import br.com.jcv.treinadorpro.corelayer.response.PersonalTrainerResponse;
 import br.com.jcv.treinadorpro.corelayer.response.ProgramResponse;
 import br.com.jcv.treinadorpro.corelayer.response.StudentPaymentResponse;
+import br.com.jcv.treinadorpro.corelayer.response.StudentPaymentsTransactionResponse;
 import br.com.jcv.treinadorpro.corelayer.response.StudentResponse;
 import br.com.jcv.treinadorpro.corelayer.response.StudentsFromTrainerResponse;
 import br.com.jcv.treinadorpro.corelayer.response.TrainingPackResponse;
@@ -43,8 +45,8 @@ public class MapperServiceHelper {
 
 
     public static TrainingPack toEntity(CreateTrainingPackRequest request,
-                                  User user,
-                                  Modality modality) {
+                                        User user,
+                                        Modality modality) {
         return TrainingPack.builder()
                 .externalId(UUID.randomUUID())
                 .personalUser(user)
@@ -101,7 +103,7 @@ public class MapperServiceHelper {
 
 
     public static PersonalFeatureResponse toResponse(PersonalFeature personalFeature) {
-        if(personalFeature == null) return null;
+        if (personalFeature == null) return null;
         return PersonalFeatureResponse.builder()
                 .id(personalFeature.getId())
                 .register(personalFeature.getRegister())
@@ -190,9 +192,9 @@ public class MapperServiceHelper {
                 .updatedAt(workGroup.getUpdatedAt())
                 .build();
     }
-    
+
     public static ExerciseResponse toResponse(Exercise exercise) {
-        if(exercise == null) return null;
+        if (exercise == null) return null;
         return ExerciseResponse.builder()
                 .id(exercise.getId())
                 .externalId(exercise.getExternalId())
@@ -209,7 +211,7 @@ public class MapperServiceHelper {
                 .build();
     }
 
-    public static PlanTemplateResponse toResponse(PlanTemplate planTemplate){
+    public static PlanTemplateResponse toResponse(PlanTemplate planTemplate) {
         return PlanTemplateResponse.builder()
                 .id(planTemplate.getId())
                 .externalId(planTemplate.getExternalId())
@@ -234,19 +236,34 @@ public class MapperServiceHelper {
                 .build();
     }
 
-    public static StudentPaymentResponse toResponse(StudentPayment studentPayment){
+    public static StudentPaymentResponse toResponse(StudentPayment studentPayment) {
         return StudentPaymentResponse.builder()
                 .externalId(studentPayment.getExternalId())
                 .contract(toResponse(studentPayment.getContract()))
                 .amount(studentPayment.getAmount())
                 .dueDate(studentPayment.getDuedate())
-                .paymentDate(studentPayment.getPaymentDate())
-                .receivedAmount(studentPayment.getReceivedAmount())
-                .paymentMethod(studentPayment.getPaymentMethod())
-                .comment(studentPayment.getComment())
                 .status(studentPayment.getStatus())
                 .createdAt(studentPayment.getCreatedAt())
                 .updatedAt(studentPayment.getUpdatedAt())
+                .studentPaymentsTransactions(studentPayment.getStudentPaymentsTransactions()
+                        .stream()
+                        .map(MapperServiceHelper::toResponse)
+                        .collect(Collectors.toList())
+                )
+                .build();
+    }
+
+    public static StudentPaymentsTransactionResponse toResponse(StudentPaymentsTransaction studentPaymentsTransaction) {
+        return StudentPaymentsTransactionResponse.builder()
+                .id(studentPaymentsTransaction.getId())
+                .externalId(studentPaymentsTransaction.getExternalId())
+                .studentPayment(toResponse(studentPaymentsTransaction.getStudentPayment()))
+                .paymentDate(studentPaymentsTransaction.getPaymentDate())
+                .paymentMethod(studentPaymentsTransaction.getPaymentMethod())
+                .comment(studentPaymentsTransaction.getComment())
+                .status(studentPaymentsTransaction.getStatus())
+                .createdAt(studentPaymentsTransaction.getCreatedAt())
+                .updatedAt(studentPaymentsTransaction.getUpdatedAt())
                 .build();
     }
 
@@ -299,8 +316,8 @@ public class MapperServiceHelper {
                 .build();
     }
 
-    public static TrainingSessionRequest toResponse(UserTrainingSession userTrainingSession){
-        if(userTrainingSession == null) return null;
+    public static TrainingSessionRequest toResponse(UserTrainingSession userTrainingSession) {
+        if (userTrainingSession == null) return null;
         return TrainingSessionRequest.builder()
                 .externalId(userTrainingSession.getExternalId())
                 .contract(MapperServiceHelper.toResponse(userTrainingSession.getContract()))
@@ -316,7 +333,7 @@ public class MapperServiceHelper {
                 .build();
     }
 
-    private static List<UserWorkoutPlanRequest> toResponseExercise(List<UserTrainingSessionExercise> exercises){
+    private static List<UserWorkoutPlanRequest> toResponseExercise(List<UserTrainingSessionExercise> exercises) {
         return exercises.stream()
                 .map((e) -> UserWorkoutPlanRequest.builder()
                         .externalId(e.getUserWorkoutPlan().getExternalId())
@@ -346,7 +363,7 @@ public class MapperServiceHelper {
 
     private static List<UserTrainingExecutionSetResponse> toResponse(List<UserTrainingExecutionSet> trainingExecutionSets) {
         return trainingExecutionSets.stream()
-                .map( set -> UserTrainingExecutionSetResponse.builder()
+                .map(set -> UserTrainingExecutionSetResponse.builder()
                         .externalId(set.getExternalId())
                         .userWorkPlan(MapperServiceHelper.toResponse(set.getUserTrainingSessionExercise().getUserWorkoutPlan()))
                         .startedAt(set.getStartedAt())
