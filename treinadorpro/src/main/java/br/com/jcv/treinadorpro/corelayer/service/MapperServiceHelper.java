@@ -235,9 +235,12 @@ public class MapperServiceHelper {
                 .phone(user.getCellphone())
                 .build();
     }
-
     public static StudentPaymentResponse toResponse(StudentPayment studentPayment) {
-        return StudentPaymentResponse.builder()
+        return toResponse(studentPayment, true);
+    }
+
+    public static StudentPaymentResponse toResponse(StudentPayment studentPayment, Boolean isDeep) {
+        StudentPaymentResponse studentPaymentResponse = StudentPaymentResponse.builder()
                 .externalId(studentPayment.getExternalId())
                 .contract(toResponse(studentPayment.getContract()))
                 .amount(studentPayment.getAmount())
@@ -245,22 +248,26 @@ public class MapperServiceHelper {
                 .status(studentPayment.getStatus())
                 .createdAt(studentPayment.getCreatedAt())
                 .updatedAt(studentPayment.getUpdatedAt())
-                .studentPaymentsTransactions(studentPayment.getStudentPaymentsTransactions()
-                        .stream()
-                        .map(MapperServiceHelper::toResponse)
-                        .collect(Collectors.toList())
-                )
                 .build();
+        if(isDeep){
+            studentPaymentResponse.setStudentPaymentsTransactions(
+                    studentPayment.getStudentPaymentsTransactions()
+                    .stream()
+                    .map(MapperServiceHelper::toResponse)
+                    .collect(Collectors.toList()));
+        }
+        return studentPaymentResponse;
     }
 
     public static StudentPaymentsTransactionResponse toResponse(StudentPaymentsTransaction studentPaymentsTransaction) {
         return StudentPaymentsTransactionResponse.builder()
                 .id(studentPaymentsTransaction.getId())
                 .externalId(studentPaymentsTransaction.getExternalId())
-                .studentPayment(toResponse(studentPaymentsTransaction.getStudentPayment()))
+                .studentPayment(toResponse(studentPaymentsTransaction.getStudentPayment(), false))
                 .paymentDate(studentPaymentsTransaction.getPaymentDate())
                 .paymentMethod(studentPaymentsTransaction.getPaymentMethod())
                 .comment(studentPaymentsTransaction.getComment())
+                .receivedAmount(studentPaymentsTransaction.getReceivedAmount())
                 .status(studentPaymentsTransaction.getStatus())
                 .createdAt(studentPaymentsTransaction.getCreatedAt())
                 .updatedAt(studentPaymentsTransaction.getUpdatedAt())

@@ -17,6 +17,7 @@ import br.com.jcv.treinadorpro.corelayer.request.UserDataSheetPlanRequest;
 import br.com.jcv.treinadorpro.corelayer.response.ContractResponse;
 import br.com.jcv.treinadorpro.corelayer.response.CreateNewStudentContractResponse;
 import br.com.jcv.treinadorpro.corelayer.response.StudentPaymentResponse;
+import br.com.jcv.treinadorpro.corelayer.response.StudentPaymentsTransactionResponse;
 import br.com.jcv.treinadorpro.corelayer.response.StudentsFromTrainerResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -96,7 +97,7 @@ public class ContractController {
     }
 
     @GetMapping("/trainer/student/received-payments")
-    public ResponseEntity<ControllerGenericResponse<List<StudentPaymentResponse>>> findAllReceivedPaymentsCurrentMonthService() {
+    public ResponseEntity<ControllerGenericResponse<List<StudentPaymentsTransactionResponse>>> findAllReceivedPaymentsCurrentMonthService() {
         return ResponseEntity.ok(findAllReceivedPaymentsCurrentMonthService.execute(UUID.randomUUID()));
     }
 
