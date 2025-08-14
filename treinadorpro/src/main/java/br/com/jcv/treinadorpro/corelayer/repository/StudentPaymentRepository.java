@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface StudentPaymentRepository extends JpaRepository<StudentPayment, Long> {
@@ -37,4 +39,6 @@ public interface StudentPaymentRepository extends JpaRepository<StudentPayment, 
             "AND FUNCTION('EXTRACT', MONTH FROM c.paymentDate) = FUNCTION('EXTRACT', MONTH FROM CURRENT_TIMESTAMP) " +
             "and c.contract.trainingPack.personalUser.id = :personalId")
     List<StudentPayment> findAllReceivedPaymentsCurrentMonth(@Param("personalId") Long personalId);
+
+    Optional<StudentPayment> findByExternalId(UUID externalId);
 }
