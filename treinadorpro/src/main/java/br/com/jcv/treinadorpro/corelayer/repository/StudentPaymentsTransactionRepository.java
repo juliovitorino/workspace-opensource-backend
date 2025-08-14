@@ -23,5 +23,5 @@ public interface StudentPaymentsTransactionRepository extends JpaRepository<Stud
             "AND FUNCTION('EXTRACT', YEAR FROM c.paymentDate) = FUNCTION('EXTRACT', YEAR FROM CURRENT_TIMESTAMP) " +
             "AND FUNCTION('EXTRACT', MONTH FROM c.paymentDate) = FUNCTION('EXTRACT', MONTH FROM CURRENT_TIMESTAMP) " +
             "and c.studentPayment.contract.trainingPack.personalUser.id = :personalId")
-    List<StudentPayment> findAllReceivedPaymentsCurrentMonth(@Param("personalId") Long personalId);
+    List<StudentPaymentsTransaction> findAllReceivedPaymentsCurrentMonth(@Param("personalId") Long personalId);
 }

@@ -3,10 +3,12 @@ package br.com.jcv.treinadorpro.corebusiness.usecases;
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.treinadorpro.corebusiness.users.GetLoggedUserService;
 import br.com.jcv.treinadorpro.corelayer.model.StudentPayment;
+import br.com.jcv.treinadorpro.corelayer.model.StudentPaymentsTransaction;
 import br.com.jcv.treinadorpro.corelayer.repository.StudentPaymentRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.StudentPaymentsTransactionRepository;
 import br.com.jcv.treinadorpro.corelayer.response.PersonalTrainerResponse;
 import br.com.jcv.treinadorpro.corelayer.response.StudentPaymentResponse;
+import br.com.jcv.treinadorpro.corelayer.response.StudentPaymentsTransactionResponse;
 import br.com.jcv.treinadorpro.corelayer.service.MapperServiceHelper;
 import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
 import lombok.extern.slf4j.Slf4j;
@@ -30,9 +32,9 @@ public class FindAllReceivedPaymentsCurrentMonthServiceImpl implements FindAllRe
     }
 
     @Override
-    public ControllerGenericResponse<List<StudentPaymentResponse>> execute(UUID processId) {
+    public ControllerGenericResponse<List<StudentPaymentsTransactionResponse>> execute(UUID processId) {
         PersonalTrainerResponse trainer = getLoggedUserService.execute(processId);
-        List<StudentPayment> allReceivedPaymentsCurrentMonth = studentPaymentsTransactionRepository.findAllReceivedPaymentsCurrentMonth(trainer.getId());
+        List<StudentPaymentsTransaction> allReceivedPaymentsCurrentMonth = studentPaymentsTransactionRepository.findAllReceivedPaymentsCurrentMonth(trainer.getId());
 
         return ControllerGenericResponseHelper.getInstance(
                 "MSG-1127",

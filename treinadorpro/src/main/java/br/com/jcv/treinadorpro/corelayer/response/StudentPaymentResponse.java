@@ -40,19 +40,6 @@ public class StudentPaymentResponse {
     @JsonProperty("dueDate")
     private LocalDate dueDate;
 
-    @JsonProperty("paymentDate")
-    private LocalDate paymentDate;
-
-    @JsonProperty("receivedAmount")
-    private BigDecimal receivedAmount;
-
-    @JsonProperty("paymentMethod")
-    private PaymentMethodEnum paymentMethod;
-
-    @JsonProperty("comment")
-    private String comment;
-
-
     @JsonProperty("status")
     private String status;
 
