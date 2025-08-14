@@ -4,6 +4,7 @@ import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse
 import br.com.jcv.treinadorpro.corebusiness.users.GetLoggedUserService;
 import br.com.jcv.treinadorpro.corelayer.model.StudentPayment;
 import br.com.jcv.treinadorpro.corelayer.repository.StudentPaymentRepository;
+import br.com.jcv.treinadorpro.corelayer.repository.StudentPaymentsTransactionRepository;
 import br.com.jcv.treinadorpro.corelayer.response.PersonalTrainerResponse;
 import br.com.jcv.treinadorpro.corelayer.response.StudentPaymentResponse;
 import br.com.jcv.treinadorpro.corelayer.service.MapperServiceHelper;
@@ -20,17 +21,18 @@ import java.util.stream.Collectors;
 public class FindAllReceivedPaymentsCurrentMonthServiceImpl implements FindAllReceivedPaymentsCurrentMonthService{
 
     private final GetLoggedUserService getLoggedUserService;
-    private final StudentPaymentRepository studentPaymentRepository;
+    private final StudentPaymentsTransactionRepository studentPaymentsTransactionRepository;
 
-    public FindAllReceivedPaymentsCurrentMonthServiceImpl(GetLoggedUserService getLoggedUserService, StudentPaymentRepository studentPaymentRepository) {
+    public FindAllReceivedPaymentsCurrentMonthServiceImpl(GetLoggedUserService getLoggedUserService,
+                                                          StudentPaymentsTransactionRepository studentPaymentsTransactionRepository) {
         this.getLoggedUserService = getLoggedUserService;
-        this.studentPaymentRepository = studentPaymentRepository;
+        this.studentPaymentsTransactionRepository = studentPaymentsTransactionRepository;
     }
 
     @Override
     public ControllerGenericResponse<List<StudentPaymentResponse>> execute(UUID processId) {
         PersonalTrainerResponse trainer = getLoggedUserService.execute(processId);
-        List<StudentPayment> allReceivedPaymentsCurrentMonth = studentPaymentRepository.findAllReceivedPaymentsCurrentMonth(trainer.getId());
+        List<StudentPayment> allReceivedPaymentsCurrentMonth = studentPaymentsTransactionRepository.findAllReceivedPaymentsCurrentMonth(trainer.getId());
 
         return ControllerGenericResponseHelper.getInstance(
                 "MSG-1127",

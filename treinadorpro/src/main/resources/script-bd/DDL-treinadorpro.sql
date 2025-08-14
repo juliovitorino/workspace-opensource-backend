@@ -426,10 +426,6 @@ CREATE TABLE student_payments (
     contract_id INTEGER NOT NULL REFERENCES contract(id) ON DELETE CASCADE,
     amount DECIMAL(10,2) NOT NULL,
     expected_date DATE NOT NULL,
-    payment_date DATE,
-    received_amount DECIMAL(10,2),
-    payment_method VARCHAR(100),
-    comment TEXT,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -445,6 +441,21 @@ COMMENT ON COLUMN student_payments.payment_date IS 'Actual date when the payment
 COMMENT ON COLUMN student_payments.status IS 'Status of the student payment record: A (Active), B (Blocked), I (Inactive), P (Pending).';
 COMMENT ON COLUMN student_payments.created_at IS 'Timestamp when the student payment record was created.';
 COMMENT ON COLUMN student_payments.updated_at IS 'Timestamp when the student payment record was last updated.';
+
+-- student payments
+CREATE TABLE student_payments_transaction (
+    id serial PRIMARY KEY,
+    external_id UUID UNIQUE NOT NULL,
+    student_payments_id INTEGER NOT NULL REFERENCES student_payments(id) ON DELETE CASCADE,
+    payment_date DATE,
+    received_amount DECIMAL(10,2),
+    payment_method VARCHAR(100),
+    comment TEXT,
+    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 --
 ---- program_template table
 --CREATE TABLE program_template (

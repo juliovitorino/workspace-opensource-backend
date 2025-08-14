@@ -6,6 +6,7 @@ import br.com.jcv.treinadorpro.corelayer.enums.SituationEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.corelayer.repository.ContractRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.StudentPaymentRepository;
+import br.com.jcv.treinadorpro.corelayer.repository.StudentPaymentsTransactionRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.TrainingPackRepository;
 import br.com.jcv.treinadorpro.corelayer.response.BuilderDashboardResponse;
 import br.com.jcv.treinadorpro.corelayer.response.PersonalTrainerResponse;
@@ -25,15 +26,18 @@ public class BuilderDashboardServiceImpl implements BuilderDashboardService{
     private final GetLoggedUserService getLoggedUserService;
     private final StudentPaymentRepository studentPaymentRepository;
     private final TrainingPackRepository trainingPackRepository;
+    private final StudentPaymentsTransactionRepository studentPaymentsTransactionRepository;
 
     public BuilderDashboardServiceImpl(ContractRepository contractRepository,
                                        GetLoggedUserService getLoggedUserService,
                                        StudentPaymentRepository studentPaymentRepository,
-                                       TrainingPackRepository trainingPackRepository) {
+                                       TrainingPackRepository trainingPackRepository,
+                                       StudentPaymentsTransactionRepository studentPaymentsTransactionRepository) {
         this.contractRepository = contractRepository;
         this.getLoggedUserService = getLoggedUserService;
         this.studentPaymentRepository = studentPaymentRepository;
         this.trainingPackRepository = trainingPackRepository;
+        this.studentPaymentsTransactionRepository = studentPaymentsTransactionRepository;
     }
 
     @Override
@@ -41,7 +45,7 @@ public class BuilderDashboardServiceImpl implements BuilderDashboardService{
     public ControllerGenericResponse<BuilderDashboardResponse> execute(UUID processId) {
         PersonalTrainerResponse trainer = getLoggedUserService.execute(processId);
         BigDecimal overdueAmountContracts = studentPaymentRepository.sumOverduePayments(trainer.getId());
-        BigDecimal totalAmountReceivedMonth = studentPaymentRepository.sumReceivedPaymentsCurrentMonth(trainer.getId());
+        BigDecimal totalAmountReceivedMonth = studentPaymentsTransactionRepository.sumReceivedPaymentsCurrentMonth(trainer.getId());
         return ControllerGenericResponseHelper.getInstance(
                 "MSG-1449",
                 "Dashboard Response has been executed successfully",
