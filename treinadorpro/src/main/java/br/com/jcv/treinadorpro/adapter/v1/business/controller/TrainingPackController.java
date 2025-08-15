@@ -5,6 +5,7 @@ import br.com.jcv.treinadorpro.corebusiness.trainingpack.FindAllTrainingPackServ
 import br.com.jcv.treinadorpro.corebusiness.usecases.AddTrainingPackService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.ChangeStatusTrainingPackageService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllTrainingPackFromTrainerService;
+import br.com.jcv.treinadorpro.corebusiness.usecases.PurgeTrainingPackageService;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.corelayer.request.AddTrainingPackRequest;
 import br.com.jcv.treinadorpro.corelayer.request.ChangeStatusTrainingPackageRequest;
@@ -13,6 +14,7 @@ import br.com.jcv.treinadorpro.infrastructure.utils.PageResultRequest;
 import br.com.jcv.treinadorpro.infrastructure.utils.PageResultResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,15 +37,18 @@ public class TrainingPackController {
     private final FindAllTrainingPackFromTrainerService findAllTrainingPackFromTrainerService;
     private final AddTrainingPackService addTrainingPackService;
     private final ChangeStatusTrainingPackageService changeStatusTrainingPackageService;
+    private final PurgeTrainingPackageService purgeTrainingPackageService;
 
     public TrainingPackController(FindAllTrainingPackService findAllTrainingPackService,
                                   FindAllTrainingPackFromTrainerService findAllTrainingPackFromTrainerService,
                                   AddTrainingPackService addTrainingPackService,
-                                  ChangeStatusTrainingPackageService changeStatusTrainingPackageService) {
+                                  ChangeStatusTrainingPackageService changeStatusTrainingPackageService,
+                                  PurgeTrainingPackageService purgeTrainingPackageService) {
         this.findAllTrainingPackService = findAllTrainingPackService;
         this.findAllTrainingPackFromTrainerService = findAllTrainingPackFromTrainerService;
         this.addTrainingPackService = addTrainingPackService;
         this.changeStatusTrainingPackageService = changeStatusTrainingPackageService;
+        this.purgeTrainingPackageService = purgeTrainingPackageService;
     }
 
     @PostMapping
@@ -91,5 +96,11 @@ public class TrainingPackController {
                         .externalId(externalId)
                         .status(StatusEnum.A)
                         .build());
+    }
+
+    @DeleteMapping("{externalId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    private void deleteForever(@PathVariable("externalId") UUID trainingPackageExternalId) {
+        purgeTrainingPackageService.execute(UUID.randomUUID(), trainingPackageExternalId);
     }
 }

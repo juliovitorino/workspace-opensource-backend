@@ -4,6 +4,7 @@ import br.com.jcv.treinadorpro.corelayer.model.TrainingPack;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -26,4 +27,8 @@ public interface TrainingPackRepository extends JpaRepository<TrainingPack, Long
 
     @Query("select count(TP) from TrainingPack TP where personalUser.id = :personalUserId")
     Long countTrainingPack(@Param("personalUserId") Long personalUserId);
+
+    @Modifying
+    @Query(value = "delete from TrainingPack TP where TP.id = :id")
+    void deleteUsingId(@Param("id") Long id);
 }
