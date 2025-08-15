@@ -39,7 +39,7 @@ public class AddTrainingPackServiceImpl implements AddTrainingPackService{
 
     @Override
     public ControllerGenericResponse<Boolean> execute(UUID processId, AddTrainingPackRequest request) {
-
+        getLoggedUserService.execute(processId);
         trainingPackRepository.save(getTrainingPackInstance(request, getLoggedUserService.execute(processId)));
 
         return ControllerGenericResponseHelper.getInstance(
