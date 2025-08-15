@@ -4,7 +4,7 @@ CREATE TABLE parameters (
     external_id UUID UNIQUE NOT NULL,
     keytag VARCHAR(500) UNIQUE NOT NULL,
     valuetag VARCHAR(2000) NOT NULL,
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    status VARCHAR(1) DEFAULT 'A' ,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -25,7 +25,7 @@ CREATE TABLE program (
     name_pt VARCHAR(100),
     name_en VARCHAR(100),
     name_es VARCHAR(100),
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
+    status VARCHAR(1) DEFAULT 'A' ,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -47,7 +47,7 @@ CREATE TABLE goal (
     name_pt VARCHAR(100),
     name_en VARCHAR(100),
     name_es VARCHAR(100),
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
+    status VARCHAR(1) DEFAULT 'A' ,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -69,7 +69,7 @@ CREATE TABLE work_group (
     name_pt VARCHAR(100),
     name_en VARCHAR(100),
     name_es VARCHAR(100),
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
+    status VARCHAR(1) DEFAULT 'A' ,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -91,7 +91,7 @@ CREATE TABLE modality (
     name_pt VARCHAR(100),
     name_en VARCHAR(100),
     name_es VARCHAR(100),
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    status VARCHAR(1) DEFAULT 'A' ,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -117,7 +117,7 @@ CREATE TABLE exercise (
     video_url_en VARCHAR(1000),
     video_url_es VARCHAR(1000),
     image_uuid UUID,
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    status VARCHAR(1) DEFAULT 'A' ,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -138,7 +138,7 @@ CREATE TABLE work_group_exercise (
     external_id UUID UNIQUE NOT NULL,
     work_group_id INTEGER NOT NULL REFERENCES work_group(id) ON DELETE CASCADE,
     exercise_id INTEGER NOT NULL REFERENCES exercise(id) ON DELETE CASCADE,
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    status VARCHAR(1) DEFAULT 'A' ,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -196,7 +196,7 @@ CREATE TABLE users (
     master_language VARCHAR(10) NOT NULL DEFAULT 'pt-BR' CHECK (master_language IN ('pt-BR', 'en-US', 'es-ES')),
     guardian_integration UUID,
     last_login TIMESTAMP,
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    status VARCHAR(1) DEFAULT 'A' ,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -205,7 +205,7 @@ CREATE TABLE users (
 --    id bigserial PRIMARY KEY,
 --    personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
 --    student_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
---    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+--    status VARCHAR(1) DEFAULT 'A' ,
 --    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 --    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 --);
@@ -373,7 +373,7 @@ CREATE TABLE training_pack (
     notes VARCHAR(255) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     currency VARCHAR(10),
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    status VARCHAR(1) DEFAULT 'A' ,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -399,7 +399,7 @@ CREATE TABLE contract (
     saturday VARCHAR(5),
     sunday VARCHAR(5),
     situation VARCHAR(50),
-    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I','P')),
+    status VARCHAR(1) DEFAULT 'A' ,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
