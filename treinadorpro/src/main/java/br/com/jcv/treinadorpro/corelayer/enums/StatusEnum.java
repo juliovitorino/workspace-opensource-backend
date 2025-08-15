@@ -4,5 +4,6 @@ public enum StatusEnum {
     A, // Active
     B, // Block
     I, // Inactive
-    P // Pending
+    P, // Pending,
+    D // Delete
 }
