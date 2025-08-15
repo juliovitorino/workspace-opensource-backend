@@ -18,6 +18,7 @@ import java.util.UUID;
 import static br.com.jcv.treinadorpro.corelayer.service.MapperServiceHelper.toEntity;
 
 @Service
+@Deprecated
 public class CreateTrainingPackServiceImpl implements CreateTrainingPackService{
 
     private final TrainingPackRepository trainingPackRepository;

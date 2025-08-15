@@ -1,10 +1,10 @@
 package br.com.jcv.treinadorpro.adapter.v1.business.controller;
 
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
-import br.com.jcv.treinadorpro.corebusiness.trainingpack.CreateTrainingPackService;
 import br.com.jcv.treinadorpro.corebusiness.trainingpack.FindAllTrainingPackService;
+import br.com.jcv.treinadorpro.corebusiness.usecases.AddTrainingPackService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllTrainingPackFromTrainerService;
-import br.com.jcv.treinadorpro.corelayer.request.CreateTrainingPackRequest;
+import br.com.jcv.treinadorpro.corelayer.request.AddTrainingPackRequest;
 import br.com.jcv.treinadorpro.corelayer.response.TrainingPackResponse;
 import br.com.jcv.treinadorpro.infrastructure.utils.PageResultRequest;
 import br.com.jcv.treinadorpro.infrastructure.utils.PageResultResponse;
@@ -25,21 +25,22 @@ import java.util.UUID;
 @RequestMapping("/v1/api/business/trainingpack")
 public class TrainingPackController {
 
-    private final CreateTrainingPackService createTrainingPackService;
-    private final FindAllTrainingPackService  findAllTrainingPackService;
+    private final FindAllTrainingPackService findAllTrainingPackService;
     private final FindAllTrainingPackFromTrainerService findAllTrainingPackFromTrainerService;
+    private final AddTrainingPackService addTrainingPackService;
 
-    public TrainingPackController(CreateTrainingPackService createTrainingPackService,
-                                  FindAllTrainingPackService findAllTrainingPackService,
-                                  FindAllTrainingPackFromTrainerService findAllTrainingPackFromTrainerService) {
-        this.createTrainingPackService = createTrainingPackService;
+    public TrainingPackController(FindAllTrainingPackService findAllTrainingPackService,
+                                  FindAllTrainingPackFromTrainerService findAllTrainingPackFromTrainerService,
+                                  AddTrainingPackService addTrainingPackService) {
         this.findAllTrainingPackService = findAllTrainingPackService;
         this.findAllTrainingPackFromTrainerService = findAllTrainingPackFromTrainerService;
+        this.addTrainingPackService = addTrainingPackService;
     }
 
     @PostMapping
-    private ResponseEntity<ControllerGenericResponse<Boolean>> createTrainingPack(@RequestBody @Valid CreateTrainingPackRequest request) {
-        return ResponseEntity.ok(createTrainingPackService.execute(UUID.randomUUID(), request));
+    @Deprecated
+    private ResponseEntity<ControllerGenericResponse<Boolean>> addTrainingPack(@RequestBody @Valid AddTrainingPackRequest request) {
+        return ResponseEntity.ok(addTrainingPackService.execute(UUID.randomUUID(), request));
     }
 
     @GetMapping()
