@@ -45,7 +45,6 @@ public class TrainingPackController {
 
     @GetMapping()
     private ResponseEntity<ControllerGenericResponse<PageResultResponse<TrainingPackResponse>>> findAllTrainingPack(
-            @RequestParam("externalId") UUID personalTrainerExternalId,
             @RequestParam("page") Integer page,
             @RequestParam("size") Integer size) {
         return ResponseEntity.ok(
@@ -54,7 +53,6 @@ public class TrainingPackController {
                         PageResultRequest.<UUID>builder()
                                 .page(page)
                                 .size(size)
-                                .request(personalTrainerExternalId)
                                 .build()
                 )
         );
