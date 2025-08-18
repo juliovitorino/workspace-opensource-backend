@@ -4,8 +4,11 @@ import br.com.jcv.commons.library.commodities.exception.CommoditieBaseException;
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.treinadorpro.corebusiness.users.GetLoggedUserService;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
+import br.com.jcv.treinadorpro.corelayer.model.AccountStatement;
 import br.com.jcv.treinadorpro.corelayer.model.StudentPayment;
 import br.com.jcv.treinadorpro.corelayer.model.StudentPaymentsTransaction;
+import br.com.jcv.treinadorpro.corelayer.model.User;
+import br.com.jcv.treinadorpro.corelayer.repository.AccountStatementRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.StudentPaymentRepository;
 import br.com.jcv.treinadorpro.corelayer.request.ReceiveStudentPaymentRequest;
 import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
@@ -24,17 +27,21 @@ public class ReceiveStudentPaymentServiceImpl implements ReceiveStudentPaymentSe
 
     private final GetLoggedUserService getLoggedUserService;
     private final StudentPaymentRepository studentPaymentRepository;
+    private final AccountStatementRepository accountStatementRepository;
 
     public ReceiveStudentPaymentServiceImpl(GetLoggedUserService getLoggedUserService,
-                                            StudentPaymentRepository studentPaymentRepository) {
+                                            StudentPaymentRepository studentPaymentRepository,
+                                            AccountStatementRepository accountStatementRepository) {
         this.getLoggedUserService = getLoggedUserService;
         this.studentPaymentRepository = studentPaymentRepository;
+        this.accountStatementRepository = accountStatementRepository;
     }
 
     @Override
     @Transactional
     public ControllerGenericResponse<Boolean> execute(UUID processId, ReceiveStudentPaymentRequest request) {
         getLoggedUserService.execute(processId);
+
         StudentPayment studentPayment = studentPaymentRepository.findByExternalId(request.getStudentPaymentExternalId())
                 .orElseThrow(() -> new CommoditieBaseException("Invalid Payment ID", HttpStatus.BAD_REQUEST, "MSG-0853"));
 
@@ -54,12 +61,40 @@ public class ReceiveStudentPaymentServiceImpl implements ReceiveStudentPaymentSe
         studentPaymentsTransactionInstance.setStudentPayment(studentPayment);
         studentPayment.getStudentPaymentsTransactions().add(studentPaymentsTransactionInstance);
 
+        AccountStatement accountStatementInstance = getAccountStatementInstance(studentPaymentsTransactionInstance, studentPayment);
+
         studentPaymentRepository.save(studentPayment);
+        accountStatementRepository.save(accountStatementInstance);
+
         return ControllerGenericResponseHelper.getInstance(
                 "MSG-0856",
                 "Student payment has been recorded successfully",
                 Boolean.TRUE
         );
+    }
+
+    private AccountStatement getAccountStatementInstance(StudentPaymentsTransaction transaction,
+                                                         StudentPayment studentPayment) {
+        User trainer = studentPayment.getContract().getTrainingPack().getPersonalUser();
+        User student = studentPayment.getContract().getStudentUser();
+        String descriptionText = "Contract %s :: Student %s :: %s";
+        return AccountStatement.builder()
+                .externalId(UUID.randomUUID())
+                .personalUser(trainer)
+                .studentUser(student)
+                .amount(transaction.getReceivedAmount())
+                .type(AccountStatement.EntryType.CREDIT)
+                .paymentMethod(transaction.getPaymentMethod())
+                .entryDate(transaction.getPaymentDate())
+                .status(StatusEnum.A)
+                .description(String.format(
+                                descriptionText,
+                                studentPayment.getContract().getDescription(),
+                                student.getName(),
+                                transaction.getComment()
+                        )
+                )
+                .build();
     }
 
     private StudentPaymentsTransaction getStudentPaymentsTransactionInstance(ReceiveStudentPaymentRequest request) {

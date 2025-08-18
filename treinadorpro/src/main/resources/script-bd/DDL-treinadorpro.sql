@@ -456,98 +456,6 @@ CREATE TABLE student_payments_transaction (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
---
----- program_template table
---CREATE TABLE program_template (
---    id serial PRIMARY KEY,
---    external_id UUID UNIQUE NOT NULL,
---    version INTEGER NOT NULL,
---    modality_id INTEGER NOT NULL REFERENCES modality(id) ON DELETE CASCADE,
---    goal_id INTEGER NOT NULL REFERENCES goal(id) ON DELETE CASCADE,
---    program_id INTEGER NOT NULL REFERENCES program(id) ON DELETE CASCADE,
---    work_group_id INTEGER NOT NULL REFERENCES work_group(id) ON DELETE CASCADE,
---    exercise_id INTEGER NOT NULL REFERENCES exercise(id) ON DELETE CASCADE,
---    execution_method VARCHAR(100),
---    qty_series INTEGER,
---    qty_reps INTEGER,
---    execution VARCHAR(100),
---    execution_time VARCHAR(5),
---    rest_time VARCHAR(5),
---    weight INTEGER,
---    weight_unit VARCHAR(10),
---    comments VARCHAR(500),
---    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
---    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
---    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
---);
---
---COMMENT ON TABLE program_template IS 'Table that stores templates for exercise programs.';
---
---COMMENT ON COLUMN program_template.id IS 'Unique identifier for the program template.';
---COMMENT ON COLUMN program_template.version IS 'Version or variation for the program template';
---COMMENT ON COLUMN program_template.modality_id IS 'Reference to the associated modality relationship.';
---COMMENT ON COLUMN program_template.exercise_id IS 'Reference to the associated exercise relationship.';
---COMMENT ON COLUMN program_template.work_group_id IS 'Reference to the associated work group.';
---COMMENT ON COLUMN program_template.goal_id IS 'Reference to the associated goal.';
---COMMENT ON COLUMN program_template.program_id IS 'Reference to the associated program.';
---COMMENT ON COLUMN program_template.execution IS 'Execution description or instructions.';
---COMMENT ON COLUMN program_template.execution_time IS 'Estimated time for execution (in minutes). format: hh:mi';
---COMMENT ON COLUMN program_template.rest_time IS 'Rest time between sets or exercises (in minutes). format: hh:mi';
---COMMENT ON COLUMN program_template.weight IS 'Suggested weight for the exercise.';
---COMMENT ON COLUMN program_template.weight_unit IS 'Unit of measurement for weight (e.g., kg, lbs).';
---COMMENT ON COLUMN program_template.comments IS 'Additional comments or notes about the exercise.';
---COMMENT ON COLUMN program_template.status IS 'Status of the program template: A (Active), B (Blocked), I (Inactive), P (Pending).';
---COMMENT ON COLUMN program_template.created_at IS 'Timestamp when the program template was created.';
---COMMENT ON COLUMN program_template.updated_at IS 'Timestamp when the program template was last updated.';
-
----- personal_trainer_program table
---CREATE TABLE personal_trainer_program (
---    id serial PRIMARY KEY,
---    personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
---    modality_id INTEGER NOT NULL REFERENCES modality(id) ON DELETE CASCADE,
---    goal_id INTEGER NOT NULL REFERENCES goal(id) ON DELETE CASCADE,
---    program_id INTEGER NOT NULL REFERENCES program(id) ON DELETE CASCADE,
---    work_group_id INTEGER NOT NULL REFERENCES work_group(id) ON DELETE CASCADE,
---    exercise_id INTEGER REFERENCES exercise(id) ON DELETE CASCADE,
---    custom_exercise VARCHAR(100),
---    custom_program VARCHAR(100),
---    execution_method VARCHAR(100),
---    qty_series INTEGER,
---    qty_reps INTEGER,
---    execution VARCHAR(100),
---    execution_time VARCHAR(5),
---    rest_time VARCHAR(5),
---    weight INTEGER,
---    weight_unit VARCHAR(10),
---    comments VARCHAR(500),
---    obs VARCHAR(500),
---    status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
---    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
---    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
---);
---
---COMMENT ON TABLE personal_trainer_program IS 'Table that stores customized exercise programs created by personal trainers.';
---
---COMMENT ON COLUMN personal_trainer_program.id IS 'Unique identifier for the personal trainer program.';
---COMMENT ON COLUMN personal_trainer_program.personal_user_id IS 'Reference to the associated personal trainer user.';
---COMMENT ON COLUMN personal_trainer_program.modality_id IS 'Reference to the associated modality relationship.';
---COMMENT ON COLUMN personal_trainer_program.work_group_id IS 'Reference to the associated work group.';
---COMMENT ON COLUMN personal_trainer_program.goal_id IS 'Reference to the associated goal.';
---COMMENT ON COLUMN personal_trainer_program.exercise_id IS 'Reference to the associated exercise (nullable if a custom exercise is provided).';
---COMMENT ON COLUMN personal_trainer_program.program_id IS 'Reference to the associated program.';
---COMMENT ON COLUMN personal_trainer_program.custom_exercise IS 'Name of the custom exercise if not using a predefined one.';
---COMMENT ON COLUMN personal_trainer_program.custom_program IS 'Name of the custom program if not using a predefined one.';
---COMMENT ON COLUMN personal_trainer_program.execution IS 'Execution description or instructions.';
---COMMENT ON COLUMN personal_trainer_program.execution_time IS 'Estimated time for execution (in minutes). format: hh:mi';
---COMMENT ON COLUMN personal_trainer_program.rest_time IS 'Rest time between sets or exercises (in minutes). format: hh:mi';
---COMMENT ON COLUMN personal_trainer_program.weight IS 'Suggested weight for the exercise.';
---COMMENT ON COLUMN personal_trainer_program.weight_unit IS 'Unit of measurement for weight (e.g., kg, lbs).';
---COMMENT ON COLUMN personal_trainer_program.comments IS 'Additional comments about the exercise or program.';
---COMMENT ON COLUMN personal_trainer_program.obs IS 'Observations or notes related to the exercise or program.';
---COMMENT ON COLUMN personal_trainer_program.status IS 'Status of the personal trainer program: A (Active), B (Blocked), I (Inactive), P (Pending).';
---COMMENT ON COLUMN personal_trainer_program.created_at IS 'Timestamp when the personal trainer program was created.';
---COMMENT ON COLUMN personal_trainer_program.updated_at IS 'Timestamp when the personal trainer program was last updated.';
-
 -- User Workout Calendar
 CREATE TABLE user_workout_plan (
     id SERIAL PRIMARY KEY,
@@ -621,6 +529,21 @@ CREATE TABLE user_training_execution_set (
     weight_unit VARCHAR(10) DEFAULT 'kg',
     elapsed_time INTEGER,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE account_statement (
+    id serial PRIMARY KEY,
+    external_id uuid NOT NULL,
+    personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    student_user_id INTEGER REFERENCES users(id),
+    type VARCHAR(10) CHECK (type IN ('CREDIT', 'DEBIT', 'BALANCE')),
+    amount numeric(10, 2) NOT NULL,
+    description text NULL,
+    payment_method varchar(100),
+    entry_date date NOT NULL,
+    status VARCHAR(1) DEFAULT 'A',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
