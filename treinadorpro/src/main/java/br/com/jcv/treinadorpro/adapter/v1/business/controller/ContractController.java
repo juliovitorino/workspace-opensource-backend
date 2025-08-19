@@ -1,6 +1,7 @@
 package br.com.jcv.treinadorpro.adapter.v1.business.controller;
 
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
+import br.com.jcv.treinadorpro.corebusiness.usecases.ContractScheduleModifierService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.CreateNewContractService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllActiveContractsService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllContractTodayWorkoutService;
@@ -11,6 +12,7 @@ import br.com.jcv.treinadorpro.corebusiness.usecases.FindContractService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindUserWorkoutDataSheetPlanService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.ReceiveStudentPaymentService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.SaveUserWorkoutDataSheetPlanService;
+import br.com.jcv.treinadorpro.corelayer.request.ContractScheduleModifierRequest;
 import br.com.jcv.treinadorpro.corelayer.request.CreateNewStudentContractRequest;
 import br.com.jcv.treinadorpro.corelayer.request.ReceiveStudentPaymentRequest;
 import br.com.jcv.treinadorpro.corelayer.request.UserDataSheetPlanRequest;
@@ -45,6 +47,7 @@ public class ContractController {
     private final SaveUserWorkoutDataSheetPlanService saveUserWorkoutDataSheetPlanService;
     private final FindUserWorkoutDataSheetPlanService findUserWorkoutDataSheetPlanService;
     private final ReceiveStudentPaymentService receiveStudentPaymentService;
+    private final ContractScheduleModifierService contractScheduleModifierService;
 
     public ContractController(CreateNewContractService createNewContractService,
                               FindAllStudentsFromTrainerService findAllStudentsFromTrainerService,
@@ -55,7 +58,8 @@ public class ContractController {
                               FindContractService findContractService,
                               SaveUserWorkoutDataSheetPlanService saveUserWorkoutDataSheetPlanService,
                               FindUserWorkoutDataSheetPlanService findUserWorkoutDataSheetPlanService,
-                              ReceiveStudentPaymentService receiveStudentPaymentService) {
+                              ReceiveStudentPaymentService receiveStudentPaymentService,
+                              ContractScheduleModifierService contractScheduleModifierService) {
         this.createNewContractService = createNewContractService;
         this.findAllStudentsFromTrainerService = findAllStudentsFromTrainerService;
         this.findAllActiveContractsService = findAllActiveContractsService;
@@ -66,6 +70,7 @@ public class ContractController {
         this.saveUserWorkoutDataSheetPlanService = saveUserWorkoutDataSheetPlanService;
         this.findUserWorkoutDataSheetPlanService = findUserWorkoutDataSheetPlanService;
         this.receiveStudentPaymentService = receiveStudentPaymentService;
+        this.contractScheduleModifierService = contractScheduleModifierService;
     }
 
     @PostMapping
@@ -122,6 +127,13 @@ public class ContractController {
             @RequestBody ReceiveStudentPaymentRequest request) {
         request.setStudentPaymentExternalId(studentPaymentExternalId);
         return ResponseEntity.ok(receiveStudentPaymentService.execute(UUID.randomUUID(), request));
+    }
+
+    @PutMapping("{externalId}/changeSchedule")
+    public ResponseEntity<ControllerGenericResponse<Boolean>> changeSchedule(
+            @PathVariable("externalId") UUID contractExternalId, @RequestBody ContractScheduleModifierRequest request){
+        request.setContractExternalId(contractExternalId);
+        return ResponseEntity.ok(contractScheduleModifierService.execute(UUID.randomUUID(), request));
     }
 
 }
