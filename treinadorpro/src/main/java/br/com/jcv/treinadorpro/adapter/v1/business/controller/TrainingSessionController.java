@@ -5,12 +5,12 @@ import br.com.jcv.treinadorpro.corebusiness.usecases.BookingTrainingService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.DeleteTrainingSessionService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllTrainingSessionCalendarService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindMostRecentTrainingSessionService;
-import br.com.jcv.treinadorpro.corebusiness.usecases.MoveBookingService;
+import br.com.jcv.treinadorpro.corebusiness.usecases.ChangeBookingService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.SaveTrainingSessionService;
 import br.com.jcv.treinadorpro.corelayer.request.BookingDTO;
 import br.com.jcv.treinadorpro.corelayer.request.DeleteTrainingSessionRequest;
 import br.com.jcv.treinadorpro.corelayer.request.FindAllTrainingSessionCalendarRequest;
-import br.com.jcv.treinadorpro.corelayer.request.MoveBookingRequest;
+import br.com.jcv.treinadorpro.corelayer.request.ChangeBookingRequest;
 import br.com.jcv.treinadorpro.corelayer.request.TrainingSessionRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -36,20 +36,20 @@ public class TrainingSessionController {
     private final BookingTrainingService bookingTrainingService;
     private final FindAllTrainingSessionCalendarService findAllTrainingSessionCalendarService;
     private final DeleteTrainingSessionService deleteTrainingSessionService;
-    private final MoveBookingService moveBookingService;
+    private final ChangeBookingService changeBookingService;
 
     public TrainingSessionController(SaveTrainingSessionService saveTrainingSessionService,
                                      FindMostRecentTrainingSessionService findMostRecentTrainingSessionService,
                                      BookingTrainingService bookingTrainingService,
                                      FindAllTrainingSessionCalendarService findAllTrainingSessionCalendarService,
                                      DeleteTrainingSessionService deleteTrainingSessionService,
-                                     MoveBookingService moveBookingService) {
+                                     ChangeBookingService changeBookingService) {
         this.saveTrainingSessionService = saveTrainingSessionService;
         this.findMostRecentTrainingSessionService = findMostRecentTrainingSessionService;
         this.bookingTrainingService = bookingTrainingService;
         this.findAllTrainingSessionCalendarService = findAllTrainingSessionCalendarService;
         this.deleteTrainingSessionService = deleteTrainingSessionService;
-        this.moveBookingService = moveBookingService;
+        this.changeBookingService = changeBookingService;
     }
 
     @PostMapping
@@ -88,13 +88,13 @@ public class TrainingSessionController {
     }
 
     @PatchMapping("booking/{contractExternalId}/{trainingSessionExternalId}/move/{newBooking}")
-    public ResponseEntity<ControllerGenericResponse<Boolean>> moveBooking(
+    public ResponseEntity<ControllerGenericResponse<Boolean>> changeBooking(
             @PathVariable("contractExternalId") UUID contractExternalId,
             @PathVariable("trainingSessionExternalId") UUID trainingSessionExternalId,
             @PathVariable("newBooking") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate newBookingDate
     ){
-        return ResponseEntity.ok(moveBookingService.execute(UUID.randomUUID(),
-                MoveBookingRequest.builder()
+        return ResponseEntity.ok(changeBookingService.execute(UUID.randomUUID(),
+                ChangeBookingRequest.builder()
                         .contractExternalId(contractExternalId)
                         .trainingSessionExternalId(trainingSessionExternalId)
                         .newBookingDate(newBookingDate)

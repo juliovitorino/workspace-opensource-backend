@@ -7,7 +7,7 @@ import br.com.jcv.treinadorpro.corelayer.model.Contract;
 import br.com.jcv.treinadorpro.corelayer.model.UserTrainingSession;
 import br.com.jcv.treinadorpro.corelayer.repository.ContractRepository;
 import br.com.jcv.treinadorpro.corelayer.repository.UserTrainingSessionRepository;
-import br.com.jcv.treinadorpro.corelayer.request.MoveBookingRequest;
+import br.com.jcv.treinadorpro.corelayer.request.ChangeBookingRequest;
 import br.com.jcv.treinadorpro.corelayer.response.PersonalTrainerResponse;
 import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
 import lombok.extern.slf4j.Slf4j;
@@ -19,22 +19,22 @@ import java.util.UUID;
 
 @Service
 @Slf4j
-public class MoveBookingServiceImpl implements MoveBookingService {
+public class ChangeBookingServiceImpl implements ChangeBookingService {
 
     private final GetLoggedUserService getLoggedUserService;
     private final UserTrainingSessionRepository userTrainingSessionRepository;
     private final ContractRepository contractRepository;
 
-    public MoveBookingServiceImpl(GetLoggedUserService getLoggedUserService,
-                                  UserTrainingSessionRepository userTrainingSessionRepository,
-                                  ContractRepository contractRepository) {
+    public ChangeBookingServiceImpl(GetLoggedUserService getLoggedUserService,
+                                    UserTrainingSessionRepository userTrainingSessionRepository,
+                                    ContractRepository contractRepository) {
         this.getLoggedUserService = getLoggedUserService;
         this.userTrainingSessionRepository = userTrainingSessionRepository;
         this.contractRepository = contractRepository;
     }
 
     @Override
-    public ControllerGenericResponse<Boolean> execute(UUID processId, MoveBookingRequest request) {
+    public ControllerGenericResponse<Boolean> execute(UUID processId, ChangeBookingRequest request) {
         PersonalTrainerResponse trainer = getLoggedUserService.execute(processId);
 
         Contract contract = contractRepository.findByExternalIdAndPersonalId(request.getContractExternalId(), trainer.getId())

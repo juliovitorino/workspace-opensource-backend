@@ -13,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MoveBookingRequest implements Serializable {
+public class ChangeBookingRequest implements Serializable {
     private UUID contractExternalId;
     private UUID trainingSessionExternalId;
     private LocalDate newBookingDate;
