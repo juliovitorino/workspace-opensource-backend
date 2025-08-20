@@ -27,6 +27,7 @@ public interface StudentPaymentRepository extends JpaRepository<StudentPayment, 
                     "  INNER JOIN contract c ON c.id = sp.contract_id " +
                     "  INNER JOIN training_pack tp ON tp.id = c.pack_training_id " +
                     "  WHERE tp.personal_user_id = :personalId " +
+                    "    AND sp.expected_date < current_timestamp " +
                     "  GROUP BY sp.id, sp.amount" +
                     "  HAVING sp.amount - COALESCE(SUM(spt.received_amount), 0) > 0" +
                     ")" +
