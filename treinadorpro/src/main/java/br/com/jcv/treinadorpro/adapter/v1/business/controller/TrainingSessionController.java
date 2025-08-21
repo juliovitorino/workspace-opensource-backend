@@ -6,11 +6,13 @@ import br.com.jcv.treinadorpro.corebusiness.usecases.DeleteTrainingSessionServic
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllTrainingSessionCalendarService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindMostRecentTrainingSessionService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.ChangeBookingService;
+import br.com.jcv.treinadorpro.corebusiness.usecases.FindTodayBookingService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.SaveTrainingSessionService;
 import br.com.jcv.treinadorpro.corelayer.request.BookingDTO;
 import br.com.jcv.treinadorpro.corelayer.request.DeleteTrainingSessionRequest;
 import br.com.jcv.treinadorpro.corelayer.request.FindAllTrainingSessionCalendarRequest;
 import br.com.jcv.treinadorpro.corelayer.request.ChangeBookingRequest;
+import br.com.jcv.treinadorpro.corelayer.request.FindMostRecentTrainingSessionRequest;
 import br.com.jcv.treinadorpro.corelayer.request.TrainingSessionRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,19 +40,22 @@ public class TrainingSessionController {
     private final FindAllTrainingSessionCalendarService findAllTrainingSessionCalendarService;
     private final DeleteTrainingSessionService deleteTrainingSessionService;
     private final ChangeBookingService changeBookingService;
+    private final FindTodayBookingService findTodayBookingService;
 
     public TrainingSessionController(SaveTrainingSessionService saveTrainingSessionService,
                                      FindMostRecentTrainingSessionService findMostRecentTrainingSessionService,
                                      BookingTrainingService bookingTrainingService,
                                      FindAllTrainingSessionCalendarService findAllTrainingSessionCalendarService,
                                      DeleteTrainingSessionService deleteTrainingSessionService,
-                                     ChangeBookingService changeBookingService) {
+                                     ChangeBookingService changeBookingService,
+                                     FindTodayBookingService findTodayBookingService) {
         this.saveTrainingSessionService = saveTrainingSessionService;
         this.findMostRecentTrainingSessionService = findMostRecentTrainingSessionService;
         this.bookingTrainingService = bookingTrainingService;
         this.findAllTrainingSessionCalendarService = findAllTrainingSessionCalendarService;
         this.deleteTrainingSessionService = deleteTrainingSessionService;
         this.changeBookingService = changeBookingService;
+        this.findTodayBookingService = findTodayBookingService;
     }
 
     @PostMapping
@@ -66,7 +72,23 @@ public class TrainingSessionController {
 
     @GetMapping("/{externalId}")
     public ResponseEntity<ControllerGenericResponse<TrainingSessionRequest>> findMostRecentTrainingSessionService(@PathVariable("externalId") UUID contractExternalId){
-        return ResponseEntity.ok(findMostRecentTrainingSessionService.execute(UUID.randomUUID(), contractExternalId));
+        return ResponseEntity.ok(findMostRecentTrainingSessionService.execute(
+                UUID.randomUUID(),
+                FindMostRecentTrainingSessionRequest.builder()
+                        .contractExternalId(contractExternalId)
+                        .progressStatus("FINISHED")
+                .build()));
+    }
+
+    @GetMapping("/{externalId}/booking")
+    public ResponseEntity<ControllerGenericResponse<TrainingSessionRequest>> findTodayBooking(@PathVariable("externalId") UUID contractExternalId){
+        return ResponseEntity.ok(findTodayBookingService.execute(
+                UUID.randomUUID(),
+                FindMostRecentTrainingSessionRequest.builder()
+                        .contractExternalId(contractExternalId)
+                        .progressStatus("BOOKING")
+                        .bookingDate(LocalDate.now().atTime(LocalTime.MIN))
+                .build()));
     }
 
     @PostMapping("/calendar")

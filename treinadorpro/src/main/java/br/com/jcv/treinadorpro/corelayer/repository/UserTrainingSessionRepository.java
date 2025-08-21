@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,6 +16,10 @@ import java.util.UUID;
 public interface UserTrainingSessionRepository extends JpaRepository<UserTrainingSession, Long> {
 
     Optional<UserTrainingSession> findTopByContractExternalIdAndProgressStatusOrderByIdDesc(UUID contractExternalId, String progressStatus);
+    Optional<UserTrainingSession> findTopByContractExternalIdAndProgressStatusAndBookingOrderByIdDesc(
+            UUID contractExternalId,
+            String progressStatus,
+            LocalDateTime booking);
 
     @Query(value = "select uts from UserTrainingSession uts " +
             "where uts.externalId = :externalId and uts.contract.id = :contractId")

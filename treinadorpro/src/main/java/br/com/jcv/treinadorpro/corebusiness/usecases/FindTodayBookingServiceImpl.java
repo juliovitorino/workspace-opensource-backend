@@ -20,15 +20,13 @@ import java.util.UUID;
 
 @Service
 @Slf4j
-public class FindMostRecentTrainingSessionServiceImpl implements FindMostRecentTrainingSessionService {
+public class FindTodayBookingServiceImpl implements FindTodayBookingService {
 
     private final UserTrainingSessionRepository userTrainingSessionRepository;
     private final GetLoggedUserService getLoggedUserService;
     private final ContractRepository contractRepository;
 
-    public FindMostRecentTrainingSessionServiceImpl(UserTrainingSessionRepository userTrainingSessionRepository,
-                                                    GetLoggedUserService getLoggedUserService,
-                                                    ContractRepository contractRepository) {
+    public FindTodayBookingServiceImpl(UserTrainingSessionRepository userTrainingSessionRepository, GetLoggedUserService getLoggedUserService, ContractRepository contractRepository) {
         this.userTrainingSessionRepository = userTrainingSessionRepository;
         this.getLoggedUserService = getLoggedUserService;
         this.contractRepository = contractRepository;
@@ -38,11 +36,12 @@ public class FindMostRecentTrainingSessionServiceImpl implements FindMostRecentT
     public ControllerGenericResponse<TrainingSessionRequest> execute(UUID processId, FindMostRecentTrainingSessionRequest request) {
         PersonalTrainerResponse trainer = getLoggedUserService.execute(processId);
         Contract contract = contractRepository.findByExternalIdAndPersonalId(request.getContractExternalId(), trainer.getId())
-                .orElseThrow(() -> new CommoditieBaseException("Invalid contract", HttpStatus.BAD_REQUEST, "MSG-1227"));
+                .orElseThrow(() -> new CommoditieBaseException("Invalid contract", HttpStatus.BAD_REQUEST, "MSG-1506"));
 
-        UserTrainingSession userTrainingSession = userTrainingSessionRepository.findTopByContractExternalIdAndProgressStatusOrderByIdDesc(
+        UserTrainingSession userTrainingSession = userTrainingSessionRepository.findTopByContractExternalIdAndProgressStatusAndBookingOrderByIdDesc(
                         contract.getExternalId(),
-                        request.getProgressStatus()
+                        request.getProgressStatus(),
+                        request.getBookingDate()
                 )
                 .orElse(null);
         return ControllerGenericResponseHelper.getInstance(
