@@ -5,7 +5,5 @@ import br.com.jcv.commons.library.commodities.service.BusinessService;
 import br.com.jcv.treinadorpro.corelayer.request.FindMostRecentTrainingSessionRequest;
 import br.com.jcv.treinadorpro.corelayer.request.TrainingSessionRequest;
 
-import java.util.UUID;
-
-public interface FindMostRecentTrainingSessionService extends BusinessService<FindMostRecentTrainingSessionRequest, ControllerGenericResponse<TrainingSessionRequest>> {
+public interface FindTodayBookingService extends BusinessService<FindMostRecentTrainingSessionRequest, ControllerGenericResponse<TrainingSessionRequest>> {
 }
