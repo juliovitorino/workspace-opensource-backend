@@ -2,18 +2,21 @@ package br.com.jcv.treinadorpro.adapter.v1.business.controller;
 
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.treinadorpro.corebusiness.usecases.BookingTrainingService;
+import br.com.jcv.treinadorpro.corebusiness.usecases.ChangeBookingService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.DeleteTrainingSessionService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllTrainingSessionCalendarService;
+import br.com.jcv.treinadorpro.corebusiness.usecases.FindLastLoadExerciseService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindMostRecentTrainingSessionService;
-import br.com.jcv.treinadorpro.corebusiness.usecases.ChangeBookingService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindTodayBookingService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.SaveTrainingSessionService;
 import br.com.jcv.treinadorpro.corelayer.request.BookingDTO;
+import br.com.jcv.treinadorpro.corelayer.request.ChangeBookingRequest;
 import br.com.jcv.treinadorpro.corelayer.request.DeleteTrainingSessionRequest;
 import br.com.jcv.treinadorpro.corelayer.request.FindAllTrainingSessionCalendarRequest;
-import br.com.jcv.treinadorpro.corelayer.request.ChangeBookingRequest;
+import br.com.jcv.treinadorpro.corelayer.request.FindLastLoadExerciseRequest;
 import br.com.jcv.treinadorpro.corelayer.request.FindMostRecentTrainingSessionRequest;
 import br.com.jcv.treinadorpro.corelayer.request.TrainingSessionRequest;
+import br.com.jcv.treinadorpro.corelayer.response.FindLastLoadExerciseResponse;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -41,6 +45,7 @@ public class TrainingSessionController {
     private final DeleteTrainingSessionService deleteTrainingSessionService;
     private final ChangeBookingService changeBookingService;
     private final FindTodayBookingService findTodayBookingService;
+    private final FindLastLoadExerciseService findLastLoadExerciseService;
 
     public TrainingSessionController(SaveTrainingSessionService saveTrainingSessionService,
                                      FindMostRecentTrainingSessionService findMostRecentTrainingSessionService,
@@ -48,7 +53,8 @@ public class TrainingSessionController {
                                      FindAllTrainingSessionCalendarService findAllTrainingSessionCalendarService,
                                      DeleteTrainingSessionService deleteTrainingSessionService,
                                      ChangeBookingService changeBookingService,
-                                     FindTodayBookingService findTodayBookingService) {
+                                     FindTodayBookingService findTodayBookingService,
+                                     FindLastLoadExerciseService findLastLoadExerciseService) {
         this.saveTrainingSessionService = saveTrainingSessionService;
         this.findMostRecentTrainingSessionService = findMostRecentTrainingSessionService;
         this.bookingTrainingService = bookingTrainingService;
@@ -56,18 +62,17 @@ public class TrainingSessionController {
         this.deleteTrainingSessionService = deleteTrainingSessionService;
         this.changeBookingService = changeBookingService;
         this.findTodayBookingService = findTodayBookingService;
+        this.findLastLoadExerciseService = findLastLoadExerciseService;
     }
 
     @PostMapping
     public ResponseEntity<ControllerGenericResponse<Boolean>> saveTrainingSession(@RequestBody TrainingSessionRequest trainingSessionRequest){
         return ResponseEntity.ok(saveTrainingSessionService.execute(UUID.randomUUID(), trainingSessionRequest));
-
     }
 
     @PostMapping("/booking")
     public ResponseEntity<ControllerGenericResponse<Boolean>> bookingTrainingSession(@RequestBody BookingDTO bookingDTO){
         return ResponseEntity.ok(bookingTrainingService.execute(UUID.randomUUID(), bookingDTO));
-
     }
 
     @GetMapping("/{externalId}")
@@ -122,5 +127,10 @@ public class TrainingSessionController {
                         .newBookingDate(newBookingDate)
                         .build())
         );
+    }
+
+    @PostMapping("lastload")
+    public ResponseEntity<ControllerGenericResponse<FindLastLoadExerciseResponse>> findLastLoadExercise(@RequestBody @Valid FindLastLoadExerciseRequest request){
+        return ResponseEntity.ok(findLastLoadExerciseService.execute(UUID.randomUUID(), request));
     }
 }
