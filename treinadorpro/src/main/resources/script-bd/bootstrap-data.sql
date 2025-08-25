@@ -1,5 +1,8 @@
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
+INSERT INTO version (external_id, version, platform, status, created_at, updated_at)
+VALUES ('550e8400-e29b-41d4-a716-446655440000', '1.0.0', 'APP', 'A', NOW(), NOW());
+
 -- insert parameters
 INSERT INTO parameters (keytag, valuetag, status) VALUES
     ('ACTIVE_ENVIRONMENT', 'DEVELOPMENT', 'A'),

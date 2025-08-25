@@ -547,3 +547,13 @@ CREATE TABLE account_statement (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE version (
+    id serial PRIMARY KEY,
+    external_id uuid NOT NULL,
+    version VARCHAR(15) NOT NULL,
+    platform VARCHAR(10) NOT NULL CHECK (platform IN ('WEB', 'APP', 'API')),
+    status VARCHAR(1) DEFAULT 'A',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
