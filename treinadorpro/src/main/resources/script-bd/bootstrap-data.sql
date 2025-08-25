@@ -892,5 +892,9 @@ update exercise set video_url_pt = 'https://www.youtube.com/shorts/3QU7jjEgWVI' 
 update exercise set video_url_pt = 'https://www.youtube.com/shorts/g3T7LsEeDWQ' where id=100;
 update exercise set video_url_pt = 'https://youtu.be/EZKnjiDXPlY' where id=91;
 update exercise set video_url_pt = 'https://youtu.be/EZKnjiDXPlY' where id=1;
+update exercise set video_url_pt = 'https://youtu.be/7UoGsmqallc' where id=104;
+update exercise set video_url_pt = 'https://www.youtube.com/shorts/Ft6nkjCozf0' where id=99;
+update exercise set video_url_pt = 'https://www.youtube.com/shorts/Ft6nkjCozf0' where id=105;
+update exercise set video_url_pt = 'https://www.youtube.com/shorts/B9gGcbEdYBQ' where id=94;
 
 
