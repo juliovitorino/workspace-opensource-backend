@@ -887,4 +887,10 @@ INSERT INTO program_template (version, modality_id,goal_id, program_id,  work_gr
 -- adjusting execution method for modality  (1-Bodybuilding) and goal (1-Hypertrophy)
 update program_template set execution_method = 'TRADITIONAL_SET' where modality_id = 1 and goal_id = 1;
 
+--videos for exercises
+update exercise set video_url_pt = 'https://www.youtube.com/shorts/3QU7jjEgWVI' where id=7;
+update exercise set video_url_pt = 'https://www.youtube.com/shorts/g3T7LsEeDWQ' where id=100;
+update exercise set video_url_pt = 'https://youtu.be/EZKnjiDXPlY' where id=91;
+update exercise set video_url_pt = 'https://youtu.be/EZKnjiDXPlY' where id=1;
+
 

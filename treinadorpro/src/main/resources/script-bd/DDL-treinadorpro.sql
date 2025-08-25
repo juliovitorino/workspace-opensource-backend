@@ -557,3 +557,25 @@ CREATE TABLE version (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE trainer_exercise_video (
+    id serial PRIMARY KEY,
+    external_id uuid NOT NULL,
+    personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    exercise_id INTEGER NOT NULL REFERENCES exercise(id) ON DELETE CASCADE,
+    video_url text NOT NULL,
+    platform VARCHAR(20) NOT NULL CHECK (platform IN ('YOUTUBE','TIKTOK','VIMEO','OTHER')),
+    status VARCHAR(1) DEFAULT 'A',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE UNIQUE INDEX uq_trainer_exercise_video_active
+  ON trainer_exercise_video (personal_user_id, exercise_id)
+  WHERE status = 'A';
+
+ALTER TABLE trainer_exercise_video
+  ADD CONSTRAINT uq_trainer_exercise_video_external UNIQUE (external_id);
+
+CREATE INDEX ix_trainer_exercise_video_personal ON trainer_exercise_video (personal_user_id);
+CREATE INDEX ix_trainer_exercise_video_exercise ON trainer_exercise_video (exercise_id);
