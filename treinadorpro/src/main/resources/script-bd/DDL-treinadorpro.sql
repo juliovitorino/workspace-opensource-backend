@@ -525,7 +525,7 @@ CREATE TABLE user_training_execution_set (
     finished_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     set_number INTEGER NOT NULL,
     reps INTEGER,
-    weight NUMERIC(5,2),
+    weight NUMERIC(10,2),
     weight_unit VARCHAR(10) DEFAULT 'kg',
     elapsed_time INTEGER,
     status VARCHAR(1) DEFAULT 'A' CHECK (status IN ('A', 'B', 'I', 'P')),
