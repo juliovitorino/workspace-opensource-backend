@@ -1,6 +1,4 @@
 spring:
-  application:
-    name: treinadorpro-app
 
   apikey:
     uuid: 2409aeab-9179-4ad7-b400-891ce338b57a
@@ -21,9 +19,9 @@ spring:
       matching-strategy: ant_path_matcher
 
   datasource:
-    url: jdbc:postgresql://localhost:5130/treinadorpro
-    username: postgres
-    password: postgres
+    url: ${DB_URL:jdbc:postgresql://localhost:5130/treinadorpro}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
     driverClassName: org.postgresql.Driver
   jpa:
     hibernate:

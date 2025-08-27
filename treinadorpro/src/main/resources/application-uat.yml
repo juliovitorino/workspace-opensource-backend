@@ -1,6 +1,4 @@
 spring:
-  application:
-    name: guardian-app
 
   apikey:
     uuid: 2409aeab-9179-4ad7-b400-891ce338b57a
@@ -22,9 +20,9 @@ spring:
       matching-strategy: ant_path_matcher
 
   datasource:
-    url: jdbc:postgresql://pg-guardian-instance.cev4hwwunwmk.sa-east-1.rds.amazonaws.com:5432/guardian_db
-    username: pgguardian
-    password: EiAqAlZb0qRKegk
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driverClassName: org.postgresql.Driver
   jpa:
     hibernate:

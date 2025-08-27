@@ -1,5 +1,9 @@
+--liquibase formatted sql
+
+--changeset julio.vitorino:2023-10-23_01-create-core
+
 -- parameters table
-CREATE TABLE parameters (
+CREATE TABLE IF NOT EXISTS parameters (
     id SERIAL PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     keytag VARCHAR(500) UNIQUE NOT NULL,
@@ -18,8 +22,12 @@ COMMENT ON COLUMN parameters.status IS 'Status of the parameter: A (Active), B (
 COMMENT ON COLUMN parameters.created_at IS 'Timestamp when the parameter was created.';
 COMMENT ON COLUMN parameters.updated_at IS 'Timestamp when the parameter was last updated.';
 
+--rollback DROP TABLE  IF EXISTS parameters;
+
+--changeset julio.vitorino:2023-10-23_02-create-core
+
 -- program table
-CREATE TABLE program (
+CREATE TABLE IF NOT EXISTS program (
     id SERIAL PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     name_pt VARCHAR(100),
@@ -40,8 +48,12 @@ COMMENT ON COLUMN program.status IS 'Status of the program: A (Active), B (Block
 COMMENT ON COLUMN program.created_at IS 'Timestamp when the program was created.';
 COMMENT ON COLUMN program.updated_at IS 'Timestamp when the program was last updated.';
 
+
+--rollback DROP TABLE  IF EXISTS program;
+
+--changeset julio.vitorino:2023-10-23_03-create-core
 -- goal table
-CREATE TABLE goal (
+CREATE TABLE IF NOT EXISTS goal (
     id SERIAL PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     name_pt VARCHAR(100),
@@ -62,8 +74,12 @@ COMMENT ON COLUMN goal.status IS 'Status of the goal: A (Active), B (Blocked), I
 COMMENT ON COLUMN goal.created_at IS 'Timestamp when the goal was created.';
 COMMENT ON COLUMN goal.updated_at IS 'Timestamp when the goal was last updated.';
 
+--rollback DROP TABLE  IF EXISTS goal;
+
+--changeset julio.vitorino:2023-10-23_04-create-core
+
 -- work_group table
-CREATE TABLE work_group (
+CREATE TABLE IF NOT EXISTS work_group (
     id SERIAL PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     name_pt VARCHAR(100),
@@ -84,8 +100,12 @@ COMMENT ON COLUMN work_group.status IS 'Status of the work group: A (Active), B 
 COMMENT ON COLUMN work_group.created_at IS 'Timestamp when the work group was created.';
 COMMENT ON COLUMN work_group.updated_at IS 'Timestamp when the work group was last updated.';
 
+--rollback DROP TABLE  IF EXISTS work_group;
+
+--changeset julio.vitorino:2023-10-23_05-create-core
+
 -- Modality table
-CREATE TABLE modality (
+CREATE TABLE IF NOT EXISTS modality (
     id SERIAL PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     name_pt VARCHAR(100),
@@ -106,8 +126,12 @@ COMMENT ON COLUMN modality.status IS 'Status of the modality (A = Active, B = Bl
 COMMENT ON COLUMN modality.created_at IS 'Timestamp when the record was created.';
 COMMENT ON COLUMN modality.updated_at IS 'Timestamp when the record was last updated.';
 
+--rollback DROP TABLE  IF EXISTS modality;
+
+--changeset julio.vitorino:2023-10-23_06-create-core
+
 -- Exercise table
-CREATE TABLE exercise (
+CREATE TABLE IF NOT EXISTS exercise (
     id SERIAL PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     name_pt VARCHAR(100),
@@ -132,8 +156,12 @@ COMMENT ON COLUMN exercise.status IS 'Status of the exercise (A = Active, B = Bl
 COMMENT ON COLUMN exercise.created_at IS 'Timestamp when the record was created.';
 COMMENT ON COLUMN exercise.updated_at IS 'Timestamp when the record was last updated.';
 
+--rollback DROP TABLE  IF EXISTS exercise;
+
+--changeset julio.vitorino:2023-10-23_07-create-core
+
 -- Exercise table
-CREATE TABLE work_group_exercise (
+CREATE TABLE IF NOT EXISTS work_group_exercise (
     id SERIAL PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     work_group_id INTEGER NOT NULL REFERENCES work_group(id) ON DELETE CASCADE,
@@ -152,9 +180,12 @@ COMMENT ON COLUMN work_group_exercise.status IS 'Status of the record: A (Active
 COMMENT ON COLUMN work_group_exercise.created_at IS 'Timestamp indicating when the record was created.';
 COMMENT ON COLUMN work_group_exercise.updated_at IS 'Timestamp indicating the last time the record was updated.';
 
+--rollback DROP TABLE  IF EXISTS work_group_exercise;
+
+--changeset julio.vitorino:2023-10-23_08-create-core
 
 -- plan_template table
-CREATE TABLE plan_template (
+CREATE TABLE IF NOT EXISTS plan_template (
     id serial PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     description VARCHAR(500) NOT NULL,
@@ -181,9 +212,13 @@ COMMENT ON COLUMN plan_template.status IS 'Status of the plan template: A (Activ
 COMMENT ON COLUMN plan_template.created_at IS 'Timestamp when the plan template was created.';
 COMMENT ON COLUMN plan_template.updated_at IS 'Timestamp when the plan template was last updated.';
 
+--rollback DROP TABLE  IF EXISTS plan_template;
+
+--changeset julio.vitorino:2023-10-23_09-create-core
+
 -- Users Table
 
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id bigserial PRIMARY KEY,
     uuid_id UUID UNIQUE NOT NULL,
     name VARCHAR(200) NOT NULL,
@@ -201,19 +236,8 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
---CREATE TABLE trainer_users (
---    id bigserial PRIMARY KEY,
---    personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
---    student_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
---    status VARCHAR(1) DEFAULT 'A' ,
---    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
---    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
---);
-
 COMMENT ON COLUMN users.id IS 'Unique identifier for the user (primary key)';
-COMMENT ON COLUMN users.first_name IS 'First name of the user';
-COMMENT ON COLUMN users.middle_name IS 'Middle name of the user';
-COMMENT ON COLUMN users.last_name IS 'Last name of the user';
+COMMENT ON COLUMN users.name IS 'user name';
 COMMENT ON COLUMN users.email IS 'User email address (must be unique)';
 COMMENT ON COLUMN users.cellphone IS 'User cellphone number';
 COMMENT ON COLUMN users.birthday IS 'User''s date of birth';
@@ -227,7 +251,11 @@ COMMENT ON COLUMN users.last_login IS 'Timestamp of the user''s last login';
 COMMENT ON COLUMN users.created_at IS 'Timestamp of when the user was created';
 COMMENT ON COLUMN users.updated_at IS 'Timestamp of the last update to the user record';
 
-CREATE TABLE available_time (
+--rollback DROP TABLE  IF EXISTS users;
+
+--changeset julio.vitorino:2023-10-23_10-create-core
+
+CREATE TABLE IF NOT EXISTS available_time (
     id serial PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -239,8 +267,12 @@ CREATE TABLE available_time (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+--rollback DROP TABLE  IF EXISTS available_time;
+
+--changeset julio.vitorino:2023-10-23_11-create-core
+
 -- active_personal_plan table
-CREATE TABLE active_personal_plan (
+CREATE TABLE IF NOT EXISTS active_personal_plan (
     id serial PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -271,8 +303,12 @@ COMMENT ON COLUMN active_personal_plan.status IS 'Status of the active personal 
 COMMENT ON COLUMN active_personal_plan.created_at IS 'Timestamp when the active personal plan was created.';
 COMMENT ON COLUMN active_personal_plan.updated_at IS 'Timestamp when the active personal plan was last updated.';
 
+--rollback DROP TABLE  IF EXISTS active_personal_plan;
+
+--changeset julio.vitorino:2023-10-23_12-create-core
+
 -- personal_trainer_payments table
-CREATE TABLE personal_trainer_payments (
+CREATE TABLE IF NOT EXISTS personal_trainer_payments (
     id serial PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     active_personal_plan_id INTEGER NOT NULL REFERENCES active_personal_plan(id) ON DELETE CASCADE,
@@ -298,9 +334,12 @@ COMMENT ON COLUMN personal_trainer_payments.paid_date IS 'Date when the payment 
 COMMENT ON COLUMN personal_trainer_payments.status IS 'Status of the payment record: A (Active), B (Blocked), I (Inactive), P (Pending).';
 COMMENT ON COLUMN personal_trainer_payments.created_at IS 'Timestamp when the payment record was created.';
 COMMENT ON COLUMN personal_trainer_payments.updated_at IS 'Timestamp when the payment record was last updated.';
+--rollback DROP TABLE  IF EXISTS personal_trainer_payments;
+
+--changeset julio.vitorino:2023-10-23_13-create-core
 
 -- student_feature table
-CREATE TABLE student_feature (
+CREATE TABLE IF NOT EXISTS student_feature (
     id bigserial PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     student_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -324,9 +363,12 @@ COMMENT ON COLUMN student_feature.weight_unit IS 'Measurement unit for the weigh
 COMMENT ON COLUMN student_feature.status IS 'Status of the student feature record: A (Active), B (Blocked), I (Inactive), P (Pending).';
 COMMENT ON COLUMN student_feature.created_at IS 'Timestamp when the student feature record was created.';
 COMMENT ON COLUMN student_feature.updated_at IS 'Timestamp when the student feature record was last updated.';
+--rollback DROP TABLE  IF EXISTS student_feature;
+
+--changeset julio.vitorino:2023-10-23_14-create-core
 
 -- personal_feature table
-CREATE TABLE personal_feature (
+CREATE TABLE IF NOT EXISTS personal_feature (
     id bigserial PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -360,9 +402,12 @@ COMMENT ON COLUMN personal_feature.sun_period IS 'Available period on Sunday.';
 COMMENT ON COLUMN personal_feature.status IS 'Status of the personal feature record: A (Active), B (Blocked), I (Inactive), P (Pending).';
 COMMENT ON COLUMN personal_feature.created_at IS 'Timestamp when the personal feature record was created.';
 COMMENT ON COLUMN personal_feature.updated_at IS 'Timestamp when the personal feature record was last updated.';
+--rollback DROP TABLE  IF EXISTS personal_feature;
+
+--changeset julio.vitorino:2023-10-23_15-create-core
 
 -- User pack tranning table
-CREATE TABLE training_pack (
+CREATE TABLE IF NOT EXISTS training_pack (
     id SERIAL PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -377,9 +422,12 @@ CREATE TABLE training_pack (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+--rollback DROP TABLE IF EXISTS training_pack;
+
+--changeset julio.vitorino:2023-10-23_16-create-core
 
 -- contract table
-CREATE TABLE contract (
+CREATE TABLE IF NOT EXISTS contract (
     id SERIAL PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     pack_training_id INTEGER NOT NULL REFERENCES training_pack(id) ON DELETE CASCADE,
@@ -404,8 +452,6 @@ CREATE TABLE contract (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-create UNIQUE index uix_upt_pack_training_id_student_user_id on contract(pack_training_id,student_user_id);
-
 -- Comments for contract
 COMMENT ON TABLE contract IS 'Table that represents training packages between personal trainers and students.';
 
@@ -413,14 +459,16 @@ COMMENT ON COLUMN contract.id IS 'Unique identifier of the training package.';
 COMMENT ON COLUMN contract.student_user_id IS 'ID of the user acting as the student. References the users table.';
 COMMENT ON COLUMN contract.description IS 'Description of the training package.';
 COMMENT ON COLUMN contract.price IS 'Price of the package in decimal currency';
-COMMENT ON COLUMN contract.start_time IS 'Start time of the training session (format HH:MM).';
 COMMENT ON COLUMN contract.duration IS 'End time of the training session (format HH:MM).';
-COMMENT ON COLUMN contract.days_of_week IS 'Days of the week when the training will take place. E.g.: 0=Sunday, 1=Monday, ...';
 COMMENT ON COLUMN contract.created_at IS 'Date and time when the record was created.';
 COMMENT ON COLUMN contract.updated_at IS 'Date and time of the last update to the record.';
 
+--rollback DROP TABLE IF EXISTS contract;
+
+--changeset julio.vitorino:2023-10-23_17-create-core
+
 -- student payments
-CREATE TABLE student_payments (
+CREATE TABLE IF NOT EXISTS student_payments (
     id serial PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     contract_id INTEGER NOT NULL REFERENCES contract(id) ON DELETE CASCADE,
@@ -437,13 +485,15 @@ COMMENT ON COLUMN student_payments.id IS 'Unique identifier for the student paym
 COMMENT ON COLUMN student_payments.contract_id IS 'Reference to the associated user training package.';
 COMMENT ON COLUMN student_payments.amount IS 'Payment amount expected from the student.';
 COMMENT ON COLUMN student_payments.expected_date IS 'Expected date of payment.';
-COMMENT ON COLUMN student_payments.payment_date IS 'Actual date when the payment was made.';
 COMMENT ON COLUMN student_payments.status IS 'Status of the student payment record: A (Active), B (Blocked), I (Inactive), P (Pending).';
 COMMENT ON COLUMN student_payments.created_at IS 'Timestamp when the student payment record was created.';
 COMMENT ON COLUMN student_payments.updated_at IS 'Timestamp when the student payment record was last updated.';
+--rollback DROP TABLE IF EXISTS contract;
+
+--changeset julio.vitorino:2023-10-23_18-create-core
 
 -- student payments
-CREATE TABLE student_payments_transaction (
+CREATE TABLE IF NOT EXISTS student_payments_transaction (
     id serial PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     student_payments_id INTEGER NOT NULL REFERENCES student_payments(id) ON DELETE CASCADE,
@@ -455,9 +505,12 @@ CREATE TABLE student_payments_transaction (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+--rollback DROP TABLE IF EXISTS student_payments_transaction;
+
+--changeset julio.vitorino:2023-10-23_19-create-core
 
 -- User Workout Calendar
-CREATE TABLE user_workout_plan (
+CREATE TABLE IF NOT EXISTS user_workout_plan (
     id SERIAL PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     contract_id INTEGER NOT NULL REFERENCES contract(id) ON DELETE CASCADE,
@@ -489,8 +542,11 @@ COMMENT ON TABLE user_workout_plan IS 'Stores scheduled workouts for users, incl
 -- Column comments
 COMMENT ON COLUMN user_workout_plan.id IS 'Primary key for the user workout calendar entry.';
 COMMENT ON COLUMN user_workout_plan.contract_id IS 'Foreign key referencing the contract table, indicating which training pack this workout is part of.';
+--rollback DROP TABLE IF EXISTS user_workout_plan;
 
-CREATE TABLE user_training_session(
+--changeset julio.vitorino:2023-10-23_20-create-core
+
+CREATE TABLE IF NOT EXISTS user_training_session(
     id SERIAL PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     contract_id INTEGER NOT NULL REFERENCES contract(id) ON DELETE CASCADE,
@@ -505,8 +561,11 @@ CREATE TABLE user_training_session(
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+--rollback DROP TABLE IF EXISTS user_training_session;
 
-CREATE TABLE user_training_session_exercises(
+--changeset julio.vitorino:2023-10-23_21-create-core
+
+CREATE TABLE IF NOT EXISTS user_training_session_exercises(
     id SERIAL PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     user_training_session_id INTEGER NOT NULL REFERENCES user_training_session(id) ON DELETE CASCADE,
@@ -516,8 +575,11 @@ CREATE TABLE user_training_session_exercises(
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
 );
+--rollback DROP TABLE IF EXISTS user_training_session_exercises;
 
-CREATE TABLE user_training_execution_set (
+--changeset julio.vitorino:2023-10-23_22-create-core
+
+CREATE TABLE IF NOT EXISTS user_training_execution_set (
     id SERIAL PRIMARY KEY,
     external_id UUID UNIQUE NOT NULL,
     user_training_session_exercises_id INTEGER NOT NULL REFERENCES user_training_session_exercises(id) ON DELETE CASCADE,
@@ -532,8 +594,11 @@ CREATE TABLE user_training_execution_set (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+--rollback DROP TABLE IF EXISTS user_training_execution_set;
 
-CREATE TABLE account_statement (
+--changeset julio.vitorino:2023-10-23_23-create-core
+
+CREATE TABLE IF NOT EXISTS account_statement (
     id serial PRIMARY KEY,
     external_id uuid NOT NULL,
     personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -547,8 +612,11 @@ CREATE TABLE account_statement (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+--rollback DROP TABLE IF EXISTS account_statement;
 
-CREATE TABLE version (
+--changeset julio.vitorino:2023-10-23_24-create-core
+
+CREATE TABLE IF NOT EXISTS version (
     id serial PRIMARY KEY,
     external_id uuid NOT NULL,
     version VARCHAR(15) NOT NULL,
@@ -557,10 +625,13 @@ CREATE TABLE version (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+--rollback DROP TABLE IF EXISTS version;
 
-CREATE TABLE trainer_exercise_video (
+--changeset julio.vitorino:2023-10-23_25-create-core
+
+CREATE TABLE IF NOT EXISTS trainer_exercise_video (
     id serial PRIMARY KEY,
-    external_id uuid NOT NULL,
+    external_id uuid NOT NULL UNIQUE,
     personal_user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     exercise_id INTEGER NOT NULL REFERENCES exercise(id) ON DELETE CASCADE,
     video_url text NOT NULL,
@@ -570,12 +641,4 @@ CREATE TABLE trainer_exercise_video (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE UNIQUE INDEX uq_trainer_exercise_video_active
-  ON trainer_exercise_video (personal_user_id, exercise_id)
-  WHERE status = 'A';
-
-ALTER TABLE trainer_exercise_video
-  ADD CONSTRAINT uq_trainer_exercise_video_external UNIQUE (external_id);
-
-CREATE INDEX ix_trainer_exercise_video_personal ON trainer_exercise_video (personal_user_id);
-CREATE INDEX ix_trainer_exercise_video_exercise ON trainer_exercise_video (exercise_id);
+--rollback DROP TABLE IF EXISTS version;
