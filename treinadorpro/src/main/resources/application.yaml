@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: treinadorpro-app
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    enabled: true
