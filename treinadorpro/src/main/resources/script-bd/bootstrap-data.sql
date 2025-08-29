@@ -1,20 +1,5 @@
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
-insert into plan_template (
-description, price, status, payment_frequency) values
-    ('FREEMIUM', 67, 'A','MONTHLY'),
-    ('BASIC', 804, 'A','ANNUALLY'),
-    ('BASIC', 97, 'A','MONTHLY'),
-    ('PROFESSIONAL', 1164, 'A','ANNUALLY'),
-    ('PROFESSIONAL', 130, 'A','MONTHLY'),
-    ('PREMIUM', 1560, 'A','ANNUALLY'),
-    ('PREMIUM', 197, 'A','MONTHLY')
-;
-
-insert into parameters (keytag,valuetag)
-select 'FREEMIUM_PLAN_ID', id
-from plan_template where description = 'FREEMIUM' LIMIT 1;
-
 -- Insert modalities
 INSERT INTO modality (id, name_pt, name_en, name_es) VALUES
 (1, 'Musculação', 'Bodybuilding', 'Musculación'),
