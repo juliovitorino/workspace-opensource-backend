@@ -17,6 +17,8 @@
     <include file="scripts/baseline/2023-10-23/2025-08-29-1941_CREATE_PROGRAM_UNIQUE_INDEX.sql" relativeToChangelogFile="true"/>
     <include file="scripts/baseline/2023-10-23/2025-08-29-1945_POPULATE_PROGRAM_TABLE.sql" relativeToChangelogFile="true"/>
     <include file="scripts/baseline/2023-10-23/2025-08-29-1951_plan_template_table.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-1956_CREATE_MODALITY_UNIQUE_IDX.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2001_POPULATE_MODALITY_TABLE.sql" relativeToChangelogFile="true"/>
 
     <!-- Você pode listar meses explicitamente para garantir ordem entre diretórios -->
 <!--    <include file="" relativeToChangelogFile="true" />-->
