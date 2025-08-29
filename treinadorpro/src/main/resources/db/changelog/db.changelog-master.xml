@@ -12,6 +12,8 @@
     <include file="scripts/baseline/2023-10-23/2025-08-29-1747_POPULATE_PARAMETER_TABLE.sql" relativeToChangelogFile="true"/>
     <include file="scripts/baseline/2023-10-23/2025-08-29-1756_CREATE_UNIQUE_IDX.sql" relativeToChangelogFile="true"/>
     <include file="scripts/baseline/2023-10-23/2025-08-29-1808_POPULATE_GOAL_TABLE.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-1811_CREATE_WORKGROUP_UNIQUE_IDX.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-1816_POPULATE_WORKGROUP_TABLE.sql" relativeToChangelogFile="true"/>
 
     <!-- Você pode listar meses explicitamente para garantir ordem entre diretórios -->
 <!--    <include file="" relativeToChangelogFile="true" />-->
