@@ -18,7 +18,18 @@
     <include file="scripts/baseline/2023-10-23/2025-08-29-1945_POPULATE_PROGRAM_TABLE.sql" relativeToChangelogFile="true"/>
     <include file="scripts/baseline/2023-10-23/2025-08-29-1951_plan_template_table.sql" relativeToChangelogFile="true"/>
     <include file="scripts/baseline/2023-10-23/2025-08-29-1956_CREATE_MODALITY_UNIQUE_IDX.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2001-DELETE_EXERCISE_115.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2001-DELETE_EXERCISE_192.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2001-DELETE_EXERCISE_170.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2001-DELETE_DUPLICATED_EXERCISES.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2001-DELETE_DUPLICATED_EXERCISES_NAME_EN.sql" relativeToChangelogFile="true"/>
     <include file="scripts/baseline/2023-10-23/2025-08-29-2001_POPULATE_MODALITY_TABLE.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2001_UPDATE_EXERCISE_65.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2001_DELETE_EXERCISE_54.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2001_DELETE_EXERCISE_45.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2001_DELETE_EXERCISE_207.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2001_DELETE_EXERCISE_136.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2014_CREATE_EXERCISE_UNIQUE_IDX.sql" relativeToChangelogFile="true"/>
 
     <!-- Você pode listar meses explicitamente para garantir ordem entre diretórios -->
 <!--    <include file="" relativeToChangelogFile="true" />-->
