@@ -1,17 +1,5 @@
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
--- Inserção de Exercícios para Musculação focus quadriceps (id=1)
-INSERT INTO exercise (id, image_uuid, name_pt, name_en, name_es) VALUES
-(51, gen_random_uuid(), 'Agachamento Livre', 'Barbell Squat', 'Sentadilla Libre'),
-(52, gen_random_uuid(), 'Agachamento no Smith', 'Smith Machine Squat', 'Sentadilla en Máquina Smith'),
-(53, gen_random_uuid(), 'Leg Press 45°', '45 Degree Leg Press', 'Prensa de Piernas 45°'),
-(54, gen_random_uuid(), 'Extensão de Pernas', 'Leg Extension', 'Extensión de Piernas'),
-(55, gen_random_uuid(), 'Agachamento Frontal', 'Front Squat', 'Sentadilla Frontal'),
-(56, gen_random_uuid(), 'Agachamento Búlgaro', 'Bulgarian Split Squat', 'Sentadilla Búlgara'),
-(57, gen_random_uuid(), 'Passada com Halteres', 'Dumbbell Walking Lunge', 'Zancada Caminando con Mancuernas'),
-(58, gen_random_uuid(), 'Step-up no Banco', 'Step-up onto Bench', 'Subida al Banco'),
-(59, gen_random_uuid(), 'Agachamento Sumô', 'Sumo Squat', 'Sentadilla Sumo'),
-(60, gen_random_uuid(), 'Hack Machine', 'Hack Squat Machine', 'Máquina Hack de Sentadilla');
 
 -- Inserção de Exercícios para Musculação focus harmstrings (id=1)
 INSERT INTO exercise (id, image_uuid, name_pt, name_en, name_es) VALUES
