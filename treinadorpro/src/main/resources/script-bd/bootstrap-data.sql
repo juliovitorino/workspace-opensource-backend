@@ -1,33 +1,5 @@
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
--- Inserção de Exercícios para Treinamento Funcional (id=2)
-INSERT INTO exercise (id, image_uuid, name_pt, name_en, name_es) VALUES
-(11, gen_random_uuid(), 'Burpee', 'Burpee', 'Burpee'),
-(12, gen_random_uuid(), 'Agachamento com kettlebell', 'Goblet Squat', 'Sentadilla con kettlebell'),
-(13, gen_random_uuid(), 'Swing com kettlebell', 'Kettlebell Swing', 'Balanceo con kettlebell'),
-(14, gen_random_uuid(), 'Prancha frontal', 'Plank', 'Plancha'),
-(15, gen_random_uuid(), 'Saltos no caixote', 'Box Jump', 'Saltos al cajón'),
-(16, gen_random_uuid(), 'Avanço com halteres', 'Dumbbell Lunge', 'Zancadas con mancuernas'),
-(17, gen_random_uuid(), 'Battle rope', 'Battle Rope', 'Cuerdas de combate'),
-(18, gen_random_uuid(), 'Escada de agilidade', 'Agility Ladder', 'Escalera de agilidad'),
-(19, gen_random_uuid(), 'Corrida em zigue-zague', 'Zigzag Run', 'Carrera en zigzag'),
-(20, gen_random_uuid(), 'Prancha lateral', 'Side Plank', 'Plancha lateral');
--- Adicione mais exercícios conforme necessário
-
--- Inserção de Exercícios para Yoga (id=3)
-INSERT INTO exercise (id, image_uuid, name_pt, name_en, name_es) VALUES
-(21, gen_random_uuid(), 'Postura da criança', 'Child''s Pose', 'Postura del niño'),
-(22, gen_random_uuid(), 'Cão olhando para baixo', 'Downward-Facing Dog', 'Perro boca abajo'),
-(23, gen_random_uuid(), 'Postura da cobra', 'Cobra Pose', 'Postura de la cobra'),
-(24, gen_random_uuid(), 'Postura da montanha', 'Mountain Pose', 'Postura de la montaña'),
-(25, gen_random_uuid(), 'Postura do guerreiro I', 'Warrior I Pose', 'Guerrero I'),
-(26, gen_random_uuid(), 'Postura do guerreiro II', 'Warrior II Pose', 'Guerrero II'),
-(27, gen_random_uuid(), 'Postura do triângulo', 'Triangle Pose', 'Postura del triángulo'),
-(28, gen_random_uuid(), 'Postura da árvore', 'Tree Pose', 'Postura del árbol'),
-(29, gen_random_uuid(), 'Postura do cadáver', 'Corpse Pose', 'Postura del cadáver'),
-(30, gen_random_uuid(), 'Torção sentada', 'Seated Twist', 'Torsión sentada');
--- Adicione mais exercícios conforme necessário
-
 -- Inserção de Exercícios para Pilates (id=4)
 INSERT INTO exercise (id, image_uuid, name_pt, name_en, name_es) VALUES
 (31, gen_random_uuid(), 'The Hundred', 'The Hundred', 'El Cien'),
