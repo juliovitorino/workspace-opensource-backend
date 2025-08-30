@@ -1,19 +1,5 @@
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
--- Inserção de Exercícios para Musculação (id=1)
-INSERT INTO exercise (id, image_uuid, name_pt, name_en, name_es) VALUES
-(1, gen_random_uuid(),'Supino reto', 'Flat Bench Press', 'Press de banca plano'),
-(2, gen_random_uuid(),'Agachamento livre', 'Barbell Squat', 'Sentadilla con barra'),
-(3, gen_random_uuid(),'Levantamento terra', 'Deadlift', 'Peso muerto'),
-(4, gen_random_uuid(),'Desenvolvimento com barra', 'Overhead Press', 'Press militar'),
-(5, gen_random_uuid(),'Rosca direta', 'Barbell Curl', 'Curl con barra'),
-(6, gen_random_uuid(),'Tríceps pulley', 'Triceps Pushdown', 'Extensiones en polea'),
-(7, gen_random_uuid(),'Remada curvada', 'Bent-over Row', 'Remo inclinado'),
-(8, gen_random_uuid(),'Cadeira extensora', 'Leg Extension', 'Extensión de piernas'),
-(9, gen_random_uuid(),'Cadeira flexora', 'Leg Curl', 'Curl femoral'),
-(10,gen_random_uuid(), 'Crucifixo', 'Dumbbell Fly', 'Aperturas con mancuernas');
--- Adicione mais exercícios conforme necessário
-
 -- Inserção de Exercícios para Treinamento Funcional (id=2)
 INSERT INTO exercise (id, image_uuid, name_pt, name_en, name_es) VALUES
 (11, gen_random_uuid(), 'Burpee', 'Burpee', 'Burpee'),
