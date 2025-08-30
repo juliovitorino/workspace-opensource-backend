@@ -1,33 +1,5 @@
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
--- Inserção de Exercícios para Pilates (id=4)
-INSERT INTO exercise (id, image_uuid, name_pt, name_en, name_es) VALUES
-(31, gen_random_uuid(), 'The Hundred', 'The Hundred', 'El Cien'),
-(32, gen_random_uuid(), 'Roll Up', 'Roll Up', 'Rodar hacia arriba'),
-(33, gen_random_uuid(), 'Single Leg Stretch', 'Single Leg Stretch', 'Estiramiento de una pierna'),
-(34, gen_random_uuid(), 'Double Leg Stretch', 'Double Leg Stretch', 'Estiramiento de dos piernas'),
-(35, gen_random_uuid(), 'Leg Circles', 'Leg Circles', 'Círculos de piernas'),
-(36, gen_random_uuid(), 'Spine Stretch', 'Spine Stretch', 'Estiramiento de columna'),
-(37, gen_random_uuid(), 'Teaser', 'Teaser', 'Teaser'),
-(38, gen_random_uuid(), 'Saw', 'Saw', 'Sierra'),
-(39, gen_random_uuid(), 'Swimming', 'Swimming', 'Natación'),
-(40, gen_random_uuid(), 'Shoulder Bridge', 'Shoulder Bridge', 'Puente de hombros');
--- Adicione mais exercícios conforme necessário
-
--- Inserção de Exercícios para CrossFit (id=5)
-INSERT INTO exercise (id, image_uuid, name_pt, name_en, name_es) VALUES
-(41, gen_random_uuid(), 'Snatch', 'Snatch', 'Arranque'),
-(42, gen_random_uuid(), 'Clean and Jerk', 'Clean and Jerk', 'Dos tiempos'),
-(43, gen_random_uuid(), 'Thruster', 'Thruster', 'Thruster'),
-(44, gen_random_uuid(), 'Wall Ball', 'Wall Ball', 'Lanzamiento a la pared'),
-(45, gen_random_uuid(), 'Box Jump', 'Box Jump', 'Salto al cajón'),
-(46, gen_random_uuid(), 'Double Under', 'Double Under', 'Doble salto de cuerda'),
-(47, gen_random_uuid(), 'Toes to Bar', 'Toes to Bar', 'Pies a la barra'),
-(48, gen_random_uuid(), 'Kipping Pull-up', 'Kipping Pull-up', 'Dominadas con impulso'),
-(49, gen_random_uuid(), 'Handstand Push-up', 'Handstand Push-up', 'Flexión de parada de manos'),
-(50, gen_random_uuid(), 'Overhead Squat', 'Overhead Squat', 'Sentadilla sobre la cabeza');
--- Adicione mais exercícios conforme necessário
-
 -- Inserção de Exercícios para Musculação focus quadriceps (id=1)
 INSERT INTO exercise (id, image_uuid, name_pt, name_en, name_es) VALUES
 (51, gen_random_uuid(), 'Agachamento Livre', 'Barbell Squat', 'Sentadilla Libre'),

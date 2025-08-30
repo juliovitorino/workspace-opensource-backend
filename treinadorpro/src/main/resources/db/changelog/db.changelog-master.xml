@@ -33,6 +33,8 @@
     <include file="scripts/baseline/2023-10-23/2025-08-29-2101_CREATE_EXERCISES_1_TO_10.sql" relativeToChangelogFile="true"/>
     <include file="scripts/baseline/2023-10-23/2025-08-30-1520_CREATE_EXERCISES_11_TO_20.sql" relativeToChangelogFile="true"/>
     <include file="scripts/baseline/2023-10-23/2025-08-30-1524_CREATE_EXERCISES_21_TO_30.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-30-1527_CREATE_EXERCISES_31_TO_40.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-30-1532_CREATE_EXERCISES_41_TO_50.SQL" relativeToChangelogFile="true"/>
 
     <!-- Você pode listar meses explicitamente para garantir ordem entre diretórios -->
 <!--    <include file="" relativeToChangelogFile="true" />-->
