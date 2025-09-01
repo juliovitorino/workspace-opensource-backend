@@ -37,6 +37,17 @@
     <include file="scripts/baseline/2023-10-23/2025-08-30-1532_CREATE_EXERCISES_41_TO_50.sql" relativeToChangelogFile="true"/>
     <include file="scripts/baseline/2023-10-23/2025-08-30-1736_CREATE_EXERCISES_51_TO_60.sql" relativeToChangelogFile="true"/>
     <include file="scripts/baseline/2023-10-23/2025-08-30-1738_CREATE_EXERCISES_61_TO_70.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-09-01-1626_CREATE_EXERCISES_71_TO_80.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-09-01-1630_CREATE_EXERCISES_81_TO_90.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-09-01-1633_CREATE_EXERCISES_91_TO_105.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-09-01-1636_CREATE_EXERCISES_106_TO_120.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-09-01-1638_CREATE_EXERCISES_121_TO_135.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-09-01-1641_CREATE_EXERCISES_136_TO_150.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-09-01-1644_CREATE_EXERCISES_151_TO_165.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-09-01-1647_CREATE_EXERCISES_166_TO_180.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-09-01-1649_CREATE_EXERCISES_181_TO_195.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-09-01-1651_CREATE_EXERCISES_196_TO_205.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-09-01-1653_CREATE_EXERCISES_206_TO_215.sql" relativeToChangelogFile="true"/>
 
     <!-- Você pode listar meses explicitamente para garantir ordem entre diretórios -->
 <!--    <include file="" relativeToChangelogFile="true" />-->
