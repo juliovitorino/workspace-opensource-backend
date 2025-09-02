@@ -53,6 +53,7 @@
     <!-- Você pode listar meses explicitamente para garantir ordem entre diretórios -->
     <include file="scripts/evolution/2025-09-02-0948_update_video_url_pt.sql" relativeToChangelogFile="true"/>
     <include file="scripts/evolution/2025-09-02-1012_update_video_url_pt.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/evolution/2025-09-02-1055_update_video_url_pt.sql" relativeToChangelogFile="true"/>
 
     <!-- Alternativa: incluir o diretório releases inteiro (ordem alfabética de subpastas) -->
     <!-- <includeAll path="db/changelog/releases" relativeToChangelogFile="true"/> -->
