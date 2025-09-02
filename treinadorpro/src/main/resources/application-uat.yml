@@ -1,9 +1,18 @@
 spring:
-  application:
-    name: guardian-app
 
   apikey:
     uuid: 2409aeab-9179-4ad7-b400-891ce338b57a
+  mail:
+    host: ${SMTP_EMAIL_PROVIDER}
+    port: ${SMTP_EMAIL_PROVIDER_PORT}
+    username: ${SMTP_EMAIL_USERNAME}
+    password: ${SMTP_EMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
   # solve problem in swagger 'documentationPluginsBootstrapper'
   mvc:
@@ -11,9 +20,9 @@ spring:
       matching-strategy: ant_path_matcher
 
   datasource:
-    url: jdbc:postgresql://pg-guardian-instance.cev4hwwunwmk.sa-east-1.rds.amazonaws.com:5432/guardian_db
-    username: pgguardian
-    password: EiAqAlZb0qRKegk
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driverClassName: org.postgresql.Driver
   jpa:
     hibernate:
@@ -47,3 +56,8 @@ guardian:
     magicSeed: B7CdeU3QtR1FQctrSV0JatNEcGeAaFUfSBW2XdDIgpF2eMmUIM
   api:
     url: http://localhost:8081 # ou a URL do serviço real
+
+email:
+  send-to-admin: false
+  admin-email-account: ${MAIL_ADMIN}
+  from-mail: ${MAIL_SEND_FROM}

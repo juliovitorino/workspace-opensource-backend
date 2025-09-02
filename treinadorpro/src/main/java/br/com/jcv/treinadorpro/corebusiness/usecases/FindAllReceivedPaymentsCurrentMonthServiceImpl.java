@@ -1,0 +1,47 @@
+package br.com.jcv.treinadorpro.corebusiness.usecases;
+
+import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
+import br.com.jcv.treinadorpro.corebusiness.users.GetLoggedUserService;
+import br.com.jcv.treinadorpro.corelayer.model.StudentPayment;
+import br.com.jcv.treinadorpro.corelayer.model.StudentPaymentsTransaction;
+import br.com.jcv.treinadorpro.corelayer.repository.StudentPaymentRepository;
+import br.com.jcv.treinadorpro.corelayer.repository.StudentPaymentsTransactionRepository;
+import br.com.jcv.treinadorpro.corelayer.response.PersonalTrainerResponse;
+import br.com.jcv.treinadorpro.corelayer.response.StudentPaymentResponse;
+import br.com.jcv.treinadorpro.corelayer.response.StudentPaymentsTransactionResponse;
+import br.com.jcv.treinadorpro.corelayer.service.MapperServiceHelper;
+import br.com.jcv.treinadorpro.infrastructure.utils.ControllerGenericResponseHelper;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+@Service
+@Slf4j
+public class FindAllReceivedPaymentsCurrentMonthServiceImpl implements FindAllReceivedPaymentsCurrentMonthService{
+
+    private final GetLoggedUserService getLoggedUserService;
+    private final StudentPaymentsTransactionRepository studentPaymentsTransactionRepository;
+
+    public FindAllReceivedPaymentsCurrentMonthServiceImpl(GetLoggedUserService getLoggedUserService,
+                                                          StudentPaymentsTransactionRepository studentPaymentsTransactionRepository) {
+        this.getLoggedUserService = getLoggedUserService;
+        this.studentPaymentsTransactionRepository = studentPaymentsTransactionRepository;
+    }
+
+    @Override
+    public ControllerGenericResponse<List<StudentPaymentsTransactionResponse>> execute(UUID processId) {
+        PersonalTrainerResponse trainer = getLoggedUserService.execute(processId);
+        List<StudentPaymentsTransaction> allReceivedPaymentsCurrentMonth = studentPaymentsTransactionRepository.findAllReceivedPaymentsCurrentMonth(trainer.getId());
+
+        return ControllerGenericResponseHelper.getInstance(
+                "MSG-1127",
+                "All received payments from student have been retrieved",
+                allReceivedPaymentsCurrentMonth.stream()
+                        .map(MapperServiceHelper::toResponse)
+                        .collect(Collectors.toList())
+        );
+    }
+}

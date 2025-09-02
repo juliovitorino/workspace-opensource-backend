@@ -1,0 +1,11 @@
+package br.com.jcv.treinadorpro.corebusiness.usecases;
+
+import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
+import br.com.jcv.commons.library.commodities.service.BusinessServiceNoInput;
+import br.com.jcv.treinadorpro.corelayer.response.StudentPaymentResponse;
+import br.com.jcv.treinadorpro.corelayer.response.StudentPaymentsTransactionResponse;
+
+import java.util.List;
+
+public interface FindAllReceivedPaymentsCurrentMonthService extends BusinessServiceNoInput<ControllerGenericResponse<List<StudentPaymentsTransactionResponse>>> {
+}

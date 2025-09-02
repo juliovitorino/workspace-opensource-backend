@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class UserWorkoutCalendarDTO implements Serializable {
 
     private Long id;
-    private Long userPackTrainingId;
+    private Long contractId;
     private Long modalityExerciseId;
     private LocalDate trainingDate;
     private String startTime;

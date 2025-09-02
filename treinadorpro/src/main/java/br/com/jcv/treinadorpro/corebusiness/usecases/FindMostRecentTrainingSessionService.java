@@ -1,0 +1,11 @@
+package br.com.jcv.treinadorpro.corebusiness.usecases;
+
+import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
+import br.com.jcv.commons.library.commodities.service.BusinessService;
+import br.com.jcv.treinadorpro.corelayer.request.FindMostRecentTrainingSessionRequest;
+import br.com.jcv.treinadorpro.corelayer.request.TrainingSessionRequest;
+
+import java.util.UUID;
+
+public interface FindMostRecentTrainingSessionService extends BusinessService<FindMostRecentTrainingSessionRequest, ControllerGenericResponse<TrainingSessionRequest>> {
+}

@@ -1,6 +1,5 @@
 package br.com.jcv.security.guardian.controller.v1.business.createaccount;
 
-import br.com.jcv.commons.library.commodities.dto.MensagemResponse;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +13,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,7 +23,7 @@ import java.time.LocalDate;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Deprecated
 public class CreateNewAccountResponse implements Serializable {
-    private MensagemResponse response;
+    private UUID externalUserId;
+    private String code;
 }

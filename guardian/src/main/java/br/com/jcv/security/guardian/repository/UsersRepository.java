@@ -57,7 +57,6 @@ public interface UsersRepository extends JpaRepository<Users, Long>
 @Query(value = "SELECT * FROM tb_user WHERE 1=1 " +
         "AND (cast(:id as BIGINT) IS NULL OR id_user = :id) " +
         "AND (cast(:name as TEXT) IS NULL OR tx_name = :name) " +
-        "AND (cast(:birthday as DATE) IS NULL OR to_char(dt_birthday, 'YYYY-MM-DD') = :birthday) " +
         "AND (cast(:status as TEXT) IS NULL OR status = :status) " +
         "AND (cast(:dateCreated as DATE) IS NULL OR to_char(date_created, 'YYYY-MM-DD') = :dateCreated) " +
         "AND (cast(:dateUpdated as DATE) IS NULL OR to_char(date_updated, 'YYYY-MM-DD') = :dateUpdated) "
@@ -66,7 +65,6 @@ public interface UsersRepository extends JpaRepository<Users, Long>
 Page<Users> findUsersByFilter(Pageable pageable,
         @Param(UsersConstantes.ID) Long id,
         @Param(UsersConstantes.NAME) String name,
-        @Param(UsersConstantes.BIRTHDAY) String birthday,
         @Param(UsersConstantes.STATUS) String status,
         @Param(UsersConstantes.DATECREATED) String dateCreated,
         @Param(UsersConstantes.DATEUPDATED) String dateUpdated
@@ -76,7 +74,6 @@ Page<Users> findUsersByFilter(Pageable pageable,
 @Query(value = "SELECT * FROM tb_user WHERE 1=1 " +
         "AND (cast(:id as BIGINT) IS NULL OR id_user = :id) " +
         "AND (cast(:name as TEXT) IS NULL OR tx_name = :name) " +
-        "AND (cast(:birthday as DATE) IS NULL OR to_char(dt_birthday, 'YYYY-MM-DD') = :birthday) " +
         "AND (cast(:status as TEXT) IS NULL OR status = :status) " +
         "AND (cast(:dateCreated as DATE) IS NULL OR to_char(date_created, 'YYYY-MM-DD') = :dateCreated) " +
         "AND (cast(:dateUpdated as DATE) IS NULL OR to_char(date_updated, 'YYYY-MM-DD') = :dateUpdated) "
@@ -85,7 +82,6 @@ Page<Users> findUsersByFilter(Pageable pageable,
 List<Users> findUsersByFilter(
         @Param(UsersConstantes.ID) Long id,
         @Param(UsersConstantes.NAME) String name,
-        @Param(UsersConstantes.BIRTHDAY) String birthday,
         @Param(UsersConstantes.STATUS) String status,
         @Param(UsersConstantes.DATECREATED) String dateCreated,
         @Param(UsersConstantes.DATEUPDATED) String dateUpdated
@@ -96,8 +92,6 @@ List<Users> findUsersByFilter(
      Long loadMaxIdByIdAndStatus(Long id, String status);
      @Query(value = "SELECT MAX(id_user) AS maxid FROM tb_user WHERE tx_name = :name AND status = :status ", nativeQuery = true)
      Long loadMaxIdByNameAndStatus(String name, String status);
-     @Query(value = "SELECT MAX(id_user) AS maxid FROM tb_user WHERE dt_birthday = :birthday AND status = :status ", nativeQuery = true)
-     Long loadMaxIdByBirthdayAndStatus(LocalDate birthday, String status);
      @Query(value = "SELECT MAX(id_user) AS maxid FROM tb_user WHERE date_created = :dateCreated AND status = :status ", nativeQuery = true)
      Long loadMaxIdByDateCreatedAndStatus(Date dateCreated, String status);
      @Query(value = "SELECT MAX(id_user) AS maxid FROM tb_user WHERE date_updated = :dateUpdated AND status = :status ", nativeQuery = true)
@@ -108,16 +102,12 @@ List<Users> findUsersByFilter(
      @Query(value = "UPDATE tb_user SET tx_name = :name, dt_updated = current_timestamp  WHERE id_user = :id", nativeQuery = true)
      void updateNameById(@Param("id") Long id, @Param(UsersConstantes.NAME) String name);
      @Modifying
-     @Query(value = "UPDATE tb_user SET dt_birthday = :birthday, dt_updated = current_timestamp  WHERE id_user = :id", nativeQuery = true)
-     void updateBirthdayById(@Param("id") Long id, @Param(UsersConstantes.BIRTHDAY) LocalDate birthday);
-     @Modifying
      @Query(value = "UPDATE tb_user SET status = :status, dt_updated = current_timestamp  WHERE id_user = :id", nativeQuery = true)
      void updateStatusById(@Param("id") Long id, @Param(UsersConstantes.STATUS) String status);
 
 
      long countByIdAndStatus(Long id, String status);
      long countByNameAndStatus(String name, String status);
-     long countByBirthdayAndStatus(LocalDate birthday, String status);
      long countByDateCreatedAndStatus(Date dateCreated, String status);
      long countByDateUpdatedAndStatus(Date dateUpdated, String status);
 
@@ -126,8 +116,6 @@ List<Users> findUsersByFilter(
     Optional<Users> findByIdAndStatus(Long id, String status);
     @Query(value = "SELECT * FROM tb_user WHERE id_user = (SELECT MAX(id_user) AS maxid FROM tb_user WHERE tx_name = :name AND  status = :status) ", nativeQuery = true)
     Optional<Users> findByNameAndStatus(String name, String status);
-    @Query(value = "SELECT * FROM tb_user WHERE id_user = (SELECT MAX(id_user) AS maxid FROM tb_user WHERE dt_birthday = :birthday AND  status = :status) ", nativeQuery = true)
-    Optional<Users> findByBirthdayAndStatus(LocalDate birthday, String status);
     @Query(value = "SELECT * FROM tb_user WHERE id_user = (SELECT MAX(id_user) AS maxid FROM tb_user WHERE date_created = :dateCreated AND  status = :status) ", nativeQuery = true)
     Optional<Users> findByDateCreatedAndStatus(Date dateCreated, String status);
     @Query(value = "SELECT * FROM tb_user WHERE id_user = (SELECT MAX(id_user) AS maxid FROM tb_user WHERE date_updated = :dateUpdated AND  status = :status) ", nativeQuery = true)
@@ -138,8 +126,6 @@ List<Users> findUsersByFilter(
      List<Users> findAllByIdAndStatus(Long id, String status);
      @Query(value = "SELECT * FROM tb_user WHERE tx_name = :name AND  status = :status ", nativeQuery = true)
      List<Users> findAllByNameAndStatus(String name, String status);
-     @Query(value = "SELECT * FROM tb_user WHERE dt_birthday = :birthday AND  status = :status ", nativeQuery = true)
-     List<Users> findAllByBirthdayAndStatus(LocalDate birthday, String status);
      @Query(value = "SELECT * FROM tb_user WHERE date_created = :dateCreated AND  status = :status ", nativeQuery = true)
      List<Users> findAllByDateCreatedAndStatus(Date dateCreated, String status);
      @Query(value = "SELECT * FROM tb_user WHERE date_updated = :dateUpdated AND  status = :status ", nativeQuery = true)
@@ -152,9 +138,6 @@ List<Users> findUsersByFilter(
     @Modifying
     @Query(value = "DELETE FROM tb_user WHERE tx_name = :name", nativeQuery = true)
     void deleteByName(@Param(UsersConstantes.NAME) String name);
-    @Modifying
-    @Query(value = "DELETE FROM tb_user WHERE dt_birthday = :birthday", nativeQuery = true)
-    void deleteByBirthday(@Param(UsersConstantes.BIRTHDAY) LocalDate birthday);
     @Modifying
     @Query(value = "DELETE FROM tb_user WHERE status = :status", nativeQuery = true)
     void deleteByStatus(@Param(UsersConstantes.STATUS) String status);

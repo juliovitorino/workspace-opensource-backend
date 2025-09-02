@@ -12,11 +12,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
+@Deprecated
 public class ValidateApplicationCodeBusinessServiceImpl implements ValidateApplicationCodeBusinessService {
     @Autowired
     private GApplicationService gApplicationService;
 
     @Override
+    @Deprecated
     public Boolean execute(UUID processId, UUID uuidExternalApp) {
         return Objects.nonNull(gApplicationService.findGApplicationByExternalCodeUUIDAndStatus(
                 uuidExternalApp,

@@ -21,9 +21,10 @@ import java.util.UUID;
 @Service
 @Slf4j
 public class CreateNewAccountBusinessService extends AbstractGuardianBusinessService implements CreateNewAccount{
+
     @Override
     @Transactional
-    public ControllerGenericResponse<UUID> execute(UUID processId, CreateNewAccountRequest request) {
+    public ControllerGenericResponse<CreateNewAccountResponse> execute(UUID processId, CreateNewAccountRequest request) {
         log.info("execute :: processId = {} :: has been started", processId);
         if(!request.getPasswd().equals(request.getPasswdCheck())) {
             throw new CommoditieBaseException("Your secret password doesn't match with request", HttpStatus.BAD_REQUEST);
@@ -72,15 +73,17 @@ public class CreateNewAccountBusinessService extends AbstractGuardianBusinessSer
                 .msgcode("GRDN-1933")
                 .mensagem("Your account has been created successfully, but it's depending on confirmation. A 6-digit code for activation has been sent to " + request.getEmail() + ". Check it out!")
                 .build();
-        ControllerGenericResponse<UUID> response = new ControllerGenericResponse<>();
+        ControllerGenericResponse<CreateNewAccountResponse> response = new ControllerGenericResponse<>();
         response.setResponse(mensagemResponse);
-        response.setObjectResponse(applicationUserDTO.getExternalUserUUID());
+        response.setObjectResponse(CreateNewAccountResponse.builder()
+                        .code(applicationUserDTO.getActivationCode())
+                        .externalUserId(applicationUserDTO.getExternalUserUUID())
+                .build());
         return response;
     }
 
     private UsersDTO mapperToDto(CreateNewAccountRequest request) {
         UsersDTO dto = new UsersDTO();
-        dto.setBirthday(request.getBirthday());
         dto.setName(request.getName());
         return dto;
     }

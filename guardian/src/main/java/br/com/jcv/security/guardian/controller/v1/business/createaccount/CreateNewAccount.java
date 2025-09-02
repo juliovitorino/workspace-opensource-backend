@@ -5,5 +5,5 @@ import br.com.jcv.commons.library.commodities.service.BusinessService;
 
 import java.util.UUID;
 
-public interface CreateNewAccount extends BusinessService<CreateNewAccountRequest, ControllerGenericResponse<UUID>> {
+public interface CreateNewAccount extends BusinessService<CreateNewAccountRequest, ControllerGenericResponse<CreateNewAccountResponse>> {
 }

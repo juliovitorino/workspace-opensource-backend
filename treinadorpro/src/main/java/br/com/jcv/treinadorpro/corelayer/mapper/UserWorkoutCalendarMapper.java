@@ -1,7 +1,7 @@
 package br.com.jcv.treinadorpro.corelayer.mapper;
 
 import br.com.jcv.treinadorpro.corelayer.dto.UserWorkoutCalendarDTO;
-import br.com.jcv.treinadorpro.corelayer.model.UserWorkoutCalendar;
+import br.com.jcv.treinadorpro.corelayer.model.UserWorkoutPlan;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -14,11 +14,11 @@ public class UserWorkoutCalendarMapper {
         this.modelMapper = modelMapper;
     }
 
-    public UserWorkoutCalendarDTO toDTO(UserWorkoutCalendar entity) {
+    public UserWorkoutCalendarDTO toDTO(UserWorkoutPlan entity) {
         return modelMapper.map(entity, UserWorkoutCalendarDTO.class);
     }
 
-    public UserWorkoutCalendar toEntity(UserWorkoutCalendarDTO dto) {
-        return modelMapper.map(dto, UserWorkoutCalendar.class);
+    public UserWorkoutPlan toEntity(UserWorkoutCalendarDTO dto) {
+        return modelMapper.map(dto, UserWorkoutPlan.class);
     }
 }

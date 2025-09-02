@@ -21,6 +21,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Deprecated
 public class ValidateAccountRequest implements Serializable {
     private UUID externalUUID;
     private String requiredCode;

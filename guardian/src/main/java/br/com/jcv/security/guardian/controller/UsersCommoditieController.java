@@ -321,26 +321,8 @@ public class UsersCommoditieController
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @ApiResponses({
-            @ApiResponse(code = 204, message = "Indica que o processo Users foi executado com sucesso"),
-            @ApiResponse(code = 200, message = "Indica que o processo Users foi executado com sucesso"),
-            @ApiResponse(code = 500, message = "Ocorreu algum problema inesperado"),
-    })
-    @GetMapping(params = "birthday")
-    public ResponseEntity<UsersDTO> findUsersByBirthday(@RequestParam(UsersConstantes.BIRTHDAY) LocalDate birthday) {
-        try{
-            UsersDTO usersDTO = usersService.findUsersByBirthdayAndStatus(birthday, GenericStatusEnums.ATIVO.getShortValue());
-            return Objects.nonNull(usersDTO)
-                ? new ResponseEntity<>(usersDTO, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (UsersNotFoundException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch(CommoditieBaseException e) {
-            return new ResponseEntity(e.getMensagemResponse(), e.getHttpStatus());
-        } catch(Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+
+
     @ApiResponses({
             @ApiResponse(code = 204, message = "Indica que o processo Users foi executado com sucesso"),
             @ApiResponse(code = 200, message = "Indica que o processo Users foi executado com sucesso"),

@@ -1,191 +1,235 @@
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
--- Insert modalities
-INSERT INTO modality (id, name_pt, name_en, name_es) VALUES
-(1, 'Musculação', 'Bodybuilding', 'Musculación'),
-(2, 'Treinamento Funcional', 'Functional Training', 'Entrenamiento Funcional'),
-(3, 'Yoga', 'Yoga', 'Yoga'),
-(4, 'Pilates', 'Pilates', 'Pilates'),
-(5, 'CrossFit', 'CrossFit', 'CrossFit'),
-(6, 'Calistenia', 'Calisthenics', 'Calistenia'),
-(7, 'Spinning', 'Spinning', 'Spinning'),
-(8, 'HIIT', 'HIIT', 'HIIT'),
-(9, 'Corrida', 'Running', 'Correr'),
-(10, 'Caminhada', 'Walking', 'Caminata'),
-(11, 'Alongamento', 'Stretching', 'Estiramiento'),
-(12, 'Mobilidade Articular', 'Joint Mobility', 'Movilidad Articular'),
-(13, 'Zumba', 'Zumba', 'Zumba'),
-(14, 'Step', 'Step', 'Step'),
-(15, 'Jump', 'Jump', 'Jump'),
-(16, 'Boxe', 'Boxing', 'Boxeo'),
-(17, 'Muay Thai', 'Muay Thai', 'Muay Thai'),
-(18, 'Jiu-Jitsu', 'Jiu-Jitsu', 'Jiu-Jitsu'),
-(19, 'Judô', 'Judo', 'Judo'),
-(20, 'Karatê', 'Karate', 'Karate'),
-(21, 'Taekwondo', 'Taekwondo', 'Taekwondo'),
-(22, 'Capoeira', 'Capoeira', 'Capoeira'),
-(23, 'Natação', 'Swimming', 'Natación'),
-(24, 'Hidroginástica', 'Water Aerobics', 'Aquagym'),
-(25, 'Remo Indoor', 'Indoor Rowing', 'Remo Indoor'),
-(26, 'Escalada Indoor', 'Indoor Climbing', 'Escalada Indoor'),
-(27, 'TRX', 'Suspension Training', 'Entrenamiento en Suspensión'),
-(28, 'Slackline', 'Slackline', 'Slackline'),
-(29, 'Parkour', 'Parkour', 'Parkour'),
-(30, 'Escalada', 'Climbing', 'Escalada'),
-(31, 'Patinação', 'Skating', 'Patinaje'),
-(32, 'Ciclismo', 'Cycling', 'Ciclismo'),
-(33, 'Basquete', 'Basketball', 'Baloncesto'),
-(34, 'Futebol', 'Soccer', 'Fútbol'),
-(35, 'Futsal', 'Indoor Soccer', 'Fútbol Sala'),
-(36, 'Handebol', 'Handball', 'Balonmano'),
-(37, 'Vôlei', 'Volleyball', 'Voleibol'),
-(38, 'Beach Tennis', 'Beach Tennis', 'Tenis Playa'),
-(39, 'Tênis', 'Tennis', 'Tenis'),
-(40, 'Paddle', 'Paddle', 'Pádel'),
-(41, 'Esgrima', 'Fencing', 'Esgrima'),
-(42, 'Ginástica Rítmica', 'Rhythmic Gymnastics', 'Gimnasia Rítmica'),
-(43, 'Ginástica Artística', 'Artistic Gymnastics', 'Gimnasia Artística'),
-(44, 'Ginástica Acrobática', 'Acrobatic Gymnastics', 'Gimnasia Acrobática'),
-(45, 'Powerlifting', 'Powerlifting', 'Powerlifting'),
-(46, 'Strongman', 'Strongman', 'Strongman'),
-(47, 'Levantamento Olímpico', 'Olympic Weightlifting', 'Halterofilia Olímpica'),
-(48, 'Corrida de Obstáculos', 'Obstacle Course Racing', 'Carreras de Obstáculos'),
-(49, 'Dança Contemporânea', 'Contemporary Dance', 'Danza Contemporánea'),
-(50, 'Balé', 'Ballet', 'Ballet'),
-(51, 'Jazz Dance', 'Jazz Dance', 'Danza Jazz'),
-(52, 'Street Dance', 'Street Dance', 'Baile Urbano'),
-(53, 'Pole Dance', 'Pole Dance', 'Pole Dance'),
-(54, 'Ginástica Localizada', 'Localized Gymnastics', 'Gimnasia Localizada'),
-(55, 'Treinamento Militar', 'Military Training', 'Entrenamiento Militar'),
-(56, 'Corrida de Rua', 'Street Running', 'Carrera Callejera'),
-(57, 'Mountain Bike', 'Mountain Biking', 'Ciclismo de Montaña'),
-(58, 'Skate', 'Skateboarding', 'Skateboarding'),
-(59, 'Surfe', 'Surfing', 'Surf'),
-(60, 'Bodyboard', 'Bodyboarding', 'Bodyboard'),
-(61, 'Windsurf', 'Windsurfing', 'Windsurf'),
-(62, 'Kitesurf', 'Kitesurfing', 'Kitesurf'),
-(63, 'Canoagem', 'Canoeing', 'Piragüismo'),
-(64, 'Escalada em Rocha', 'Rock Climbing', 'Escalada en Roca'),
-(65, 'Tiro com Arco', 'Archery', 'Tiro con Arco'),
-(66, 'Corrida em Trilha', 'Trail Running', 'Carrera de Montaña'),
-(67, 'Corrida de Orientação', 'Orienteering', 'Orientación'),
-(68, 'Equitação', 'Horse Riding', 'Equitación'),
-(69, 'Atletismo', 'Athletics', 'Atletismo'),
-(70, 'Marcha Atlética', 'Race Walking', 'Marcha Atlética'),
-(71, 'Salto com Vara', 'Pole Vault', 'Salto con Pértiga'),
-(72, 'Salto em Altura', 'High Jump', 'Salto de Altura'),
-(73, 'Arremesso de Peso', 'Shot Put', 'Lanzamiento de Bala'),
-(74, 'Lançamento de Dardo', 'Javelin Throw', 'Lanzamiento de Jabalina'),
-(75, 'Lançamento de Disco', 'Discus Throw', 'Lanzamiento de Disco'),
-(76, 'Corrida de Revezamento', 'Relay Race', 'Carrera de Relevo'),
-(77, 'Treinamento Pós-Parto', 'Postpartum Training', 'Entrenamiento Postparto'),
-(78, 'Treinamento Pré-Natal', 'Prenatal Training', 'Entrenamiento Prenatal'),
-(79, 'Treinamento para Terceira Idade', 'Senior Training', 'Entrenamiento para Mayores'),
-(80, 'Treinamento Infantil', 'Kids Training', 'Entrenamiento Infantil'),
-(81, 'Treinamento Corporativo', 'Corporate Training', 'Entrenamiento Corporativo'),
-(82, 'Reabilitação Física', 'Physical Rehabilitation', 'Rehabilitación Física'),
-(83, 'Prevenção de Lesões', 'Injury Prevention', 'Prevención de Lesiones'),
-(84, 'Condicionamento Físico', 'Physical Conditioning', 'Acondicionamiento Físico'),
-(85, 'Core Training', 'Core Training', 'Entrenamiento de Core'),
-(86, 'Resistência Cardiorrespiratória', 'Cardiorespiratory Endurance', 'Resistencia Cardiorrespiratoria'),
-(87, 'Força Muscular', 'Muscular Strength', 'Fuerza Muscular'),
-(88, 'Flexibilidade', 'Flexibility', 'Flexibilidad'),
-(89, 'Velocidade', 'Speed', 'Velocidad'),
-(90, 'Agilidade', 'Agility', 'Agilidad'),
-(91, 'Coordenação Motora', 'Motor Coordination', 'Coordinación Motora'),
-(92, 'Equilíbrio', 'Balance', 'Equilibrio'),
-(93, 'Propriocepção', 'Proprioception', 'Propiocepción'),
-(94, 'Biomecânica do Movimento', 'Movement Biomechanics', 'Biomecánica del Movimiento'),
-(95, 'Análise Postural', 'Postural Analysis', 'Análisis Postural'),
-(96, 'Ergonomia', 'Ergonomics', 'Ergonomía'),
-(97, 'Psicomotricidade', 'Psychomotricity', 'Psicomotricidad'),
-(98, 'Educação Física Escolar', 'School Physical Education', 'Educación Física Escolar'),
-(99, 'Atividades Recreativas', 'Recreational Activities', 'Actividades Recreativas'),
-(100, 'Jogos Cooperativos', 'Cooperative Games', 'Juegos Cooperativos'),
-(101, 'Exergames', 'Exergames', 'Exergames'),
-(102, 'Atividades ao Ar Livre', 'Outdoor Activities', 'Actividades al Aire Libre');
+-- insert relationship between work_group x exercise
+-- work_group = 1 (chest)
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES
+(1,   1, 'A'),
+(1,  10, 'A'),
+(1,  91, 'A'),
+(1,  92, 'A'),
+(1,  93, 'A'),
+(1,  94, 'A'),
+(1,  95, 'A'),
+(1,  96, 'A'),
+(1,  97, 'A'),
+(1,  98, 'A'),
+(1,  99, 'A'),
+(1, 100, 'A'),
+(1, 101, 'A'),
+(1, 102, 'A'),
+(1, 103, 'A'),
+(1, 104, 'A'),
+(1, 105, 'A');
 
--- Inserção de Exercícios para Musculação (id=1)
-INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
-(1, 'Supino reto', 'Flat Bench Press', 'Press de banca plano'),
-(2, 'Agachamento livre', 'Barbell Squat', 'Sentadilla con barra'),
-(3, 'Levantamento terra', 'Deadlift', 'Peso muerto'),
-(4, 'Desenvolvimento com barra', 'Overhead Press', 'Press militar'),
-(5, 'Rosca direta', 'Barbell Curl', 'Curl con barra'),
-(6, 'Tríceps pulley', 'Triceps Pushdown', 'Extensiones en polea'),
-(7, 'Remada curvada', 'Bent-over Row', 'Remo inclinado'),
-(8, 'Cadeira extensora', 'Leg Extension', 'Extensión de piernas'),
-(9, 'Cadeira flexora', 'Leg Curl', 'Curl femoral'),
-(10, 'Crucifixo', 'Dumbbell Fly', 'Aperturas con mancuernas');
--- Adicione mais exercícios conforme necessário
+--work_group = 2(back)
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (2, 3, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (2, 7, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (2, 106, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (2, 107, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (2, 108, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (2, 109, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (2, 110, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (2, 111, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (2, 112, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (2, 113, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (2, 114, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (2, 115, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (2, 117, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (2, 120, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (2, 205, 'A');
 
--- Inserção de Exercícios para Treinamento Funcional (id=2)
-INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
-(11, 'Burpee', 'Burpee', 'Burpee'),
-(12, 'Agachamento com kettlebell', 'Goblet Squat', 'Sentadilla con kettlebell'),
-(13, 'Swing com kettlebell', 'Kettlebell Swing', 'Balanceo con kettlebell'),
-(14, 'Prancha frontal', 'Plank', 'Plancha'),
-(15, 'Saltos no caixote', 'Box Jump', 'Saltos al cajón'),
-(16, 'Avanço com halteres', 'Dumbbell Lunge', 'Zancadas con mancuernas'),
-(17, 'Battle rope', 'Battle Rope', 'Cuerdas de combate'),
-(18, 'Escada de agilidade', 'Agility Ladder', 'Escalera de agilidad'),
-(19, 'Corrida em zigue-zague', 'Zigzag Run', 'Carrera en zigzag'),
-(20, 'Prancha lateral', 'Side Plank', 'Plancha lateral');
--- Adicione mais exercícios conforme necessário
+-- work_group = 3 (shoulders)
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 4, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 121, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 122, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 123, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 124, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 125, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 126, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 127, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 128, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 129, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 130, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 131, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 132, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 133, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 134, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 135, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 206, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 207, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 208, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 209, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 210, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 211, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 212, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 213, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (3, 214, 'A');
 
--- Inserção de Exercícios para Yoga (id=3)
-INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
-(21, 'Postura da criança', 'Child''s Pose', 'Postura del niño'),
-(22, 'Cão olhando para baixo', 'Downward-Facing Dog', 'Perro boca abajo'),
-(23, 'Postura da cobra', 'Cobra Pose', 'Postura de la cobra'),
-(24, 'Postura da montanha', 'Mountain Pose', 'Postura de la montaña'),
-(25, 'Postura do guerreiro I', 'Warrior I Pose', 'Guerrero I'),
-(26, 'Postura do guerreiro II', 'Warrior II Pose', 'Guerrero II'),
-(27, 'Postura do triângulo', 'Triangle Pose', 'Postura del triángulo'),
-(28, 'Postura da árvore', 'Tree Pose', 'Postura del árbol'),
-(29, 'Postura do cadáver', 'Corpse Pose', 'Postura del cadáver'),
-(30, 'Torção sentada', 'Seated Twist', 'Torsión sentada');
--- Adicione mais exercícios conforme necessário
+-- work_group =5	Bíceps
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (5, 5, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (5, 136, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (5, 137, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (5, 138, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (5, 139, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (5, 140, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (5, 141, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (5, 142, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (5, 143, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (5, 144, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (5, 145, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (5, 146, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (5, 147, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (5, 148, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (5, 149, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (5, 150, 'A');
 
--- Inserção de Exercícios para Pilates (id=4)
-INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
-(31, 'The Hundred', 'The Hundred', 'El Cien'),
-(32, 'Roll Up', 'Roll Up', 'Rodar hacia arriba'),
-(33, 'Single Leg Stretch', 'Single Leg Stretch', 'Estiramiento de una pierna'),
-(34, 'Double Leg Stretch', 'Double Leg Stretch', 'Estiramiento de dos piernas'),
-(35, 'Leg Circles', 'Leg Circles', 'Círculos de piernas'),
-(36, 'Spine Stretch', 'Spine Stretch', 'Estiramiento de columna'),
-(37, 'Teaser', 'Teaser', 'Teaser'),
-(38, 'Saw', 'Saw', 'Sierra'),
-(39, 'Swimming', 'Swimming', 'Natación'),
-(40, 'Shoulder Bridge', 'Shoulder Bridge', 'Puente de hombros');
--- Adicione mais exercícios conforme necessário
+-- work_group =6	Tríceps
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (6, 6, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (6, 151, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (6, 152, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (6, 153, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (6, 154, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (6, 155, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (6, 156, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (6, 157, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (6, 158, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (6, 159, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (6, 160, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (6, 161, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (6, 162, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (6, 163, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (6, 164, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (6, 165, 'A');
 
--- Inserção de Exercícios para CrossFit (id=5)
-INSERT INTO exercise (id, name_pt, name_en, name_es) VALUES
-(41, 'Snatch', 'Snatch', 'Arranque'),
-(42, 'Clean and Jerk', 'Clean and Jerk', 'Dos tiempos'),
-(43, 'Thruster', 'Thruster', 'Thruster'),
-(44, 'Wall Ball', 'Wall Ball', 'Lanzamiento a la pared'),
-(45, 'Box Jump', 'Box Jump', 'Salto al cajón'),
-(46, 'Double Under', 'Double Under', 'Doble salto de cuerda'),
-(47, 'Toes to Bar', 'Toes to Bar', 'Pies a la barra'),
-(48, 'Kipping Pull-up', 'Kipping Pull-up', 'Dominadas con impulso'),
-(49, 'Handstand Push-up', 'Handstand Push-up', 'Flexión de parada de manos'),
-(50, 'Overhead Squat', 'Overhead Squat', 'Sentadilla sobre la cabeza');
--- Adicione mais exercícios conforme necessário
+-- work_group =7	Abdômen
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (7, 14, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (7, 20, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (7, 166, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (7, 167, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (7, 168, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (7, 169, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (7, 170, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (7, 171, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (7, 172, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (7, 173, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (7, 174, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (7, 175, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (7, 176, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (7, 177, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (7, 178, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (7, 179, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (7, 180, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (7, 215, 'A');
 
--- creating relationship between bodybuilding modality and their exercises
-insert into modality_exercise (modality_id,exercise_id) select 1, e.id from exercise e where e.id between 1 and 10;
+-- work_group =8	Glúteos
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (8, 181, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (8, 182, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (8, 183, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (8, 184, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (8, 185, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (8, 186, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (8, 187, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (8, 188, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (8, 189, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (8, 190, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (8, 191, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (8, 192, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (8, 193, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (8, 194, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (8, 195, 'A');
 
--- creating relationship between 'Functional Training' and their exercises
-insert into modality_exercise (modality_id,exercise_id) select 2, e.id from exercise e where e.id between 11 and 20;
+-- work_group =9	Quadríceps
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (9, 2, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (9, 8, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (9, 51, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (9, 52, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (9, 53, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (9, 54, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (9, 55, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (9, 56, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (9, 57, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (9, 58, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (9, 59, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (9, 60, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (9, 193, 'A');
 
--- creating relationship between 'Yoga' and their exercises
-insert into modality_exercise (modality_id,exercise_id) select 3, e.id from exercise e where e.id between 21 and 30;
+-- work_group =10	Posterior de Coxa
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (10, 9, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (10, 61, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (10, 62, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (10, 63, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (10, 64, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (10, 65, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (10, 66, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (10, 67, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (10, 68, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (10, 69, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (10, 70, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (10, 116, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (10, 194, 'A');
 
--- creating relationship between 'Pilates' and their exercises
-insert into modality_exercise (modality_id,exercise_id) select 4, e.id from exercise e where e.id between 31 and 40;
+-- work_group =11	Panturrilhas
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (11, 71, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (11, 72, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (11, 73, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (11, 74, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (11, 75, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (11, 76, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (11, 77, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (11, 78, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (11, 79, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (11, 80, 'A');
 
--- creating relationship between 'CrossFit' and their exercises
-insert into modality_exercise (modality_id,exercise_id) select 5, e.id from exercise e where e.id between 41 and 50;
+-- work_group =12	Antebraço
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (12, 196, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (12, 197, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (12, 198, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (12, 199, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (12, 200, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (12, 201, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (12, 203, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (12, 204, 'A');
+
+-- work_group =13	Trapézio
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (13, 118, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (13, 119, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (13, 206, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (13, 207, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (13, 208, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (13, 209, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (13, 210, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (13, 211, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (13, 212, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (13, 213, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (13, 214, 'A');
+
+-- work_group =14	Adutores
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (14, 82, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (14, 84, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (14, 86, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (14, 88, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (14, 90, 'A');
+
+-- work_group =15	Abdutores
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (15, 81, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (15, 83, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (15, 85, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (15, 87, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (15, 89, 'A');
+
+-- work_group =16	Corpo inteiro
+-- work_group =17	Lombar
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (17, 67, 'A');
+INSERT INTO work_group_exercise (work_group_id, exercise_id, status) VALUES (17, 120, 'A');
+
+--videos for exercises
+update exercise set video_url_pt = 'https://www.youtube.com/shorts/3QU7jjEgWVI' where id=7;
+update exercise set video_url_pt = 'https://www.youtube.com/shorts/g3T7LsEeDWQ' where id=100;
+update exercise set video_url_pt = 'https://youtu.be/EZKnjiDXPlY' where id=91;
+update exercise set video_url_pt = 'https://youtu.be/EZKnjiDXPlY' where id=1;
+update exercise set video_url_pt = 'https://youtu.be/7UoGsmqallc' where id=104;
+update exercise set video_url_pt = 'https://www.youtube.com/shorts/Ft6nkjCozf0' where id=99;
+update exercise set video_url_pt = 'https://www.youtube.com/shorts/Ft6nkjCozf0' where id=105;
+update exercise set video_url_pt = 'https://www.youtube.com/shorts/B9gGcbEdYBQ' where id=94;
+
 

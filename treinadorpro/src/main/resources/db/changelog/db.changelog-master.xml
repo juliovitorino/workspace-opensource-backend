@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+      http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <!-- Orquestração explícita da ordem macro: primeiro baseline, depois releases por mês -->
+    <include file="scripts/baseline/2023-10-23/DDL-treinadorpro.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-1741-unique_external_id_indexes.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-1747_POPULATE_PARAMETER_TABLE.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-1756_CREATE_UNIQUE_IDX.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-1808_POPULATE_GOAL_TABLE.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-1811_CREATE_WORKGROUP_UNIQUE_IDX.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-1816_POPULATE_WORKGROUP_TABLE.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-1941_CREATE_PROGRAM_UNIQUE_INDEX.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-1945_POPULATE_PROGRAM_TABLE.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-1951_plan_template_table.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-1956_CREATE_MODALITY_UNIQUE_IDX.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2001-DELETE_EXERCISE_115.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2001-DELETE_EXERCISE_192.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2001-DELETE_EXERCISE_170.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2001-DELETE_DUPLICATED_EXERCISES.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2001-DELETE_DUPLICATED_EXERCISES_NAME_EN.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2001_POPULATE_MODALITY_TABLE.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2001_UPDATE_EXERCISE_65.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2001_DELETE_EXERCISE_54.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2001_DELETE_EXERCISE_45.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2001_DELETE_EXERCISE_207.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2001_DELETE_EXERCISE_136.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2014_CREATE_EXERCISE_UNIQUE_IDX.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-29-2101_CREATE_EXERCISES_1_TO_10.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-30-1520_CREATE_EXERCISES_11_TO_20.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-30-1524_CREATE_EXERCISES_21_TO_30.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-30-1527_CREATE_EXERCISES_31_TO_40.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-30-1532_CREATE_EXERCISES_41_TO_50.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-30-1736_CREATE_EXERCISES_51_TO_60.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-08-30-1738_CREATE_EXERCISES_61_TO_70.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-09-01-1626_CREATE_EXERCISES_71_TO_80.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-09-01-1630_CREATE_EXERCISES_81_TO_90.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-09-01-1633_CREATE_EXERCISES_91_TO_105.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-09-01-1636_CREATE_EXERCISES_106_TO_120.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-09-01-1638_CREATE_EXERCISES_121_TO_135.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-09-01-1641_CREATE_EXERCISES_136_TO_150.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-09-01-1644_CREATE_EXERCISES_151_TO_165.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-09-01-1647_CREATE_EXERCISES_166_TO_180.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-09-01-1649_CREATE_EXERCISES_181_TO_195.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-09-01-1651_CREATE_EXERCISES_196_TO_205.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-09-01-1653_CREATE_EXERCISES_206_TO_215.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/baseline/2023-10-23/2025-09-01-1659_update_video_url_pt.sql" relativeToChangelogFile="true"/>
+
+    <!-- Você pode listar meses explicitamente para garantir ordem entre diretórios -->
+<!--    <include file="" relativeToChangelogFile="true" />-->
+
+    <!-- Alternativa: incluir o diretório releases inteiro (ordem alfabética de subpastas) -->
+    <!-- <includeAll path="db/changelog/releases" relativeToChangelogFile="true"/> -->
+</databaseChangeLog>
