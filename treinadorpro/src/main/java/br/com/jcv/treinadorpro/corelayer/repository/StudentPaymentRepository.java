@@ -14,8 +14,13 @@ import java.util.UUID;
 @Repository
 public interface StudentPaymentRepository extends JpaRepository<StudentPayment, Long> {
 
-    @Query("select sum(c.amount) from StudentPayment c " +
-            "where c.duedate < CURRENT_TIMESTAMP " +
+    @Query("select coalesce( sum(c.amount - coalesce( "+
+            "(select sum(t.receivedAmount) from StudentPaymentsTransaction t where t.studentPayment = c and t.status = br.com.jcv.treinadorpro.corelayer.enums.StatusEnum.A)"+
+            ",0))"+
+            ",0) "+
+            "from StudentPayment c " +
+            "where c.duedate < CURRENT_DATE " +
+            "and c.status = 'A' " +
             "and c.contract.trainingPack.personalUser.id = :personalId")
     BigDecimal sumOverduePayments(@Param("personalId") Long personalId);
 
