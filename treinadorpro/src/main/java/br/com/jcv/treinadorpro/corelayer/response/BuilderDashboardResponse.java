@@ -29,4 +29,7 @@ public class BuilderDashboardResponse implements Serializable {
 
     @JsonProperty("totalAmountReceivedMonth")
     private BigDecimal totalAmountReceivedMonth;
+
+    @JsonProperty("totalFutureRevenueAmount")
+    private BigDecimal totalFutureRevenueAmount;
 }

@@ -45,6 +45,7 @@ public class BuilderDashboardServiceImpl implements BuilderDashboardService{
     public ControllerGenericResponse<BuilderDashboardResponse> execute(UUID processId) {
         PersonalTrainerResponse trainer = getLoggedUserService.execute(processId);
         BigDecimal overdueAmountContracts = studentPaymentRepository.sumOverduePayments(trainer.getId());
+        BigDecimal futureRevenueAmount = studentPaymentRepository.sumFutureRevenues(trainer.getId());
         BigDecimal totalAmountReceivedMonth = studentPaymentsTransactionRepository.sumReceivedPaymentsCurrentMonth(trainer.getId());
         return ControllerGenericResponseHelper.getInstance(
                 "MSG-1449",
@@ -52,6 +53,7 @@ public class BuilderDashboardServiceImpl implements BuilderDashboardService{
                 BuilderDashboardResponse.builder()
                         .activeStudentContract(contractRepository.countOpenAndActiveContracts(SituationEnum.OPEN, StatusEnum.A, trainer.getId()))
                         .overdueAmountContracts(overdueAmountContracts == null ? BigDecimal.ZERO : overdueAmountContracts)
+                        .totalFutureRevenueAmount(futureRevenueAmount == null ? BigDecimal.ZERO : futureRevenueAmount)
                         .totalTrainingPack(trainingPackRepository.countTrainingPack(getLoggedUserService.execute(processId).getId()))
                         .totalTodayWorkout(contractRepository.countTodayWorkout(SituationEnum.OPEN.name(), StatusEnum.A.name(), trainer.getId()))
                         .totalAmountReceivedMonth(totalAmountReceivedMonth == null ? BigDecimal.ZERO : totalAmountReceivedMonth)

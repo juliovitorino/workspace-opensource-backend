@@ -5,6 +5,7 @@ import br.com.jcv.treinadorpro.corebusiness.usecases.ContractScheduleModifierSer
 import br.com.jcv.treinadorpro.corebusiness.usecases.CreateNewContractService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllActiveContractsService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllContractTodayWorkoutService;
+import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllFutureRevenueService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllOverduePaymentService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllReceivedPaymentsCurrentMonthService;
 import br.com.jcv.treinadorpro.corebusiness.usecases.FindAllStudentsFromTrainerService;
@@ -42,6 +43,7 @@ public class ContractController {
     private final FindAllActiveContractsService findAllActiveContractsService;
     private final FindAllContractTodayWorkoutService findAllContractTodayWorkoutService;
     private final FindAllOverduePaymentService findAllOverduePaymentService;
+    private final FindAllFutureRevenueService findAllFutureRevenueService;
     private final FindAllReceivedPaymentsCurrentMonthService findAllReceivedPaymentsCurrentMonthService;
     private final FindContractService findContractService;
     private final SaveUserWorkoutDataSheetPlanService saveUserWorkoutDataSheetPlanService;
@@ -54,6 +56,7 @@ public class ContractController {
                               FindAllActiveContractsService findAllActiveContractsService,
                               FindAllContractTodayWorkoutService findAllContractTodayWorkoutService,
                               FindAllOverduePaymentService findAllOverduePaymentService,
+                              FindAllFutureRevenueService findAllFutureRevenueService,
                               FindAllReceivedPaymentsCurrentMonthService findAllReceivedPaymentsCurrentMonthService,
                               FindContractService findContractService,
                               SaveUserWorkoutDataSheetPlanService saveUserWorkoutDataSheetPlanService,
@@ -65,6 +68,7 @@ public class ContractController {
         this.findAllActiveContractsService = findAllActiveContractsService;
         this.findAllContractTodayWorkoutService = findAllContractTodayWorkoutService;
         this.findAllOverduePaymentService = findAllOverduePaymentService;
+        this.findAllFutureRevenueService = findAllFutureRevenueService;
         this.findAllReceivedPaymentsCurrentMonthService = findAllReceivedPaymentsCurrentMonthService;
         this.findContractService = findContractService;
         this.saveUserWorkoutDataSheetPlanService = saveUserWorkoutDataSheetPlanService;
@@ -99,6 +103,11 @@ public class ContractController {
     @GetMapping("/trainer/student/overdue-payments")
     public ResponseEntity<ControllerGenericResponse<List<StudentPaymentResponse>>> findAllOverduePayment() {
         return ResponseEntity.ok(findAllOverduePaymentService.execute(UUID.randomUUID()));
+    }
+
+    @GetMapping("/trainer/student/future-revenues")
+    public ResponseEntity<ControllerGenericResponse<List<StudentPaymentResponse>>> findAllFutureRevenues() {
+        return ResponseEntity.ok(findAllFutureRevenueService.execute(UUID.randomUUID()));
     }
 
     @GetMapping("/trainer/student/received-payments")
