@@ -1,5 +1,6 @@
 package br.com.jcv.treinadorpro.corelayer.repository;
 
+import br.com.jcv.treinadorpro.corelayer.enums.LoginSocialProviderEnum;
 import br.com.jcv.treinadorpro.corelayer.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -13,4 +14,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
     Optional<User> findByGuardianIntegrationUUID(UUID userUUID);
     Optional<User> findByUuidId(UUID uuidId);
+    Optional<User> findByProviderAndIdGoogle(LoginSocialProviderEnum provider, String idGoogle);
 }

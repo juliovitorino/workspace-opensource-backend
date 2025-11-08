@@ -1,6 +1,7 @@
 package br.com.jcv.treinadorpro.corelayer.model;
 
 import br.com.jcv.treinadorpro.corelayer.enums.GenderEnum;
+import br.com.jcv.treinadorpro.corelayer.enums.LoginSocialProviderEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.MasterLanguageEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.UserProfileEnum;
@@ -88,6 +89,13 @@ public class User {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @Column(name = "provider")
+    @Enumerated(EnumType.STRING)
+    private LoginSocialProviderEnum provider;
+
+    @Column(name = "id_google")
+    private String idGoogle;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "personalUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
