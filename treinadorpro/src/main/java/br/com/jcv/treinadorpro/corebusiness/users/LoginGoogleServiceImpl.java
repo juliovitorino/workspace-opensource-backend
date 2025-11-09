@@ -2,10 +2,12 @@ package br.com.jcv.treinadorpro.corebusiness.users;
 
 import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse;
 import br.com.jcv.commons.library.commodities.service.BusinessService;
+import br.com.jcv.restclient.guardian.LoginRequest;
 import br.com.jcv.treinadorpro.corelayer.enums.LoginSocialProviderEnum;
 import br.com.jcv.treinadorpro.corelayer.model.User;
 import br.com.jcv.treinadorpro.corelayer.repository.UserRepository;
 import br.com.jcv.treinadorpro.corelayer.request.LoginSocialRequest;
+import br.com.jcv.treinadorpro.infrastructure.config.TreinadorProConfig;
 import br.com.jcv.treinadorpro.infrastructure.decoder.IPayloadLoginSocial;
 import br.com.jcv.treinadorpro.infrastructure.decoder.JwtDecoder;
 import br.com.jcv.treinadorpro.infrastructure.decoder.PayloadGoogleLoginSocial;
@@ -18,15 +20,21 @@ import java.util.UUID;
 
 @Service
 @Slf4j
-public class LoginGoogleServiceImpl implements LoginGoogleService{
+public class LoginGoogleServiceImpl implements LoginGoogleService {
 
     private final UserRepository userRepository;
     private final RegisterNewPersonalTrainerGoogleService registerNewPersonalTrainerGoogleService;
+    private final LoginService loginService;
+    private final TreinadorProConfig config;
 
     public LoginGoogleServiceImpl(UserRepository userRepository,
-                                  RegisterNewPersonalTrainerGoogleService registerNewPersonalTrainerGoogleService) {
+                                  RegisterNewPersonalTrainerGoogleService registerNewPersonalTrainerGoogleService,
+                                  LoginService loginService,
+                                  TreinadorProConfig config) {
         this.userRepository = userRepository;
         this.registerNewPersonalTrainerGoogleService = registerNewPersonalTrainerGoogleService;
+        this.loginService = loginService;
+        this.config = config;
     }
 
     @Override
@@ -38,7 +46,7 @@ public class LoginGoogleServiceImpl implements LoginGoogleService{
                 .orElse(null);
 
         BusinessService<IPayloadLoginSocial, String> executor = Objects.isNull(user)
-                ? (pid, payload) -> registerNewPersonalTrainerGoogleService.execute(pid,payload).getObjectResponse()
+                ? (pid, payload) -> registerNewPersonalTrainerGoogleService.execute(pid, payload).getObjectResponse()
                 : this::existentUser;
 
         String tokenGuardian = executor.execute(processId, payloadGoogle);
@@ -51,6 +59,14 @@ public class LoginGoogleServiceImpl implements LoginGoogleService{
     }
 
     private String existentUser(UUID processId, IPayloadLoginSocial payloadGoogle) {
-        return "token plataforma";
+        return loginService.execute(
+                processId, LoginRequest.builder()
+                        .email(payloadGoogle.getEmail())
+                        .applicationExternalUUID(config.getApiKeyUUID())
+                        .codePass(
+                                payloadGoogle.getSub().concat(payloadGoogle.getEmail()).concat(config.getSeed())
+                        )
+                        .build()
+        ).getObjectResponse();
     }
 }

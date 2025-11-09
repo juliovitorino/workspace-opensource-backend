@@ -155,7 +155,7 @@ public class RegisterNewPersonalTrainerGoogleServiceImpl implements RegisterNewP
 
 
     private CreateNewAccountRequest getInstanceCreateNewAccountRequest(IPayloadLoginSocial payload) {
-        final String pwd = UUID.randomUUID().toString();
+        final String pwd = payload.getSub().concat(payload.getEmail()).concat(config.getSeed());
         CreateNewAccountRequest createNewAccountRequest = new CreateNewAccountRequest();
         createNewAccountRequest.setEmail(payload.getEmail());
         createNewAccountRequest.setPasswd(pwd);
