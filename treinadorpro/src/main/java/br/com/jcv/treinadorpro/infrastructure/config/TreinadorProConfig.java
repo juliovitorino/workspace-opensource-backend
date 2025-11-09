@@ -22,6 +22,9 @@ public class TreinadorProConfig {
     @Value("${spring.apikey.uuid}")
     private UUID apiKeyUUID;
 
+    @Value("${spring.seed}")
+    private String seed;
+
     public String getDbDriverClassName() {
         return dbDriverClassName;
     }
@@ -40,4 +43,6 @@ public class TreinadorProConfig {
     public UUID getApiKeyUUID() {
         return apiKeyUUID;
     }
+
+    public String getSeed() { return seed;}
 }

@@ -4,9 +4,11 @@ import br.com.jcv.commons.library.commodities.response.ControllerGenericResponse
 import br.com.jcv.restclient.guardian.LoginRequest;
 import br.com.jcv.restclient.guardian.request.RegisterResponse;
 import br.com.jcv.restclient.guardian.request.ValidateSixCodeRequest;
+import br.com.jcv.treinadorpro.corebusiness.users.LoginGoogleService;
 import br.com.jcv.treinadorpro.corebusiness.users.LoginService;
 import br.com.jcv.treinadorpro.corebusiness.users.RegisterNewPersonalTrainerService;
 import br.com.jcv.treinadorpro.corebusiness.users.ValidateSixCodeService;
+import br.com.jcv.treinadorpro.corelayer.request.LoginSocialRequest;
 import br.com.jcv.treinadorpro.corelayer.request.RegisterRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,13 +27,16 @@ import java.util.UUID;
 public class UserPublicController {
 
     private final LoginService loginService;
+    private final LoginGoogleService loginGoogleService;
     private final RegisterNewPersonalTrainerService registerNewPersonalTrainerService;
     private final ValidateSixCodeService validateSixCodeService;
 
     public UserPublicController(LoginService loginService,
+                                LoginGoogleService loginGoogleService,
                                 RegisterNewPersonalTrainerService registerNewPersonalTrainerService,
                                 ValidateSixCodeService validateSixCodeService) {
         this.loginService = loginService;
+        this.loginGoogleService = loginGoogleService;
         this.registerNewPersonalTrainerService = registerNewPersonalTrainerService;
         this.validateSixCodeService = validateSixCodeService;
     }
@@ -41,6 +46,15 @@ public class UserPublicController {
                                                                    @RequestHeader("X-API-KEY") UUID apiKey) {
         loginRequest.setApplicationExternalUUID(apiKey);
         return ResponseEntity.ok(loginService.execute(UUID.randomUUID(), loginRequest));
+    }
+
+    @PostMapping("/login/google")
+    public ResponseEntity<ControllerGenericResponse<String>> loginGoogle(@RequestHeader("Authorization") String token,
+                                                                   @RequestHeader("X-API-KEY") UUID apiKey) {
+        return ResponseEntity.ok(loginGoogleService.execute(UUID.randomUUID(), LoginSocialRequest.builder()
+                        .apiKey(apiKey)
+                        .token(token)
+                .build()));
     }
 
     @PostMapping("/register")
