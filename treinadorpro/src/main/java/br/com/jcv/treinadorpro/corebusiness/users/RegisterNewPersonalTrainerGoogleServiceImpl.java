@@ -11,7 +11,9 @@ import br.com.jcv.treinadorpro.corelayer.enums.LoginSocialProviderEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.MasterLanguageEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.StatusEnum;
 import br.com.jcv.treinadorpro.corelayer.enums.UserProfileEnum;
+import br.com.jcv.treinadorpro.corelayer.enums.WeekdaysEnum;
 import br.com.jcv.treinadorpro.corelayer.model.ActivePersonalPlan;
+import br.com.jcv.treinadorpro.corelayer.model.AvailableTime;
 import br.com.jcv.treinadorpro.corelayer.model.PlanTemplate;
 import br.com.jcv.treinadorpro.corelayer.model.User;
 import br.com.jcv.treinadorpro.corelayer.repository.ActivePersonalPlanRepository;
@@ -30,8 +32,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @Slf4j
@@ -180,6 +186,33 @@ public class RegisterNewPersonalTrainerGoogleServiceImpl implements RegisterNewP
         user.setLastLogin(LocalDateTime.now());
         user.setProvider(LoginSocialProviderEnum.google);
         user.setIdGoogle(payload.getSub());
+        user.setAvailableTimeList(createAvailableTimeList(user));
         return user;
     }
+
+    private List<AvailableTime> createAvailableTimeList(User userEntity) {
+
+        List<AvailableTime> availableTimeList = new ArrayList<>();
+        List<String> availableTimes = IntStream.rangeClosed(5, 23)
+                .mapToObj(hour -> String.format("%02d:00", hour))
+                .collect(Collectors.toList());
+
+        for (WeekdaysEnum day : WeekdaysEnum.values()) {
+            for (String availableTime : availableTimes) {
+                availableTimeList.add(
+                        AvailableTime.builder()
+                                .externalId(UUID.randomUUID())
+                                .available(Boolean.TRUE)
+                                .daysOfWeek(day)
+                                .dayTime(availableTime)
+                                .personalUser(userEntity)
+                                .build()
+                );
+            }
+
+        }
+
+        return availableTimeList;
+    }
+
 }
