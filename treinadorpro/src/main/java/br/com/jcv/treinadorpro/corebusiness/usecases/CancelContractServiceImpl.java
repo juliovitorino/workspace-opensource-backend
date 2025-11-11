@@ -89,11 +89,9 @@ public class CancelContractServiceImpl implements CancelContractService {
 
         log.info("({}) return available time", processId);
         c.getTrainingPack().getPersonalUser().getAvailableTimeList()
-                .forEach(at -> {
-                    if (availableTimeValidator.test(at)) {
-                        at.setAvailable(Boolean.TRUE);
-                    }
-                });
+                .stream()
+                .filter(availableTimeValidator)
+                .forEach(e -> e.setAvailable(Boolean.TRUE));
 
         contractRepository.save(c);
 
