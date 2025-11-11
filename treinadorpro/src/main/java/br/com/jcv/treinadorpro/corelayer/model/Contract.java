@@ -111,6 +111,15 @@ public class Contract {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    @Column(name = "cancel_code")
+    private String cancelCode;
+
+    @Column(name = "purge_at")
+    private LocalDate purgeAt;
+
+    @Column(name = "cancel_at")
+    private LocalDate cancelAt;
+
     @ToString.Exclude
     @OneToMany(mappedBy = "contract", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<UserWorkoutPlan> userWorkoutPlanList;
