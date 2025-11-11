@@ -291,6 +291,7 @@ public class MapperServiceHelper {
                 .saturday(contract.getSaturday())
                 .sunday(contract.getSunday())
                 .duration(contract.getDuration())
+                .cancelCode(contract.getCancelCode())
                 .status(contract.getStatus())
                 .createdAt(contract.getCreatedAt())
                 .updatedAt(contract.getUpdatedAt())

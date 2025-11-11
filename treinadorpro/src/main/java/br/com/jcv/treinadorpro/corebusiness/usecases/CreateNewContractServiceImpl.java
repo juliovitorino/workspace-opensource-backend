@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -220,7 +221,17 @@ public class CreateNewContractServiceImpl implements CreateNewContractService{
                 .startDate(request.getTrainingInfo().getStartDate())
                 .endDate(request.getTrainingInfo().getEndDate())
                 .situation(SituationEnum.OPEN)
+                .cancelCode(gerarCodigoAleatorio6Digitos())
                 .build();
+    }
+
+    public static String gerarCodigoAleatorio6Digitos() {
+        Random random = new Random();
+        int min = 100000;
+        int max = 999999;
+
+        int codigo = random.nextInt((max - min) + 1) + min;
+        return String.valueOf(codigo);
     }
 
     private User getInstanceNewStudent(CreateNewStudentContractRequest request){

@@ -70,6 +70,9 @@ public class ContractResponse implements Serializable {
     @JsonProperty("status")
     private StatusEnum status;
 
+    @JsonProperty("cancelCode")
+    private String cancelCode;
+
     @JsonProperty("createdAt")
     private LocalDateTime createdAt;
 
